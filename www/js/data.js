@@ -1,0 +1,91 @@
+// Core BaZi reference data.
+export const ELEMENTS = [
+  { key: 'wood', name: 'Wood', zh: '木', py: 'Mù', color: '#3f9d5a', season: 'Spring', direction: 'East',
+    traits: 'Growth, kindness, planning, flexibility, upward expansion.' },
+  { key: 'fire', name: 'Fire', zh: '火', py: 'Huǒ', color: '#e0503c', season: 'Summer', direction: 'South',
+    traits: 'Warmth, expression, passion, visibility, enthusiasm.' },
+  { key: 'earth', name: 'Earth', zh: '土', py: 'Tǔ', color: '#c08a3e', season: 'Transitions between seasons', direction: 'Centre',
+    traits: 'Stability, trust, nourishment, reliability, mediation.' },
+  { key: 'metal', name: 'Metal', zh: '金', py: 'Jīn', color: '#8f9aa8', season: 'Autumn', direction: 'West',
+    traits: 'Structure, justice, decisiveness, refinement, discipline.' },
+  { key: 'water', name: 'Water', zh: '水', py: 'Shuǐ', color: '#3b78c4', season: 'Winter', direction: 'North',
+    traits: 'Wisdom, adaptability, communication, depth, flow.' },
+];
+
+// element: index into ELEMENTS, yang: true/false
+export const STEMS = [
+  { zh: '甲', py: 'Jiǎ', el: 0, yang: true,  image: 'Tall tree',
+    desc: 'Yang Wood – the great tree. Upright, principled, a natural leader that grows steadily upward; can be stubborn and hard to bend.' },
+  { zh: '乙', py: 'Yǐ', el: 0, yang: false, image: 'Flowers, vines, grass',
+    desc: 'Yin Wood – flowers and vines. Graceful, adaptable and resourceful; finds a way around obstacles and thrives through connections.' },
+  { zh: '丙', py: 'Bǐng', el: 1, yang: true,  image: 'The sun',
+    desc: 'Yang Fire – the sun. Generous, radiant, open and optimistic; shines on everyone, but can be overpowering or impatient.' },
+  { zh: '丁', py: 'Dīng', el: 1, yang: false, image: 'Candle, lamp, starlight',
+    desc: 'Yin Fire – the candle. Warm, perceptive and caring; illuminates details and people up close. Steady but sensitive to "wind".' },
+  { zh: '戊', py: 'Wù', el: 2, yang: true,  image: 'Mountain',
+    desc: 'Yang Earth – the mountain. Solid, dependable and protective; slow to change, sometimes immovable.' },
+  { zh: '己', py: 'Jǐ', el: 2, yang: false, image: 'Fertile field',
+    desc: 'Yin Earth – the field. Nurturing, patient and versatile; supports others and absorbs a lot, sometimes worries too much.' },
+  { zh: '庚', py: 'Gēng', el: 3, yang: true,  image: 'Axe, raw ore, weapon',
+    desc: 'Yang Metal – the axe. Direct, loyal, brave and decisive; values justice, can be blunt or harsh.' },
+  { zh: '辛', py: 'Xīn', el: 3, yang: false, image: 'Jewellery, fine blade',
+    desc: 'Yin Metal – the jewel. Refined, precise, aesthetic and proud; values quality and recognition.' },
+  { zh: '壬', py: 'Rén', el: 4, yang: true,  image: 'Ocean, great river',
+    desc: 'Yang Water – the ocean. Intelligent, dynamic, adventurous and free-flowing; can be restless or overwhelming.' },
+  { zh: '癸', py: 'Guǐ', el: 4, yang: false, image: 'Rain, dew, mist',
+    desc: 'Yin Water – rain and mist. Intuitive, gentle, imaginative and quietly persistent; nourishes subtly.' },
+];
+
+// hidden: indices into STEMS (main qi first)
+export const BRANCHES = [
+  { zh: '子', py: 'Zǐ', animal: 'Rat', el: 4, yang: true, hours: '23–01', month: 'Dec (Da Xue → Xiao Han)', hidden: [9] },
+  { zh: '丑', py: 'Chǒu', animal: 'Ox', el: 2, yang: false, hours: '01–03', month: 'Jan (Xiao Han → Li Chun)', hidden: [5, 9, 7] },
+  { zh: '寅', py: 'Yín', animal: 'Tiger', el: 0, yang: true, hours: '03–05', month: 'Feb (Li Chun → Jing Zhe)', hidden: [0, 2, 4] },
+  { zh: '卯', py: 'Mǎo', animal: 'Rabbit', el: 0, yang: false, hours: '05–07', month: 'Mar (Jing Zhe → Qing Ming)', hidden: [1] },
+  { zh: '辰', py: 'Chén', animal: 'Dragon', el: 2, yang: true, hours: '07–09', month: 'Apr (Qing Ming → Li Xia)', hidden: [4, 1, 9] },
+  { zh: '巳', py: 'Sì', animal: 'Snake', el: 1, yang: false, hours: '09–11', month: 'May (Li Xia → Mang Zhong)', hidden: [2, 6, 4] },
+  { zh: '午', py: 'Wǔ', animal: 'Horse', el: 1, yang: true, hours: '11–13', month: 'Jun (Mang Zhong → Xiao Shu)', hidden: [3, 5] },
+  { zh: '未', py: 'Wèi', animal: 'Goat', el: 2, yang: false, hours: '13–15', month: 'Jul (Xiao Shu → Li Qiu)', hidden: [5, 3, 1] },
+  { zh: '申', py: 'Shēn', animal: 'Monkey', el: 3, yang: true, hours: '15–17', month: 'Aug (Li Qiu → Bai Lu)', hidden: [6, 8, 4] },
+  { zh: '酉', py: 'Yǒu', animal: 'Rooster', el: 3, yang: false, hours: '17–19', month: 'Sep (Bai Lu → Han Lu)', hidden: [7] },
+  { zh: '戌', py: 'Xū', animal: 'Dog', el: 2, yang: true, hours: '19–21', month: 'Oct (Han Lu → Li Dong)', hidden: [4, 7, 3] },
+  { zh: '亥', py: 'Hài', animal: 'Pig', el: 4, yang: false, hours: '21–23', month: 'Nov (Li Dong → Da Xue)', hidden: [8, 0] },
+];
+
+export const TEN_GODS = {
+  F:  { zh: '比肩', py: 'Bǐ Jiān', name: 'Friend', short: 'F', rel: 'Same element, same polarity',
+        desc: 'Peers, siblings, self-reliance and independence. Strengthens the Day Master; too much can mean stubbornness or competition.' },
+  RW: { zh: '劫财', py: 'Jié Cái', name: 'Rob Wealth', short: 'RW', rel: 'Same element, opposite polarity',
+        desc: 'Competitors, bold action, social drive and risk-taking. Supports the self but can "rob" wealth through impulsive spending.' },
+  EG: { zh: '食神', py: 'Shí Shén', name: 'Eating God', short: 'EG', rel: 'Element I produce, same polarity',
+        desc: 'Creativity, enjoyment, talent, food and relaxed self-expression. A gentle outlet for the Day Master’s energy.' },
+  HO: { zh: '伤官', py: 'Shāng Guān', name: 'Hurting Officer', short: 'HO', rel: 'Element I produce, opposite polarity',
+        desc: 'Brilliance, rebellion, performance and innovation. Challenges authority; sharp tongue, strong originality.' },
+  IW: { zh: '偏财', py: 'Piān Cái', name: 'Indirect Wealth', short: 'IW', rel: 'Element I control, same polarity',
+        desc: 'Windfalls, business, opportunities and generosity. Wealth gained through ventures and networks.' },
+  DW: { zh: '正财', py: 'Zhèng Cái', name: 'Direct Wealth', short: 'DW', rel: 'Element I control, opposite polarity',
+        desc: 'Steady income, savings, diligence and practicality. Classically also the wife star in a man’s chart.' },
+  '7K': { zh: '七杀', py: 'Qī Shā', name: 'Seven Killings', short: '7K', rel: 'Element that controls me, same polarity',
+        desc: 'Pressure, ambition, courage and power. Drives achievement under stress; uncontrolled it brings conflict.' },
+  DO: { zh: '正官', py: 'Zhèng Guān', name: 'Direct Officer', short: 'DO', rel: 'Element that controls me, opposite polarity',
+        desc: 'Order, status, responsibility, reputation and rules. Classically also the husband star in a woman’s chart.' },
+  IR: { zh: '偏印', py: 'Piān Yìn', name: 'Indirect Resource', short: 'IR', rel: 'Element that produces me, same polarity',
+        desc: 'Intuition, unconventional learning, spirituality and solitude. Insightful, sometimes withdrawn.' },
+  DR: { zh: '正印', py: 'Zhèng Yìn', name: 'Direct Resource', short: 'DR', rel: 'Element that produces me, opposite polarity',
+        desc: 'Support, education, mother, protection and patience. Nourishes and strengthens the Day Master.' },
+};
+
+export const JIE_TERMS = [
+  { zh: '立春', name: 'Li Chun – Start of Spring', lon: 315 },
+  { zh: '惊蛰', name: 'Jing Zhe – Awakening of Insects', lon: 345 },
+  { zh: '清明', name: 'Qing Ming – Clear and Bright', lon: 15 },
+  { zh: '立夏', name: 'Li Xia – Start of Summer', lon: 45 },
+  { zh: '芒种', name: 'Mang Zhong – Grain in Ear', lon: 75 },
+  { zh: '小暑', name: 'Xiao Shu – Minor Heat', lon: 105 },
+  { zh: '立秋', name: 'Li Qiu – Start of Autumn', lon: 135 },
+  { zh: '白露', name: 'Bai Lu – White Dew', lon: 165 },
+  { zh: '寒露', name: 'Han Lu – Cold Dew', lon: 195 },
+  { zh: '立冬', name: 'Li Dong – Start of Winter', lon: 225 },
+  { zh: '大雪', name: 'Da Xue – Major Snow', lon: 255 },
+  { zh: '小寒', name: 'Xiao Han – Minor Cold', lon: 285 },
+];

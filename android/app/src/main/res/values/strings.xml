@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">BaZi Academy</string>
+    <string name="title_activity_main">BaZi Academy</string>
+    <string name="package_name">com.baziacademy.app</string>
+    <string name="custom_url_scheme">com.baziacademy.app</string>
+</resources>

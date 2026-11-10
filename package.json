@@ -1,0 +1,24 @@
+{
+  "name": "bazi-academy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Learn Chinese astrology (BaZi / Four Pillars of Destiny) – Android app",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "serve": "npx --yes http-server www -p 8080 -c-1",
+    "sync": "npx cap sync android",
+    "assets": "npx capacitor-assets generate --android",
+    "build:aab": "npx cap sync android && cd android && ./gradlew bundleRelease",
+    "build:apk": "npx cap sync android && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.6.0",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/core": "^8.6.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^4.0.0",
+    "@capacitor/cli": "^8.6.0"
+  }
+}

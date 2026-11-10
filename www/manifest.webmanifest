@@ -1,0 +1,9 @@
+{
+  "name": "BaZi Academy – Learn the Four Pillars",
+  "short_name": "BaZi Academy",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#faf6ef",
+  "theme_color": "#7a2e2e",
+  "icons": [{ "src": "img/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

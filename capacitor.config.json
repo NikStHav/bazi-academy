@@ -1,0 +1,9 @@
+{
+  "appId": "com.baziacademy.app",
+  "appName": "BaZi Academy",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#faf6ef"
+  }
+}

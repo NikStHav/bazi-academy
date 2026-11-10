@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#7a2e2e"/>
+  <circle cx="256" cy="256" r="178" fill="none" stroke="#e9c46a" stroke-width="10"/>
+  <g fill="#e9c46a">
+    <circle cx="256" cy="78" r="14"/><circle cx="425" cy="201" r="14"/><circle cx="361" cy="400" r="14"/>
+    <circle cx="151" cy="400" r="14"/><circle cx="87" cy="201" r="14"/>
+  </g>
+  <text x="256" y="312" text-anchor="middle" font-family="'Noto Serif CJK SC','Noto Serif SC','Songti SC',serif" font-size="160" font-weight="700" fill="#faf6ef">八字</text>
+</svg>
