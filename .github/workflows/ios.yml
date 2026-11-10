@@ -1,0 +1,83 @@
+name: BaZi Academy (iOS)
+
+on:
+  push:
+    branches: ['**']
+    tags: ['v*']
+  pull_request:
+    branches: ['**']
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          cache: npm
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Unit tests (chart engine, quizzes)
+        run: npm test
+
+      - name: Copy web assets into the iOS project
+        run: npx cap sync ios
+
+      - name: Build for the iOS simulator (no signing needed)
+        working-directory: ios/App
+        run: xcodebuild -project App.xcodeproj -scheme App -sdk iphonesimulator -configuration Debug CODE_SIGNING_ALLOWED=NO build | tail -n 30; exit ${PIPESTATUS[0]}
+
+      - name: Check App Store Connect secrets
+        id: asc
+        env:
+          ASC_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+        run: |
+          if [ -z "$ASC_KEY" ]; then
+            echo "No App Store Connect API key configured – skipping signed build and TestFlight upload."
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Archive and upload to TestFlight
+        if: steps.asc.outputs.present == 'true'
+        working-directory: ios/App
+        env:
+          ASC_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+          ASC_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.APPSTORE_API_ISSUER_ID }}
+          TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          set -eo pipefail
+          KEY_PATH="$RUNNER_TEMP/AuthKey_${ASC_KEY_ID}.p8"
+          printf '%s' "$ASC_KEY" > "$KEY_PATH"
+          AUTH=(-allowProvisioningUpdates -authenticationKeyPath "$KEY_PATH" -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID")
+
+          xcodebuild -project App.xcodeproj -scheme App -configuration Release \
+            -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            DEVELOPMENT_TEAM="$TEAM_ID" CODE_SIGN_STYLE=Automatic CURRENT_PROJECT_VERSION=${{ github.run_number }} \
+            "${AUTH[@]}" archive | tail -n 30
+
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>teamID</key><string>${TEAM_ID}</string>
+            <key>signingStyle</key><string>automatic</string>
+          </dict></plist>
+          PLIST
+
+          xcodebuild -exportArchive -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" -exportPath "$RUNNER_TEMP/export" "${AUTH[@]}"
+          rm -f "$KEY_PATH"

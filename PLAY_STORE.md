@@ -80,7 +80,7 @@ Bump `versionName` in `android/app/build.gradle` (and in the About screen in `ww
 **Graphics** (in `resources/`):
 - App icon 512×512: `play-icon-512.png`
 - Feature graphic 1024×500: `feature-graphic.png`
-- Phone screenshots (at least 2, ideally 4–8): take them from the running app (Learn, Chart result, Quiz, Today).
+- Phone screenshots: ready in `store-screenshots/android-phone/` (1080×1920). Upload 4–8 of them.
 
 ### App content (Policy section)
 

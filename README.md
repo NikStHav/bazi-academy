@@ -1,6 +1,6 @@
-# BaZi Academy – Android app
+# BaZi Academy – Android & iPhone app
 
-An offline Android app for learning Chinese astrology according to **BaZi (八字, Four Pillars of Destiny)**.
+An offline app for Android and iPhone for learning Chinese astrology according to **BaZi (八字, Four Pillars of Destiny)**.
 
 ## Features
 
@@ -14,11 +14,11 @@ An offline Android app for learning Chinese astrology according to **BaZi (八�
   - charts are saved on the device; you can mark one as "my chart"
 - **Quiz**: endless, generated questions in 5 categories plus a mixed mode, with best scores.
 - **Today**: today's pillars, the next solar term, and how today relates to your own Day Master.
-- No internet permission, no tracking, light and dark mode.
+- Fully offline, no tracking, light and dark mode.
 
 ## Tech
 
-Plain HTML/CSS/JavaScript (ES modules, no build step) in `www/`, wrapped as a native Android app with
+Plain HTML/CSS/JavaScript (ES modules, no build step) in `www/`, wrapped as native Android and iOS apps with
 [Capacitor 8](https://capacitorjs.com) (target SDK 36).
 
 ```
@@ -29,6 +29,7 @@ www/js/quiz.js     question generators
 www/js/app.js      UI and router
 test/              node:test unit tests
 android/           Capacitor Android project
+ios/               Capacitor iOS project (Xcode, Swift Package Manager)
 resources/         icon, splash and Play Store graphics
 docs/privacy.html  privacy policy (for GitHub Pages)
 ```
@@ -46,7 +47,7 @@ npm run serve        # open http://localhost:8080 in a browser (use the phone em
 You need Android Studio (or the Android SDK) and JDK 21.
 
 ```bash
-npm run sync                       # copy www/ into the Android project
+npm run sync                       # copy www/ into the Android and iOS projects
 npx cap open android               # open in Android Studio, run it on a device or emulator
 npm run build:apk                  # debug APK -> android/app/build/outputs/apk/debug/
 npm run build:aab                  # signed release bundle (see PLAY_STORE.md)
@@ -54,6 +55,19 @@ npm run build:aab                  # signed release bundle (see PLAY_STORE.md)
 
 After you change the icon (`www/img/icon.svg` → `resources/*.png`), run `npm run assets`.
 
-The GitHub Actions workflow `.github/workflows/android.yml` runs the tests, builds a debug APK on every push, and builds a signed `.aab` once the signing secrets are configured.
+## Build for iPhone
+
+You need a Mac with Xcode, or you can use the GitHub workflow `.github/workflows/ios.yml`, which runs on a cloud Mac.
+
+```bash
+npx cap sync ios
+npx cap open ios                   # opens Xcode: pick your team under Signing & Capabilities, then run
+```
+
+See **[APP_STORE.md](APP_STORE.md)** for publishing on the Apple App Store.
+
+## CI
+
+The GitHub Actions workflow `.github/workflows/android.yml` runs the tests, builds a debug APK on every push, and builds a signed `.aab` once the signing secrets are configured. `.github/workflows/ios.yml` builds the app for the iOS simulator on every push and uploads a signed build to TestFlight once the App Store Connect secrets are configured.
 
 See **[PLAY_STORE.md](PLAY_STORE.md)** for publishing on Google Play.
