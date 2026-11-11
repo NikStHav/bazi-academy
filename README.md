@@ -13,6 +13,7 @@ An offline app for Android and iPhone for learning Chinese astrology according t
   - 10-year luck pillars with starting age
   - charts are saved on the device; you can mark one as "my chart"
 - **Quiz**: endless, generated questions in 5 categories plus a mixed mode, with best scores.
+- **Premium** (one-time in-app purchase, €2.99): lessons 8–14, unlimited chart calculations (5 are free) and a detailed chart reading. It uses StoreKit 2 / Google Play Billing on the device (`@capgo/native-purchases`), with no server. Product ID `bazi_premium`, set in `www/js/premium.js`.
 - **Today**: today's pillars, the next solar term, and how today relates to your own Day Master.
 - Fully offline, no tracking, light and dark mode.
 
@@ -26,6 +27,8 @@ www/js/bazi.js     calculation engine (pure functions, unit tested)
 www/js/data.js     stems, branches, elements, ten gods, solar terms
 www/js/lessons.js  course content
 www/js/quiz.js     question generators
+www/js/reading.js  detailed chart reading (Premium)
+www/js/premium.js  in-app purchase, free limits
 www/js/app.js      UI and router
 test/              node:test unit tests
 android/           Capacitor Android project
@@ -40,6 +43,7 @@ docs/privacy.html  privacy policy (for GitHub Pages)
 npm install
 npm test             # engine and quiz tests
 npm run serve        # open http://localhost:8080 in a browser (use the phone emulation in devtools)
+                     # in the browser, "Unlock Premium" simulates the purchase; reset with localStorage.clear()
 ```
 
 ## Build for Android

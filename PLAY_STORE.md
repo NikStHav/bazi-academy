@@ -2,8 +2,11 @@
 
 ## 1. One-time setup
 
-1. **Create a Google Play developer account** at <https://play.google.com/console> (one-time fee of US$25).
-   New *personal* accounts must run a **closed test with at least 12 testers for 14 days** before they can publish to production.
+1. **Create a Google Play developer account** at <https://play.google.com/console> (one-time fee of US$25) as an **Organization** for NSH Holding GmbH.
+   You need the GmbH's **D-U-N-S number**, the company website and a contact email/phone; Google verifies the company.
+   (Organization accounts don't need the 12-testers/14-days closed test that new personal accounts require.)
+   Under *Settings → Payments profile*, set up the GmbH's merchant account (bank account, VAT ID). It's needed to sell the in-app purchase.
+   Declare **trader status** (EU Digital Services Act): the company's address, phone and email are then shown on the store page.
 2. **Create an upload key** (keep the file and passwords safe; you need them for every update):
    ```bash
    keytool -genkeypair -v -keystore bazi-upload.jks -alias bazi-upload \
@@ -34,9 +37,18 @@ Bump `versionName` in `android/app/build.gradle` (and in the About screen in `ww
 
 ## 3. Create the app in Play Console
 
+### Premium in-app product
+
+Play only lets you create in-app products after you have uploaded a build that contains the billing library, so first upload the `.aab` to the *Internal testing* track. Then go to **Monetize with Play → Products → In-app products → Create product**:
+- Product ID: **`bazi_premium`** (must match `www/js/premium.js`)
+- Name `BaZi Academy Premium`, description `All lessons, unlimited charts and detailed chart readings.`
+- Price **€2.99**, then **Activate**.
+
+To test without being charged, add your Google account under *Settings → License testing*.
+
 - App name: **BaZi Academy – Four Pillars**
 - Default language: English (United States)
-- App or game: App · Free
+- App or game: App · Free (contains in-app purchases)
 - Category: **Education** (alternative: Lifestyle)
 - Package name: `com.baziacademy.app`. You can change it until the first upload; after that it is permanent. If you own a domain, the convention is its reverse, e.g. `com.example.bazi`.
 
@@ -72,6 +84,9 @@ Bump `versionName` in `android/app/build.gradle` (and in the About screen in `ww
 > TODAY
 > See today’s pillars, the next solar term and how the day relates to your own Day Master.
 >
+> FREE & PREMIUM
+> Lessons 1–7, all quizzes and 5 chart calculations are free. A one-time purchase unlocks all 14 lessons, unlimited charts and a detailed chart reading: your core nature, favourable elements, Ten Gods profile, career, relationships and current luck phase. No subscription.
+>
 > PRIVATE BY DESIGN
 > Works completely offline. No account, no ads, no tracking. Your birth data never leaves your phone.
 >
@@ -88,10 +103,11 @@ Bump `versionName` in `android/app/build.gradle` (and in the About screen in `ww
 |---|---|
 | Privacy policy URL | `https://<your-github-name>.github.io/<repo-name>/privacy.html`. Enable GitHub Pages (Settings → Pages → *Deploy from a branch* → `main` / `/docs`). Put your contact email into `docs/privacy.html` first. The repository must be **public** for free GitHub Pages; otherwise host the file anywhere else. |
 | Ads | No ads |
+| In-app purchases | Yes: one-time Premium unlock (€2.99) |
 | App access | All functionality available without login |
 | Content rating (IARC questionnaire) | Category "Reference, News, or Educational"; answer *No* to violence, sexuality, gambling and similar questions. Expected rating: Everyone / PEGI 3 / USK 0 |
 | Target audience | 13+ (or 18+); not designed for children |
-| Data safety | **No data collected, no data shared.** All data stays on the device and the app has no internet permission |
+| Data safety | **No data collected, no data shared.** All data stays on the device and the app has no internet permission. Purchases are processed by Google Play Billing |
 | Government / financial / health app | No |
 
 ## 4. Release

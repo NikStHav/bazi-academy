@@ -142,3 +142,23 @@ th, td { padding: 6px 4px; border-bottom: 1px solid var(--line); text-align: lef
 .saved .n { flex: 1; cursor: pointer; }
 .icon-btn { border: 0; background: none; color: var(--muted); font-size: 20px; cursor: pointer; padding: 6px; }
 .star { color: var(--gold); }
+
+/* Premium */
+.premium-banner { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text);
+  border: 1px solid color-mix(in srgb, var(--gold) 55%, var(--line)); background: color-mix(in srgb, var(--gold) 10%, var(--surface)); font-size: 14px; }
+.premium-banner .pb-icon { color: var(--gold); font-size: 22px; }
+.premium-banner .pb-go { margin-left: auto; font-size: 22px; color: var(--muted); }
+.lesson-item.locked .t, .lesson-item.locked .s { opacity: .65; }
+.paywall { text-align: center; border: 1px solid color-mix(in srgb, var(--gold) 55%, var(--line)); }
+.paywall .pw-icon { font-size: 32px; color: var(--gold); line-height: 1; }
+.paywall h3 { margin: 8px 0 4px; }
+.benefits { list-style: none; padding: 0; margin: 0 0 16px; }
+.benefits li { padding: 10px 0 10px 30px; border-bottom: 1px solid var(--line); position: relative; }
+.benefits li::before { content: '✦'; color: var(--gold); position: absolute; left: 4px; top: 10px; }
+.benefits span { display: block; font-size: 13px; color: var(--muted); }
+.reading h4 { margin: 14px 0 4px; font-size: 15px; }
+.reading details { border-top: 1px solid var(--line); padding: 4px 0; }
+.reading details summary { padding: 10px 0; }
+.reading ul { padding-left: 20px; }
+.teaser h4 { color: var(--muted); }
+.pill { font-size: 11px; background: var(--gold); color: #1b1410; padding: 2px 8px; border-radius: 99px; vertical-align: middle; }

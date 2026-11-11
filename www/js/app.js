@@ -3,6 +3,8 @@ import { LESSONS } from './lessons.js';
 import { computeChart, tenGod, pillarName, pillarPinyin, pillarFromIndex, pillarsForNow, jieTermsOfYear,
   SEASON_PHASES, PILLAR_KEYS, PILLAR_LABEL } from './bazi.js';
 import { CATEGORIES, makeRound } from './quiz.js';
+import { buildReading } from './reading.js';
+import * as premium from './premium.js';
 
 // ---------- storage ----------
 const store = {
@@ -197,6 +199,7 @@ function chartHtml(entry) {
     <p class="small muted">${c.luck.forward ? 'Forward' : 'Backward'} · first luck pillar starts at about ${c.luck.startYears} years ${c.luck.startMonths} months${i.timeUnknown ? ' (approximate – birth time unknown)' : ''}.</p>
     <div class="luck">${c.luck.pillars.map((p) => `<div class="${curLuck && p.year === curLuck.year ? 'now' : ''}"><div>${p.year}</div><div class="muted">age ${Math.floor(p.age)}</div>
       ${stemTile(p.stem, 'sm')}${branchTile(p.branch, 'sm')}<div>${TEN_GODS[tenGod(c.dayMaster, p.stem)].short}</div></div>`).join('')}</div></div>
+  ${readingHtml(c)}
   <div class="row"><button class="btn secondary" id="del-chart">Delete</button><button class="btn secondary" id="mine-chart">${entry.mine ? '★ My chart' : '☆ Set as my chart'}</button></div>`;
 }
 
@@ -211,9 +214,10 @@ const routes = {
         <p>${done === LESSONS.length ? 'Course complete! Keep practising with the quiz and charts.' : `${done} of ${LESSONS.length} lessons completed.`}</p>
         <div class="progress"><i style="width:${(done / LESSONS.length) * 100}%"></i></div>
         ${next ? `<a class="btn" style="margin-top:14px;background:var(--gold);color:#1b1410" href="#/lesson/${next.id}">${done ? 'Continue' : 'Start'}: ${next.title}</a>` : ''}</div>
-      <div class="list">${LESSONS.map((l, i) => `<a class="card lesson-item ${state.done[l.id] ? 'done' : ''}" href="#/lesson/${l.id}">
-        <span class="badge">${state.done[l.id] ? '✓' : l.zh.slice(0, 2)}</span>
-        <span><span class="lvl">${i + 1} · ${l.level}</span><div class="t">${l.title} <span class="muted" style="font-family:var(--serif);font-weight:400">${l.zh}</span></div><div class="s">${l.summary}</div></span></a>`).join('')}</div>
+      ${premium.isPremium() ? '' : `<a class="card premium-banner" href="#/premium"><span class="pb-icon">✦</span><span><b>Premium</b> · unlock lessons ${premium.FREE_LESSONS + 1}–${LESSONS.length}, unlimited charts and detailed readings</span><span class="pb-go">›</span></a>`}
+      <div class="list">${LESSONS.map((l, i) => `<a class="card lesson-item ${state.done[l.id] ? 'done' : ''} ${premium.lessonIsLocked(i) ? 'locked' : ''}" href="#/lesson/${l.id}">
+        <span class="badge">${premium.lessonIsLocked(i) ? '🔒' : state.done[l.id] ? '✓' : l.zh.slice(0, 2)}</span>
+        <span><span class="lvl">${i + 1} · ${l.level}${i >= premium.FREE_LESSONS ? ' · Premium' : ''}</span><div class="t">${l.title} <span class="muted" style="font-family:var(--serif);font-weight:400">${l.zh}</span></div><div class="s">${l.summary}</div></span></a>`).join('')}</div>
       <p class="small muted" style="text-align:center;margin-top:20px"><a href="#/about">About & privacy</a></p>`;
   },
 
@@ -223,6 +227,13 @@ const routes = {
     if (!l) return go('#/learn');
     setTitle(l.title, true);
     const next = LESSONS[idx + 1];
+    if (premium.lessonIsLocked(idx)) {
+      view.innerHTML = `<div class="lvl small" style="color:var(--gold)">LESSON ${idx + 1} · ${l.level.toUpperCase()} · PREMIUM</div>
+        <h2>${l.title} <span style="font-family:var(--serif);color:var(--accent)">${l.zh}</span></h2>
+        <p>${l.summary}</p>${paywallCard('This lesson is part of Premium.')}`;
+      bindPaywall();
+      return;
+    }
     view.innerHTML = `<article class="lesson-body"><div class="lvl small" style="color:var(--gold)">LESSON ${idx + 1} · ${l.level.toUpperCase()}</div>
       <h2>${l.title} <span style="font-family:var(--serif);color:var(--accent)">${l.zh}</span></h2>${l.body}</article>
       <div class="card" id="lq"><h3 style="margin-top:0">Check yourself</h3><div id="lq-body"></div></div>
@@ -241,6 +252,7 @@ const routes = {
       if (!entry) return go('#/chart');
       setTitle(entry.name || 'Chart', true);
       view.innerHTML = chartHtml(entry);
+      bindPaywall();
       $('#del-chart').onclick = () => { if (confirm('Delete this chart?')) { state.charts = state.charts.filter((c) => c.id !== id); save('charts'); go('#/chart', true); } };
       $('#mine-chart').onclick = () => { state.charts.forEach((c) => { c.mine = c.id === id ? !entry.mine : false; }); save('charts'); routes.chart(id); };
       return;
@@ -252,6 +264,9 @@ const routes = {
     view.innerHTML = `
       <form class="card" id="chart-form" autocomplete="off">
         <h2 style="margin-top:0">Calculate a chart</h2>
+        ${premium.isPremium() ? '' : `<p class="small ${premium.calculationsLeft() ? 'muted' : ''}" id="calc-left">${premium.calculationsLeft()
+          ? `${premium.calculationsLeft()} of ${premium.FREE_CALCULATIONS} free calculations left · <a href="#/premium">Unlimited with Premium</a>`
+          : `You have used your ${premium.FREE_CALCULATIONS} free calculations. Your saved charts stay available. <a href="#/premium">Get unlimited charts</a>`}</p>`}
         <label for="f-name">Name</label><input id="f-name" maxlength="40" placeholder="e.g. Me, Anna, …">
         <div class="row"><div><label for="f-date">Birth date</label><input id="f-date" type="date" required min="1900-01-01" max="2100-12-31" value="1990-06-15"></div>
           <div><label for="f-time">Birth time</label><input id="f-time" type="time" value="12:00"></div></div>
@@ -298,6 +313,8 @@ const routes = {
       e.preventDefault();
       const [year, month, day] = $('#f-date').value.split('-').map(Number);
       if (!year) return;
+      if (!premium.canCalculate()) { go('#/premium'); return; }
+      premium.countCalculation();
       const [hour, minute] = ($('#f-time').value || '12:00').split(':').map(Number);
       const lon = $('#f-lon').value.trim();
       state.settings.ziHourNextDay = $('#f-zi').checked; save('settings');
@@ -368,6 +385,22 @@ const routes = {
       <div class="card"><h3 style="margin-top:0">Character of the day</h3>${stemSheet(p.day.stem)}</div>`;
   },
 
+  premium() {
+    setTitle('Premium', true);
+    const has = premium.isPremium();
+    view.innerHTML = `<div class="card hero"><div class="big">✦</div><h2 style="margin:8px 0 4px">BaZi Academy Premium</h2>
+        <p>${has ? 'Premium is active. Thank you for supporting the app!' : 'One purchase. Everything unlocked. Yours forever.'}</p></div>
+      <div class="card"><ul class="benefits">
+        <li><b>All ${LESSONS.length} lessons</b><span>Hidden Stems, Day Master, Ten Gods, strength, interactions, luck pillars and the useful god</span></li>
+        <li><b>Unlimited chart calculations</b><span>Charts for family, friends and partners – save as many as you like</span></li>
+        <li><b>Detailed chart reading</b><span>Core nature, favourable elements, Ten Gods profile, career, relationships and your current luck phase</span></li>
+        <li><b>No ads, no subscription</b><span>A one-time purchase; your data stays on your device</span></li></ul>
+        ${has ? '<a class="btn block" href="#/learn">Continue learning</a>' : `<button class="btn block" id="buy">Unlock for ${premium.getPrice()}</button>`}
+        <button class="btn secondary block" id="restore" style="margin-top:10px">Restore purchase</button>
+        <p class="small muted" style="margin-bottom:0">One-time payment through your ${premium.storeName} account. No subscription, nothing renews.</p></div>`;
+    bindPaywall();
+  },
+
   about() {
     setTitle('About', true);
     view.innerHTML = `<div class="card"><h2 style="margin-top:0">BaZi Academy</h2>
@@ -375,14 +408,51 @@ const routes = {
       <h3>How charts are calculated</h3>
       <p class="small">The year and month pillars follow the 24 solar terms (the year starts at Li Chun), calculated from the sun’s apparent longitude. Day pillars follow the continuous 60-day cycle. Hour pillars follow the five-rats rule. True solar time is optional.</p>
       <h3>Privacy</h3>
-      <p class="small">The app works offline. Birth data, charts and progress are stored only on your device. Nothing is sent to a server, and there is no tracking or advertising.</p>
+      <p class="small">The app works offline. Birth data, charts and progress are stored only on your device. Nothing is sent to a server, and there is no tracking or advertising. Purchases are handled entirely by Apple or Google.</p>
       <h3>Disclaimer</h3>
       <p class="small">BaZi is a traditional cultural system. The content is for education and entertainment and is no substitute for professional medical, legal, financial or psychological advice.</p>
+      <h3>Premium</h3>
+      <p class="small">${premium.isPremium() ? '✦ Premium is active – thank you for supporting the app!' : `Not purchased. <a href="#/premium">See Premium</a>`}</p>
+      <button class="btn secondary block" id="restore" style="margin-bottom:10px">Restore purchase</button>
       <button class="btn secondary block" id="reset">Reset learning progress</button>
       <p class="small muted" style="text-align:center">Version 1.0.0</p></div>`;
+    $('#restore').onclick = async () => { const ok = await premium.restore(); alert(ok ? 'Premium restored.' : 'No previous purchase found for this store account.'); routes.about(); };
     $('#reset').onclick = () => { if (confirm('Reset lesson progress and quiz scores?')) { state.done = {}; state.best = {}; save('done'); save('best'); go('#/learn'); } };
   },
 };
+
+// ---------- premium helpers ----------
+function paywallCard(reason) {
+  return `<div class="card paywall"><div class="pw-icon">✦</div><h3>${reason}</h3>
+    <p class="small">Unlock all lessons, unlimited charts and detailed chart readings with a one-time purchase.</p>
+    <button class="btn block buy-btn">Unlock Premium – ${premium.getPrice()}</button>
+    <a class="small" href="#/premium" style="display:block;text-align:center;margin-top:10px">What’s included?</a></div>`;
+}
+
+function bindPaywall() {
+  view.querySelectorAll('.buy-btn, #buy').forEach((b) => b.addEventListener('click', async () => {
+    b.disabled = true;
+    const r = await premium.buy();
+    b.disabled = false;
+    if (r === 'purchased') { alert('Thank you! Premium is now unlocked.'); router(); }
+    else if (r === 'pending') alert('Your purchase is pending. Premium unlocks as soon as the payment is confirmed.');
+    else if (r.startsWith('error:')) alert('The purchase could not be completed. Please try again later.');
+  }));
+  const rs = $('#restore', view);
+  if (rs && !rs.onclick) rs.onclick = async () => { const ok = await premium.restore(); alert(ok ? 'Premium restored.' : 'No previous purchase found for this store account.'); router(); };
+}
+
+function readingHtml(c) {
+  const { sections } = buildReading(c);
+  if (premium.isPremium()) {
+    return `<div class="card reading"><h3 style="margin-top:0">Detailed reading <span class="pill">Premium</span></h3>
+      ${sections.map((s, i) => `<details ${i < 2 ? 'open' : ''}><summary>${s.title}</summary>${s.html}</details>`).join('')}</div>`;
+  }
+  return `<div class="card reading"><h3 style="margin-top:0">Detailed reading</h3>
+    <h4>${sections[0].title}</h4>${sections[0].html}
+    <div class="teaser">${sections.slice(1, -1).map((s) => `<h4>🔒 ${s.title}</h4>`).join('')}</div></div>
+    ${paywallCard('Read your full chart')}`;
+}
 
 // ---------- quiz runner ----------
 function runQuiz(host, questions, onFinish, onRetry) {
@@ -423,13 +493,15 @@ $('#back').addEventListener('click', () => { if (history.length > 1) history.bac
 function router() {
   closeSheet();
   const [, name = 'learn', arg] = (location.hash || '#/learn').split('/');
-  const tab = { lesson: 'learn', about: 'learn' }[name] || name;
+  const tab = { lesson: 'learn', about: 'learn', premium: 'learn' }[name] || name;
   document.querySelectorAll('.tabs a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));
   (routes[name] || routes.learn)(arg ? decodeURIComponent(arg) : undefined);
   view.scrollTop = 0;
 }
 window.addEventListener('hashchange', router);
 router();
+premium.onChange(() => router());
+premium.init();
 
 // ---------- Android hardware back button (Capacitor) ----------
 const CapApp = window.Capacitor?.Plugins?.App;
