@@ -37,9 +37,15 @@ jobs:
       - name: Copy web assets into the Android project
         run: npx cap sync android
 
-      - name: Build debug APK (for testing on a phone)
-        working-directory: android
-        run: ./gradlew assembleDebug --no-daemon
+      - name: Build debug APK (for testing on a phone, Premium unlocked)
+        run: |
+          sed -i 's/export const TEST_BUILD = false;/export const TEST_BUILD = true;/' www/js/build-flags.js
+          grep -q 'TEST_BUILD = true' www/js/build-flags.js
+          npx cap sync android
+          (cd android && ./gradlew assembleDebug --no-daemon)
+          git checkout -- www/js/build-flags.js
+          npx cap sync android
+          grep -q 'TEST_BUILD = false' android/app/src/main/assets/public/js/build-flags.js
 
       - uses: actions/upload-artifact@v5
         with:

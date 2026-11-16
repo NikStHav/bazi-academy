@@ -64,3 +64,8 @@ test('vendored Capacitor core matches the installed @capacitor/core', () => {
   const installed = readFileSync(new URL('../node_modules/@capacitor/core/dist/capacitor.js', import.meta.url), 'utf8');
   assert.equal(vendored, installed, 'run: npm run vendor');
 });
+
+test('store builds never ship with the test unlock', () => {
+  const src = readFileSync(new URL('../www/js/build-flags.js', import.meta.url), 'utf8');
+  assert.match(src, /export const TEST_BUILD = false;/);
+});

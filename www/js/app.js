@@ -543,6 +543,7 @@ const routes = {
       <h3>Disclaimer</h3>
       <p class="small">BaZi is a traditional cultural system. The content is for education and entertainment and is no substitute for professional medical, legal, financial or psychological advice.</p>
       <h3>Premium</h3>
+      ${premium.isTestBuild ? '<p class="tip">Test build: Premium is unlocked for testing. Store versions use the real purchase.</p>' : ''}
       <p class="small">${premium.isPremium() ? '✦ Premium is active – thank you for supporting the app!' : `Not purchased. <a href="#/premium">See Premium</a>`}</p>
       <button class="btn secondary block" id="restore" style="margin-bottom:10px">Restore purchase</button>
       <button class="btn secondary block" id="reset">Reset learning progress</button>

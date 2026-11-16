@@ -12,13 +12,15 @@ const read = (k, d) => { try { const v = localStorage.getItem(k); return v === n
 const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* ignore */ } };
 
 import { isNative, platform, plugin } from './cap.js';
+import { TEST_BUILD } from './build-flags.js';
 
 const Store = plugin('NativePurchases');
 
-let premium = read(KEY, false); // cached so the app works offline
+let premium = TEST_BUILD || read(KEY, false); // cached so the app works offline
+export const isTestBuild = TEST_BUILD;
 let price = FALLBACK_PRICE;
 const listeners = new Set();
-const setPremium = (v) => { if (premium !== v) { premium = v; write(KEY, v); listeners.forEach((f) => f(v)); } };
+const setPremium = (v) => { if (TEST_BUILD) v = true; if (premium !== v) { premium = v; write(KEY, v); listeners.forEach((f) => f(v)); } };
 
 export const isPremium = () => premium;
 export const onChange = (fn) => listeners.add(fn);
