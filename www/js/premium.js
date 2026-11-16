@@ -11,10 +11,9 @@ const CALC_KEY = 'bazi.calculations';
 const read = (k, d) => { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } };
 const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* ignore */ } };
 
-const Cap = window.Capacitor;
-const isNative = !!Cap?.isNativePlatform?.();
-const platform = Cap?.getPlatform?.() || 'web';
-const Store = isNative ? Cap.registerPlugin('NativePurchases') : null;
+import { isNative, platform, plugin } from './cap.js';
+
+const Store = plugin('NativePurchases');
 
 let premium = read(KEY, false); // cached so the app works offline
 let price = FALLBACK_PRICE;

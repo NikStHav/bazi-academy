@@ -3,8 +3,9 @@ import { STEMS, BRANCHES, TEN_GODS } from './data.js';
 import { tenGod, pillarName } from './bazi.js';
 import { dayInfo, RATING_LABEL } from './almanac.js';
 
-const Cap = window.Capacitor;
-const LN = Cap?.isNativePlatform?.() ? Cap.registerPlugin('LocalNotifications') : null;
+import { plugin } from './cap.js';
+
+const LN = plugin('LocalNotifications');
 const KEY = 'bazi.notify';
 const BASE_ID = 7100;
 const DAYS = 30;

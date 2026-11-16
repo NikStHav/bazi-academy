@@ -31,6 +31,9 @@ jobs:
       - name: Unit tests (chart engine, quizzes)
         run: npm test
 
+      - name: Smoke test in a simulated phone WebView
+        run: npx playwright install --with-deps chromium && npm run smoke
+
       - name: Copy web assets into the Android project
         run: npx cap sync android
 

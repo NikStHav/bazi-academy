@@ -5,6 +5,7 @@ import { computeChart, tenGod, pillarName, pillarPinyin, pillarFromIndex, pillar
 import { CATEGORIES, makeRound } from './quiz.js';
 import { buildReading } from './reading.js';
 import * as premium from './premium.js';
+import { plugin } from './cap.js';
 import { dayInfo, findDays, ACTIVITIES, OFFICERS, RATING_LABEL } from './almanac.js';
 import { compare, idealMatch } from './compat.js';
 import * as notify from './notify.js';
@@ -682,11 +683,11 @@ premium.init();
 rescheduleTips(); // keep the rolling 30-day window of daily tips filled
 
 // ---------- Android hardware back button (Capacitor) ----------
-const CapApp = window.Capacitor?.Plugins?.App;
+const CapApp = plugin('App');
 if (CapApp) {
-  CapApp.addListener('backButton', ({ canGoBack }) => {
+  Promise.resolve().then(() => CapApp.addListener('backButton', ({ canGoBack }) => {
     if (!sheet.hidden) closeSheet();
     else if (canGoBack && (location.hash || '#/learn') !== '#/learn') history.back();
     else CapApp.exitApp();
-  });
+  })).catch(() => {});
 }

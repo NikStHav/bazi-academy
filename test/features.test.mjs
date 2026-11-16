@@ -57,3 +57,10 @@ test('ideal match: combining stem first, harmonious animals, clash to avoid', ()
   assert.ok(im.avoidAnimals.some((x) => x.branch === 2)); // 寅 clashes 申
   for (const a of im.bestAnimals) for (const y of a.years) assert.equal(((y - 4) % 12 + 12) % 12, a.branch);
 });
+
+import { readFileSync } from 'node:fs';
+test('vendored Capacitor core matches the installed @capacitor/core', () => {
+  const vendored = readFileSync(new URL('../www/js/vendor/capacitor.js', import.meta.url), 'utf8');
+  const installed = readFileSync(new URL('../node_modules/@capacitor/core/dist/capacitor.js', import.meta.url), 'utf8');
+  assert.equal(vendored, installed, 'run: npm run vendor');
+});

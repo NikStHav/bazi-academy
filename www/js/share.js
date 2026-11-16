@@ -1,6 +1,7 @@
 // Share a chart as a PNG image via the native share sheet (or Web Share / download in a browser).
 import { STEMS, BRANCHES, ELEMENTS, TEN_GODS } from './data.js';
 import { tenGod, PILLAR_KEYS, PILLAR_LABEL } from './bazi.js';
+import { plugin } from './cap.js';
 
 const COLORS = ['#3f9d5a', '#e0503c', '#c08a3e', '#8f9aa8', '#3b78c4'];
 const SERIF = '"Noto Serif CJK SC","Noto Serif SC","Songti SC","Source Han Serif SC","WenQuanYi Zen Hei",serif';
@@ -54,10 +55,9 @@ export function renderChartImage(chart, name) {
 export async function shareChart(chart, name) {
   const cv = renderChartImage(chart, name);
   const dataUrl = cv.toDataURL('image/png');
-  const Cap = window.Capacitor;
   const text = 'My BaZi chart – made with BaZi Academy';
-  if (Cap?.isNativePlatform?.()) {
-    const FS = Cap.registerPlugin('Filesystem'), Share = Cap.registerPlugin('Share');
+  const FS = plugin('Filesystem'), Share = plugin('Share');
+  if (FS && Share) {
     const { uri } = await FS.writeFile({ path: 'bazi-chart.png', data: dataUrl.split(',')[1], directory: 'CACHE' });
     await Share.share({ title: 'My BaZi chart', text, files: [uri], dialogTitle: 'Share your chart' }).catch(() => {});
     return 'shared';

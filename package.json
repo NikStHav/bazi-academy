@@ -2,7 +2,7 @@
   "name": "bazi-academy",
   "version": "1.0.0",
   "private": true,
-  "description": "Learn Chinese astrology (BaZi / Four Pillars of Destiny) – Android app",
+  "description": "Learn Chinese astrology (BaZi / Four Pillars of Destiny) \u2013 Android app",
   "type": "module",
   "scripts": {
     "test": "node --test test/*.test.mjs",
@@ -11,7 +11,9 @@
     "assets": "npx capacitor-assets generate --android --ios",
     "build:aab": "npx cap sync android && cd android && ./gradlew bundleRelease",
     "build:apk": "npx cap sync android && cd android && ./gradlew assembleDebug",
-    "build:ios-sim": "npx cap sync ios && xcodebuild -project ios/App/App.xcodeproj -scheme App -sdk iphonesimulator -configuration Debug CODE_SIGNING_ALLOWED=NO build"
+    "build:ios-sim": "npx cap sync ios && xcodebuild -project ios/App/App.xcodeproj -scheme App -sdk iphonesimulator -configuration Debug CODE_SIGNING_ALLOWED=NO build",
+    "smoke": "node test/smoke-native.cjs",
+    "vendor": "cp node_modules/@capacitor/core/dist/capacitor.js www/js/vendor/capacitor.js"
   },
   "dependencies": {
     "@capacitor/android": "^8.6.0",
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "@capacitor/assets": "^4.0.0",
-    "@capacitor/cli": "^8.6.0"
+    "@capacitor/cli": "^8.6.0",
+    "playwright": "1.63.0"
   }
 }
