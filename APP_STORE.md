@@ -31,7 +31,7 @@ App Store Connect → your app → **Monetization → In-App Purchases** → **+
 - Type: **Non-Consumable** · Reference name: `Premium` · Product ID: **`bazi_premium`** (must match `www/js/premium.js`)
 - Price: **€2.99** (choose the price point; Apple converts it for other countries)
 - Localization (English): Display name `BaZi Academy Premium`, description `All lessons, unlimited charts and detailed chart readings.`
-- Review information: a screenshot of the Premium screen (`store-screenshots/ios-6.9in/9-premium.png`) and the note: *“Unlocks lessons 8–14, unlimited chart calculations (5 are free) and the detailed chart reading.”*
+- Review information: a screenshot of the Premium screen (`store-screenshots/ios-6.9in/9-premium.png`) and the note: *“Unlocks lessons 8–14, unlimited chart calculations (5 are free), the detailed chart reading, the full compatibility analysis and the almanac planner.”*
 - Make sure *Family Sharing* is set as you like (on is customer-friendly).
 - When you submit the first app version, **add the in-app purchase to that version** (section *In-App Purchases and Subscriptions* on the version page). The first IAP must be reviewed together with an app version.
 
@@ -93,7 +93,7 @@ Upload 3–8 of them, starting with the chart (`2-chart.png`) and the reading (`
 
 In the version page, select the TestFlight build and add these **App Review notes**:
 
-> BaZi Academy is an educational app that teaches the classical Chinese system of BaZi (Four Pillars of Destiny) through 14 structured lessons with interactive diagrams, a quiz engine that generates practice questions, and an astronomical chart calculator (solar terms computed from the sun's ecliptic longitude). It is a learning tool, not a fortune-telling service. Lessons 1–7, the quizzes and 5 chart calculations are free; a one-time non-consumable purchase ("bazi_premium") unlocks lessons 8–14, unlimited charts and a detailed, rule-based chart interpretation. Restore Purchase is on the Premium and About screens. The app works fully offline, requires no account and collects no data.
+> BaZi Academy is an educational app that teaches the classical Chinese system of BaZi (Four Pillars of Destiny) through 14 structured lessons with interactive diagrams, a quiz engine that generates practice questions, and an astronomical chart calculator (solar terms computed from the sun's ecliptic longitude). It is a learning tool, not a fortune-telling service. Lessons 1–7, the quizzes and 5 chart calculations are free; a one-time non-consumable purchase ("bazi_premium") unlocks lessons 8–14, unlimited charts, a detailed rule-based chart interpretation, the full compatibility analysis (comparing two birth dates the user enters; there is no contact with or matching of other users) and an almanac planner. Optional daily tips are local notifications scheduled on the device; they contain no advertising. Restore Purchase is on the Premium and About screens. The app works fully offline, requires no account and collects no data.
 
 Review usually takes 1–3 days.
 

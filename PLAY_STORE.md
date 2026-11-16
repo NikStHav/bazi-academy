@@ -81,11 +81,17 @@ To test without being charged, add your Google account under *Settings → Licen
 > PRACTISE
 > Endless quiz rounds on elements, stems, branches, hidden stems and Ten Gods.
 >
-> TODAY
-> See today’s pillars, the next solar term and how the day relates to your own Day Master.
+> LOVE & COMPATIBILITY
+> Compare two charts – Day Masters, spouse palaces, zodiac animals and element balance – or quickly check someone new by date of birth. Discover your ideal match: which Day Masters, zodiac animals and elements suit you best.
+>
+> TODAY & ALMANAC
+> Today’s pillars, the Day Officer of the traditional Chinese almanac (Tong Shu) with what the day suits and what to avoid, your personal clash days, and an optional daily tip notification. Plan weddings, moves, contracts, launches and journeys on good days.
+>
+> SHARE
+> Share your chart as a beautiful image.
 >
 > FREE & PREMIUM
-> Lessons 1–7, all quizzes and 5 chart calculations are free. A one-time purchase unlocks all 14 lessons, unlimited charts and a detailed chart reading: your core nature, favourable elements, Ten Gods profile, career, relationships and current luck phase. No subscription.
+> Lessons 1–7, all quizzes and 5 chart calculations are free. A one-time purchase unlocks all 14 lessons, unlimited charts, the detailed chart reading (core nature, favourable elements, weak spots and how to balance them, career, relationships, current luck phase), the full compatibility analysis with your ideal match, and the almanac planner. No subscription.
 >
 > PRIVATE BY DESIGN
 > Works completely offline. No account, no ads, no tracking. Your birth data never leaves your phone.

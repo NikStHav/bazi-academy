@@ -14,6 +14,10 @@ An offline app for Android and iPhone for learning Chinese astrology according t
   - charts are saved on the device; you can mark one as "my chart"
 - **Quiz**: endless, generated questions in 5 categories plus a mixed mode, with best scores.
 - **Premium** (one-time in-app purchase, €2.99): lessons 8–14, unlimited chart calculations (5 are free) and a detailed chart reading. It uses StoreKit 2 / Google Play Billing on the device (`@capgo/native-purchases`), with no server. Product ID `bazi_premium`, set in `www/js/premium.js`.
+- **Compatibility**: compare two saved charts, quick check by date of birth, "your ideal match" (Day Masters, zodiac animals with birth years, elements). The full analysis is Premium.
+- **Almanac (Tong Shu)**: the 12 Day Officers, clash animal and personal clash days; the planner ("find a good day for…") is Premium.
+- **Daily tip**: optional local notifications, scheduled on the device for a rolling 30 days.
+- **Share**: the chart as a PNG image through the share sheet.
 - **Today**: today's pillars, the next solar term, and how today relates to your own Day Master.
 - Fully offline, no tracking, light and dark mode.
 
@@ -29,6 +33,10 @@ www/js/lessons.js  course content
 www/js/quiz.js     question generators
 www/js/reading.js  detailed chart reading (Premium)
 www/js/premium.js  in-app purchase, free limits
+www/js/compat.js   compatibility and ideal match
+www/js/almanac.js  Tong Shu day officers, good-day finder
+www/js/notify.js   daily tip notifications
+www/js/share.js    chart image rendering and sharing
 www/js/app.js      UI and router
 test/              node:test unit tests
 android/           Capacitor Android project

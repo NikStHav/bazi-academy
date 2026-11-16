@@ -81,6 +81,27 @@ const GOD_TEXT = {
   },
 };
 
+const LACK = [
+  { look: 'Plans may stay vague and it can be hard to start or grow new things; flexibility and long-term vision need effort.',
+    fix: 'Set clear goals, keep learning, spend time in nature and around plants, and stretch both body and plans.' },
+  { look: 'You may come across as reserved, hold back enthusiasm or find it hard to be visible and promote yourself.',
+    fix: 'Seek warmth and company, present your work, get daylight and movement, and allow yourself to show joy.' },
+  { look: 'Routines, savings and a sense of stability may feel elusive; it can be hard to stay grounded and consistent.',
+    fix: 'Build routines, keep a budget, cook and eat regularly, create a stable home base and keep promises small and steady.' },
+  { look: 'Decisions, boundaries and structure may be weak spots – saying no and finishing things can be difficult.',
+    fix: 'Work with lists and deadlines, declutter, practise saying no, and use breathing or martial-arts style discipline.' },
+  { look: 'Rest, reflection and going with the flow may be neglected; stress can build up and adaptability suffers.',
+    fix: 'Protect your sleep, read and reflect, journal, spend time near water and talk through feelings with people you trust.' },
+];
+const EXCESS = [
+  'too much Wood can mean stubbornness, impatience and taking on too many projects at once',
+  'too much Fire can mean impulsiveness, restlessness and burning out after intense phases',
+  'too much Earth can mean worrying, overthinking and getting stuck in comfort or inertia',
+  'too much Metal can mean rigidity, perfectionism and being overly critical of yourself and others',
+  'too much Water can mean indecision, drifting, anxiety or scattering your energy',
+];
+const PILLAR_AREA = { year: 'family background and society', month: 'career and parents', day: 'yourself and your relationship', hour: 'children, plans and later life' };
+
 const GROUPS = [
   { name: 'Companions', zh: '比劫', gods: ['F', 'RW'], rel: 0,
     many: 'Many Companions: a strong sense of self and many peers around you. Independence comes naturally; sharing and compromise are the lessons.',
@@ -98,6 +119,17 @@ const GROUPS = [
     many: 'Many Resource stars: you are thoughtful, well-supported and love to learn. Turn knowledge into action rather than endless preparation.',
     none: 'No Resource stars: you learn by doing and are used to fending for yourself. Mentors and rest are worth seeking out.' },
 ];
+
+/** Favourable / less favourable element indices (support-or-restrain method). */
+export function favourableElements(chart) {
+  const e = STEMS[chart.dayMaster].el;
+  const strong = chart.strength.ratio >= 45;
+  return {
+    strong,
+    favourable: (strong ? [e + 1, e + 2, e + 3] : [e - 1, e]).map((x) => mod(x, 5)),
+    unfavourable: (strong ? [e - 1, e] : [e + 2, e + 3]).map((x) => mod(x, 5)),
+  };
+}
 
 /** Returns { sections: [{ title, html }] } */
 export function buildReading(chart) {
@@ -118,9 +150,7 @@ export function buildReading(chart) {
       dead: ' You are shaped strongly by outside forces and grow stronger through the right support and timing.' }[phase.key]}</p>` });
 
   // 2. Strength & useful elements
-  const strong = chart.strength.ratio >= 45;
-  const favourable = strong ? [dmEl + 1, dmEl + 2, dmEl + 3] : [dmEl - 1, dmEl];
-  const unfavourable = strong ? [dmEl - 1, dmEl] : [dmEl + 2, dmEl + 3];
+  const { strong, favourable, unfavourable } = favourableElements(chart);
   const fav = favourable.map((x) => el(x));
   const mainFav = mod(favourable[0], 5);
   sections.push({ title: 'Balance & favourable elements', html: `
@@ -187,6 +217,32 @@ export function buildReading(chart) {
   } else {
     sections.push({ title: 'Your current phase', html: `<p>Your first luck pillar has not started yet. <b>${now}</b> is a <b>${TEN_GODS[yGod].name}</b> year for you.</p>` });
   }
+
+  // 7. Weak spots & balancing
+  const items = [];
+  const weakest = [...chart.elements].sort((a, b) => a.pct - b.pct)[0];
+  const lackEls = chart.elements.filter((e) => e.pct === 0).length ? chart.elements.filter((e) => e.pct === 0) : (weakest.pct < 10 ? [weakest] : []);
+  for (const e of lackEls) {
+    const isFav = favourable.includes(e.el);
+    items.push(`<li><b>${e.pct === 0 ? 'Missing' : 'Weak'} ${el(e.el).name} (${e.pct}%).</b> ${LACK[e.el].look}
+      ${isFav ? `<br><i>How to balance:</i> ${LACK[e.el].fix}` : `<br><i>Note:</i> ${el(e.el).name} is not among your favourable elements, so you don’t need to add a lot of it – just be aware of this blind spot.`}</li>`);
+  }
+  if (sorted[0].pct >= 35) {
+    const x = sorted[0].el, drain = mod(x + 1, 5), ctrl = mod(x + 3, 5);
+    items.push(`<li><b>Excess ${el(x).name} (${sorted[0].pct}%).</b> In daily life, ${EXCESS[x]}.
+      <br><i>How to balance:</i> let it flow out through <b>${el(drain).name}</b> (${ELEMENT_ADVICE[drain].activities}) or bring structure with <b>${el(ctrl).name}</b> (${ELEMENT_ADVICE[ctrl].activities}).</li>`);
+  }
+  if (strong) items.push(`<li><b>Strong Day Master.</b> Look out for stubbornness and wanting to do everything yourself. <i>Balance:</i> channel energy into output – projects, work, teaching – and accept being challenged.</li>`);
+  else items.push(`<li><b>Weaker Day Master.</b> Look out for over-extending yourself and taking on others’ burdens. <i>Balance:</i> rest, learning and supportive people come first; say no more often and build up step by step.</li>`);
+  for (const g of none) items.push(`<li>${g.none.replace(/^([^:]+):/, '<b>$1.</b>')}</li>`);
+  for (const x of chart.interactions.filter((i) => i.type === 'Clash')) {
+    const [p1, p2] = x.where.split(' & ').map((w) => w.toLowerCase());
+    items.push(`<li><b>Clash ${x.chars}</b> between ${PILLAR_AREA[p1]} and ${PILLAR_AREA[p2]}: these areas can pull in different directions. <i>Balance:</i> plan consciously for both and expect change rather than fighting it.</li>`);
+  }
+  sections.splice(sections.length - 1, 0, { title: 'Weak spots & how to balance them', html: `
+    <p>Every chart has imbalances – they are where growth happens. Based on your chart, watch out for:</p>
+    <ul class="weak-list">${items.join('')}</ul>
+    <p><b>In relationships</b>, people whose charts are rich in ${favourable.map((x) => el(x).name).join(' and ')} tend to balance you – see <i>Your ideal match</i> on the compatibility page.</p>` });
 
   sections.push({ title: 'A note', html: '<p class="small muted">This reading describes traditional BaZi tendencies to inspire reflection. It is not a prediction and no substitute for professional advice. Your choices shape your life.</p>' });
   return { sections };
