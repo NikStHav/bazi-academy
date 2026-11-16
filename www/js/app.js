@@ -6,6 +6,7 @@ import { CATEGORIES, makeRound } from './quiz.js';
 import { buildReading } from './reading.js';
 import * as premium from './premium.js';
 import { plugin } from './cap.js';
+import { BUILD } from './build-flags.js';
 import { dayInfo, findDays, ACTIVITIES, OFFICERS, RATING_LABEL } from './almanac.js';
 import { compare, idealMatch } from './compat.js';
 import * as notify from './notify.js';
@@ -543,11 +544,11 @@ const routes = {
       <h3>Disclaimer</h3>
       <p class="small">BaZi is a traditional cultural system. The content is for education and entertainment and is no substitute for professional medical, legal, financial or psychological advice.</p>
       <h3>Premium</h3>
-      ${premium.isTestBuild ? '<p class="tip">Test build: Premium is unlocked for testing. Store versions use the real purchase.</p>' : ''}
+      ${premium.isTestBuild ? `<p class="tip">Test build ${BUILD}: Premium is unlocked for testing. Store versions use the real purchase.</p>` : ''}
       <p class="small">${premium.isPremium() ? '✦ Premium is active – thank you for supporting the app!' : `Not purchased. <a href="#/premium">See Premium</a>`}</p>
       <button class="btn secondary block" id="restore" style="margin-bottom:10px">Restore purchase</button>
       <button class="btn secondary block" id="reset">Reset learning progress</button>
-      <p class="small muted" style="text-align:center">Version 1.0.0</p></div>`;
+      <p class="small muted" style="text-align:center">Version 1.0.0 · build ${BUILD}</p></div>`;
     $('#restore').onclick = async () => { const ok = await premium.restore(); alert(ok ? 'Premium restored.' : 'No previous purchase found for this store account.'); routes.about(); };
     $('#reset').onclick = () => { if (confirm('Reset lesson progress and quiz scores?')) { state.done = {}; state.best = {}; save('done'); save('best'); go('#/learn'); } };
   },
@@ -679,6 +680,7 @@ function router() {
 }
 window.addEventListener('hashchange', router);
 router();
+window.__baziStarted = true;
 premium.onChange(() => router());
 premium.init();
 rescheduleTips(); // keep the rolling 30-day window of daily tips filled

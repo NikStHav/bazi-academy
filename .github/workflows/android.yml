@@ -40,6 +40,7 @@ jobs:
       - name: Build debug APK (for testing on a phone, Premium unlocked)
         run: |
           sed -i 's/export const TEST_BUILD = false;/export const TEST_BUILD = true;/' www/js/build-flags.js
+          sed -i "s/export const BUILD = 'local';/export const BUILD = '${{ github.run_number }}';/" www/js/build-flags.js
           grep -q 'TEST_BUILD = true' www/js/build-flags.js
           npx cap sync android
           (cd android && ./gradlew assembleDebug --no-daemon)
