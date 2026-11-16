@@ -18,6 +18,13 @@ android {
         }
     }
     signingConfigs {
+        debug {
+            // Fixed, non-secret test key so every CI test build can update the previous one on a phone.
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
         release {
             // Upload key: provided via environment variables (CI) or android/keystore.properties (local, never commit it)
             def props = new Properties()

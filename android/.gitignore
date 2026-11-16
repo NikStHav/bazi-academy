@@ -104,3 +104,5 @@ app/src/main/res/xml/config.xml
 keystore.properties
 *.jks
 *.keystore
+# Non-secret fixed debug key for test builds (the release upload key is never committed)
+!app/debug.keystore
