@@ -88,6 +88,9 @@ To test without being charged, add your Google account under *Settings → Licen
 > TODAY & ALMANAC
 > Today’s pillars, the Day Officer of the traditional Chinese almanac (Tong Shu) with what the day suits and what to avoid, your personal clash days, and an optional daily tip notification. Plan weddings, moves, contracts, launches and journeys on good days.
 >
+> LUNAR CALENDAR
+> The Chinese lunar calendar with all 24 solar terms – equinoxes and solstices included – new and full moons with exact times, and traditional festivals such as Chinese New Year, Lantern, Dragon Boat and Mid-Autumn.
+>
 > YEAR AHEAD
 > Your annual pillar and all 12 months: themes, best months and activated stars.
 >

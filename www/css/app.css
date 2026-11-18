@@ -218,3 +218,23 @@ body.no-tabs main { padding-bottom: calc(32px + env(safe-area-inset-bottom)); }
 .about-link { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); margin-top: 6px; }
 .about-link > span:first-child { font-size: 22px; color: var(--muted); }
 .about-link .pb-go { margin-left: auto; font-size: 22px; color: var(--muted); }
+
+/* Lunar calendar */
+.tabs a .ti { font-size: 21px; }
+.cal-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; text-align: center; margin-bottom: 10px; }
+.cal-nav .icon-btn { font-size: 30px; text-decoration: none; padding: 4px 12px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.cal-w { text-align: center; font-size: 11px; color: var(--muted); padding: 4px 0; text-transform: uppercase; }
+.cal-cell { position: relative; aspect-ratio: 1 / 1.15; border: 0; border-radius: 8px; background: var(--surface-2); color: var(--text); font: inherit;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2px; cursor: pointer; min-width: 0; }
+.cal-cell.empty { background: none; cursor: default; }
+.cal-cell.today { outline: 2px solid var(--accent); outline-offset: -2px; }
+.cal-d { font-size: 15px; font-weight: 600; line-height: 1.2; }
+.cal-l { font-family: var(--serif); font-size: 10.5px; color: var(--muted); white-space: nowrap; overflow: hidden; max-width: 100%; }
+.cal-l.first { color: var(--accent); font-weight: 700; }
+.cal-cell.term .cal-l { color: var(--wood); font-weight: 600; }
+.cal-cell.fest { background: color-mix(in srgb, var(--fire) 14%, var(--surface-2)); }
+.cal-cell.fest .cal-l { color: var(--fire); font-weight: 700; }
+.cal-m { font-size: 9px; line-height: 1; margin-top: 1px; }
+.cal-ev { padding: 9px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.cal-ev:last-of-type { border-bottom: 0; }

@@ -1,5 +1,6 @@
 // BaZi (Four Pillars) calculation engine. Pure functions, no DOM.
 import { STEMS, BRANCHES, ELEMENTS, JIE_TERMS } from './data.js';
+import { apparentSunLongitude } from './vsop.js';
 
 const DEG = Math.PI / 180;
 const DAY_MS = 86400000;
@@ -8,15 +9,9 @@ const mod = (a, n) => ((a % n) + n) % n;
 export const jdFromMs = (ms) => ms / DAY_MS + 2440587.5;
 export const msFromJd = (jd) => (jd - 2440587.5) * DAY_MS;
 
-/** Apparent geocentric ecliptic longitude of the sun in degrees (Meeus, ch. 25, ~0.01°). */
+/** Apparent geocentric ecliptic longitude of the sun in degrees (VSOP87, ~1″). */
 export function sunLongitude(jd) {
-  const T = (jd + 69 / 86400 - 2451545) / 36525; // ~TT
-  const L0 = 280.46646 + 36000.76983 * T + 0.0003032 * T * T;
-  const M = (357.52911 + 35999.05029 * T - 0.0001537 * T * T) * DEG;
-  const C = (1.914602 - 0.004817 * T - 0.000014 * T * T) * Math.sin(M)
-    + (0.019993 - 0.000101 * T) * Math.sin(2 * M) + 0.000289 * Math.sin(3 * M);
-  const omega = (125.04 - 1934.136 * T) * DEG;
-  return mod(L0 + C - 0.00569 - 0.00478 * Math.sin(omega), 360);
+  return apparentSunLongitude(jd + 69 / 86400); // UT → TT (ΔT ≈ 69 s)
 }
 
 /** Find the instant (ms UTC) when the sun reaches `target` longitude, starting near `ms`. */
@@ -25,7 +20,7 @@ export function findSolarLongitude(target, ms) {
   for (let i = 0; i < 8; i++) {
     let diff = mod(target - sunLongitude(jd) + 180, 360) - 180;
     jd += diff / 0.98565;
-    if (Math.abs(diff) < 1e-6) break;
+    if (Math.abs(diff) < 1e-7) break;
   }
   return msFromJd(jd);
 }

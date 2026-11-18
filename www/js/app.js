@@ -12,6 +12,7 @@ import { dayInfo, findDays, ACTIVITIES, OFFICERS, RATING_LABEL } from './almanac
 import { compare, idealMatch } from './compat.js';
 import * as notify from './notify.js';
 import { shareChart, shareTextFile } from './share.js';
+import { dayEvents, lunarDate, moonAge, moonEvents, solarTermsBetween, MONTH_NAMES } from './lunar.js';
 import { findStars, STARS, pillarListText } from './shensha.js';
 import { yearForecast, baziYearOf } from './forecast.js';
 import { makeBackup, validateBackup, mergeBackup } from './backup.js';
@@ -461,7 +462,10 @@ const routes = {
     } else {
       personal = `<div class="card"><p>Save your own chart (★) in the <a href="#/chart">Chart</a> tab to see how today relates to your Day Master.</p></div>`;
     }
+    const lToday = lunarDate(now.getFullYear(), now.getMonth() + 1, now.getDate());
+    const mToday = moonAge(now.getTime());
     view.innerHTML = `<div class="card"><h2 style="margin-top:0">${now.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</h2>
+      <p style="margin-top:-4px"><a href="#/calendar" style="text-decoration:none"><span style="font-family:var(--serif)">${lToday ? lToday.label : ''}</span> · ${mToday.icon} ${mToday.illumination}% · Lunar calendar ›</a></p>
       ${pillarsHtml(pseudo, false).replace('Day Master', 'Day')}
       <p class="small muted">Ten Gods above are shown relative to today’s day stem.</p></div>
       ${personal}
@@ -675,6 +679,50 @@ const routes = {
     render(y0);
   },
 
+  calendar(ym) {
+    const now = new Date();
+    let [y, m] = (ym || '').split('-').map(Number);
+    if (!y || !m || m < 1 || m > 12) { y = now.getFullYear(); m = now.getMonth() + 1; }
+    const monthName = new Date(y, m - 1, 1).toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+    setTitle('Lunar calendar');
+    const mineE = state.charts.find((c) => c.mine);
+    const mine = mineE ? computeChart({ ...mineE.input, ziHourNextDay: state.settings.ziHourNextDay }) : null;
+    const days = new Date(y, m, 0).getDate();
+    const lead = (new Date(y, m - 1, 1).getDay() + 6) % 7; // Monday first
+    const ymKey = (yy, mm) => `${yy}-${String(mm).padStart(2, '0')}`;
+    const prev = m === 1 ? ymKey(y - 1, 12) : ymKey(y, m - 1), next = m === 12 ? ymKey(y + 1, 1) : ymKey(y, m + 1);
+    const isToday = (d) => y === now.getFullYear() && m === now.getMonth() + 1 && d === now.getDate();
+    const cells = [];
+    for (let i = 0; i < lead; i++) cells.push('<div class="cal-cell empty"></div>');
+    const list = [];
+    for (let d = 1; d <= days; d++) {
+      const e = dayEvents(y, m, d);
+      const l = e.lunar;
+      const lunarText = l ? (l.day === 1 ? `${l.leap ? '闰' : ''}${MONTH_NAMES[l.month - 1]}` : l.label.slice(-2)) : '';
+      const term = e.terms[0];
+      const moon = e.moon[0];
+      const fest = e.festivals[0];
+      cells.push(`<button class="cal-cell ${isToday(d) ? 'today' : ''} ${fest ? 'fest' : ''} ${term ? 'term' : ''}" data-d="${d}">
+        <span class="cal-d">${d}</span><span class="cal-l ${l && l.day === 1 ? 'first' : ''}">${fest ? fest.zh.slice(0, 3) : term ? term.zh : lunarText}</span>
+        ${moon ? `<span class="cal-m">${moon.type === 'full' ? '🌕' : '🌑'}</span>` : ''}</button>`);
+      for (const t of e.terms) list.push({ ms: t.ms, html: `<b>${t.zh} ${t.name}</b>${t.major ? ' ☀︎' : ''}`, d });
+      for (const mo of e.moon) list.push({ ms: mo.ms, html: `<b>${mo.type === 'full' ? '🌕 Full moon' : '🌑 New moon'}</b>`, d });
+      for (const f of e.festivals) list.push({ ms: new Date(y, m - 1, d, 0, 0).getTime(), html: `<b>🏮 ${f.zh} ${f.name}</b>`, d, allDay: true });
+    }
+    const first = lunarDate(y, m, 1), last = lunarDate(y, m, days);
+    const ly = (l) => `${pillarName(pillarFromIndex(l.year - 4))} ${BRANCHES[((l.year - 4) % 12 + 12) % 12].animal}`;
+    const fmtT = (ms) => new Date(ms).toLocaleString(undefined, { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+    view.innerHTML = `<div class="card">
+        <div class="cal-nav"><a class="icon-btn" href="#/calendar/${prev}" aria-label="Previous month">‹</a>
+          <div><h2 style="margin:0">${monthName}</h2><div class="small muted">${first.label.slice(0, -2)} – ${last.label.slice(0, -2)} · ${ly(first)}${ly(first) !== ly(last) ? ' / ' + ly(last) : ''} year</div></div>
+          <a class="icon-btn" href="#/calendar/${next}" aria-label="Next month">›</a></div>
+        <div class="cal-grid">${['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((w) => `<div class="cal-w">${w}</div>`).join('')}${cells.join('')}</div>
+        <p class="small muted" style="margin-bottom:0">Lunar dates as in China (UTC+8). Tap a day for details. ${y === now.getFullYear() && m === now.getMonth() + 1 ? '' : `<a href="#/calendar">Back to today</a>`}</p></div>
+      <div class="card"><h3 style="margin-top:0">This month</h3>${list.sort((a, b) => a.ms - b.ms).map((x) => `<div class="cal-ev" data-d="${x.d}">${x.html}<br><span class="small muted">${x.allDay ? new Date(x.ms).toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) : fmtT(x.ms)}</span></div>`).join('') || '<p class="muted">No events.</p>'}
+        <p class="small muted" style="margin-bottom:0">Times in your time zone.</p></div>`;
+    view.querySelectorAll('[data-d]').forEach((el) => el.addEventListener('click', () => openSheet(calendarDay(y, m, +el.dataset.d, mine))));
+  },
+
   premium() {
     setTitle('Premium', true);
     const has = premium.isPremium();
@@ -738,6 +786,26 @@ const routes = {
     $('#reset').onclick = () => { if (confirm('Reset lesson progress and quiz scores?')) { state.done = {}; state.best = {}; save('done'); save('best'); go('#/learn'); } };
   },
 };
+
+// ---------- lunar calendar ----------
+function calendarDay(y, m, d, mine) {
+  const e = dayEvents(y, m, d);
+  const a = dayInfo(y, m, d, mine);
+  const l = e.lunar;
+  const yp = pillarFromIndex(l.year - 4);
+  const moon = moonAge(new Date(y, m - 1, d, 12).getTime());
+  const fmtTime = (ms) => new Date(ms).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+  return `<h2 style="margin-top:0">${new Date(y, m - 1, d).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</h2>
+    <p style="font-size:20px;font-family:var(--serif);margin:4px 0">${pillarName(yp)}年 ${l.label}</p>
+    <p class="small muted">Lunar year of the ${BRANCHES[yp.branch].animal} · month ${l.leap ? 'leap ' : ''}${l.month}, day ${l.day} of ${l.monthLength}. BaZi years change at Li Chun instead.</p>
+    ${e.festivals.map((f) => `<p class="tip"><b>${f.zh} ${f.name}</b> – ${f.desc}</p>`).join('')}
+    ${e.terms.map((t) => `<p><b>☀︎ ${t.zh} ${t.name}</b> at ${fmtTime(t.ms)} – the sun reaches ${t.lon}°.${t.lon === 0 || t.lon === 180 ? ' Day and night are equal.' : t.lon === 90 ? ' The longest day of the year (northern hemisphere).' : t.lon === 270 ? ' The shortest day – Yin peaks and Yang is reborn.' : ''}${t.lon % 30 === 15 ? ' A new BaZi month begins.' : ''}</p>`).join('')}
+    ${e.moon.map((mo) => `<p><b>${mo.type === 'full' ? '🌕 Full moon' : '🌑 New moon'}</b> at ${fmtTime(mo.ms)}</p>`).join('')}
+    <p>${e.moon.some((x) => x.type === 'new') ? '🌑 New moon day – a new lunar month begins in China' : e.moon.some((x) => x.type === 'full') ? `🌕 Full moon day · ${Math.max(moon.illumination, 99)}% lit` : `${moon.icon} Moon ${moon.illumination}% lit · day ${Math.floor(moon.age) + 1} of the lunar cycle`}</p>
+    <p><b>Day pillar:</b> <span style="font-family:var(--serif)">${pillarName(a.pillars.day)}</span>${mine ? ` – a ${TEN_GODS[tenGod(mine.dayMaster, a.pillars.day.stem)].name} day for you` : ''}</p>
+    <p><span class="officer r-${a.officer.rating}">${a.officer.zh}</span> <b>${a.officer.name} day</b> – ${RATING_LABEL[a.officer.rating]}. Good for: ${a.officer.good.toLowerCase()}.</p>
+    ${a.personalClash.length ? `<p class="tip">This day ${a.personalClash.join(' and ')}.</p>` : ''}`;
+}
 
 // ---------- symbolic stars ----------
 function starsCard(c) {
