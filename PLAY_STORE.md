@@ -71,7 +71,8 @@ To test without being charged, add your Google account under *Settings → Licen
 >
 > CALCULATE
 > An accurate Four Pillars calculator based on the real solar terms:
-> • Year, month, day and hour pillars, with optional true solar time
+> • Year, month, day and hour pillars
+> • Birthplace search: time zone, historical daylight saving and true solar time set automatically
 > • Ten Gods for every stem and hidden stem
 > • Five Elements balance and Day Master strength
 > • Clashes, harmonies, punishments and harms

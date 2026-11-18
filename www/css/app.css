@@ -14,6 +14,7 @@
   }
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+[hidden] { display: none !important; }
 html, body { margin: 0; height: 100%; }
 body { background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   display: flex; flex-direction: column; overscroll-behavior-y: none; }
@@ -192,3 +193,12 @@ th, td { padding: 6px 4px; border-bottom: 1px solid var(--line); text-align: lef
 .stem-row { display: flex; flex-wrap: wrap; gap: 6px; }
 .stem-row .ch { min-width: 52px; }
 .weak-list li { margin-bottom: 10px; }
+
+/* Birthplace search */
+.place-wrap { position: relative; }
+.place-list { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 10; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 10px; box-shadow: var(--shadow); max-height: 280px; overflow-y: auto; }
+.place-opt { padding: 11px 12px; cursor: pointer; border-bottom: 1px solid var(--line); font-size: 15px; }
+.place-opt:last-child { border-bottom: 0; }
+.place-opt.on, .place-opt:hover { background: var(--surface-2); }
+.place-none { padding: 11px 12px; font-size: 14px; color: var(--muted); }

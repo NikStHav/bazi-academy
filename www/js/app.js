@@ -7,6 +7,7 @@ import { buildReading } from './reading.js';
 import * as premium from './premium.js';
 import { plugin } from './cap.js';
 import { BUILD } from './build-flags.js';
+import { searchPlaces, utcOffsetFor, countryName } from './places.js';
 import { dayInfo, findDays, ACTIVITIES, OFFICERS, RATING_LABEL } from './almanac.js';
 import { compare, idealMatch } from './compat.js';
 import * as notify from './notify.js';
@@ -180,7 +181,7 @@ function chartHtml(entry) {
   return `
   <div class="card">
     <h2 style="margin-bottom:2px">${esc(entry.name || 'Chart')} ${entry.mine ? '<span class="star" title="My chart">★</span>' : ''}</h2>
-    <div class="small muted">${i.year}-${pad(i.month)}-${pad(i.day)} ${i.timeUnknown ? '(time unknown)' : `${pad(i.hour)}:${pad(i.minute)}`} · UTC${i.tzOffset >= 0 ? '+' : ''}${i.tzOffset} · ${i.gender === 'f' ? 'female' : 'male'}
+    <div class="small muted">${i.place ? `${esc(i.place.name)}, ${esc(countryName(i.place.cc))} · ` : ''}${i.year}-${pad(i.month)}-${pad(i.day)} ${i.timeUnknown ? '(time unknown)' : `${pad(i.hour)}:${pad(i.minute)}`} · UTC${i.tzOffset >= 0 ? '+' : ''}${i.tzOffset} · ${i.gender === 'f' ? 'female' : 'male'}
       ${c.solarCorrectionMin ? ` · true solar time ${c.solarCorrectionMin > 0 ? '+' : ''}${c.solarCorrectionMin} min` : ''}</div>
     <div style="margin-top:12px">${pillarsHtml(c)}</div>
     <p class="small muted" style="margin-bottom:0">Tap any character for its meaning. Small letters under the branches are the Ten Gods of the hidden stems.</p>
@@ -283,11 +284,16 @@ const routes = {
         <label class="check"><input type="checkbox" id="f-unknown"> Birth time unknown (three pillars)</label>
         <label>Gender <span class="help">(determines the direction of the luck pillars)</span></label>
         <div class="seg" id="f-gender"><button type="button" data-v="f">Female</button><button type="button" data-v="m" class="on">Male</button></div>
+        <label for="f-place">Birthplace</label>
+        <div class="place-wrap"><input id="f-place" autocomplete="off" placeholder="Start typing a city, e.g. Bad Homburg" role="combobox" aria-expanded="false" aria-controls="f-place-list">
+          <div class="place-list" id="f-place-list" role="listbox" hidden></div></div>
+        <div class="help" id="f-place-help">Sets the time zone (incl. historical daylight saving) and true solar time automatically.</div>
+        <label class="check" id="f-solar-row" hidden><input type="checkbox" id="f-solar" checked> Use true solar time for the birthplace</label>
         <label for="f-tz">Time zone at birth</label>
         <select id="f-tz">${tzOpts.map((h) => `<option value="${h}">${tzLabel(h)}</option>`).join('')}</select>
-        <div class="help">Use the offset that applied at the birthplace on that date, including daylight saving time (e.g. Germany: winter UTC+1, summer UTC+2). Prefilled from this device.</div>
+        <div class="help" id="f-tz-help">Prefilled from this device. Choosing the birthplace sets it correctly for the birth date.</div>
         <details><summary>Advanced</summary>
-          <label for="f-lon">Birthplace longitude (optional, for true solar time)</label>
+          <label for="f-lon">Birthplace longitude (if your place isn’t in the list)</label>
           <input id="f-lon" type="number" step="0.01" min="-180" max="180" placeholder="e.g. 13.40 for Berlin, −74.00 for New York">
           <div class="help">East positive, west negative. Corrects the hour to the sun’s actual position.</div>
           <label class="check" style="margin-top:12px"><input type="checkbox" id="f-zi" ${state.settings.ziHourNextDay ? 'checked' : ''}> New day starts at 23:00 (Zi hour)</label>
@@ -305,13 +311,51 @@ const routes = {
 
     const f = $('#chart-form');
     let tzTouched = false;
+    let place = null;
+    const setTzValue = (off) => {
+      const sel = $('#f-tz');
+      if (![...sel.options].some((o) => Number(o.value) === off)) sel.add(new Option(tzLabel(off), String(off)));
+      sel.value = [...sel.options].find((o) => Number(o.value) === off).value;
+    };
     const setTz = () => {
-      if (tzTouched) return;
       const [y, m, d] = ($('#f-date').value || '1990-06-15').split('-').map(Number);
       const [hh, mm] = ($('#f-time').value || '12:00').split(':').map(Number);
-      const off = -new Date(y, m - 1, d, hh, mm).getTimezoneOffset() / 60;
-      $('#f-tz').value = String(off);
+      if (place) {
+        const off = utcOffsetFor(place.tz, y, m, d, hh, mm);
+        if (off !== null) { setTzValue(off); $('#f-tz-help').textContent = `Set from ${place.name} (${place.tz}) for this date${off !== utcOffsetFor(place.tz, y, 1, 15) ? ' – daylight saving time' : ''}.`; return; }
+      }
+      if (tzTouched) return;
+      setTzValue(-new Date(y, m - 1, d, hh, mm).getTimezoneOffset() / 60);
     };
+    const list = $('#f-place-list'), placeIn = $('#f-place');
+    let results = [], active = -1, searchSeq = 0;
+    const closeList = () => { list.hidden = true; placeIn.setAttribute('aria-expanded', 'false'); active = -1; };
+    const choose = (c) => {
+      place = c; placeIn.value = `${c.name}, ${countryName(c.cc)}`; closeList();
+      $('#f-lon').value = c.lon.toFixed(2); $('#f-solar-row').hidden = false; $('#f-solar').checked = true;
+      $('#f-place-help').textContent = `${c.lat.toFixed(2)}°, ${c.lon.toFixed(2)}° · time zone ${c.tz}`;
+      setTz();
+    };
+    placeIn.addEventListener('input', async () => {
+      place = null; $('#f-solar-row').hidden = true; $('#f-lon').value = ''; $('#f-tz-help').textContent = 'Prefilled from this device. Choosing the birthplace sets it correctly for the birth date.';
+      const seq = ++searchSeq;
+      const found = await searchPlaces(placeIn.value);
+      if (seq !== searchSeq) return; // a newer keystroke is already being handled
+      results = found; active = -1;
+      if (!found.length) { list.innerHTML = placeIn.value.trim().length >= 2 ? '<div class="place-none">No match – try another spelling or enter the longitude under Advanced.</div>' : ''; list.hidden = !list.innerHTML; return; }
+      list.innerHTML = found.map((c, i) => `<div class="place-opt" role="option" data-i="${i}"><b>${esc(c.name)}</b> <span class="muted">${esc(countryName(c.cc))}</span></div>`).join('');
+      list.hidden = false; placeIn.setAttribute('aria-expanded', 'true');
+    });
+    list.addEventListener('mousedown', (e) => e.preventDefault()); // keep focus so the click registers
+    list.addEventListener('click', (e) => { const o = e.target.closest('.place-opt'); if (o) choose(results[+o.dataset.i]); });
+    placeIn.addEventListener('keydown', (e) => {
+      if (list.hidden || !results.length) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); active = (active + (e.key === 'ArrowDown' ? 1 : -1) + results.length) % results.length;
+        list.querySelectorAll('.place-opt').forEach((o, i) => o.classList.toggle('on', i === active)); }
+      else if (e.key === 'Enter') { e.preventDefault(); choose(results[Math.max(0, active)]); }
+      else if (e.key === 'Escape') closeList();
+    });
+    placeIn.addEventListener('blur', () => setTimeout(closeList, 150));
     setTz();
     $('#f-tz').addEventListener('change', () => { tzTouched = true; });
     $('#f-date').addEventListener('change', setTz);
@@ -327,10 +371,11 @@ const routes = {
       if (!premium.canCalculate()) { go('#/premium'); return; }
       premium.countCalculation();
       const [hour, minute] = ($('#f-time').value || '12:00').split(':').map(Number);
-      const lon = $('#f-lon').value.trim();
+      const lon = place && !$('#f-solar').checked ? '' : $('#f-lon').value.trim();
       state.settings.ziHourNextDay = $('#f-zi').checked; save('settings');
       const input = { year, month, day, hour, minute, tzOffset: Number($('#f-tz').value), timeUnknown: $('#f-unknown').checked,
-        gender: $('#f-gender .on').dataset.v, longitude: lon === '' ? null : Number(lon) };
+        gender: $('#f-gender .on').dataset.v, longitude: lon === '' ? null : Number(lon),
+        place: place ? { name: place.name, cc: place.cc, lat: place.lat, lon: place.lon, tz: place.tz } : null };
       const id = Date.now().toString(36);
       const mine = $('#f-mine').checked;
       if (mine) state.charts.forEach((c) => { c.mine = false; });
@@ -539,6 +584,8 @@ const routes = {
       <p>An introduction to BaZi (八字), the Four Pillars of Destiny: Yin and Yang, the Five Elements, the Heavenly Stems and Earthly Branches, the Ten Gods and luck pillars, with a chart calculator and quizzes.</p>
       <h3>How charts are calculated</h3>
       <p class="small">The year and month pillars follow the 24 solar terms (the year starts at Li Chun), calculated from the sun’s apparent longitude. Day pillars follow the continuous 60-day cycle. Hour pillars follow the five-rats rule. True solar time is optional.</p>
+      <h3>Birthplaces</h3>
+      <p class="small">City data © <a href="https://www.geonames.org" rel="noopener">GeoNames</a>, licensed under CC BY 4.0. Historical time zones come from your device.</p>
       <h3>Privacy</h3>
       <p class="small">The app works offline. Birth data, charts and progress are stored only on your device. Nothing is sent to a server, and there is no tracking or advertising. Purchases are handled entirely by Apple or Google.</p>
       <h3>Disclaimer</h3>

@@ -6,6 +6,7 @@ An offline app for Android and iPhone for learning Chinese astrology according t
 
 - **Learn**: 14 lessons from the basics to analysis: Yin/Yang, the Five Elements, the 10 Heavenly Stems, the 12 Earthly Branches, the 60 Jiazi cycle, building the pillars, hidden stems, the Day Master, the Ten Gods, seasonal strength, branch interactions, luck pillars, and the useful god. Lessons include interactive diagrams and a short quiz each.
 - **Chart**: a full Four Pillars calculator:
+  - birthplace search (offline list of 25,000+ cities, GeoNames CC BY 4.0) that sets the historical time zone, daylight saving time and true solar time automatically
   - year and month pillars from the real solar terms (sun longitude, Li Chun as the start of the year)
   - day and hour pillars, with an optional late Zi hour rule and optional true solar time (birthplace longitude)
   - Ten Gods for every stem and hidden stem, element balance, Day Master strength and season phase
@@ -33,6 +34,8 @@ www/js/lessons.js  course content
 www/js/quiz.js     question generators
 www/js/reading.js  detailed chart reading (Premium)
 www/js/premium.js  in-app purchase, free limits
+www/js/places.js   birthplace search, historical UTC offsets (Intl)
+www/js/cities-data.js  generated city list: node tools/build-cities.cjs <dir with all-the-cities + tz-lookup>
 www/js/compat.js   compatibility and ideal match
 www/js/almanac.js  Tong Shu day officers, good-day finder
 www/js/notify.js   daily tip notifications
