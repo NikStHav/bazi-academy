@@ -340,7 +340,7 @@ const routes = {
       <div class="list">${LESSONS.map((l, i) => `<a class="card lesson-item ${state.done[l.id] ? 'done' : ''} ${premium.lessonIsLocked(i) ? 'locked' : ''}" href="#/lesson/${l.id}">
         <span class="badge">${premium.lessonIsLocked(i) ? '🔒' : state.done[l.id] ? '✓' : l.zh.slice(0, 2)}</span>
         <span><span class="lvl">${i + 1} · ${l.level}${i >= premium.FREE_LESSONS ? ' · Premium' : ''}</span><div class="t">${l.title} <span class="muted" style="font-family:var(--serif);font-weight:400">${l.zh}</span></div><div class="s">${l.summary}</div></span></a>`).join('')}</div>
-      <p class="small muted" style="text-align:center;margin-top:20px"><a href="#/about">About & privacy</a></p>`;
+      <a class="card about-link" href="#/about"><span>ⓘ</span><span><b>About, privacy & backup</b><br><span class="small muted">Backup and new phone, restore purchase, settings</span></span><span class="pb-go">›</span></a>`;
   },
 
   lesson(id) {
