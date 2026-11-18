@@ -1,0 +1,1296 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//BaZi Academy//Lunar Calendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:BaZi Academy – Chinese festivals
+X-PUBLISHED-TTL:P7D
+REFRESH-INTERVAL;VALUE=DURATION:P7D
+BEGIN:VEVENT
+UID:fest-20250107@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20250107
+DTEND;VALUE=DATE:20250108
+SUMMARY:🏮 Laba Festival 腊八节
+DESCRIPTION:Laba congee is eaten – the start of the New Year preparations
+ .
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20250128@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20250128
+DTEND;VALUE=DATE:20250129
+SUMMARY:🏮 Lunar New Year’s Eve 除夕
+DESCRIPTION:The reunion dinner on the last evening of the lunar year.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20250129@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20250129
+DTEND;VALUE=DATE:20250130
+SUMMARY:🏮 Chinese New Year 春节
+DESCRIPTION:The Spring Festival – the start of the lunar year\, celebrate
+ d with family\, red decorations and fireworks.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20250212@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20250212
+DTEND;VALUE=DATE:20250213
+SUMMARY:🏮 Lantern Festival 元宵节
+DESCRIPTION:The first full moon of the year – lanterns\, riddles and swee
+ t rice balls (tangyuan).
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20250301@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20250301
+DTEND;VALUE=DATE:20250302
+SUMMARY:🏮 Dragon Raises its Head 龙抬头
+DESCRIPTION:The dragon wakes – a traditional day for a haircut and for we
+ lcoming spring rains.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20250404@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20250404
+DTEND;VALUE=DATE:20250405
+SUMMARY:🏮 Qingming Festival 清明节
+DESCRIPTION:Tomb-Sweeping Day – families visit and tend their ancestors
+ ’ graves.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20250531@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20250531
+DTEND;VALUE=DATE:20250601
+SUMMARY:🏮 Dragon Boat Festival 端午节
+DESCRIPTION:Dragon boat races and zongzi rice dumplings\, in memory of the 
+ poet Qu Yuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20250829@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20250829
+DTEND;VALUE=DATE:20250830
+SUMMARY:🏮 Qixi Festival 七夕
+DESCRIPTION:The meeting of the Cowherd and the Weaver Girl – the Chinese 
+ festival of love.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20250906@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20250906
+DTEND;VALUE=DATE:20250907
+SUMMARY:🏮 Ghost Festival 中元节
+DESCRIPTION:A day to honour ancestors and appease wandering spirits.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20251006@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20251006
+DTEND;VALUE=DATE:20251007
+SUMMARY:🏮 Mid-Autumn Festival 中秋节
+DESCRIPTION:The harvest full moon – family reunions and mooncakes.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20251029@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20251029
+DTEND;VALUE=DATE:20251030
+SUMMARY:🏮 Double Ninth Festival 重阳节
+DESCRIPTION:A day for climbing heights\, chrysanthemums and honouring the e
+ lderly.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20251221@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20251221
+DTEND;VALUE=DATE:20251222
+SUMMARY:🏮 Winter Solstice Festival 冬至
+DESCRIPTION:Dongzhi – the turning point of Yin and Yang\, celebrated with
+  dumplings or tangyuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20260126@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20260126
+DTEND;VALUE=DATE:20260127
+SUMMARY:🏮 Laba Festival 腊八节
+DESCRIPTION:Laba congee is eaten – the start of the New Year preparations
+ .
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20260216@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20260216
+DTEND;VALUE=DATE:20260217
+SUMMARY:🏮 Lunar New Year’s Eve 除夕
+DESCRIPTION:The reunion dinner on the last evening of the lunar year.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20260217@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20260217
+DTEND;VALUE=DATE:20260218
+SUMMARY:🏮 Chinese New Year 春节
+DESCRIPTION:The Spring Festival – the start of the lunar year\, celebrate
+ d with family\, red decorations and fireworks.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20260303@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20260303
+DTEND;VALUE=DATE:20260304
+SUMMARY:🏮 Lantern Festival 元宵节
+DESCRIPTION:The first full moon of the year – lanterns\, riddles and swee
+ t rice balls (tangyuan).
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20260320@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20260320
+DTEND;VALUE=DATE:20260321
+SUMMARY:🏮 Dragon Raises its Head 龙抬头
+DESCRIPTION:The dragon wakes – a traditional day for a haircut and for we
+ lcoming spring rains.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20260404@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20260404
+DTEND;VALUE=DATE:20260405
+SUMMARY:🏮 Qingming Festival 清明节
+DESCRIPTION:Tomb-Sweeping Day – families visit and tend their ancestors
+ ’ graves.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20260619@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20260619
+DTEND;VALUE=DATE:20260620
+SUMMARY:🏮 Dragon Boat Festival 端午节
+DESCRIPTION:Dragon boat races and zongzi rice dumplings\, in memory of the 
+ poet Qu Yuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20260819@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20260819
+DTEND;VALUE=DATE:20260820
+SUMMARY:🏮 Qixi Festival 七夕
+DESCRIPTION:The meeting of the Cowherd and the Weaver Girl – the Chinese 
+ festival of love.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20260827@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20260827
+DTEND;VALUE=DATE:20260828
+SUMMARY:🏮 Ghost Festival 中元节
+DESCRIPTION:A day to honour ancestors and appease wandering spirits.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20260925@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20260925
+DTEND;VALUE=DATE:20260926
+SUMMARY:🏮 Mid-Autumn Festival 中秋节
+DESCRIPTION:The harvest full moon – family reunions and mooncakes.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20261018@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20261018
+DTEND;VALUE=DATE:20261019
+SUMMARY:🏮 Double Ninth Festival 重阳节
+DESCRIPTION:A day for climbing heights\, chrysanthemums and honouring the e
+ lderly.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20261221@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20261221
+DTEND;VALUE=DATE:20261222
+SUMMARY:🏮 Winter Solstice Festival 冬至
+DESCRIPTION:Dongzhi – the turning point of Yin and Yang\, celebrated with
+  dumplings or tangyuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20270115@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+SUMMARY:🏮 Laba Festival 腊八节
+DESCRIPTION:Laba congee is eaten – the start of the New Year preparations
+ .
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20270205@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20270205
+DTEND;VALUE=DATE:20270206
+SUMMARY:🏮 Lunar New Year’s Eve 除夕
+DESCRIPTION:The reunion dinner on the last evening of the lunar year.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20270206@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20270206
+DTEND;VALUE=DATE:20270207
+SUMMARY:🏮 Chinese New Year 春节
+DESCRIPTION:The Spring Festival – the start of the lunar year\, celebrate
+ d with family\, red decorations and fireworks.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20270220@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20270220
+DTEND;VALUE=DATE:20270221
+SUMMARY:🏮 Lantern Festival 元宵节
+DESCRIPTION:The first full moon of the year – lanterns\, riddles and swee
+ t rice balls (tangyuan).
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20270309@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20270309
+DTEND;VALUE=DATE:20270310
+SUMMARY:🏮 Dragon Raises its Head 龙抬头
+DESCRIPTION:The dragon wakes – a traditional day for a haircut and for we
+ lcoming spring rains.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20270405@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20270405
+DTEND;VALUE=DATE:20270406
+SUMMARY:🏮 Qingming Festival 清明节
+DESCRIPTION:Tomb-Sweeping Day – families visit and tend their ancestors
+ ’ graves.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20270609@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20270609
+DTEND;VALUE=DATE:20270610
+SUMMARY:🏮 Dragon Boat Festival 端午节
+DESCRIPTION:Dragon boat races and zongzi rice dumplings\, in memory of the 
+ poet Qu Yuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20270808@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20270808
+DTEND;VALUE=DATE:20270809
+SUMMARY:🏮 Qixi Festival 七夕
+DESCRIPTION:The meeting of the Cowherd and the Weaver Girl – the Chinese 
+ festival of love.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20270816@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20270816
+DTEND;VALUE=DATE:20270817
+SUMMARY:🏮 Ghost Festival 中元节
+DESCRIPTION:A day to honour ancestors and appease wandering spirits.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20270915@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20270915
+DTEND;VALUE=DATE:20270916
+SUMMARY:🏮 Mid-Autumn Festival 中秋节
+DESCRIPTION:The harvest full moon – family reunions and mooncakes.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20271008@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20271008
+DTEND;VALUE=DATE:20271009
+SUMMARY:🏮 Double Ninth Festival 重阳节
+DESCRIPTION:A day for climbing heights\, chrysanthemums and honouring the e
+ lderly.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20271222@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20271222
+DTEND;VALUE=DATE:20271223
+SUMMARY:🏮 Winter Solstice Festival 冬至
+DESCRIPTION:Dongzhi – the turning point of Yin and Yang\, celebrated with
+  dumplings or tangyuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20280104@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20280104
+DTEND;VALUE=DATE:20280105
+SUMMARY:🏮 Laba Festival 腊八节
+DESCRIPTION:Laba congee is eaten – the start of the New Year preparations
+ .
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20280125@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20280125
+DTEND;VALUE=DATE:20280126
+SUMMARY:🏮 Lunar New Year’s Eve 除夕
+DESCRIPTION:The reunion dinner on the last evening of the lunar year.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20280126@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20280126
+DTEND;VALUE=DATE:20280127
+SUMMARY:🏮 Chinese New Year 春节
+DESCRIPTION:The Spring Festival – the start of the lunar year\, celebrate
+ d with family\, red decorations and fireworks.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20280209@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20280209
+DTEND;VALUE=DATE:20280210
+SUMMARY:🏮 Lantern Festival 元宵节
+DESCRIPTION:The first full moon of the year – lanterns\, riddles and swee
+ t rice balls (tangyuan).
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20280226@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20280226
+DTEND;VALUE=DATE:20280227
+SUMMARY:🏮 Dragon Raises its Head 龙抬头
+DESCRIPTION:The dragon wakes – a traditional day for a haircut and for we
+ lcoming spring rains.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20280404@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20280404
+DTEND;VALUE=DATE:20280405
+SUMMARY:🏮 Qingming Festival 清明节
+DESCRIPTION:Tomb-Sweeping Day – families visit and tend their ancestors
+ ’ graves.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20280528@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20280528
+DTEND;VALUE=DATE:20280529
+SUMMARY:🏮 Dragon Boat Festival 端午节
+DESCRIPTION:Dragon boat races and zongzi rice dumplings\, in memory of the 
+ poet Qu Yuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20280826@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20280826
+DTEND;VALUE=DATE:20280827
+SUMMARY:🏮 Qixi Festival 七夕
+DESCRIPTION:The meeting of the Cowherd and the Weaver Girl – the Chinese 
+ festival of love.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20280903@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20280903
+DTEND;VALUE=DATE:20280904
+SUMMARY:🏮 Ghost Festival 中元节
+DESCRIPTION:A day to honour ancestors and appease wandering spirits.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20281003@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20281003
+DTEND;VALUE=DATE:20281004
+SUMMARY:🏮 Mid-Autumn Festival 中秋节
+DESCRIPTION:The harvest full moon – family reunions and mooncakes.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20281026@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20281026
+DTEND;VALUE=DATE:20281027
+SUMMARY:🏮 Double Ninth Festival 重阳节
+DESCRIPTION:A day for climbing heights\, chrysanthemums and honouring the e
+ lderly.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20281221@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20281221
+DTEND;VALUE=DATE:20281222
+SUMMARY:🏮 Winter Solstice Festival 冬至
+DESCRIPTION:Dongzhi – the turning point of Yin and Yang\, celebrated with
+  dumplings or tangyuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20290122@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20290122
+DTEND;VALUE=DATE:20290123
+SUMMARY:🏮 Laba Festival 腊八节
+DESCRIPTION:Laba congee is eaten – the start of the New Year preparations
+ .
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20290212@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20290212
+DTEND;VALUE=DATE:20290213
+SUMMARY:🏮 Lunar New Year’s Eve 除夕
+DESCRIPTION:The reunion dinner on the last evening of the lunar year.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20290213@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20290213
+DTEND;VALUE=DATE:20290214
+SUMMARY:🏮 Chinese New Year 春节
+DESCRIPTION:The Spring Festival – the start of the lunar year\, celebrate
+ d with family\, red decorations and fireworks.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20290227@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20290227
+DTEND;VALUE=DATE:20290228
+SUMMARY:🏮 Lantern Festival 元宵节
+DESCRIPTION:The first full moon of the year – lanterns\, riddles and swee
+ t rice balls (tangyuan).
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20290316@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20290316
+DTEND;VALUE=DATE:20290317
+SUMMARY:🏮 Dragon Raises its Head 龙抬头
+DESCRIPTION:The dragon wakes – a traditional day for a haircut and for we
+ lcoming spring rains.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20290404@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20290404
+DTEND;VALUE=DATE:20290405
+SUMMARY:🏮 Qingming Festival 清明节
+DESCRIPTION:Tomb-Sweeping Day – families visit and tend their ancestors
+ ’ graves.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20290616@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20290616
+DTEND;VALUE=DATE:20290617
+SUMMARY:🏮 Dragon Boat Festival 端午节
+DESCRIPTION:Dragon boat races and zongzi rice dumplings\, in memory of the 
+ poet Qu Yuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20290816@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20290816
+DTEND;VALUE=DATE:20290817
+SUMMARY:🏮 Qixi Festival 七夕
+DESCRIPTION:The meeting of the Cowherd and the Weaver Girl – the Chinese 
+ festival of love.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20290824@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20290824
+DTEND;VALUE=DATE:20290825
+SUMMARY:🏮 Ghost Festival 中元节
+DESCRIPTION:A day to honour ancestors and appease wandering spirits.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20290922@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20290922
+DTEND;VALUE=DATE:20290923
+SUMMARY:🏮 Mid-Autumn Festival 中秋节
+DESCRIPTION:The harvest full moon – family reunions and mooncakes.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20291016@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20291016
+DTEND;VALUE=DATE:20291017
+SUMMARY:🏮 Double Ninth Festival 重阳节
+DESCRIPTION:A day for climbing heights\, chrysanthemums and honouring the e
+ lderly.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20291221@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20291221
+DTEND;VALUE=DATE:20291222
+SUMMARY:🏮 Winter Solstice Festival 冬至
+DESCRIPTION:Dongzhi – the turning point of Yin and Yang\, celebrated with
+  dumplings or tangyuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20300111@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20300111
+DTEND;VALUE=DATE:20300112
+SUMMARY:🏮 Laba Festival 腊八节
+DESCRIPTION:Laba congee is eaten – the start of the New Year preparations
+ .
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20300202@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20300202
+DTEND;VALUE=DATE:20300203
+SUMMARY:🏮 Lunar New Year’s Eve 除夕
+DESCRIPTION:The reunion dinner on the last evening of the lunar year.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20300203@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20300203
+DTEND;VALUE=DATE:20300204
+SUMMARY:🏮 Chinese New Year 春节
+DESCRIPTION:The Spring Festival – the start of the lunar year\, celebrate
+ d with family\, red decorations and fireworks.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20300217@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20300217
+DTEND;VALUE=DATE:20300218
+SUMMARY:🏮 Lantern Festival 元宵节
+DESCRIPTION:The first full moon of the year – lanterns\, riddles and swee
+ t rice balls (tangyuan).
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20300305@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20300305
+DTEND;VALUE=DATE:20300306
+SUMMARY:🏮 Dragon Raises its Head 龙抬头
+DESCRIPTION:The dragon wakes – a traditional day for a haircut and for we
+ lcoming spring rains.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20300404@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20300404
+DTEND;VALUE=DATE:20300405
+SUMMARY:🏮 Qingming Festival 清明节
+DESCRIPTION:Tomb-Sweeping Day – families visit and tend their ancestors
+ ’ graves.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20300605@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20300605
+DTEND;VALUE=DATE:20300606
+SUMMARY:🏮 Dragon Boat Festival 端午节
+DESCRIPTION:Dragon boat races and zongzi rice dumplings\, in memory of the 
+ poet Qu Yuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20300805@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20300805
+DTEND;VALUE=DATE:20300806
+SUMMARY:🏮 Qixi Festival 七夕
+DESCRIPTION:The meeting of the Cowherd and the Weaver Girl – the Chinese 
+ festival of love.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20300813@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20300813
+DTEND;VALUE=DATE:20300814
+SUMMARY:🏮 Ghost Festival 中元节
+DESCRIPTION:A day to honour ancestors and appease wandering spirits.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20300912@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20300912
+DTEND;VALUE=DATE:20300913
+SUMMARY:🏮 Mid-Autumn Festival 中秋节
+DESCRIPTION:The harvest full moon – family reunions and mooncakes.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20301005@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20301005
+DTEND;VALUE=DATE:20301006
+SUMMARY:🏮 Double Ninth Festival 重阳节
+DESCRIPTION:A day for climbing heights\, chrysanthemums and honouring the e
+ lderly.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20301221@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20301221
+DTEND;VALUE=DATE:20301222
+SUMMARY:🏮 Winter Solstice Festival 冬至
+DESCRIPTION:Dongzhi – the turning point of Yin and Yang\, celebrated with
+  dumplings or tangyuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20310101@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20310101
+DTEND;VALUE=DATE:20310102
+SUMMARY:🏮 Laba Festival 腊八节
+DESCRIPTION:Laba congee is eaten – the start of the New Year preparations
+ .
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20310122@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20310122
+DTEND;VALUE=DATE:20310123
+SUMMARY:🏮 Lunar New Year’s Eve 除夕
+DESCRIPTION:The reunion dinner on the last evening of the lunar year.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20310123@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20310123
+DTEND;VALUE=DATE:20310124
+SUMMARY:🏮 Chinese New Year 春节
+DESCRIPTION:The Spring Festival – the start of the lunar year\, celebrate
+ d with family\, red decorations and fireworks.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20310206@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20310206
+DTEND;VALUE=DATE:20310207
+SUMMARY:🏮 Lantern Festival 元宵节
+DESCRIPTION:The first full moon of the year – lanterns\, riddles and swee
+ t rice balls (tangyuan).
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20310222@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20310222
+DTEND;VALUE=DATE:20310223
+SUMMARY:🏮 Dragon Raises its Head 龙抬头
+DESCRIPTION:The dragon wakes – a traditional day for a haircut and for we
+ lcoming spring rains.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20310404@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20310404
+DTEND;VALUE=DATE:20310405
+SUMMARY:🏮 Qingming Festival 清明节
+DESCRIPTION:Tomb-Sweeping Day – families visit and tend their ancestors
+ ’ graves.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20310624@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20310624
+DTEND;VALUE=DATE:20310625
+SUMMARY:🏮 Dragon Boat Festival 端午节
+DESCRIPTION:Dragon boat races and zongzi rice dumplings\, in memory of the 
+ poet Qu Yuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20310824@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20310824
+DTEND;VALUE=DATE:20310825
+SUMMARY:🏮 Qixi Festival 七夕
+DESCRIPTION:The meeting of the Cowherd and the Weaver Girl – the Chinese 
+ festival of love.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20310901@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20310901
+DTEND;VALUE=DATE:20310902
+SUMMARY:🏮 Ghost Festival 中元节
+DESCRIPTION:A day to honour ancestors and appease wandering spirits.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20311001@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20311001
+DTEND;VALUE=DATE:20311002
+SUMMARY:🏮 Mid-Autumn Festival 中秋节
+DESCRIPTION:The harvest full moon – family reunions and mooncakes.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20311024@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20311024
+DTEND;VALUE=DATE:20311025
+SUMMARY:🏮 Double Ninth Festival 重阳节
+DESCRIPTION:A day for climbing heights\, chrysanthemums and honouring the e
+ lderly.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20311222@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20311222
+DTEND;VALUE=DATE:20311223
+SUMMARY:🏮 Winter Solstice Festival 冬至
+DESCRIPTION:Dongzhi – the turning point of Yin and Yang\, celebrated with
+  dumplings or tangyuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20320120@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20320120
+DTEND;VALUE=DATE:20320121
+SUMMARY:🏮 Laba Festival 腊八节
+DESCRIPTION:Laba congee is eaten – the start of the New Year preparations
+ .
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20320210@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20320210
+DTEND;VALUE=DATE:20320211
+SUMMARY:🏮 Lunar New Year’s Eve 除夕
+DESCRIPTION:The reunion dinner on the last evening of the lunar year.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20320211@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20320211
+DTEND;VALUE=DATE:20320212
+SUMMARY:🏮 Chinese New Year 春节
+DESCRIPTION:The Spring Festival – the start of the lunar year\, celebrate
+ d with family\, red decorations and fireworks.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20320225@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20320225
+DTEND;VALUE=DATE:20320226
+SUMMARY:🏮 Lantern Festival 元宵节
+DESCRIPTION:The first full moon of the year – lanterns\, riddles and swee
+ t rice balls (tangyuan).
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20320313@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20320313
+DTEND;VALUE=DATE:20320314
+SUMMARY:🏮 Dragon Raises its Head 龙抬头
+DESCRIPTION:The dragon wakes – a traditional day for a haircut and for we
+ lcoming spring rains.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20320404@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20320404
+DTEND;VALUE=DATE:20320405
+SUMMARY:🏮 Qingming Festival 清明节
+DESCRIPTION:Tomb-Sweeping Day – families visit and tend their ancestors
+ ’ graves.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20320612@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20320612
+DTEND;VALUE=DATE:20320613
+SUMMARY:🏮 Dragon Boat Festival 端午节
+DESCRIPTION:Dragon boat races and zongzi rice dumplings\, in memory of the 
+ poet Qu Yuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20320812@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20320812
+DTEND;VALUE=DATE:20320813
+SUMMARY:🏮 Qixi Festival 七夕
+DESCRIPTION:The meeting of the Cowherd and the Weaver Girl – the Chinese 
+ festival of love.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20320820@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20320820
+DTEND;VALUE=DATE:20320821
+SUMMARY:🏮 Ghost Festival 中元节
+DESCRIPTION:A day to honour ancestors and appease wandering spirits.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20320919@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20320919
+DTEND;VALUE=DATE:20320920
+SUMMARY:🏮 Mid-Autumn Festival 中秋节
+DESCRIPTION:The harvest full moon – family reunions and mooncakes.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20321012@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20321012
+DTEND;VALUE=DATE:20321013
+SUMMARY:🏮 Double Ninth Festival 重阳节
+DESCRIPTION:A day for climbing heights\, chrysanthemums and honouring the e
+ lderly.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20321221@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20321221
+DTEND;VALUE=DATE:20321222
+SUMMARY:🏮 Winter Solstice Festival 冬至
+DESCRIPTION:Dongzhi – the turning point of Yin and Yang\, celebrated with
+  dumplings or tangyuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20330108@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20330108
+DTEND;VALUE=DATE:20330109
+SUMMARY:🏮 Laba Festival 腊八节
+DESCRIPTION:Laba congee is eaten – the start of the New Year preparations
+ .
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20330130@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20330130
+DTEND;VALUE=DATE:20330131
+SUMMARY:🏮 Lunar New Year’s Eve 除夕
+DESCRIPTION:The reunion dinner on the last evening of the lunar year.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20330131@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20330131
+DTEND;VALUE=DATE:20330201
+SUMMARY:🏮 Chinese New Year 春节
+DESCRIPTION:The Spring Festival – the start of the lunar year\, celebrate
+ d with family\, red decorations and fireworks.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20330214@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20330214
+DTEND;VALUE=DATE:20330215
+SUMMARY:🏮 Lantern Festival 元宵节
+DESCRIPTION:The first full moon of the year – lanterns\, riddles and swee
+ t rice balls (tangyuan).
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20330302@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20330302
+DTEND;VALUE=DATE:20330303
+SUMMARY:🏮 Dragon Raises its Head 龙抬头
+DESCRIPTION:The dragon wakes – a traditional day for a haircut and for we
+ lcoming spring rains.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20330404@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20330404
+DTEND;VALUE=DATE:20330405
+SUMMARY:🏮 Qingming Festival 清明节
+DESCRIPTION:Tomb-Sweeping Day – families visit and tend their ancestors
+ ’ graves.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20330601@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20330601
+DTEND;VALUE=DATE:20330602
+SUMMARY:🏮 Dragon Boat Festival 端午节
+DESCRIPTION:Dragon boat races and zongzi rice dumplings\, in memory of the 
+ poet Qu Yuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20330801@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20330801
+DTEND;VALUE=DATE:20330802
+SUMMARY:🏮 Qixi Festival 七夕
+DESCRIPTION:The meeting of the Cowherd and the Weaver Girl – the Chinese 
+ festival of love.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20330809@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20330809
+DTEND;VALUE=DATE:20330810
+SUMMARY:🏮 Ghost Festival 中元节
+DESCRIPTION:A day to honour ancestors and appease wandering spirits.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20330908@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20330908
+DTEND;VALUE=DATE:20330909
+SUMMARY:🏮 Mid-Autumn Festival 中秋节
+DESCRIPTION:The harvest full moon – family reunions and mooncakes.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20331001@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20331001
+DTEND;VALUE=DATE:20331002
+SUMMARY:🏮 Double Ninth Festival 重阳节
+DESCRIPTION:A day for climbing heights\, chrysanthemums and honouring the e
+ lderly.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20331221@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20331221
+DTEND;VALUE=DATE:20331222
+SUMMARY:🏮 Winter Solstice Festival 冬至
+DESCRIPTION:Dongzhi – the turning point of Yin and Yang\, celebrated with
+  dumplings or tangyuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20340127@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20340127
+DTEND;VALUE=DATE:20340128
+SUMMARY:🏮 Laba Festival 腊八节
+DESCRIPTION:Laba congee is eaten – the start of the New Year preparations
+ .
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20340218@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20340218
+DTEND;VALUE=DATE:20340219
+SUMMARY:🏮 Lunar New Year’s Eve 除夕
+DESCRIPTION:The reunion dinner on the last evening of the lunar year.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20340219@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20340219
+DTEND;VALUE=DATE:20340220
+SUMMARY:🏮 Chinese New Year 春节
+DESCRIPTION:The Spring Festival – the start of the lunar year\, celebrate
+ d with family\, red decorations and fireworks.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20340305@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20340305
+DTEND;VALUE=DATE:20340306
+SUMMARY:🏮 Lantern Festival 元宵节
+DESCRIPTION:The first full moon of the year – lanterns\, riddles and swee
+ t rice balls (tangyuan).
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20340321@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20340321
+DTEND;VALUE=DATE:20340322
+SUMMARY:🏮 Dragon Raises its Head 龙抬头
+DESCRIPTION:The dragon wakes – a traditional day for a haircut and for we
+ lcoming spring rains.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20340404@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20340404
+DTEND;VALUE=DATE:20340405
+SUMMARY:🏮 Qingming Festival 清明节
+DESCRIPTION:Tomb-Sweeping Day – families visit and tend their ancestors
+ ’ graves.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20340620@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20340620
+DTEND;VALUE=DATE:20340621
+SUMMARY:🏮 Dragon Boat Festival 端午节
+DESCRIPTION:Dragon boat races and zongzi rice dumplings\, in memory of the 
+ poet Qu Yuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20340820@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20340820
+DTEND;VALUE=DATE:20340821
+SUMMARY:🏮 Qixi Festival 七夕
+DESCRIPTION:The meeting of the Cowherd and the Weaver Girl – the Chinese 
+ festival of love.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20340828@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20340828
+DTEND;VALUE=DATE:20340829
+SUMMARY:🏮 Ghost Festival 中元节
+DESCRIPTION:A day to honour ancestors and appease wandering spirits.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20340927@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20340927
+DTEND;VALUE=DATE:20340928
+SUMMARY:🏮 Mid-Autumn Festival 中秋节
+DESCRIPTION:The harvest full moon – family reunions and mooncakes.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20341020@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20341020
+DTEND;VALUE=DATE:20341021
+SUMMARY:🏮 Double Ninth Festival 重阳节
+DESCRIPTION:A day for climbing heights\, chrysanthemums and honouring the e
+ lderly.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20341221@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20341221
+DTEND;VALUE=DATE:20341222
+SUMMARY:🏮 Winter Solstice Festival 冬至
+DESCRIPTION:Dongzhi – the turning point of Yin and Yang\, celebrated with
+  dumplings or tangyuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20350116@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20350116
+DTEND;VALUE=DATE:20350117
+SUMMARY:🏮 Laba Festival 腊八节
+DESCRIPTION:Laba congee is eaten – the start of the New Year preparations
+ .
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20350207@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20350207
+DTEND;VALUE=DATE:20350208
+SUMMARY:🏮 Lunar New Year’s Eve 除夕
+DESCRIPTION:The reunion dinner on the last evening of the lunar year.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20350208@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20350208
+DTEND;VALUE=DATE:20350209
+SUMMARY:🏮 Chinese New Year 春节
+DESCRIPTION:The Spring Festival – the start of the lunar year\, celebrate
+ d with family\, red decorations and fireworks.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20350222@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20350222
+DTEND;VALUE=DATE:20350223
+SUMMARY:🏮 Lantern Festival 元宵节
+DESCRIPTION:The first full moon of the year – lanterns\, riddles and swee
+ t rice balls (tangyuan).
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20350311@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20350311
+DTEND;VALUE=DATE:20350312
+SUMMARY:🏮 Dragon Raises its Head 龙抬头
+DESCRIPTION:The dragon wakes – a traditional day for a haircut and for we
+ lcoming spring rains.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20350404@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20350404
+DTEND;VALUE=DATE:20350405
+SUMMARY:🏮 Qingming Festival 清明节
+DESCRIPTION:Tomb-Sweeping Day – families visit and tend their ancestors
+ ’ graves.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20350610@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20350610
+DTEND;VALUE=DATE:20350611
+SUMMARY:🏮 Dragon Boat Festival 端午节
+DESCRIPTION:Dragon boat races and zongzi rice dumplings\, in memory of the 
+ poet Qu Yuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20350810@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20350810
+DTEND;VALUE=DATE:20350811
+SUMMARY:🏮 Qixi Festival 七夕
+DESCRIPTION:The meeting of the Cowherd and the Weaver Girl – the Chinese 
+ festival of love.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20350818@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20350818
+DTEND;VALUE=DATE:20350819
+SUMMARY:🏮 Ghost Festival 中元节
+DESCRIPTION:A day to honour ancestors and appease wandering spirits.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20350916@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20350916
+DTEND;VALUE=DATE:20350917
+SUMMARY:🏮 Mid-Autumn Festival 中秋节
+DESCRIPTION:The harvest full moon – family reunions and mooncakes.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20351009@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20351009
+DTEND;VALUE=DATE:20351010
+SUMMARY:🏮 Double Ninth Festival 重阳节
+DESCRIPTION:A day for climbing heights\, chrysanthemums and honouring the e
+ lderly.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fest-20351222@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART;VALUE=DATE:20351222
+DTEND;VALUE=DATE:20351223
+SUMMARY:🏮 Winter Solstice Festival 冬至
+DESCRIPTION:Dongzhi – the turning point of Yin and Yang\, celebrated with
+  dumplings or tangyuan.
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR

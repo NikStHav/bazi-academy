@@ -12,7 +12,8 @@ import { dayInfo, findDays, ACTIVITIES, OFFICERS, RATING_LABEL } from './almanac
 import { compare, idealMatch } from './compat.js';
 import * as notify from './notify.js';
 import { shareChart, shareTextFile } from './share.js';
-import { dayEvents, lunarDate, moonAge, moonEvents, solarTermsBetween, MONTH_NAMES } from './lunar.js';
+import { dayEvents, lunarDate, moonAge, MONTH_NAMES } from './lunar.js';
+import { KINDS, collectEvents, buildIcs } from './ics.js';
 import { findStars, STARS, pillarListText } from './shensha.js';
 import { yearForecast, baziYearOf } from './forecast.js';
 import { makeBackup, validateBackup, mergeBackup } from './backup.js';
@@ -719,8 +720,11 @@ const routes = {
         <div class="cal-grid">${['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((w) => `<div class="cal-w">${w}</div>`).join('')}${cells.join('')}</div>
         <p class="small muted" style="margin-bottom:0">Lunar dates as in China (UTC+8). Tap a day for details. ${y === now.getFullYear() && m === now.getMonth() + 1 ? '' : `<a href="#/calendar">Back to today</a>`}</p></div>
       <div class="card"><h3 style="margin-top:0">This month</h3>${list.sort((a, b) => a.ms - b.ms).map((x) => `<div class="cal-ev" data-d="${x.d}">${x.html}<br><span class="small muted">${x.allDay ? new Date(x.ms).toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) : fmtT(x.ms)}</span></div>`).join('') || '<p class="muted">No events.</p>'}
-        <p class="small muted" style="margin-bottom:0">Times in your time zone.</p></div>`;
+        <p class="small muted" style="margin-bottom:0">Times in your time zone.</p></div>
+      ${remindersCard()}
+      ${calendarExportCard()}`;
     view.querySelectorAll('[data-d]').forEach((el) => el.addEventListener('click', () => openSheet(calendarDay(y, m, +el.dataset.d, mine))));
+    bindCalendarCards();
   },
 
   premium() {
@@ -807,6 +811,72 @@ function calendarDay(y, m, d, mine) {
     ${a.personalClash.length ? `<p class="tip">This day ${a.personalClash.join(' and ')}.</p>` : ''}`;
 }
 
+// ---------- reminders & calendar export ----------
+const FEED_BASE = 'https://niksthav.github.io/bazi-academy/calendar/';
+const FEEDS = [['lunar.ics', 'Moons, equinoxes, solstices & festivals'], ['full-moons.ics', 'Full moons'], ['seasons.ics', 'Equinoxes & solstices'],
+  ['solar-terms.ics', 'All 24 solar terms'], ['festivals.ics', 'Chinese festivals']];
+
+function remindersCard() {
+  const r = notify.getReminders();
+  if (!notify.supported) return `<div class="card"><h3 style="margin-top:0">Reminders</h3><p class="small muted">In the app, you can get notifications before full moons, solar terms and festivals.</p></div>`;
+  return `<div class="card"><h3 style="margin-top:0">Reminders</h3>
+    <label class="check"><input type="checkbox" id="r-on" ${r.on ? 'checked' : ''}> Remind me about lunar events</label>
+    <div id="r-opts" ${r.on ? '' : 'hidden'}>
+      ${Object.entries(KINDS).map(([k, v]) => `<label class="check"><input type="checkbox" data-rk="${k}" ${r.kinds[k] ? 'checked' : ''}> ${v.icon} ${v.name}</label>`).join('')}
+      <label for="r-when">When</label>
+      <select id="r-when"><option value="evening" ${r.when === 'evening' ? 'selected' : ''}>The evening before (19:00)</option>
+        <option value="morning" ${r.when === 'morning' ? 'selected' : ''}>On the day (08:00)</option>
+        <option value="exact" ${r.when === 'exact' ? 'selected' : ''}>At the exact moment</option></select>
+      <p class="help">Planned on this phone – no server. You can turn this off at any time.</p></div></div>`;
+}
+
+function calendarExportCard() {
+  const y = new Date().getFullYear();
+  const google = (f) => `https://calendar.google.com/calendar/render?cid=${encodeURIComponent('webcal://' + FEED_BASE.replace(/^https:\/\//, '') + f)}`;
+  return `<div class="card"><h3 style="margin-top:0">Add to your calendar</h3>
+    <h4 style="margin:6px 0 2px">Subscribe (updates automatically)</h4>
+    <p class="small">Adds the events to Google Calendar – and to Samsung Calendar if it syncs your Google account.</p>
+    ${FEEDS.map(([f, name]) => `<div class="feed-row"><span>${name}</span><a class="btn secondary feed-btn" href="${google(f)}" target="_blank" rel="noopener">Google</a>
+      <button type="button" class="btn secondary feed-btn" data-copy="${FEED_BASE + f}">Copy link</button></div>`).join('')}
+    <p class="help">iPhone: Settings → Calendar → Accounts → Add Subscribed Calendar, and paste the link.</p>
+    <h4 style="margin:14px 0 2px">Or import a file</h4>
+    <p class="small">Creates a calendar file to open with Samsung Calendar or Apple Calendar.</p>
+    ${Object.entries(KINDS).map(([k, v]) => `<label class="check"><input type="checkbox" data-ek="${k}" ${k !== 'terms' && k !== 'new' ? 'checked' : ''}> ${v.icon} ${v.name}</label>`).join('')}
+    <label for="e-years">Period</label>
+    <select id="e-years"><option value="1">${y}</option><option value="2" selected>${y}–${y + 1}</option><option value="3">${y}–${y + 2}</option><option value="5">${y}–${y + 4}</option></select>
+    <button class="btn block" id="e-go" style="margin-top:12px">Create calendar file</button></div>`;
+}
+
+function bindCalendarCards() {
+  const on = $('#r-on');
+  if (on) {
+    const read = () => ({ on: on.checked, when: $('#r-when').value, kinds: Object.fromEntries([...view.querySelectorAll('[data-rk]')].map((c) => [c.dataset.rk, c.checked])) });
+    const apply = async () => {
+      $('#r-opts').hidden = !on.checked;
+      const ok = await notify.setReminders(read());
+      if (!ok) { on.checked = false; $('#r-opts').hidden = true; alert('Please allow notifications for BaZi Academy in your phone settings.'); }
+    };
+    on.onchange = apply; $('#r-when').onchange = apply;
+    view.querySelectorAll('[data-rk]').forEach((c) => { c.onchange = apply; });
+  }
+  view.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = 'Copied ✓'; }
+    catch { prompt('Copy this link:', b.dataset.copy); }
+  }));
+  const go = $('#e-go');
+  if (go) go.onclick = async () => {
+    const kinds = Object.fromEntries([...view.querySelectorAll('[data-ek]')].map((c) => [c.dataset.ek, c.checked]));
+    if (!Object.values(kinds).some(Boolean)) { alert('Choose at least one type of event.'); return; }
+    const y = new Date().getFullYear(), n = +$('#e-years').value;
+    const events = collectEvents(Date.UTC(y, 0, 1), Date.UTC(y + n, 0, 1), kinds);
+    const ics = buildIcs(events, 'BaZi Academy – Lunar calendar');
+    go.disabled = true;
+    try { await shareTextFile(`bazi-lunar-calendar-${y}${n > 1 ? '-' + (y + n - 1) : ''}.ics`, ics, 'text/calendar'); }
+    catch { alert('The calendar file could not be created on this device.'); }
+    go.disabled = false;
+  };
+}
+
 // ---------- symbolic stars ----------
 function starsCard(c) {
   const stars = findStars(c);
@@ -848,7 +918,7 @@ function notifyCard() {
 }
 
 function myChart() { const m = state.charts.find((c) => c.mine); return m ? computeChart({ ...m.input, ziHourNextDay: state.settings.ziHourNextDay }) : null; }
-function rescheduleTips() { notify.reschedule(myChart()); }
+function rescheduleTips() { notify.reschedule(myChart()).then(() => notify.rescheduleReminders()).catch(() => {}); }
 
 function bindNotifyCard() {
   const on = $('#n-on'), time = $('#n-time');

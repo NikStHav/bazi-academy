@@ -4,6 +4,7 @@ import { tenGod, pillarName } from './bazi.js';
 import { dayInfo, RATING_LABEL } from './almanac.js';
 
 import { plugin } from './cap.js';
+import { collectEvents } from './ics.js';
 
 const LN = plugin('LocalNotifications');
 const KEY = 'bazi.notify';
@@ -66,3 +67,57 @@ export async function enable(time, mine) {
 
 export async function disable() { write({ ...read(), on: false }); await cancelAll(); }
 export async function setTime(time, mine) { write({ ...read(), time }); await reschedule(mine); }
+
+// ---------- lunar event reminders (full/new moon, solar terms, festivals) ----------
+const REM_KEY = 'bazi.reminders';
+const REM_BASE = 7400;
+const REM_MAX = 30; // iOS allows 64 pending notifications in total (daily tips use up to 31)
+const REM_DEFAULT = { on: false, when: 'evening', kinds: { full: true, new: false, major: true, terms: false, fest: true } };
+export function getReminders() {
+  try { const v = JSON.parse(localStorage.getItem(REM_KEY)); return v ? { ...REM_DEFAULT, ...v, kinds: { ...REM_DEFAULT.kinds, ...v.kinds } } : REM_DEFAULT; } catch { return REM_DEFAULT; }
+}
+const writeRem = (v) => { try { localStorage.setItem(REM_KEY, JSON.stringify(v)); } catch { /* ignore */ } };
+
+/** When to notify for an event: 'evening' (19:00 the day before), 'morning' (08:00 on the day) or 'exact'. */
+export function reminderTime(e, when) {
+  const day = e.allDay ? new Date(+e.date.slice(0, 4), +e.date.slice(4, 6) - 1, +e.date.slice(6)) : new Date(e.ms);
+  if (when === 'exact' && !e.allDay) return new Date(e.ms);
+  if (when === 'evening') return new Date(day.getFullYear(), day.getMonth(), day.getDate() - 1, 19, 0);
+  return new Date(day.getFullYear(), day.getMonth(), day.getDate(), 8, 0);
+}
+
+export function reminderText(e, when) {
+  const t = e.allDay ? '' : new Date(e.ms).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+  const day = when === 'evening' ? 'Tomorrow' : 'Today';
+  return { title: `${e.title}${when === 'exact' && !e.allDay ? ' – now' : ''}`,
+    body: `${when === 'exact' && !e.allDay ? '' : `${day}${t ? ' at ' + t : ''}. `}${e.desc}` };
+}
+
+async function cancelReminders() {
+  if (!LN) return;
+  await LN.cancel({ notifications: Array.from({ length: REM_MAX }, (_, i) => ({ id: REM_BASE + i })) }).catch(() => {});
+}
+
+export async function rescheduleReminders() {
+  if (!LN) return;
+  const r = getReminders();
+  await cancelReminders();
+  if (!r.on) return;
+  const now = Date.now();
+  const events = collectEvents(now - 86400000, now + 150 * 86400000, r.kinds)
+    .map((e) => ({ e, at: reminderTime(e, r.when) })).filter((x) => x.at.getTime() > now).slice(0, REM_MAX);
+  const notifications = events.map(({ e, at }, i) => ({ id: REM_BASE + i, ...reminderText(e, r.when), schedule: { at, allowWhileIdle: true, isExactNotification: false } }));
+  if (notifications.length) await LN.schedule({ notifications }).catch(() => {});
+}
+
+/** Save reminder settings; turning them on asks for notification permission. Resolves false if permission was refused. */
+export async function setReminders(next) {
+  if (next.on && LN) {
+    let perm = await LN.checkPermissions().catch(() => ({ display: 'denied' }));
+    if (perm.display !== 'granted') perm = await LN.requestPermissions().catch(() => ({ display: 'denied' }));
+    if (perm.display !== 'granted') { writeRem({ ...next, on: false }); return false; }
+  }
+  writeRem(next);
+  await rescheduleReminders();
+  return true;
+}

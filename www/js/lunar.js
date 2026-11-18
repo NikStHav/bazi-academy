@@ -64,7 +64,7 @@ export function moonEvents(fromMs, toMs) {
 /** All 24 solar terms between two instants: [{ ...term, ms }] */
 export function solarTermsBetween(fromMs, toMs) {
   const out = [];
-  for (let t = fromMs - 20 * DAY; t < toMs + 20 * DAY; t += 15 * DAY) {
+  for (let t = fromMs - 20 * DAY; t < toMs + 20 * DAY; t += 5 * DAY) { // the sun moves ~5° in 5 days, so no term is skipped
     const lon = Math.round(sunLongitude(jdFromMs(t)) / 15) * 15 % 360;
     const term = SOLAR_TERMS.find((x) => x.lon === lon);
     const ms = findSolarLongitude(lon, t);

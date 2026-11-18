@@ -1,6 +1,6 @@
 // Safe access to Capacitor native plugins. Returns null in a normal browser or if anything is missing,
 // so a plugin problem can never stop the rest of the app from loading.
-const Cap = window.Capacitor;
+const Cap = globalThis.window?.Capacitor;
 export const isNative = (() => { try { return !!Cap?.isNativePlatform?.(); } catch { return false; } })();
 export const platform = (() => { try { return Cap?.getPlatform?.() || 'web'; } catch { return 'web'; } })();
 const cache = {};

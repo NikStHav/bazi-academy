@@ -1,0 +1,1369 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//BaZi Academy//Lunar Calendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:BaZi Academy – Full moons
+X-PUBLISHED-TTL:P7D
+REFRESH-INTERVAL;VALUE=DURATION:P7D
+BEGIN:VEVENT
+UID:fullmoon-20250113@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20250113T222656Z
+DTEND:20250113T225656Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20250212@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20250212T135325Z
+DTEND:20250212T142325Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20250314@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20250314T065438Z
+DTEND:20250314T072438Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20250413@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20250413T002218Z
+DTEND:20250413T005218Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20250512@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20250512T165603Z
+DTEND:20250512T172603Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20250611@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20250611T074351Z
+DTEND:20250611T081351Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20250710@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20250710T203645Z
+DTEND:20250710T210645Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20250809@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20250809T075504Z
+DTEND:20250809T082504Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20250907@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20250907T180851Z
+DTEND:20250907T183851Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20251007@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20251007T034734Z
+DTEND:20251007T041734Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20251105@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20251105T131920Z
+DTEND:20251105T134920Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20251204@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20251204T231406Z
+DTEND:20251204T234406Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20260103@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20260103T100256Z
+DTEND:20260103T103256Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20260201@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20260201T220918Z
+DTEND:20260201T223918Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20260303@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20260303T113757Z
+DTEND:20260303T120757Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20260402@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20260402T021202Z
+DTEND:20260402T024202Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20260501@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20260501T172316Z
+DTEND:20260501T175316Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20260531@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20260531T084517Z
+DTEND:20260531T091517Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20260629@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20260629T235644Z
+DTEND:20260630T002644Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20260729@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20260729T143544Z
+DTEND:20260729T150544Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20260828@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20260828T041831Z
+DTEND:20260828T044831Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20260926@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20260926T164903Z
+DTEND:20260926T171903Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20261026@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20261026T041149Z
+DTEND:20261026T044149Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20261124@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20261124T145332Z
+DTEND:20261124T152332Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20261224@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20261224T012814Z
+DTEND:20261224T015814Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20270122@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20270122T121721Z
+DTEND:20270122T124721Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20270220@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20270220T232334Z
+DTEND:20270220T235334Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20270322@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20270322T104346Z
+DTEND:20270322T111346Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20270420@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20270420T222708Z
+DTEND:20270420T225708Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20270520@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20270520T105859Z
+DTEND:20270520T112859Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20270619@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20270619T004424Z
+DTEND:20270619T011424Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20270718@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20270718T154458Z
+DTEND:20270718T161458Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20270817@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20270817T072842Z
+DTEND:20270817T075842Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20270915@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20270915T230337Z
+DTEND:20270915T233337Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20271015@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20271015T134704Z
+DTEND:20271015T141704Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20271114@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20271114T032553Z
+DTEND:20271114T035553Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20271213@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20271213T160848Z
+DTEND:20271213T163848Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20280112@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20280112T040305Z
+DTEND:20280112T043305Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20280210@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20280210T150342Z
+DTEND:20280210T153342Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20280311@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20280311T010607Z
+DTEND:20280311T013607Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20280409@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20280409T102639Z
+DTEND:20280409T105639Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20280508@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20280508T194852Z
+DTEND:20280508T201852Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20280607@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20280607T060849Z
+DTEND:20280607T063849Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20280706@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20280706T181052Z
+DTEND:20280706T184052Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20280805@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20280805T080951Z
+DTEND:20280805T083951Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20280903@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20280903T234740Z
+DTEND:20280904T001740Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20281003@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20281003T162505Z
+DTEND:20281003T165505Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20281102@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20281102T091722Z
+DTEND:20281102T094722Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20281202@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20281202T014013Z
+DTEND:20281202T021013Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20281231@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20281231T164830Z
+DTEND:20281231T171830Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20290130@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20290130T060336Z
+DTEND:20290130T063336Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20290228@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20290228T171018Z
+DTEND:20290228T174018Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20290330@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20290330T022627Z
+DTEND:20290330T025627Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20290428@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20290428T103650Z
+DTEND:20290428T110650Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20290527@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20290527T183732Z
+DTEND:20290527T190732Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20290626@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20290626T032220Z
+DTEND:20290626T035220Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20290725@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20290725T133547Z
+DTEND:20290725T140547Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20290824@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20290824T015122Z
+DTEND:20290824T022122Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20290922@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20290922T162925Z
+DTEND:20290922T165925Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20291022@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20291022T092740Z
+DTEND:20291022T095740Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20291121@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20291121T040306Z
+DTEND:20291121T043306Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20291220@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20291220T224633Z
+DTEND:20291220T231633Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20300119@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20300119T155427Z
+DTEND:20300119T162427Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20300218@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20300218T062001Z
+DTEND:20300218T065001Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20300319@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20300319T175634Z
+DTEND:20300319T182634Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20300418@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20300418T032001Z
+DTEND:20300418T035001Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20300517@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20300517T111911Z
+DTEND:20300517T114911Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20300615@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20300615T184059Z
+DTEND:20300615T191059Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20300715@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20300715T021153Z
+DTEND:20300715T024153Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20300813@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20300813T104423Z
+DTEND:20300813T111423Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20300911@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20300911T211755Z
+DTEND:20300911T214755Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20301011@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20301011T104646Z
+DTEND:20301011T111646Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20301110@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20301110T033022Z
+DTEND:20301110T040022Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20301209@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20301209T224033Z
+DTEND:20301209T231033Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20310108@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20310108T182555Z
+DTEND:20310108T185555Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20310207@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20310207T124626Z
+DTEND:20310207T131626Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20310309@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20310309T042952Z
+DTEND:20310309T045952Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20310407@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20310407T172127Z
+DTEND:20310407T175127Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20310507@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20310507T033959Z
+DTEND:20310507T040959Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20310605@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20310605T115834Z
+DTEND:20310605T122834Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20310704@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20310704T190120Z
+DTEND:20310704T193120Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20310803@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20310803T014536Z
+DTEND:20310803T021536Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20310901@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20310901T092033Z
+DTEND:20310901T095033Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20310930@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20310930T185756Z
+DTEND:20310930T192756Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20311030@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20311030T073246Z
+DTEND:20311030T080246Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20311128@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20311128T231831Z
+DTEND:20311128T234831Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20311228@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20311228T173301Z
+DTEND:20311228T180301Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20320127@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20320127T125230Z
+DTEND:20320127T132230Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20320226@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20320226T074317Z
+DTEND:20320226T081317Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20320327@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20320327T004625Z
+DTEND:20320327T011625Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20320425@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20320425T150949Z
+DTEND:20320425T153949Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20320525@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20320525T023720Z
+DTEND:20320525T030720Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20320623@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20320623T113236Z
+DTEND:20320623T120236Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20320722@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20320722T185133Z
+DTEND:20320722T192133Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20320821@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20320821T014647Z
+DTEND:20320821T021647Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20320919@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20320919T093019Z
+DTEND:20320919T100019Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20321018@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20321018T185818Z
+DTEND:20321018T192818Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20321117@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20321117T064211Z
+DTEND:20321117T071211Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20321216@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20321216T204907Z
+DTEND:20321216T211907Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20330115@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20330115T130712Z
+DTEND:20330115T133712Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20330214@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20330214T070413Z
+DTEND:20330214T073413Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20330316@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20330316T013726Z
+DTEND:20330316T020726Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20330414@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20330414T191730Z
+DTEND:20330414T194730Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20330514@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20330514T104254Z
+DTEND:20330514T111254Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20330612@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20330612T231921Z
+DTEND:20330612T234921Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20330712@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20330712T092842Z
+DTEND:20330712T095842Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20330810@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20330810T180746Z
+DTEND:20330810T183746Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20330909@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20330909T022034Z
+DTEND:20330909T025034Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20331008@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20331008T105812Z
+DTEND:20331008T112812Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20331106@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20331106T203214Z
+DTEND:20331106T210214Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20331206@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20331206T072213Z
+DTEND:20331206T075213Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20340104@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20340104T194717Z
+DTEND:20340104T201717Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20340203@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20340203T100446Z
+DTEND:20340203T103446Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20340305@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20340305T021019Z
+DTEND:20340305T024019Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20340403@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20340403T191856Z
+DTEND:20340403T194856Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20340503@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20340503T121547Z
+DTEND:20340503T124547Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20340602@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20340602T035406Z
+DTEND:20340602T042406Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20340701@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20340701T174436Z
+DTEND:20340701T181436Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20340731@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20340731T055436Z
+DTEND:20340731T062436Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20340829@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20340829T164923Z
+DTEND:20340829T171923Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20340928@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20340928T025649Z
+DTEND:20340928T032649Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20341027@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20341027T124230Z
+DTEND:20341027T131230Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20341125@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20341125T223211Z
+DTEND:20341125T230211Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20341225@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20341225T085429Z
+DTEND:20341225T092429Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20350123@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20350123T201638Z
+DTEND:20350123T204638Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20350222@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20350222T085357Z
+DTEND:20350222T092357Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20350323@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20350323T224207Z
+DTEND:20350323T231207Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20350422@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20350422T132044Z
+DTEND:20350422T135044Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20350522@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20350522T042548Z
+DTEND:20350522T045548Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20350620@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20350620T193730Z
+DTEND:20350620T200730Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20350720@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20350720T103654Z
+DTEND:20350720T110654Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20350819@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20350819T010020Z
+DTEND:20350819T013020Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20350917@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20350917T142335Z
+DTEND:20350917T145335Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20351017@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20351017T023537Z
+DTEND:20351017T030537Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20351115@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20351115T134853Z
+DTEND:20351115T141853Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:fullmoon-20351215@bazi-academy
+DTSTAMP:20250101T000000Z
+DTSTART:20351215T003312Z
+DTEND:20351215T010312Z
+SUMMARY:🌕 Full moon
+DESCRIPTION:Full moon (望). In the Chinese calendar it falls around the 15
+ th day of the lunar month.
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR

@@ -23,6 +23,7 @@ An offline app for Android and iPhone for learning Chinese astrology according t
 - **Year ahead** (Premium): annual pillar and 12 solar months with ratings, best months and activated symbolic stars.
 - **Backup**: export/import charts and progress as a JSON file (About screen).
 - **Lunar calendar** (Calendar tab): Chinese lunar dates incl. leap months, all 24 solar terms (equinoxes, solstices), new and full moons, traditional festivals; tap a day for its pillar, almanac officer and moon phase. Sun: truncated VSOP87 (~1″), moon phases: Meeus ch. 49.
+- **Reminders & calendar export** (Calendar tab): optional local notifications for full/new moons, equinoxes & solstices, solar terms and festivals (evening before, morning of, or exact time); export as an .ics file, or subscribe to the feeds in `docs/calendar/` (served by GitHub Pages; regenerate with `node tools/build-calendar-feeds.mjs 2025 2035`).
 - **Today**: today's pillars, the next solar term, and how today relates to your own Day Master.
 - Fully offline, no tracking, light and dark mode.
 

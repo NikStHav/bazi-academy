@@ -238,3 +238,7 @@ body.no-tabs main { padding-bottom: calc(32px + env(safe-area-inset-bottom)); }
 .cal-m { font-size: 9px; line-height: 1; margin-top: 1px; }
 .cal-ev { padding: 9px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
 .cal-ev:last-of-type { border-bottom: 0; }
+
+.feed-row { display: flex; align-items: center; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.feed-row span { flex: 1; }
+.feed-btn { min-height: 36px; padding: 6px 10px; font-size: 13px; flex: 0 0 auto; }

@@ -51,3 +51,9 @@ test('moon age', () => {
   assert.equal(m.icon, '🌕');
   assert.ok(m.illumination > 98);
 });
+
+test('no solar term is ever skipped (2000-2040)', () => {
+  const t = solarTermsBetween(Date.UTC(2000, 0, 1), Date.UTC(2041, 0, 1));
+  assert.equal(t.length, 41 * 24);
+  for (let i = 1; i < t.length; i++) assert.equal((t[i - 1].lon + 15) % 360, t[i].lon, new Date(t[i].ms).toISOString());
+});
