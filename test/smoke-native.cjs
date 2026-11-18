@@ -19,15 +19,16 @@ const server = http.createServer((req, res) => {
   const base = `http://localhost:${server.address().port}/index.html`;
   const browser = await chromium.launch();
   let failed = false;
-  for (const platform of ['android', 'ios']) {
+  for (const [platform, uiLang] of [['android', 'en'], ['ios', 'en'], ['android', 'de']]) {
     const ctx = await browser.newContext({ ...devices[platform === 'ios' ? 'iPhone 15' : 'Pixel 7'] });
-    await ctx.addInitScript((pf) => {
+    await ctx.addInitScript(([pf, ul]) => {
+      localStorage.setItem('bazi.lang', ul);
       window.Capacitor = { isNativePlatform: () => true, getPlatform: () => pf, PluginHeaders: [],
         nativePromise: () => Promise.reject(new Error('no native layer in smoke test')), nativeCallback: () => '1', toNative: () => {} };
       localStorage.setItem('bazi.charts', JSON.stringify([
         { id: 'a', name: 'A', mine: true, input: { year: 1992, month: 3, day: 18, hour: 9, minute: 40, tzOffset: 8, gender: 'f' } },
         { id: 'b', name: 'B', mine: false, input: { year: 1989, month: 11, day: 2, hour: 22, minute: 15, tzOffset: 1, gender: 'm' } }]));
-    }, platform);
+    }, [platform, uiLang]);
     const page = await ctx.newPage();
     const errors = [];
     page.on('pageerror', (e) => errors.push(e.message));
@@ -36,8 +37,10 @@ const server = http.createServer((req, res) => {
       const text = (await page.locator('#view').innerText()).trim();
       if (text.length < 40) { failed = true; console.error(`✗ ${platform} ${route}: screen is blank`); }
     }
-    if (errors.length) { failed = true; console.error(`✗ ${platform}: ${[...new Set(errors)].join('; ')}`); }
-    else console.log(`✓ ${platform}: all screens render without errors`);
+    const miss = await page.evaluate(() => [...(globalThis.__i18nMissing || [])]);
+    if (uiLang !== 'en' && miss.length) { failed = true; console.error(`✗ ${platform}/${uiLang}: untranslated: ${miss.slice(0, 10).join(' | ')}`); }
+    if (errors.length) { failed = true; console.error(`✗ ${platform}/${uiLang}: ${[...new Set(errors)].join('; ')}`); }
+    else console.log(`✓ ${platform}/${uiLang}: all screens render without errors`);
     await ctx.close();
   }
   await browser.close(); server.close();

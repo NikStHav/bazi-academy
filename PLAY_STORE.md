@@ -132,3 +132,52 @@ To test without being charged, add your Google account under *Settings → Licen
 ## Updates
 
 Change the code, run the workflow again, and upload the new `.aab` to a track. The `versionCode` increases automatically.
+
+## German store listing (Deutsch)
+
+In Play Console → *Grow users → Store presence → Main store listing* → **Manage translations → Add your own translations → German (de-DE)**, then paste:
+
+**App name:** BaZi Academy – Vier Säulen
+
+**Short description** (max. 80 characters):
+> Chinesische Astrologie lernen: Vier Säulen, Fünf Elemente, Zehn Götter, Rechner
+
+**Full description:**
+> Entdecke BaZi (八字), die Vier Säulen des Schicksals – eines der großen klassischen Systeme der chinesischen Astrologie – Schritt für Schritt.
+>
+> LERNEN
+> 15 klare Lektionen führen dich von den Grundlagen bis zur echten Horoskop-Deutung:
+> • Yin & Yang und die Fünf Elemente (Holz, Feuer, Erde, Metall, Wasser)
+> • Die 10 Himmelsstämme und 12 Erdzweige
+> • Der 60er-Zyklus und der Sonnenkalender (Solarterme)
+> • Verborgene Stämme, der Tagesmeister und die Zehn Götter
+> • Stärke und Jahreszeiten, Zusammenstöße und Kombinationen, Symbolsterne (Edler, Pfirsichblüte, Reisepferd …), Glückssäulen, der Nützliche Gott
+> Jede Lektion enthält interaktive Grafiken und ein kurzes Quiz.
+>
+> BERECHNEN
+> Ein genauer Vier-Säulen-Rechner auf Basis der echten Solarterme:
+> • Jahres-, Monats-, Tages- und Stundensäule
+> • Geburtsort-Suche: Zeitzone, historische Sommerzeit und wahre Sonnenzeit werden automatisch gesetzt
+> • Zehn Götter für jeden Stamm und verborgenen Stamm
+> • Verteilung der Fünf Elemente und Stärke des Tagesmeisters
+> • Zusammenstöße, Harmonien, Strafen und Schäden
+> • Zehnjährige Glückssäulen mit Startalter
+>
+> LIEBE & KOMPATIBILITÄT
+> Vergleiche zwei Horoskope oder prüfe eine neue Bekanntschaft per Geburtsdatum. Entdecke deinen idealen Partner: welche Tagesmeister, Tierkreiszeichen und Elemente am besten zu dir passen.
+>
+> HEUTE, ALMANACH & MONDKALENDER
+> Die Säulen des Tages, der Tagesbeamte des traditionellen chinesischen Almanachs (Tong Shu), deine persönlichen Zusammenstoß-Tage und ein optionaler Tagestipp. Der Mondkalender zeigt alle 24 Solarterme – inklusive Tagundnachtgleichen und Sonnenwenden –, Neu- und Vollmonde mit genauer Uhrzeit und traditionelle Feste. Erinnerungen und Export in deinen Kalender inklusive.
+>
+> JAHRESVORSCHAU
+> Deine Jahressäule und alle 12 Monate: Themen, beste Monate und aktivierte Sterne.
+>
+> KOSTENLOS & PREMIUM
+> Die Lektionen 1–7, alle Quizze und 5 Horoskop-Berechnungen sind kostenlos. Ein einmaliger Kauf schaltet alle 15 Lektionen, unbegrenzte Horoskope, die ausführliche Deutung (Wesenskern, günstige Elemente, Schwachstellen und ihr Ausgleich, Beruf, Beziehungen, aktuelle Glücksphase), die vollständige Kompatibilitätsanalyse, die Jahresvorschau und den Almanach-Planer frei. Kein Abo.
+>
+> PRIVAT VON ANFANG AN
+> Funktioniert komplett offline. Kein Konto, keine Werbung, kein Tracking. Deine Geburtsdaten verlassen nie dein Handy.
+>
+> BaZi ist ein traditionelles Kultursystem. Diese App dient der Bildung und Unterhaltung und ersetzt keine professionelle Beratung.
+
+**Screenshots:** take German screenshots by switching the app to *Deutsch* (About → Language) or by using a phone set to German.

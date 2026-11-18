@@ -1,5 +1,5 @@
 // Course content. Widgets: <div data-widget="..."></div> are rendered by app.js.
-export const LESSONS = [
+const LESSONS_EN = [
   {
     id: 'intro', title: 'What is BaZi?', zh: '八字', level: 'Basics',
     summary: 'The “Eight Characters” – a map of the energies at the moment of birth.',
@@ -285,3 +285,10 @@ export const LESSONS = [
     ],
   },
 ];
+
+// ---------- localisation ----------
+import { lang } from './i18n.js';
+import { LESSONS_DE_1 } from './i18n/lessons-de-1.js';
+import { LESSONS_DE_2 } from './i18n/lessons-de-2.js';
+const DE = Object.fromEntries([...LESSONS_DE_1, ...LESSONS_DE_2].map((l) => [l.id, l]));
+export const LESSONS = lang === 'de' ? LESSONS_EN.map((l) => DE[l.id] || l) : LESSONS_EN;

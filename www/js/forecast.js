@@ -4,6 +4,8 @@ import { tenGod, pillarFromIndex, jieTermsOfYear, cycleIndex } from './bazi.js';
 import { favourableElements } from './reading.js';
 import { branchRelation } from './compat.js';
 import { starsActivatedBy } from './shensha.js';
+import { lang } from './i18n.js';
+import { MONTH_TEXT as MONTH_DE } from './i18n/de-misc.js';
 
 const mod = (a, n) => ((a % n) + n) % n;
 
@@ -19,6 +21,8 @@ const MONTH_TEXT = {
   IR: 'Reflection and study – research, intuition, time alone.',
   DR: 'Support and learning – mentors, courses, rest and family.',
 };
+
+if (lang === 'de') Object.assign(MONTH_TEXT, MONTH_DE);
 
 function rate(chart, stem, branch) {
   const { favourable } = favourableElements(chart);

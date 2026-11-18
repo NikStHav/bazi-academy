@@ -1,6 +1,8 @@
 // Tong Shu (通书) almanac basics: the 12 Day Officers (建除十二神), clash animal and activity suggestions.
 import { BRANCHES } from './data.js';
 import { computeChart } from './bazi.js';
+import { lang, t } from './i18n.js';
+import * as DE from './i18n/de-misc.js';
 
 const mod = (a, n) => ((a % n) + n) % n;
 
@@ -43,6 +45,12 @@ export const ACTIVITIES = [
   { key: 'renovation', name: 'Renovation or building', icon: '🔨', officers: [3, 5, 8] },
 ];
 
+if (lang === 'de') {
+  OFFICERS.forEach((o, i) => Object.assign(o, DE.OFFICERS[i]));
+  Object.assign(RATING_LABEL, DE.RATING_LABEL);
+  ACTIVITIES.forEach((a, i) => { a.name = DE.ACTIVITIES[i]; });
+}
+
 /** Almanac info for a local calendar date. `mine` (optional) is the user's chart. */
 export function dayInfo(year, month, day, mine = null) {
   const c = computeChart({ year, month, day, hour: 12, minute: 0, tzOffset: 0 }); // noon: month & day pillar of that date
@@ -52,8 +60,8 @@ export function dayInfo(year, month, day, mine = null) {
   const personal = [];
   if (mine) {
     const yb = mine.pillars.year.branch, db = mine.pillars.day.branch;
-    if (clashBranch === yb) personal.push(`clashes your year branch ${BRANCHES[yb].zh} ${BRANCHES[yb].animal}`);
-    if (clashBranch === db) personal.push(`clashes your day branch ${BRANCHES[db].zh} (relationships, health)`);
+    if (clashBranch === yb) personal.push(t('clashes your year branch {b}', { b: `${BRANCHES[yb].zh} ${BRANCHES[yb].animal}` }));
+    if (clashBranch === db) personal.push(t('clashes your day branch {b} (relationships, health)', { b: BRANCHES[db].zh }));
   }
   return { date: { year, month, day }, pillars: c.pillars, officerIdx, officer: OFFICERS[officerIdx],
     clashBranch, personalClash: personal };
@@ -64,8 +72,8 @@ export function findDays(activityKey, from, days, mine = null) {
   const act = ACTIVITIES.find((a) => a.key === activityKey);
   const out = [];
   for (let i = 0; i < days; i++) {
-    const t = new Date(from.getFullYear(), from.getMonth(), from.getDate() + i);
-    const info = dayInfo(t.getFullYear(), t.getMonth() + 1, t.getDate(), mine);
+    const dt = new Date(from.getFullYear(), from.getMonth(), from.getDate() + i);
+    const info = dayInfo(dt.getFullYear(), dt.getMonth() + 1, dt.getDate(), mine);
     if (act.officers.includes(info.officerIdx) && !info.personalClash.length) out.push(info);
   }
   return out;

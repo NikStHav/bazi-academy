@@ -102,3 +102,19 @@ Review usually takes 1–3 days.
 - **Guideline 4.3 (Spam / saturated categories).** Apple names astrology and fortune telling as saturated, so a rejection under 4.3 is the biggest risk. The answer is the app's educational depth: keep the listing, screenshots and keywords about *learning*. If it is rejected anyway, reply in Resolution Center with the review notes above. Adding unique features (e.g. a German localisation, more lessons, progress statistics) strengthens a resubmission.
 - **Guideline 4.2 (Minimum functionality).** The app is fully offline and interactive, not a wrapped website, which addresses this.
 - **Guideline 2.1 (Completeness).** Make sure the support and privacy URLs load before you submit.
+
+## German localization (Deutsch)
+
+App Store Connect → your app → *App Information* → **Localizable Information** → add **German**. Use:
+
+| Field | Text |
+|---|---|
+| Name (≤30) | BaZi Academy: Vier Säulen |
+| Subtitle (≤30) | Chinesische Astrologie lernen |
+| Keywords (≤100) | `bazi,vier säulen,chinesische astrologie,fünf elemente,zehn götter,horoskop,mondkalender,feng shui` |
+| Privacy Policy URL | `https://<your-github-name>.github.io/<repo>/datenschutz.html` |
+
+**Promotional text:**
+> Die Vier Säulen des Schicksals Schritt für Schritt verstehen: 15 Lektionen, ein genauer BaZi-Rechner, ausführliche Deutungen, Mondkalender und endlose Quizze. Offline und privat.
+
+**Description:** use the German full description from `PLAY_STORE.md`. For the in-app purchase, also add a German localization: display name `BaZi Academy Premium`, description `Alle Lektionen, unbegrenzte Horoskope und ausführliche Deutungen.`

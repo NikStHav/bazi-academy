@@ -89,3 +89,14 @@ export const JIE_TERMS = [
   { zh: '大雪', name: 'Da Xue – Major Snow', lon: 255 },
   { zh: '小寒', name: 'Xiao Han – Minor Cold', lon: 285 },
 ];
+
+// ---------- localisation: apply translated texts in place (before any other module reads them) ----------
+import { lang } from './i18n.js';
+import { ELEMENTS_DE, STEMS_DE, BRANCHES_DE, TEN_GODS_DE, JIE_NAMES_DE } from './i18n/de-data.js';
+if (lang === 'de') {
+  ELEMENTS.forEach((e, i) => Object.assign(e, ELEMENTS_DE[i]));
+  STEMS.forEach((s, i) => Object.assign(s, STEMS_DE[i]));
+  BRANCHES.forEach((b, i) => Object.assign(b, BRANCHES_DE[i]));
+  for (const k of Object.keys(TEN_GODS)) Object.assign(TEN_GODS[k], TEN_GODS_DE[k]);
+  JIE_TERMS.forEach((j, i) => { j.name = JIE_NAMES_DE[i]; });
+}

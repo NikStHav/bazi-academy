@@ -26,6 +26,7 @@ An offline app for Android and iPhone for learning Chinese astrology according t
 - **Reminders & calendar export** (Calendar tab): optional local notifications for full/new moons, equinoxes & solstices, solar terms and festivals (evening before, morning of, or exact time); export as an .ics file, or subscribe to the feeds in `docs/calendar/` (served by GitHub Pages; regenerate with `node tools/build-calendar-feeds.mjs 2025 2035`).
 - **Today**: today's pillars, the next solar term, and how today relates to your own Day Master.
 - Fully offline, no tracking, light and dark mode.
+- **Languages:** English and German, following the phone's language (switchable under About → Language). UI texts use English source strings as keys (`t('…')` in `www/js/i18n.js`, German in `www/js/i18n/`); `node tools/i18n-keys.cjs --missing de` lists untranslated texts, and the tests fail if one is missing.
 
 ## Tech
 

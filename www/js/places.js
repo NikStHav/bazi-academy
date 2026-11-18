@@ -1,4 +1,6 @@
 // Birthplace search (offline city list, loaded on first use) and historical UTC offsets per IANA time zone.
+import { lang } from './i18n.js';
+
 let cities = null; // [{ name, cc, lat, lon, tz, pop, key }]
 
 // Common alternative spellings → name as stored in the data (and country).
@@ -46,7 +48,7 @@ export async function searchPlaces(query, limit = 8) {
 
 let countryNames = null;
 export function countryName(cc) {
-  try { countryNames ??= new Intl.DisplayNames(['en'], { type: 'region' }); return countryNames.of(cc) || cc; } catch { return cc; }
+  try { countryNames ??= new Intl.DisplayNames([lang], { type: 'region' }); return countryNames.of(cc) || cc; } catch { return cc; }
 }
 
 /** UTC offset in hours of `tz` at the instant `utcMs`. */

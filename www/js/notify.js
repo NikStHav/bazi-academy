@@ -5,6 +5,7 @@ import { dayInfo, RATING_LABEL } from './almanac.js';
 
 import { plugin } from './cap.js';
 import { collectEvents } from './ics.js';
+import { t, LOCALE } from './i18n.js';
 
 const LN = plugin('LocalNotifications');
 const KEY = 'bazi.notify';
@@ -21,12 +22,13 @@ export function dailyMessage(date, mine) {
   const info = dayInfo(date.getFullYear(), date.getMonth() + 1, date.getDate(), mine);
   const p = info.pillars.day;
   const o = info.officer;
-  let title = `${pillarName(p)} · ${o.zh} ${o.name} day (${RATING_LABEL[o.rating].toLowerCase()})`;
-  let body = `Good for: ${o.good.split(',')[0].toLowerCase()}.`;
+  const good = o.good.split(',')[0];
+  let title = `${pillarName(p)} · ${t('{name} day', { name: `${o.zh} ${o.name}` })} (${RATING_LABEL[o.rating]})`;
+  let body = `${t('Good for:')} ${good}.`;
   if (mine) {
     const g = TEN_GODS[tenGod(mine.dayMaster, p.stem)];
-    title = `${pillarName(p)} – a ${g.name} day for you`;
-    body = `${o.zh} ${o.name} day: good for ${o.good.split(',')[0].toLowerCase()}.${info.personalClash.length ? ' Clash with your chart – take it easy.' : ''}`;
+    title = `${pillarName(p)} – ${t('a {god} day for you', { god: g.name })}`;
+    body = `${t('{name} day', { name: `${o.zh} ${o.name}` })} – ${t('Good for:')} ${good}.${info.personalClash.length ? t(' Clash with your chart – take it easy.') : ''}`;
   }
   return { title, body: `${body} (${STEMS[p.stem].py} ${BRANCHES[p.branch].animal})` };
 }
@@ -87,10 +89,10 @@ export function reminderTime(e, when) {
 }
 
 export function reminderText(e, when) {
-  const t = e.allDay ? '' : new Date(e.ms).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
-  const day = when === 'evening' ? 'Tomorrow' : 'Today';
-  return { title: `${e.title}${when === 'exact' && !e.allDay ? ' – now' : ''}`,
-    body: `${when === 'exact' && !e.allDay ? '' : `${day}${t ? ' at ' + t : ''}. `}${e.desc}` };
+  const tm = e.allDay ? '' : new Date(e.ms).toLocaleTimeString(LOCALE, { hour: '2-digit', minute: '2-digit' });
+  const day = when === 'evening' ? t('Tomorrow') : t('Today');
+  return { title: `${e.title}${when === 'exact' && !e.allDay ? t(' – now') : ''}`,
+    body: `${when === 'exact' && !e.allDay ? '' : `${tm ? t('{day} at {time}', { day, time: tm }) : day}. `}${e.desc}` };
 }
 
 async function cancelReminders() {

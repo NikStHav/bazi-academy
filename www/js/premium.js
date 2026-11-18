@@ -4,7 +4,7 @@
 export const PRODUCT_ID = 'bazi_premium';
 export const FREE_LESSONS = 7;          // lessons 1–7 are free
 export const FREE_CALCULATIONS = 5;     // new charts that can be calculated without Premium
-export const FALLBACK_PRICE = '€2.99';
+export const FALLBACK_PRICE = lang === 'de' ? '2,99 €' : '€2.99';
 
 const KEY = 'bazi.premium';
 const CALC_KEY = 'bazi.calculations';
@@ -13,6 +13,7 @@ const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } ca
 
 import { isNative, platform, plugin } from './cap.js';
 import { TEST_BUILD } from './build-flags.js';
+import { lang, t } from './i18n.js';
 
 const Store = plugin('NativePurchases');
 
@@ -58,7 +59,7 @@ export async function init() {
 export async function buy() {
   if (!Store) {
     // Browser preview only (never shipped behaviour): simulate the purchase so the flow can be tested.
-    if (confirm('Browser preview – simulate buying Premium?')) { setPremium(true); return 'purchased'; }
+    if (confirm(t('Browser preview – simulate buying Premium?'))) { setPremium(true); return 'purchased'; }
     return 'cancelled';
   }
   try {

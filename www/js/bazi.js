@@ -1,6 +1,7 @@
 // BaZi (Four Pillars) calculation engine. Pure functions, no DOM.
 import { STEMS, BRANCHES, ELEMENTS, JIE_TERMS } from './data.js';
 import { apparentSunLongitude } from './vsop.js';
+import { t } from './i18n.js';
 
 const DEG = Math.PI / 180;
 const DAY_MS = 86400000;
@@ -122,13 +123,14 @@ export function elementBalance(chart) {
   return scores.map((v, i) => ({ el: i, score: Math.round(v * 10) / 10, pct: Math.round((v / total) * 100) }));
 }
 
-export const SEASON_PHASES = [
+export const SEASON_PHASES_EN = [
   { key: 'prosperous', zh: '旺', name: 'Prosperous', desc: 'The Day Master’s element is in season – at its peak.' },
   { key: 'strong', zh: '相', name: 'Strong', desc: 'The season produces the Day Master – well supported.' },
   { key: 'resting', zh: '休', name: 'Resting', desc: 'The Day Master produces the season’s element – it is spending energy.' },
   { key: 'trapped', zh: '囚', name: 'Trapped', desc: 'The Day Master must control the season’s element – tiring.' },
   { key: 'dead', zh: '死', name: 'Weak (Dead)', desc: 'The season controls the Day Master – least seasonal support.' },
 ];
+export const SEASON_PHASES = SEASON_PHASES_EN.map((p) => ({ ...p, name: t(p.name), desc: t(p.desc) }));
 
 export function seasonPhase(dmEl, seasonEl) {
   const rel = mod(dmEl - seasonEl, 5); // 0 same, 1 season produces DM, 2 season controls DM...
@@ -161,7 +163,8 @@ export function dayMasterStrength(chart) {
 }
 
 const PILLAR_KEYS = ['year', 'month', 'day', 'hour'];
-const PILLAR_LABEL = { year: 'Year', month: 'Month', day: 'Day', hour: 'Hour' };
+const PILLAR_CODE = { year: 'Year', month: 'Month', day: 'Day', hour: 'Hour' }; // internal (used in `where`)
+const PILLAR_LABEL = { year: t('Year'), month: t('Month'), day: t('Day'), hour: t('Hour') };
 
 const SIX_HARMONY_EL = { '0-1': 2, '2-11': 0, '3-10': 1, '4-9': 3, '5-8': 4, '6-7': 1 };
 const THREE_HARMONY = [ // [branches], element
@@ -177,25 +180,25 @@ export function findInteractions(chart) {
   for (let i = 0; i < ps.length; i++) {
     for (let j = i + 1; j < ps.length; j++) {
       const a = ps[i], b = ps[j];
-      const where = `${PILLAR_LABEL[a.key]} & ${PILLAR_LABEL[b.key]}`;
+      const where = `${PILLAR_CODE[a.key]} & ${PILLAR_CODE[b.key]}`;
       if (mod(a.stem - b.stem, 10) === 5) {
         const lo = Math.min(a.stem, b.stem) % 5;
         out.push({ type: 'Stem combination', zh: '天干五合', where, chars: STEMS[a.stem].zh + STEMS[b.stem].zh,
-          note: `Can transform into ${ELEMENTS[STEM_COMBO_EL[lo]].name} if supported by the season.` });
+          note: t('Can transform into {el} if supported by the season.', { el: ELEMENTS[STEM_COMBO_EL[lo]].name }) });
       }
       const [x, y] = [a.branch, b.branch].sort((m, n) => m - n);
       const chars = BRANCHES[a.branch].zh + BRANCHES[b.branch].zh;
       if (mod(a.branch - b.branch, 12) === 6)
-        out.push({ type: 'Clash', zh: '六冲', where, chars, note: 'Opposing branches – movement, change, conflict or travel.' });
+        out.push({ type: 'Clash', zh: '六冲', where, chars, note: t('Opposing branches – movement, change, conflict or travel.') });
       if (mod(a.branch + b.branch, 12) === 1)
         out.push({ type: 'Six Harmony', zh: '六合', where, chars,
-          note: `A bond of attraction; associated with ${ELEMENTS[SIX_HARMONY_EL[`${x}-${y}`]].name}.` });
+          note: t('A bond of attraction; associated with {el}.', { el: ELEMENTS[SIX_HARMONY_EL[`${x}-${y}`]].name }) });
       if (HARMS.some(([m, n]) => m === x && n === y))
-        out.push({ type: 'Harm', zh: '六害', where, chars, note: 'Hidden friction – often between people or plans.' });
+        out.push({ type: 'Harm', zh: '六害', where, chars, note: t('Hidden friction – often between people or plans.') });
       if (x === y && [4, 6, 9, 11].includes(x))
-        out.push({ type: 'Self-punishment', zh: '自刑', where, chars, note: 'Self-critical tendencies tied to this branch.' });
+        out.push({ type: 'Self-punishment', zh: '自刑', where, chars, note: t('Self-critical tendencies tied to this branch.') });
       if ((x === 0 && y === 3))
-        out.push({ type: 'Punishment', zh: '子卯刑', where, chars, note: 'The “uncivil” punishment – friction in manners or relationships.' });
+        out.push({ type: 'Punishment', zh: '子卯刑', where, chars, note: t('The “uncivil” punishment – friction in manners or relationships.') });
     }
   }
   const branchSet = new Set(ps.map((p) => p.branch));
@@ -203,16 +206,17 @@ export function findInteractions(chart) {
     const n = trio.filter((b) => branchSet.has(b)).length;
     const centerPresent = branchSet.has(trio[1]);
     if (n === 3) out.push({ type: 'Three Harmony (full)', zh: '三合局', where: 'Chart', chars: trio.map((b) => BRANCHES[b].zh).join(''),
-      note: `A complete ${ELEMENTS[el].name} frame – this element is greatly strengthened.` });
+      note: t('A complete {el} frame – this element is greatly strengthened.', { el: ELEMENTS[el].name }) });
     else if (n === 2 && centerPresent) out.push({ type: 'Half Three Harmony', zh: '半合', where: 'Chart',
       chars: trio.filter((b) => branchSet.has(b)).map((b) => BRANCHES[b].zh).join(''),
-      note: `A partial ${ELEMENTS[el].name} frame.` });
+      note: t('A partial {el} frame.', { el: ELEMENTS[el].name }) });
   }
   for (const trio of PUNISH) {
     const present = trio.filter((b) => branchSet.has(b));
     if (present.length >= 2) out.push({ type: present.length === 3 ? 'Punishment (full)' : 'Punishment (partial)', zh: '三刑',
-      where: 'Chart', chars: present.map((b) => BRANCHES[b].zh).join(''), note: 'Tension, obligations or legal/health matters in classical texts.' });
+      where: 'Chart', chars: present.map((b) => BRANCHES[b].zh).join(''), note: t('Tension, obligations or legal/health matters in classical texts.') });
   }
+  for (const x of out) { x.label = t(x.type); x.whereLabel = x.where === 'Chart' ? t('Chart') : x.where.split(' & ').map((w) => t(w)).join(' & '); }
   return out;
 }
 

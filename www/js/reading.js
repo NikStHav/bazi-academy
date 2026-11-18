@@ -2,6 +2,8 @@
 import { STEMS, BRANCHES, ELEMENTS, TEN_GODS } from './data.js';
 import { tenGod, pillarFromIndex } from './bazi.js';
 import { findStars, pillarListText } from './shensha.js';
+import { t, lang } from './i18n.js';
+import * as DE from './i18n/de-reading.js';
 
 const mod = (a, n) => ((a % n) + n) % n;
 
@@ -121,6 +123,15 @@ const GROUPS = [
     none: 'No Resource stars: you learn by doing and are used to fending for yourself. Mentors and rest are worth seeking out.' },
 ];
 
+if (lang === 'de') {
+  ELEMENT_ADVICE.splice(0, 5, ...DE.ELEMENT_ADVICE);
+  Object.assign(GOD_TEXT, DE.GOD_TEXT);
+  GROUPS.forEach((g, i) => Object.assign(g, DE.GROUPS[i]));
+  LACK.splice(0, 5, ...DE.LACK);
+  EXCESS.splice(0, 5, ...DE.EXCESS);
+  Object.assign(PILLAR_AREA, DE.PILLAR_AREA);
+}
+
 /** Favourable / less favourable element indices (support-or-restrain method). */
 export function favourableElements(chart) {
   const e = STEMS[chart.dayMaster].el;
@@ -136,44 +147,43 @@ export function favourableElements(chart) {
 export function buildReading(chart) {
   const dm = chart.dayMaster;
   const dmS = STEMS[dm];
-  const dmEl = dmS.el;
   const el = (i) => ELEMENTS[mod(i, 5)];
   const sections = [];
 
   // 1. Core nature & season
   const phase = chart.strength.phase;
-  const monthEl = BRANCHES[chart.pillars.month.branch].el;
-  sections.push({ title: 'Your core nature', html: `
-    <p>Your Day Master is <b>${dmS.zh} ${dmS.py}</b>. ${dmS.desc}</p>
-    <p>You were born in a ${el(monthEl).name} month (${BRANCHES[chart.pillars.month.branch].zh} ${BRANCHES[chart.pillars.month.branch].animal}), so your element is <b>${phase.name.toLowerCase()} (${phase.zh})</b>. ${phase.desc}
-    ${{ prosperous: ' Your natural qualities show strongly and early in life.', strong: ' You are well nourished by your environment and gain confidence with support.',
-      resting: ' You tend to give a lot of energy to others and need to recharge consciously.', trapped: ' Life asks you to work hard for results; your efforts pay off over time.',
-      dead: ' You are shaped strongly by outside forces and grow stronger through the right support and timing.' }[phase.key]}</p>` });
+  const mb = BRANCHES[chart.pillars.month.branch];
+  const PHASE_NOTE = { prosperous: t('Your natural qualities show strongly and early in life.'), strong: t('You are well nourished by your environment and gain confidence with support.'),
+    resting: t('You tend to give a lot of energy to others and need to recharge consciously.'), trapped: t('Life asks you to work hard for results; your efforts pay off over time.'),
+    dead: t('You are shaped strongly by outside forces and grow stronger through the right support and timing.') };
+  sections.push({ title: t('Your core nature'), html: `
+    <p>${t('Your Day Master is <b>{dm}</b>.', { dm: `${dmS.zh} ${dmS.py}` })} ${dmS.desc}</p>
+    <p>${t('You were born in a {el} month ({b}), so your element is <b>{phase}</b>.', { el: el(mb.el).name, b: `${mb.zh} ${mb.animal}`, phase: `${phase.name.toLowerCase()} (${phase.zh})` })} ${phase.desc} ${PHASE_NOTE[phase.key]}</p>` });
 
   // 2. Strength & useful elements
   const { strong, favourable, unfavourable } = favourableElements(chart);
   const fav = favourable.map((x) => el(x));
   const mainFav = mod(favourable[0], 5);
-  sections.push({ title: 'Balance & favourable elements', html: `
-    <p>Your Day Master is <b>${chart.strength.label.toLowerCase()}</b> (support ≈ ${chart.strength.ratio}%). ${strong
-      ? 'A strong Day Master has energy to spare and benefits from elements that <b>use</b> that energy: what it produces, controls, or is controlled by.'
-      : 'A weaker Day Master benefits from elements that <b>support</b> it: the element that produces it and its own element.'}</p>
-    <p><b>Favourable:</b> ${fav.map((e) => `<span class="tx-${ELEMENTS.indexOf(e)}">${e.zh} ${e.name}</span>`).join(', ')} ·
-       <b>Less favourable:</b> ${unfavourable.map((x) => el(x).name).join(', ')}</p>
-    <p>In traditional practice, people strengthen their main favourable element <b>${el(mainFav).name}</b> through:</p>
-    <ul><li><b>Colours:</b> ${ELEMENT_ADVICE[mainFav].colors}</li><li><b>Direction:</b> ${el(mainFav).direction}</li>
-      <li><b>Activities:</b> ${ELEMENT_ADVICE[mainFav].activities}</li><li><b>Fields of work:</b> ${ELEMENT_ADVICE[mainFav].careers}</li></ul>
-    <p class="small muted">A full useful-god (用神) analysis also weighs climate, combinations and special structures; treat this as a first orientation.</p>` });
+  sections.push({ title: t('Balance & favourable elements'), html: `
+    <p>${t('Your Day Master is <b>{label}</b> (support ≈ {n}%).', { label: t(chart.strength.label).toLowerCase(), n: chart.strength.ratio })} ${strong
+      ? t('A strong Day Master has energy to spare and benefits from elements that <b>use</b> that energy: what it produces, controls, or is controlled by.')
+      : t('A weaker Day Master benefits from elements that <b>support</b> it: the element that produces it and its own element.')}</p>
+    <p><b>${t('Favourable:')}</b> ${fav.map((e) => `<span class="tx-${ELEMENTS.indexOf(e)}">${e.zh} ${e.name}</span>`).join(', ')} ·
+       <b>${t('Less favourable:')}</b> ${unfavourable.map((x) => el(x).name).join(', ')}</p>
+    <p>${t('In traditional practice, people strengthen their main favourable element <b>{el}</b> through:', { el: el(mainFav).name })}</p>
+    <ul><li><b>${t('Colours:')}</b> ${ELEMENT_ADVICE[mainFav].colors}</li><li><b>${t('Direction:')}</b> ${el(mainFav).direction}</li>
+      <li><b>${t('Activities:')}</b> ${ELEMENT_ADVICE[mainFav].activities}</li><li><b>${t('Fields of work:')}</b> ${ELEMENT_ADVICE[mainFav].careers}</li></ul>
+    <p class="small muted">${t('A full useful-god (用神) analysis also weighs climate, combinations and special structures; treat this as a first orientation.')}</p>` });
 
   // 3. Element balance highlights
   const sorted = [...chart.elements].sort((a, b) => b.pct - a.pct);
   const missing = chart.elements.filter((e) => e.pct === 0);
   const weakEls = chart.elements.filter((e) => e.pct > 0 && e.pct < 8);
-  sections.push({ title: 'Your Five Elements', html: `
-    <p>Strongest element: <b class="tx-${sorted[0].el}">${el(sorted[0].el).name} (${sorted[0].pct}%)</b> – ${el(sorted[0].el).traits.toLowerCase()}
-      ${sorted[0].pct >= 35 ? ' It is very dominant, so its qualities – and their excesses – colour your whole chart.' : ''}</p>
-    ${missing.length ? `<p>Missing: <b>${missing.map((e) => el(e.el).name).join(', ')}</b>. Missing elements often show up as themes you meet through other people, places or later in life – and luck pillars can supply them.</p>` : '<p>All five elements are present in your chart – a sign of versatility.</p>'}
-    ${weakEls.length ? `<p>Weak: ${weakEls.map((e) => el(e.el).name).join(', ')}.</p>` : ''}` });
+  sections.push({ title: t('Your Five Elements'), html: `
+    <p>${t('Strongest element:')} <b class="tx-${sorted[0].el}">${el(sorted[0].el).name} (${sorted[0].pct}%)</b> – ${el(sorted[0].el).traits}
+      ${sorted[0].pct >= 35 ? t('It is very dominant, so its qualities – and their excesses – colour your whole chart.') : ''}</p>
+    ${missing.length ? `<p>${t('Missing: <b>{els}</b>. Missing elements often show up as themes you meet through other people, places or later in life – and luck pillars can supply them.', { els: missing.map((e) => el(e.el).name).join(', ') })}</p>` : `<p>${t('All five elements are present in your chart – a sign of versatility.')}</p>`}
+    ${weakEls.length ? `<p>${t('Weak: {els}.', { els: weakEls.map((e) => el(e.el).name).join(', ') })}</p>` : ''}` });
 
   // 4. Ten Gods profile
   const counts = {};
@@ -187,8 +197,8 @@ export function buildReading(chart) {
   const topGod = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
   const many = groupCount.filter((g) => g.n >= 3);
   const none = groupCount.filter((g) => g.n === 0);
-  sections.push({ title: 'Your Ten Gods profile', html: `
-    <p>Counting the stems and main hidden stems, your most prominent star is <b>${TEN_GODS[topGod].name} ${TEN_GODS[topGod].zh}</b>. ${GOD_TEXT[topGod].trait}</p>
+  sections.push({ title: t('Your Ten Gods profile'), html: `
+    <p>${t('Counting the stems and main hidden stems, your most prominent star is <b>{god}</b>.', { god: `${TEN_GODS[topGod].name} ${TEN_GODS[topGod].zh}` })} ${GOD_TEXT[topGod].trait}</p>
     <table>${groupCount.map((g) => `<tr><td>${g.name} <span class="muted">${g.zh}</span></td><td>${'●'.repeat(g.n) || '–'}</td></tr>`).join('')}</table>
     ${many.map((g) => `<p>${g.many}</p>`).join('')}${none.map((g) => `<p>${g.none}</p>`).join('')}` });
 
@@ -197,34 +207,36 @@ export function buildReading(chart) {
   const sGod = tenGod(dm, BRANCHES[chart.pillars.day.branch].hidden[0]);
   const db = chart.pillars.day.branch;
   const spouseClash = chart.interactions.find((x) => x.type === 'Clash' && x.where.includes('Day'));
-  sections.push({ title: 'Career & relationships', html: `
-    <h4>Career – month stem: ${TEN_GODS[mGod].name}</h4><p>${GOD_TEXT[mGod].career}</p>
-    <h4>Relationships – spouse palace ${BRANCHES[db].zh} ${BRANCHES[db].animal}: ${TEN_GODS[sGod].name}</h4><p>${GOD_TEXT[sGod].spouse}</p>
-    ${spouseClash ? `<p>Your day branch is involved in a clash (${spouseClash.chars}). Classically this points to an active, changeable love life or a partner who travels or moves a lot – commitment grows through flexibility.</p>` : ''}` });
+  sections.push({ title: t('Career & relationships'), html: `
+    <h4>${t('Career – month stem: {god}', { god: TEN_GODS[mGod].name })}</h4><p>${GOD_TEXT[mGod].career}</p>
+    <h4>${t('Relationships – spouse palace {b}: {god}', { b: `${BRANCHES[db].zh} ${BRANCHES[db].animal}`, god: TEN_GODS[sGod].name })}</h4><p>${GOD_TEXT[sGod].spouse}</p>
+    ${spouseClash ? `<p>${t('Your day branch is involved in a clash ({chars}). Classically this points to an active, changeable love life or a partner who travels or moves a lot – commitment grows through flexibility.', { chars: spouseClash.chars })}</p>` : ''}` });
 
   // 6. Current luck pillar & year
   const now = new Date().getFullYear();
   const cur = [...chart.luck.pillars].reverse().find((p) => p.year <= now);
   const yearP = pillarFromIndex(now - 4);
   const yGod = tenGod(dm, yearP.stem);
+  const yearLine = t('<b>{y}</b> ({p}) is a <b>{god}</b> year for you:', { y: now, p: `${STEMS[yearP.stem].zh}${BRANCHES[yearP.branch].zh}`, god: TEN_GODS[yGod].name });
   if (cur) {
     const lGod = tenGod(dm, cur.stem);
     const brEl = BRANCHES[cur.branch].el;
     const good = favourable.map((x) => mod(x, 5)).includes(brEl);
-    sections.push({ title: 'Your current phase', html: `
-      <p>Since ${cur.year} you are in the luck pillar <b>${STEMS[cur.stem].zh}${BRANCHES[cur.branch].zh}</b> (${TEN_GODS[lGod].name}). ${GOD_TEXT[lGod].luck}</p>
-      <p>Its branch brings ${el(brEl).name}, which is ${good ? '<b>favourable</b> for your chart – a supportive background for this decade.' : 'not among your favourable elements – plan carefully and use your strengths.'}</p>
-      <p><b>${now}</b> (${STEMS[yearP.stem].zh}${BRANCHES[yearP.branch].zh}) is a <b>${TEN_GODS[yGod].name}</b> year for you: ${GOD_TEXT[yGod].luck.charAt(0).toLowerCase() + GOD_TEXT[yGod].luck.slice(1)}</p>` });
+    sections.push({ title: t('Your current phase'), html: `
+      <p>${t('Since {y} you are in the luck pillar <b>{p}</b> ({god}).', { y: cur.year, p: `${STEMS[cur.stem].zh}${BRANCHES[cur.branch].zh}`, god: TEN_GODS[lGod].name })} ${GOD_TEXT[lGod].luck}</p>
+      <p>${good ? t('Its branch brings {el}, which is <b>favourable</b> for your chart – a supportive background for this decade.', { el: el(brEl).name })
+        : t('Its branch brings {el}, which is not among your favourable elements – plan carefully and use your strengths.', { el: el(brEl).name })}</p>
+      <p>${yearLine} ${GOD_TEXT[yGod].luck}</p>` });
   } else {
-    sections.push({ title: 'Your current phase', html: `<p>Your first luck pillar has not started yet. <b>${now}</b> is a <b>${TEN_GODS[yGod].name}</b> year for you.</p>` });
+    sections.push({ title: t('Your current phase'), html: `<p>${t('Your first luck pillar has not started yet.')} ${yearLine} ${GOD_TEXT[yGod].luck}</p>` });
   }
 
   // 6b. Symbolic stars
   const stars = findStars(chart);
-  sections.splice(sections.length - 1, 0, { title: 'Symbolic stars', html: stars.length ? `
-    <ul class="weak-list">${stars.map((st) => `<li><b>${st.icon} ${st.name} ${st.zh}</b> in the ${pillarListText(st.pillars)}. ${st.desc}
-      <br><span class="small">Here it points to ${st.pillars.map((p) => st.pillar[p]).join('; ')}.</span></li>`).join('')}</ul>`
-    : '<p>None of the main symbolic stars appear in your natal chart – your reading rests fully on the elements and Ten Gods. Stars can still be activated by years and luck pillars.</p>' });
+  sections.splice(sections.length - 1, 0, { title: t('Symbolic stars'), html: stars.length ? `
+    <ul class="weak-list">${stars.map((st) => `<li><b>${st.icon} ${st.name} ${st.zh}</b> ${t('in the {where}.', { where: pillarListText(st.pillars) })} ${st.desc}
+      <br><span class="small">${t('Here it points to {what}.', { what: st.pillars.map((p) => st.pillar[p]).join('; ') })}</span></li>`).join('')}</ul>`
+    : `<p>${t('None of the main symbolic stars appear in your natal chart – your reading rests fully on the elements and Ten Gods. Stars can still be activated by years and luck pillars.')}</p>` });
 
   // 7. Weak spots & balancing
   const items = [];
@@ -232,26 +244,26 @@ export function buildReading(chart) {
   const lackEls = chart.elements.filter((e) => e.pct === 0).length ? chart.elements.filter((e) => e.pct === 0) : (weakest.pct < 10 ? [weakest] : []);
   for (const e of lackEls) {
     const isFav = favourable.includes(e.el);
-    items.push(`<li><b>${e.pct === 0 ? 'Missing' : 'Weak'} ${el(e.el).name} (${e.pct}%).</b> ${LACK[e.el].look}
-      ${isFav ? `<br><i>How to balance:</i> ${LACK[e.el].fix}` : `<br><i>Note:</i> ${el(e.el).name} is not among your favourable elements, so you don’t need to add a lot of it – just be aware of this blind spot.`}</li>`);
+    items.push(`<li><b>${t(e.pct === 0 ? 'Missing {el} ({pct}%).' : 'Weak {el} ({pct}%).', { el: el(e.el).name, pct: e.pct })}</b> ${LACK[e.el].look}
+      ${isFav ? `<br><i>${t('How to balance:')}</i> ${LACK[e.el].fix}` : `<br><i>${t('Note:')}</i> ${t('{el} is not among your favourable elements, so you don’t need to add a lot of it – just be aware of this blind spot.', { el: el(e.el).name })}`}</li>`);
   }
   if (sorted[0].pct >= 35) {
     const x = sorted[0].el, drain = mod(x + 1, 5), ctrl = mod(x + 3, 5);
-    items.push(`<li><b>Excess ${el(x).name} (${sorted[0].pct}%).</b> In daily life, ${EXCESS[x]}.
-      <br><i>How to balance:</i> let it flow out through <b>${el(drain).name}</b> (${ELEMENT_ADVICE[drain].activities}) or bring structure with <b>${el(ctrl).name}</b> (${ELEMENT_ADVICE[ctrl].activities}).</li>`);
+    items.push(`<li><b>${t('Excess {el} ({pct}%).', { el: el(x).name, pct: sorted[0].pct })}</b> ${t('In daily life, {what}.', { what: EXCESS[x] })}
+      <br><i>${t('How to balance:')}</i> ${t('let it flow out through <b>{a}</b> ({aa}) or bring structure with <b>{b}</b> ({bb}).', { a: el(drain).name, aa: ELEMENT_ADVICE[drain].activities, b: el(ctrl).name, bb: ELEMENT_ADVICE[ctrl].activities })}</li>`);
   }
-  if (strong) items.push(`<li><b>Strong Day Master.</b> Look out for stubbornness and wanting to do everything yourself. <i>Balance:</i> channel energy into output – projects, work, teaching – and accept being challenged.</li>`);
-  else items.push(`<li><b>Weaker Day Master.</b> Look out for over-extending yourself and taking on others’ burdens. <i>Balance:</i> rest, learning and supportive people come first; say no more often and build up step by step.</li>`);
+  if (strong) items.push(`<li>${t('<b>Strong Day Master.</b> Look out for stubbornness and wanting to do everything yourself. <i>Balance:</i> channel energy into output – projects, work, teaching – and accept being challenged.')}</li>`);
+  else items.push(`<li>${t('<b>Weaker Day Master.</b> Look out for over-extending yourself and taking on others’ burdens. <i>Balance:</i> rest, learning and supportive people come first; say no more often and build up step by step.')}</li>`);
   for (const g of none) items.push(`<li>${g.none.replace(/^([^:]+):/, '<b>$1.</b>')}</li>`);
   for (const x of chart.interactions.filter((i) => i.type === 'Clash')) {
     const [p1, p2] = x.where.split(' & ').map((w) => w.toLowerCase());
-    items.push(`<li><b>Clash ${x.chars}</b> between ${PILLAR_AREA[p1]} and ${PILLAR_AREA[p2]}: these areas can pull in different directions. <i>Balance:</i> plan consciously for both and expect change rather than fighting it.</li>`);
+    items.push(`<li>${t('<b>Clash {chars}</b> between {a} and {b}: these areas can pull in different directions. <i>Balance:</i> plan consciously for both and expect change rather than fighting it.', { chars: x.chars, a: PILLAR_AREA[p1], b: PILLAR_AREA[p2] })}</li>`);
   }
-  sections.splice(sections.length - 1, 0, { title: 'Weak spots & how to balance them', html: `
-    <p>Every chart has imbalances – they are where growth happens. Based on your chart, watch out for:</p>
+  sections.splice(sections.length - 1, 0, { title: t('Weak spots & how to balance them'), html: `
+    <p>${t('Every chart has imbalances – they are where growth happens. Based on your chart, watch out for:')}</p>
     <ul class="weak-list">${items.join('')}</ul>
-    <p><b>In relationships</b>, people whose charts are rich in ${favourable.map((x) => el(x).name).join(' and ')} tend to balance you – see <i>Your ideal match</i> on the compatibility page.</p>` });
+    <p>${t('<b>In relationships</b>, people whose charts are rich in {els} tend to balance you – see <i>Your ideal match</i> on the compatibility page.', { els: favourable.map((x) => el(x).name).join(t(' and ')) })}</p>` });
 
-  sections.push({ title: 'A note', html: '<p class="small muted">This reading describes traditional BaZi tendencies to inspire reflection. It is not a prediction and no substitute for professional advice. Your choices shape your life.</p>' });
+  sections.push({ title: t('A note'), html: `<p class="small muted">${t('This reading describes traditional BaZi tendencies to inspire reflection. It is not a prediction and no substitute for professional advice. Your choices shape your life.')}</p>` });
   return { sections };
 }

@@ -1,13 +1,14 @@
 // iCalendar (RFC 5545) export of lunar events: moons, solar terms, festivals. Pure functions.
 import { moonEvents, solarTermsBetween, dayEvents } from './lunar.js';
+import { t } from './i18n.js';
 
 const DAY = 86400000;
 export const KINDS = {
-  full: { name: 'Full moons', icon: '🌕' },
-  new: { name: 'New moons', icon: '🌑' },
-  major: { name: 'Equinoxes & solstices', icon: '☀️' },
-  terms: { name: 'All 24 solar terms', icon: '🌱' },
-  fest: { name: 'Traditional festivals', icon: '🏮' },
+  full: { name: t('Full moons'), icon: '🌕' },
+  new: { name: t('New moons'), icon: '🌑' },
+  major: { name: t('Equinoxes & solstices'), icon: '☀️' },
+  terms: { name: t('All 24 solar terms'), icon: '🌱' },
+  fest: { name: t('Traditional festivals'), icon: '🏮' },
 };
 
 /** Lunar events between two dates: [{ kind, uid, title, desc, ms, allDay?, date? }] */
@@ -17,21 +18,21 @@ export function collectEvents(fromMs, toMs, kinds) {
     if (!kinds[m.type]) continue;
     const d = new Date(m.ms).toISOString().slice(0, 10).replace(/-/g, '');
     out.push({ kind: m.type, uid: `${m.type}moon-${d}@bazi-academy`, ms: m.ms,
-      title: m.type === 'full' ? '🌕 Full moon' : '🌑 New moon',
-      desc: m.type === 'full' ? 'Full moon (望). In the Chinese calendar it falls around the 15th day of the lunar month.' : 'New moon (朔) – the first day of a lunar month in China.' });
+      title: m.type === 'full' ? t('🌕 Full moon') : t('🌑 New moon'),
+      desc: m.type === 'full' ? t('Full moon (望). In the Chinese calendar it falls around the 15th day of the lunar month.') : t('New moon (朔) – the first day of a lunar month in China.') });
   }
   if (kinds.major || kinds.terms) {
-    for (const t of solarTermsBetween(fromMs, toMs)) {
-      if (!kinds.terms && !t.major) continue;
-      const y = new Date(t.ms).getUTCFullYear();
-      out.push({ kind: t.major ? 'major' : 'terms', uid: `term-${t.lon}-${y}@bazi-academy`, ms: t.ms,
-        title: `${t.major ? '☀️' : '🌱'} ${t.name} ${t.zh}`,
-        desc: `Solar term ${t.zh}: the sun reaches ${t.lon}° ecliptic longitude.${t.lon % 30 === 15 ? ' A new BaZi month begins.' : ''}` });
+    for (const st of solarTermsBetween(fromMs, toMs)) {
+      if (!kinds.terms && !st.major) continue;
+      const y = new Date(st.ms).getUTCFullYear();
+      out.push({ kind: st.major ? 'major' : 'terms', uid: `term-${st.lon}-${y}@bazi-academy`, ms: st.ms,
+        title: `${st.major ? '☀️' : '🌱'} ${st.name} ${st.zh}`,
+        desc: t('Solar term {zh}: the sun reaches {lon}° ecliptic longitude.', { zh: st.zh, lon: st.lon }) + (st.lon % 30 === 15 ? t(' A new BaZi month begins.') : '') });
     }
   }
   if (kinds.fest) {
-    for (let t = fromMs; t < toMs; t += DAY) {
-      const dt = new Date(t);
+    for (let tm = fromMs; tm < toMs; tm += DAY) {
+      const dt = new Date(tm);
       const y = dt.getUTCFullYear(), m = dt.getUTCMonth() + 1, d = dt.getUTCDate();
       for (const f of dayEvents(y, m, d).festivals) {
         if (f.zh === '冬至' && kinds.major) continue; // already listed as the solstice
