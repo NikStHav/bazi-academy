@@ -202,3 +202,15 @@ th, td { padding: 6px 4px; border-bottom: 1px solid var(--line); text-align: lef
 .place-opt:last-child { border-bottom: 0; }
 .place-opt.on, .place-opt:hover { background: var(--surface-2); }
 .place-none { padding: 11px 12px; font-size: 14px; color: var(--muted); }
+
+/* Welcome */
+body.no-tabs .tabs { display: none; }
+body.no-tabs main { padding-bottom: 32px; }
+/* Year forecast */
+.rate { font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 99px; vertical-align: middle; white-space: nowrap; }
+.rate-favourable { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
+.rate-mixed { background: color-mix(in srgb, var(--metal) 22%, transparent); color: var(--muted); }
+.rate-challenging { background: color-mix(in srgb, var(--bad) 15%, transparent); color: var(--bad); }
+.fc-month { border-top: 1px solid var(--line); padding: 10px 0 2px; }
+.fc-head { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+.fc-pillar { font-family: var(--serif); font-size: 20px; color: #fff; border-radius: 8px; padding: 4px 8px; }

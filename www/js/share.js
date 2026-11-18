@@ -68,3 +68,17 @@ export async function shareChart(chart, name) {
   const a = document.createElement('a'); a.href = dataUrl; a.download = 'bazi-chart.png'; a.click();
   return 'downloaded';
 }
+
+/** Save/share a text file (backup). Native: share sheet; browser: download. */
+export async function shareTextFile(filename, text, mime = 'application/json') {
+  const FS = plugin('Filesystem'), Share = plugin('Share');
+  if (FS && Share) {
+    const { uri } = await FS.writeFile({ path: filename, data: text, directory: 'CACHE', encoding: 'utf8' });
+    await Share.share({ title: filename, files: [uri], dialogTitle: 'Save your backup' }).catch(() => {});
+    return 'shared';
+  }
+  const url = URL.createObjectURL(new Blob([text], { type: mime }));
+  const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  return 'downloaded';
+}

@@ -61,12 +61,12 @@ To test without being charged, add your Google account under *Settings → Licen
 > Discover BaZi (八字), the Four Pillars of Destiny, one of the great classical systems of Chinese astrology, step by step.
 >
 > LEARN
-> 14 clear lessons take you from the foundations to real chart analysis:
+> 15 clear lessons take you from the foundations to real chart analysis:
 > • Yin & Yang and the Five Elements (Wood, Fire, Earth, Metal, Water)
 > • The 10 Heavenly Stems and 12 Earthly Branches
 > • The 60 Jiazi cycle and the solar calendar (solar terms)
 > • Hidden stems, the Day Master and the Ten Gods
-> • Seasonal strength, clashes and combinations, luck pillars, the useful god
+> • Seasonal strength, clashes and combinations, symbolic stars (Nobleman, Peach Blossom, Travelling Horse …), luck pillars, the useful god
 > Every lesson includes interactive diagrams and a short quiz.
 >
 > CALCULATE
@@ -88,11 +88,14 @@ To test without being charged, add your Google account under *Settings → Licen
 > TODAY & ALMANAC
 > Today’s pillars, the Day Officer of the traditional Chinese almanac (Tong Shu) with what the day suits and what to avoid, your personal clash days, and an optional daily tip notification. Plan weddings, moves, contracts, launches and journeys on good days.
 >
-> SHARE
-> Share your chart as a beautiful image.
+> YEAR AHEAD
+> Your annual pillar and all 12 months: themes, best months and activated stars.
+>
+> SHARE & BACKUP
+> Share your chart as a beautiful image, and move your charts to a new phone with a backup file.
 >
 > FREE & PREMIUM
-> Lessons 1–7, all quizzes and 5 chart calculations are free. A one-time purchase unlocks all 14 lessons, unlimited charts, the detailed chart reading (core nature, favourable elements, weak spots and how to balance them, career, relationships, current luck phase), the full compatibility analysis with your ideal match, and the almanac planner. No subscription.
+> Lessons 1–7, all quizzes and 5 chart calculations are free. A one-time purchase unlocks all 15 lessons, unlimited charts, the detailed chart reading (core nature, favourable elements, weak spots and how to balance them, career, relationships, current luck phase), the full compatibility analysis with your ideal match, the year-ahead forecast and the almanac planner. No subscription.
 >
 > PRIVATE BY DESIGN
 > Works completely offline. No account, no ads, no tracking. Your birth data never leaves your phone.

@@ -1,6 +1,7 @@
 // Detailed chart reading (Premium). Builds an interpretation from a computed chart.
 import { STEMS, BRANCHES, ELEMENTS, TEN_GODS } from './data.js';
 import { tenGod, pillarFromIndex } from './bazi.js';
+import { findStars, pillarListText } from './shensha.js';
 
 const mod = (a, n) => ((a % n) + n) % n;
 
@@ -18,7 +19,7 @@ export const ELEMENT_ADVICE = [
 ];
 
 // What each Ten God means when prominent (personality), in the spouse palace and in the month stem (career).
-const GOD_TEXT = {
+export const GOD_TEXT = {
   F: {
     trait: 'You are self-reliant and steady, with a strong sense of who you are. You work well with peers, but you dislike being told what to do.',
     spouse: 'You look for an equal partner and a friendship-like relationship. Shared goals matter; watch out for stubborn standoffs.',
@@ -217,6 +218,13 @@ export function buildReading(chart) {
   } else {
     sections.push({ title: 'Your current phase', html: `<p>Your first luck pillar has not started yet. <b>${now}</b> is a <b>${TEN_GODS[yGod].name}</b> year for you.</p>` });
   }
+
+  // 6b. Symbolic stars
+  const stars = findStars(chart);
+  sections.splice(sections.length - 1, 0, { title: 'Symbolic stars', html: stars.length ? `
+    <ul class="weak-list">${stars.map((st) => `<li><b>${st.icon} ${st.name} ${st.zh}</b> in the ${pillarListText(st.pillars)}. ${st.desc}
+      <br><span class="small">Here it points to ${st.pillars.map((p) => st.pillar[p]).join('; ')}.</span></li>`).join('')}</ul>`
+    : '<p>None of the main symbolic stars appear in your natal chart – your reading rests fully on the elements and Ten Gods. Stars can still be activated by years and luck pillars.</p>' });
 
   // 7. Weak spots & balancing
   const items = [];

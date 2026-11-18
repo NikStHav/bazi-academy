@@ -227,6 +227,27 @@ export const LESSONS = [
     ],
   },
   {
+    id: 'stars', title: 'Symbolic Stars', zh: '神煞', level: 'Analysis',
+    summary: 'Nobleman, Peach Blossom, Travelling Horse and other special stars.',
+    body: `
+<p>Besides elements and Ten Gods, classical BaZi uses <b>symbolic stars</b> (神煞, Shen Sha). They are special branches that carry a specific theme. They add colour to a reading, but never outweigh the elements and the Day Master’s strength.</p>
+<div data-widget="stars"></div>
+<h3>How they are found</h3>
+<ul>
+<li><b>From the Day Stem:</b> Nobleman 天乙贵人, Academic Star 文昌, Prosperity Star 禄 and Goat Blade 羊刃. For example, a 癸 Day Master has its Nobleman in 卯 and 巳.</li>
+<li><b>From the Day or Year Branch</b> (by its Three Harmony group): Peach Blossom 桃花, Travelling Horse 驿马 and Canopy 华盖. For 申子辰 the Peach Blossom is 酉, the Travelling Horse 寅 and the Canopy 辰.</li>
+<li><b>From the Day Pillar:</b> the two Void 空亡 branches of its ten-day group (旬). In the 甲子 group, 戌 and 亥 are void.</li>
+</ul>
+<h3>Where they appear</h3>
+<p>A star’s pillar tells you <i>where</i> it works: a Peach Blossom in the day branch points to romance in close relationships; in the month branch to charisma at work. When a year or luck pillar brings a star’s branch, the star is “activated” – a Travelling Horse year often brings travel or a move.</p>
+<p class="tip">Your chart page lists your symbolic stars, and the year forecast shows which ones each year and month activates.</p>`,
+    quiz: [
+      { q: 'Which star stands for romance and charm?', options: ['Travelling Horse', 'Peach Blossom', 'Canopy', 'Void'], answer: 1, explain: 'Peach Blossom 桃花 – attraction and popularity.' },
+      { q: 'For 申子辰, the Travelling Horse is …', options: ['寅', '酉', '辰', '亥'], answer: 0, explain: '申子辰 → 寅; it is the branch that clashes the group’s first branch.' },
+      { q: 'The Nobleman is found from the …', options: ['Month branch', 'Hour stem', 'Day stem', 'Luck pillar'], answer: 2, explain: '天乙贵人 is looked up from the Day Stem (and often the Year Stem).' },
+    ],
+  },
+  {
     id: 'luck', title: 'Luck Pillars', zh: '大运', level: 'Analysis',
     summary: 'Ten-year phases that colour your life.',
     body: `

@@ -11,7 +11,11 @@ import { searchPlaces, utcOffsetFor, countryName } from './places.js';
 import { dayInfo, findDays, ACTIVITIES, OFFICERS, RATING_LABEL } from './almanac.js';
 import { compare, idealMatch } from './compat.js';
 import * as notify from './notify.js';
-import { shareChart } from './share.js';
+import { shareChart, shareTextFile } from './share.js';
+import { findStars, STARS, pillarListText } from './shensha.js';
+import { yearForecast, baziYearOf } from './forecast.js';
+import { makeBackup, validateBackup, mergeBackup } from './backup.js';
+import { GOD_TEXT, favourableElements } from './reading.js';
 
 // ---------- storage ----------
 const store = {
@@ -147,6 +151,7 @@ const WIDGETS = {
     ${[['Same element', 'F', 'RW'], ['I produce', 'EG', 'HO'], ['I control', 'IW', 'DW'], ['Controls me', '7K', 'DO'], ['Produces me', 'IR', 'DR']]
       .map(([r, a, b]) => `<tr><td>${r}</td>${[a, b].map((k) => `<td><a href="javascript:void 0" data-god="${k}">${TEN_GODS[k].name}</a><br><span class="small muted" style="font-family:var(--serif)">${TEN_GODS[k].zh}</span></td>`).join('')}</tr>`).join('')}</table>`,
   'tengod-trainer': trainer,
+  stars: () => `<table>${Object.values(STARS).map((st) => `<tr><td style="font-size:20px">${st.icon}</td><td><b>${st.name}</b> <span style="font-family:var(--serif)">${st.zh}</span><br><span class="small">${st.desc}</span></td></tr>`).join('')}</table>`,
   phases: () => `<table>${SEASON_PHASES.map((p) => `<tr><td style="font-family:var(--serif);font-size:22px;color:var(--accent)">${p.zh}</td><td><b>${p.name}</b><br><span class="small">${p.desc}</span></td></tr>`).join('')}</table>`,
 };
 
@@ -206,12 +211,121 @@ function chartHtml(entry) {
     <p class="small muted">${c.luck.forward ? 'Forward' : 'Backward'} · first luck pillar starts at about ${c.luck.startYears} years ${c.luck.startMonths} months${i.timeUnknown ? ' (approximate – birth time unknown)' : ''}.</p>
     <div class="luck">${c.luck.pillars.map((p) => `<div class="${curLuck && p.year === curLuck.year ? 'now' : ''}"><div>${p.year}</div><div class="muted">age ${Math.floor(p.age)}</div>
       ${stemTile(p.stem, 'sm')}${branchTile(p.branch, 'sm')}<div>${TEN_GODS[tenGod(c.dayMaster, p.stem)].short}</div></div>`).join('')}</div></div>
+  ${starsCard(c)}
   ${readingHtml(c)}
+  <a class="card premium-banner" href="#/forecast/${entry.id}"><span class="pb-icon">📅</span><span><b>Year ahead ${baziYearOf()}</b> · your year and its 12 months</span><span class="pb-go">›</span></a>
   <div class="row" style="margin-bottom:10px"><button class="btn" id="share-chart">⇪ Share as image</button><a class="btn secondary" href="#/match/${entry.id}">♥ Compare</a></div>
   <div class="row"><button class="btn secondary" id="del-chart">Delete</button><button class="btn secondary" id="mine-chart">${entry.mine ? '★ My chart' : '☆ Set as my chart'}</button></div>`;
 }
 
 // ---------- views ----------
+// ---------- birth data form (shared by the chart page and the welcome screen) ----------
+const TZ_OPTS = (() => { const o = []; for (let h = -12; h <= 14; h += 0.5) o.push(h); o.push(5.75, 8.75, 12.75); return o.sort((a, b) => a - b); })();
+const tzLabel = (h) => `UTC${h >= 0 ? '+' : '−'}${Math.floor(Math.abs(h))}:${pad(Math.round((Math.abs(h) % 1) * 60))}`;
+const tzOpts = TZ_OPTS;
+
+function birthFieldsHtml() {
+  return `        <label for="f-name">Name</label><input id="f-name" maxlength="40" placeholder="e.g. Me, Anna, …">
+        <div class="row"><div><label for="f-date">Birth date</label><input id="f-date" type="date" required min="1900-01-01" max="2100-12-31" value="1990-06-15"></div>
+          <div><label for="f-time">Birth time</label><input id="f-time" type="time" value="12:00"></div></div>
+        <label class="check"><input type="checkbox" id="f-unknown"> Birth time unknown (three pillars)</label>
+        <label>Gender <span class="help">(determines the direction of the luck pillars)</span></label>
+        <div class="seg" id="f-gender"><button type="button" data-v="f">Female</button><button type="button" data-v="m" class="on">Male</button></div>
+        <label for="f-place">Birthplace</label>
+        <div class="place-wrap"><input id="f-place" autocomplete="off" placeholder="Start typing a city, e.g. Bad Homburg" role="combobox" aria-expanded="false" aria-controls="f-place-list">
+          <div class="place-list" id="f-place-list" role="listbox" hidden></div></div>
+        <div class="help" id="f-place-help">Sets the time zone (incl. historical daylight saving) and true solar time automatically.</div>
+        <label class="check" id="f-solar-row" hidden><input type="checkbox" id="f-solar" checked> Use true solar time for the birthplace</label>
+        <label for="f-tz">Time zone at birth</label>
+        <select id="f-tz">${tzOpts.map((h) => `<option value="${h}">${tzLabel(h)}</option>`).join('')}</select>
+        <div class="help" id="f-tz-help">Prefilled from this device. Choosing the birthplace sets it correctly for the birth date.</div>
+        <details><summary>Advanced</summary>
+          <label for="f-lon">Birthplace longitude (if your place isn’t in the list)</label>
+          <input id="f-lon" type="number" step="0.01" min="-180" max="180" placeholder="e.g. 13.40 for Berlin, −74.00 for New York">
+          <div class="help">East positive, west negative. Corrects the hour to the sun’s actual position.</div>
+          <label class="check" style="margin-top:12px"><input type="checkbox" id="f-zi" ${state.settings.ziHourNextDay ? 'checked' : ''}> New day starts at 23:00 (Zi hour)</label>
+        </details>
+`;
+}
+
+/** Wires up the birth form fields; returns { read } which gives { name, input } or null. */
+function bindBirthForm() {
+    let tzTouched = false;
+    let place = null;
+    const setTzValue = (off) => {
+      const sel = $('#f-tz');
+      if (![...sel.options].some((o) => Number(o.value) === off)) sel.add(new Option(tzLabel(off), String(off)));
+      sel.value = [...sel.options].find((o) => Number(o.value) === off).value;
+    };
+    const setTz = () => {
+      const [y, m, d] = ($('#f-date').value || '1990-06-15').split('-').map(Number);
+      const [hh, mm] = ($('#f-time').value || '12:00').split(':').map(Number);
+      if (place) {
+        const off = utcOffsetFor(place.tz, y, m, d, hh, mm);
+        if (off !== null) { setTzValue(off); $('#f-tz-help').textContent = `Set from ${place.name} (${place.tz}) for this date${off !== utcOffsetFor(place.tz, y, 1, 15) ? ' – daylight saving time' : ''}.`; return; }
+      }
+      if (tzTouched) return;
+      setTzValue(-new Date(y, m - 1, d, hh, mm).getTimezoneOffset() / 60);
+    };
+    const list = $('#f-place-list'), placeIn = $('#f-place');
+    let results = [], active = -1, searchSeq = 0;
+    const closeList = () => { list.hidden = true; placeIn.setAttribute('aria-expanded', 'false'); active = -1; };
+    const choose = (c) => {
+      place = c; placeIn.value = `${c.name}, ${countryName(c.cc)}`; closeList();
+      $('#f-lon').value = c.lon.toFixed(2); $('#f-solar-row').hidden = false; $('#f-solar').checked = true;
+      $('#f-place-help').textContent = `${c.lat.toFixed(2)}°, ${c.lon.toFixed(2)}° · time zone ${c.tz}`;
+      setTz();
+    };
+    placeIn.addEventListener('input', async () => {
+      place = null; $('#f-solar-row').hidden = true; $('#f-lon').value = ''; $('#f-tz-help').textContent = 'Prefilled from this device. Choosing the birthplace sets it correctly for the birth date.';
+      const seq = ++searchSeq;
+      const found = await searchPlaces(placeIn.value);
+      if (seq !== searchSeq) return; // a newer keystroke is already being handled
+      results = found; active = -1;
+      if (!found.length) { list.innerHTML = placeIn.value.trim().length >= 2 ? '<div class="place-none">No match – try another spelling or enter the longitude under Advanced.</div>' : ''; list.hidden = !list.innerHTML; return; }
+      list.innerHTML = found.map((c, i) => `<div class="place-opt" role="option" data-i="${i}"><b>${esc(c.name)}</b> <span class="muted">${esc(countryName(c.cc))}</span></div>`).join('');
+      list.hidden = false; placeIn.setAttribute('aria-expanded', 'true');
+    });
+    list.addEventListener('mousedown', (e) => e.preventDefault()); // keep focus so the click registers
+    list.addEventListener('click', (e) => { const o = e.target.closest('.place-opt'); if (o) choose(results[+o.dataset.i]); });
+    placeIn.addEventListener('keydown', (e) => {
+      if (list.hidden || !results.length) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); active = (active + (e.key === 'ArrowDown' ? 1 : -1) + results.length) % results.length;
+        list.querySelectorAll('.place-opt').forEach((o, i) => o.classList.toggle('on', i === active)); }
+      else if (e.key === 'Enter') { e.preventDefault(); choose(results[Math.max(0, active)]); }
+      else if (e.key === 'Escape') closeList();
+    });
+    placeIn.addEventListener('blur', () => setTimeout(closeList, 150));
+    setTz();
+    $('#f-tz').addEventListener('change', () => { tzTouched = true; });
+    $('#f-date').addEventListener('change', setTz);
+    $('#f-time').addEventListener('change', setTz);
+    $('#f-unknown').addEventListener('change', (e) => { $('#f-time').disabled = e.target.checked; });
+    $('#f-gender').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return;
+      [...$('#f-gender').children].forEach((x) => x.classList.toggle('on', x === b)); });
+  return {
+    read() {
+      const [year, month, day] = ($('#f-date').value || '').split('-').map(Number);
+      if (!year) { $('#f-date').focus(); return null; }
+      const [hour, minute] = ($('#f-time').value || '12:00').split(':').map(Number);
+      const lon = place && !$('#f-solar').checked ? '' : $('#f-lon').value.trim();
+      state.settings.ziHourNextDay = $('#f-zi').checked; save('settings');
+      return { name: $('#f-name').value.trim(), input: { year, month, day, hour, minute, tzOffset: Number($('#f-tz').value), timeUnknown: $('#f-unknown').checked,
+        gender: $('#f-gender .on').dataset.v, longitude: lon === '' ? null : Number(lon),
+        place: place ? { name: place.name, cc: place.cc, lat: place.lat, lon: place.lon, tz: place.tz } : null } };
+    },
+  };
+}
+
+function saveChart(name, input, mine) {
+  const id = Date.now().toString(36);
+  if (mine) state.charts.forEach((c) => { c.mine = false; });
+  state.charts.unshift({ id, name, input, mine });
+  save('charts');
+  if (mine) rescheduleTips();
+  return id;
+}
+
 const routes = {
   learn() {
     const done = LESSONS.filter((l) => state.done[l.id]).length;
@@ -269,35 +383,13 @@ const routes = {
       return;
     }
     setTitle('Your BaZi chart');
-    const today = new Date();
-    const tzOpts = []; for (let h = -12; h <= 14; h += 0.5) tzOpts.push(h); tzOpts.push(5.75, 8.75, 12.75); tzOpts.sort((a, b) => a - b);
-    const tzLabel = (h) => `UTC${h >= 0 ? '+' : '−'}${Math.floor(Math.abs(h))}:${pad(Math.round((Math.abs(h) % 1) * 60))}`;
     view.innerHTML = `
       <form class="card" id="chart-form" autocomplete="off">
         <h2 style="margin-top:0">Calculate a chart</h2>
         ${premium.isPremium() ? '' : `<p class="small ${premium.calculationsLeft() ? 'muted' : ''}" id="calc-left">${premium.calculationsLeft()
           ? `${premium.calculationsLeft()} of ${premium.FREE_CALCULATIONS} free calculations left · <a href="#/premium">Unlimited with Premium</a>`
           : `You have used your ${premium.FREE_CALCULATIONS} free calculations. Your saved charts stay available. <a href="#/premium">Get unlimited charts</a>`}</p>`}
-        <label for="f-name">Name</label><input id="f-name" maxlength="40" placeholder="e.g. Me, Anna, …">
-        <div class="row"><div><label for="f-date">Birth date</label><input id="f-date" type="date" required min="1900-01-01" max="2100-12-31" value="1990-06-15"></div>
-          <div><label for="f-time">Birth time</label><input id="f-time" type="time" value="12:00"></div></div>
-        <label class="check"><input type="checkbox" id="f-unknown"> Birth time unknown (three pillars)</label>
-        <label>Gender <span class="help">(determines the direction of the luck pillars)</span></label>
-        <div class="seg" id="f-gender"><button type="button" data-v="f">Female</button><button type="button" data-v="m" class="on">Male</button></div>
-        <label for="f-place">Birthplace</label>
-        <div class="place-wrap"><input id="f-place" autocomplete="off" placeholder="Start typing a city, e.g. Bad Homburg" role="combobox" aria-expanded="false" aria-controls="f-place-list">
-          <div class="place-list" id="f-place-list" role="listbox" hidden></div></div>
-        <div class="help" id="f-place-help">Sets the time zone (incl. historical daylight saving) and true solar time automatically.</div>
-        <label class="check" id="f-solar-row" hidden><input type="checkbox" id="f-solar" checked> Use true solar time for the birthplace</label>
-        <label for="f-tz">Time zone at birth</label>
-        <select id="f-tz">${tzOpts.map((h) => `<option value="${h}">${tzLabel(h)}</option>`).join('')}</select>
-        <div class="help" id="f-tz-help">Prefilled from this device. Choosing the birthplace sets it correctly for the birth date.</div>
-        <details><summary>Advanced</summary>
-          <label for="f-lon">Birthplace longitude (if your place isn’t in the list)</label>
-          <input id="f-lon" type="number" step="0.01" min="-180" max="180" placeholder="e.g. 13.40 for Berlin, −74.00 for New York">
-          <div class="help">East positive, west negative. Corrects the hour to the sun’s actual position.</div>
-          <label class="check" style="margin-top:12px"><input type="checkbox" id="f-zi" ${state.settings.ziHourNextDay ? 'checked' : ''}> New day starts at 23:00 (Zi hour)</label>
-        </details>
+        ${birthFieldsHtml()}
         <label class="check" style="margin-top:12px"><input type="checkbox" id="f-mine" ${state.charts.some((c) => c.mine) ? '' : 'checked'}> This is my own chart</label>
         <button class="btn block" style="margin-top:16px" type="submit">Calculate</button>
       </form>
@@ -307,81 +399,18 @@ const routes = {
           <span class="small muted">${c.input.year}-${pad(c.input.month)}-${pad(c.input.day)} · <span style="font-family:var(--serif)">${PILLAR_KEYS.map((k) => (ch.pillars[k] ? pillarName(ch.pillars[k]) : '??')).join(' ')}</span></span></span>
           <a class="icon-btn" href="#/chart/${c.id}" aria-label="Open">›</a></div>`; }).join('')}</div>` : ''}
       <a class="card premium-banner" href="#/match"><span class="pb-icon">♥</span><span><b>Compatibility</b> · compare two charts – partners, family, friends</span><span class="pb-go">›</span></a>
-      <p class="small muted">Charts are stored only on this device.</p>`;
+      <p class="small muted">Charts are stored only on this device. <a href="#/about">Back them up</a> before you change phones.</p>`;
 
     const f = $('#chart-form');
-    let tzTouched = false;
-    let place = null;
-    const setTzValue = (off) => {
-      const sel = $('#f-tz');
-      if (![...sel.options].some((o) => Number(o.value) === off)) sel.add(new Option(tzLabel(off), String(off)));
-      sel.value = [...sel.options].find((o) => Number(o.value) === off).value;
-    };
-    const setTz = () => {
-      const [y, m, d] = ($('#f-date').value || '1990-06-15').split('-').map(Number);
-      const [hh, mm] = ($('#f-time').value || '12:00').split(':').map(Number);
-      if (place) {
-        const off = utcOffsetFor(place.tz, y, m, d, hh, mm);
-        if (off !== null) { setTzValue(off); $('#f-tz-help').textContent = `Set from ${place.name} (${place.tz}) for this date${off !== utcOffsetFor(place.tz, y, 1, 15) ? ' – daylight saving time' : ''}.`; return; }
-      }
-      if (tzTouched) return;
-      setTzValue(-new Date(y, m - 1, d, hh, mm).getTimezoneOffset() / 60);
-    };
-    const list = $('#f-place-list'), placeIn = $('#f-place');
-    let results = [], active = -1, searchSeq = 0;
-    const closeList = () => { list.hidden = true; placeIn.setAttribute('aria-expanded', 'false'); active = -1; };
-    const choose = (c) => {
-      place = c; placeIn.value = `${c.name}, ${countryName(c.cc)}`; closeList();
-      $('#f-lon').value = c.lon.toFixed(2); $('#f-solar-row').hidden = false; $('#f-solar').checked = true;
-      $('#f-place-help').textContent = `${c.lat.toFixed(2)}°, ${c.lon.toFixed(2)}° · time zone ${c.tz}`;
-      setTz();
-    };
-    placeIn.addEventListener('input', async () => {
-      place = null; $('#f-solar-row').hidden = true; $('#f-lon').value = ''; $('#f-tz-help').textContent = 'Prefilled from this device. Choosing the birthplace sets it correctly for the birth date.';
-      const seq = ++searchSeq;
-      const found = await searchPlaces(placeIn.value);
-      if (seq !== searchSeq) return; // a newer keystroke is already being handled
-      results = found; active = -1;
-      if (!found.length) { list.innerHTML = placeIn.value.trim().length >= 2 ? '<div class="place-none">No match – try another spelling or enter the longitude under Advanced.</div>' : ''; list.hidden = !list.innerHTML; return; }
-      list.innerHTML = found.map((c, i) => `<div class="place-opt" role="option" data-i="${i}"><b>${esc(c.name)}</b> <span class="muted">${esc(countryName(c.cc))}</span></div>`).join('');
-      list.hidden = false; placeIn.setAttribute('aria-expanded', 'true');
-    });
-    list.addEventListener('mousedown', (e) => e.preventDefault()); // keep focus so the click registers
-    list.addEventListener('click', (e) => { const o = e.target.closest('.place-opt'); if (o) choose(results[+o.dataset.i]); });
-    placeIn.addEventListener('keydown', (e) => {
-      if (list.hidden || !results.length) return;
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); active = (active + (e.key === 'ArrowDown' ? 1 : -1) + results.length) % results.length;
-        list.querySelectorAll('.place-opt').forEach((o, i) => o.classList.toggle('on', i === active)); }
-      else if (e.key === 'Enter') { e.preventDefault(); choose(results[Math.max(0, active)]); }
-      else if (e.key === 'Escape') closeList();
-    });
-    placeIn.addEventListener('blur', () => setTimeout(closeList, 150));
-    setTz();
-    $('#f-tz').addEventListener('change', () => { tzTouched = true; });
-    $('#f-date').addEventListener('change', setTz);
-    $('#f-time').addEventListener('change', setTz);
-    $('#f-unknown').addEventListener('change', (e) => { $('#f-time').disabled = e.target.checked; });
-    $('#f-gender').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return;
-      [...$('#f-gender').children].forEach((x) => x.classList.toggle('on', x === b)); });
+    const birth = bindBirthForm();
     view.querySelectorAll('[data-open]').forEach((el) => el.addEventListener('click', () => go('#/chart/' + el.dataset.open)));
     f.addEventListener('submit', (e) => {
       e.preventDefault();
-      const [year, month, day] = $('#f-date').value.split('-').map(Number);
-      if (!year) return;
+      const r = birth.read();
+      if (!r) return;
       if (!premium.canCalculate()) { go('#/premium'); return; }
       premium.countCalculation();
-      const [hour, minute] = ($('#f-time').value || '12:00').split(':').map(Number);
-      const lon = place && !$('#f-solar').checked ? '' : $('#f-lon').value.trim();
-      state.settings.ziHourNextDay = $('#f-zi').checked; save('settings');
-      const input = { year, month, day, hour, minute, tzOffset: Number($('#f-tz').value), timeUnknown: $('#f-unknown').checked,
-        gender: $('#f-gender .on').dataset.v, longitude: lon === '' ? null : Number(lon),
-        place: place ? { name: place.name, cc: place.cc, lat: place.lat, lon: place.lon, tz: place.tz } : null };
-      const id = Date.now().toString(36);
-      const mine = $('#f-mine').checked;
-      if (mine) state.charts.forEach((c) => { c.mine = false; });
-      state.charts.unshift({ id, name: $('#f-name').value.trim(), input, mine });
-      save('charts');
-      if (mine) rescheduleTips();
+      const id = saveChart(r.name, r.input, $('#f-mine').checked);
       go('#/chart/' + id);
     });
   },
@@ -436,6 +465,7 @@ const routes = {
       ${pillarsHtml(pseudo, false).replace('Day Master', 'Day')}
       <p class="small muted">Ten Gods above are shown relative to today’s day stem.</p></div>
       ${personal}
+      ${mine ? `<a class="card premium-banner" href="#/forecast/${mine.id}"><span class="pb-icon">📅</span><span><b>Your year ahead ${baziYearOf(now)}</b> · ${pillarName(pillarFromIndex(baziYearOf(now) - 4))} year and its 12 months</span><span class="pb-go">›</span></a>` : ''}
       ${almanacCard(now, mine ? computeChart({ ...mine.input, ziHourNextDay: state.settings.ziHourNextDay }) : null)}
       ${notifyCard()}
       <div class="card"><h3 style="margin-top:0">Next solar term</h3>
@@ -560,6 +590,91 @@ const routes = {
     bindPaywall();
   },
 
+  welcome(step) {
+    setTitle('Welcome');
+    const finish = () => store.set('onboarded', true);
+    if (step === 'form') {
+      view.innerHTML = `<form class="card" id="w-form" autocomplete="off"><h2 style="margin-top:0">Your birth data</h2>
+        <p class="small muted">Everything stays on your phone.</p>${birthFieldsHtml()}
+        <button class="btn block" style="margin-top:16px" type="submit">Show my chart</button></form>
+        <p style="text-align:center"><a href="javascript:void 0" id="w-skip" class="small">Skip for now</a></p>`;
+      $('#f-name').placeholder = 'Your name';
+      const birth = bindBirthForm();
+      $('#w-skip').onclick = () => { finish(); go('#/learn', true); };
+      $('#w-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const r = birth.read(); if (!r) return;
+        const id = saveChart(r.name || 'Me', r.input, true);
+        finish();
+        go('#/welcome/' + id, true);
+      });
+      return;
+    }
+    const entry = step && state.charts.find((c) => c.id === step);
+    if (entry) {
+      const c = computeChart({ ...entry.input, ziHourNextDay: state.settings.ziHourNextDay });
+      const dm = STEMS[c.dayMaster];
+      const top = [...c.elements].sort((a, b) => b.pct - a.pct)[0];
+      const fav = favourableElements(c).favourable;
+      const star = findStars(c)[0];
+      view.innerHTML = `<div class="card hero"><div class="big" style="font-family:var(--serif)">${dm.zh}</div>
+          <h2 style="margin:8px 0 4px">${esc(entry.name)}, you are ${dm.yang ? 'Yang' : 'Yin'} ${ELEMENTS[dm.el].name}</h2>
+          <p>“${dm.image}” – ${dm.desc.slice(dm.desc.indexOf('. ') + 2) || dm.desc}</p></div>
+        <div class="card">${pillarsHtml(c, false)}</div>
+        <div class="card"><h3 style="margin-top:0">Three things about you</h3><ul class="weak-list">
+          <li><b>Season ${c.strength.phase.zh} ${c.strength.phase.name}.</b> ${c.strength.phase.desc}</li>
+          <li><b>Strongest element: ${ELEMENTS[top.el].name} (${top.pct}%).</b> ${ELEMENTS[top.el].traits}</li>
+          <li><b>${star ? `${star.icon} ${star.name} ${star.zh}.` : `Favourable: ${fav.map((x) => ELEMENTS[x].name).join(', ')}.`}</b> ${star ? star.desc : 'These elements balance your chart.'}</li></ul></div>
+        <a class="btn block" href="#/chart/${entry.id}">See my full chart</a>
+        <a class="btn secondary block" style="margin-top:10px" href="#/lesson/intro">Start learning BaZi</a>`;
+      return;
+    }
+    view.innerHTML = `<div class="card hero"><div class="big">八字</div><h2 style="margin:8px 0 4px">Welcome to BaZi Academy</h2>
+        <p>Discover the Four Pillars of Destiny – the classical Chinese map of the energies at your birth.</p></div>
+      <div class="card"><ul class="benefits">
+        <li><b>Your personal chart</b><span>Calculated from the real solar calendar, with your birthplace and true solar time</span></li>
+        <li><b>Learn step by step</b><span>${LESSONS.length} lessons from Yin and Yang to symbolic stars and luck pillars</span></li>
+        <li><b>Every day</b><span>Almanac, daily energy and compatibility</span></li></ul>
+        <a class="btn block" href="#/welcome/form">Get my chart</a>
+        <p style="text-align:center;margin-bottom:0"><a href="javascript:void 0" id="w-skip" class="small">Skip, just explore</a></p></div>`;
+    $('#w-skip').onclick = () => { finish(); go('#/learn', true); };
+  },
+
+  forecast(id) {
+    setTitle('Year ahead', true);
+    const entry = state.charts.find((c) => c.id === id) || state.charts.find((c) => c.mine) || state.charts[0];
+    if (!entry) { view.innerHTML = '<div class="card"><p>Calculate a chart first.</p><a class="btn block" href="#/chart">Calculate a chart</a></div>'; return; }
+    const c = computeChart({ ...entry.input, ziHourNextDay: state.settings.ziHourNextDay });
+    const y0 = baziYearOf();
+    const render = (year) => {
+      const f = yearForecast(c, year);
+      const g = TEN_GODS[f.god];
+      const fmtD = (ms) => new Date(ms).toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
+      const rateChip = (r) => `<span class="rate rate-${r.label}">${r.label}</span>`;
+      const overview = `<div class="card" data-dm="${c.dayMaster}"><div class="seg" id="fc-years">${[y0, y0 + 1].map((y) => `<button type="button" data-y="${y}" class="${y === year ? 'on' : ''}">${y}</button>`).join('')}</div>
+        <h2 style="margin:14px 0 2px">${year}: <span style="font-family:var(--serif)">${pillarName(f.pillar)}</span> year ${rateChip(f.rating)}</h2>
+        <p class="small muted">${fmtD(f.from)} ${year} – ${fmtD(f.to)} ${year + 1} · for ${esc(entry.name || 'this chart')} (${STEMS[c.dayMaster].zh})</p>
+        <p>A <b>${g.name} ${g.zh}</b> year: ${GOD_TEXT[f.god].luck}</p></div>`;
+      if (!premium.isPremium()) { view.innerHTML = overview + paywallCard('See your whole year, month by month'); bindYears(); bindPaywall(); return; }
+      const taiSui = f.taiSui === 'same' ? `<p class="tip">This is your <b>zodiac year (本命年)</b> – traditionally a year of change and self-renewal. Avoid unnecessary risks.</p>`
+        : f.taiSui === 'clash' ? `<p class="tip">The year branch <b>clashes your year branch (冲太岁)</b> – expect movement and change; plan big decisions carefully.</p>` : '';
+      view.innerHTML = overview + `<div class="card">${taiSui}
+          <p>The year brings <b>${f.elementNote}</b>; its branch ${BRANCHES[f.pillar.branch].zh} ${BRANCHES[f.pillar.branch].animal} has a <b>${f.rating.relation.label.toLowerCase()}</b> relation to your day branch.</p>
+          ${f.luck ? `<p>It runs inside your luck pillar <b style="font-family:var(--serif)">${STEMS[f.luck.stem].zh}${BRANCHES[f.luck.branch].zh}</b> (${TEN_GODS[f.luck.god].name}, since ${f.luck.year}).</p>` : ''}
+          ${f.stars.length ? `<p><b>Activated stars:</b> ${f.stars.map((st) => `${st.icon} ${st.name} ${st.zh}`).join(', ')} – ${f.stars.map((st) => st.desc.split(' – ')[0].toLowerCase()).join('; ')}.</p>` : ''}
+          <p><b>Best months:</b> ${f.bestMonths.map((i) => `${fmtD(f.months[i].start)} – ${fmtD(f.months[i].end - 86400000)}`).join(' · ')}</p></div>
+        <div class="card"><h3 style="margin-top:0">Month by month</h3>${f.months.map((m) => `<div class="fc-month">
+          <div class="fc-head"><span class="fc-pillar el-${STEMS[m.stem].el}">${STEMS[m.stem].zh}${BRANCHES[m.branch].zh}</span>
+            <span><b>${fmtD(m.start)} – ${fmtD(m.end - 86400000)}</b><br><span class="small muted">${TEN_GODS[m.god].name} month</span></span>${rateChip(m)}</div>
+          <p class="small">${m.text}${m.relation.key === 'clash' ? ' The month clashes your day branch – go easy on relationships and health.' : m.relation.key === 'harmony' ? ' The month combines with your day branch – good for relationships.' : ''}
+            ${m.stars.length ? `<br>${m.stars.map((st) => `${st.icon} ${st.name}`).join(' · ')}` : ''}</p></div>`).join('')}
+          <p class="small muted">Months follow the solar terms (节气). A traditional forecast for reflection – your choices shape the year.</p></div>`;
+      bindYears();
+    };
+    const bindYears = () => view.querySelectorAll('#fc-years [data-y]').forEach((b) => { b.onclick = () => render(+b.dataset.y); });
+    render(y0);
+  },
+
   premium() {
     setTitle('Premium', true);
     const has = premium.isPremium();
@@ -569,6 +684,7 @@ const routes = {
         <li><b>All ${LESSONS.length} lessons</b><span>Hidden Stems, Day Master, Ten Gods, strength, interactions, luck pillars and the useful god</span></li>
         <li><b>Unlimited chart calculations</b><span>Charts for family, friends and partners – save as many as you like</span></li>
         <li><b>Detailed chart reading</b><span>Core nature, favourable elements, weak spots and how to balance them, career, relationships and your current luck phase</span></li>
+        <li><b>Year-ahead forecast</b><span>Your annual pillar and all 12 months: themes, best months, activated stars</span></li>
         <li><b>Love & compatibility</b><span>Your ideal match, a quick check for someone new, and the full analysis of two charts</span></li>
         <li><b>Almanac planner</b><span>Find good days for weddings, moving, contracts, launches, travel and renovation – personalised to your chart</span></li>
         <li><b>No ads, no subscription</b><span>A one-time purchase; your data stays on your device</span></li></ul>
@@ -590,16 +706,47 @@ const routes = {
       <p class="small">The app works offline. Birth data, charts and progress are stored only on your device. Nothing is sent to a server, and there is no tracking or advertising. Purchases are handled entirely by Apple or Google.</p>
       <h3>Disclaimer</h3>
       <p class="small">BaZi is a traditional cultural system. The content is for education and entertainment and is no substitute for professional medical, legal, financial or psychological advice.</p>
+      <h3>Backup & new phone</h3>
+      <p class="small">Your charts and progress live only on this phone. Save a backup file (e.g. to Google Drive, iCloud or email) and import it on your new phone.</p>
+      <div class="row" style="margin-bottom:10px"><button class="btn secondary" id="bk-export">⇪ Export</button><button class="btn secondary" id="bk-import">⇩ Import</button></div>
+      <input type="file" id="bk-file" accept=".json,application/json" hidden>
       <h3>Premium</h3>
       ${premium.isTestBuild ? `<p class="tip">Test build ${BUILD}: Premium is unlocked for testing. Store versions use the real purchase.</p>` : ''}
       <p class="small">${premium.isPremium() ? '✦ Premium is active – thank you for supporting the app!' : `Not purchased. <a href="#/premium">See Premium</a>`}</p>
       <button class="btn secondary block" id="restore" style="margin-bottom:10px">Restore purchase</button>
       <button class="btn secondary block" id="reset">Reset learning progress</button>
       <p class="small muted" style="text-align:center">Version 1.0.0 · build ${BUILD}</p></div>`;
+    $('#bk-export').onclick = async () => {
+      const json = JSON.stringify(makeBackup(state, { notify: notify.getSettings() }), null, 1);
+      try { await shareTextFile(`bazi-academy-backup-${new Date().toISOString().slice(0, 10)}.json`, json); } catch { alert('The backup could not be saved on this device.'); }
+    };
+    $('#bk-import').onclick = () => $('#bk-file').click();
+    $('#bk-file').onchange = async (e) => {
+      const file = e.target.files?.[0]; if (!file) return;
+      try {
+        const backup = validateBackup(JSON.parse(await file.text()));
+        if (!confirm(`Import ${backup.charts.length} chart(s) and learning progress from ${backup.exported?.slice(0, 10) || 'the backup'}? Existing charts are kept.`)) return;
+        const { state: merged, added } = mergeBackup(state, backup);
+        state.charts = merged.charts; state.best = merged.best; state.done = merged.done;
+        save('charts'); save('best'); save('done'); rescheduleTips();
+        alert(`Imported ${added} new chart(s).`);
+        go('#/chart');
+      } catch (err) { alert(err instanceof SyntaxError ? 'This file is not a BaZi Academy backup.' : err.message); }
+      e.target.value = '';
+    };
     $('#restore').onclick = async () => { const ok = await premium.restore(); alert(ok ? 'Premium restored.' : 'No previous purchase found for this store account.'); routes.about(); };
     $('#reset').onclick = () => { if (confirm('Reset lesson progress and quiz scores?')) { state.done = {}; state.best = {}; save('done'); save('best'); go('#/learn'); } };
   },
 };
+
+// ---------- symbolic stars ----------
+function starsCard(c) {
+  const stars = findStars(c);
+  return `<div class="card"><h3 style="margin-top:0">Symbolic stars 神煞</h3>${stars.length
+    ? stars.map((st) => `<div class="inter"><b>${st.icon} ${st.name} ${st.zh}</b> <span class="muted small">${pillarListText(st.pillars)}</span><div class="small">${st.desc}</div></div>`).join('')
+    : '<p class="muted small">None of the main symbolic stars appear in this chart.</p>'}
+    <p class="small muted" style="margin-bottom:0"><a href="#/lesson/stars">What are symbolic stars?</a></p></div>`;
+}
 
 // ---------- almanac & notifications ----------
 function almanacDetail(d) {
@@ -720,12 +867,14 @@ $('#back').addEventListener('click', () => { if (history.length > 1) history.bac
 function router() {
   closeSheet();
   const [, name = 'learn', arg] = (location.hash || '#/learn').split('/');
-  const tab = { lesson: 'learn', about: 'learn', premium: 'learn', match: 'chart', almanac: 'today' }[name] || name;
+  const tab = { lesson: 'learn', about: 'learn', premium: 'learn', match: 'chart', almanac: 'today', forecast: 'chart', welcome: '' }[name] ?? name;
+  document.body.classList.toggle('no-tabs', name === 'welcome');
   document.querySelectorAll('.tabs a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));
   (routes[name] || routes.learn)(arg ? decodeURIComponent(arg) : undefined);
   view.scrollTop = 0;
 }
 window.addEventListener('hashchange', router);
+if (!state.charts.length && !store.get('onboarded', false) && ['', '#', '#/', '#/learn'].includes(location.hash)) location.replace('#/welcome');
 router();
 window.__baziStarted = true;
 premium.onChange(() => router());

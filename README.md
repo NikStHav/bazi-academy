@@ -4,7 +4,7 @@ An offline app for Android and iPhone for learning Chinese astrology according t
 
 ## Features
 
-- **Learn**: 14 lessons from the basics to analysis: Yin/Yang, the Five Elements, the 10 Heavenly Stems, the 12 Earthly Branches, the 60 Jiazi cycle, building the pillars, hidden stems, the Day Master, the Ten Gods, seasonal strength, branch interactions, luck pillars, and the useful god. Lessons include interactive diagrams and a short quiz each.
+- **Learn**: 15 lessons from the basics to analysis: Yin/Yang, the Five Elements, the 10 Heavenly Stems, the 12 Earthly Branches, the 60 Jiazi cycle, building the pillars, hidden stems, the Day Master, the Ten Gods, seasonal strength, branch interactions, luck pillars, and symbolic stars and the useful god. Lessons include interactive diagrams and a short quiz each.
 - **Chart**: a full Four Pillars calculator:
   - birthplace search (offline list of 25,000+ cities, GeoNames CC BY 4.0) that sets the historical time zone, daylight saving time and true solar time automatically
   - year and month pillars from the real solar terms (sun longitude, Li Chun as the start of the year)
@@ -19,6 +19,9 @@ An offline app for Android and iPhone for learning Chinese astrology according t
 - **Almanac (Tong Shu)**: the 12 Day Officers, clash animal and personal clash days; the planner ("find a good day for…") is Premium.
 - **Daily tip**: optional local notifications, scheduled on the device for a rolling 30 days.
 - **Share**: the chart as a PNG image through the share sheet.
+- **Welcome flow** on first start: birth data → your chart and three key insights.
+- **Year ahead** (Premium): annual pillar and 12 solar months with ratings, best months and activated symbolic stars.
+- **Backup**: export/import charts and progress as a JSON file (About screen).
 - **Today**: today's pillars, the next solar term, and how today relates to your own Day Master.
 - Fully offline, no tracking, light and dark mode.
 
@@ -37,6 +40,9 @@ www/js/premium.js  in-app purchase, free limits
 www/js/places.js   birthplace search, historical UTC offsets (Intl)
 www/js/cities-data.js  generated city list: node tools/build-cities.cjs <dir with all-the-cities + tz-lookup>
 www/js/compat.js   compatibility and ideal match
+www/js/shensha.js  symbolic stars (神煞)
+www/js/forecast.js year-ahead forecast (流年)
+www/js/backup.js   export/import
 www/js/almanac.js  Tong Shu day officers, good-day finder
 www/js/notify.js   daily tip notifications
 www/js/share.js    chart image rendering and sharing
