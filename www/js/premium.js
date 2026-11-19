@@ -1,6 +1,10 @@
 // Premium unlock: one-time, non-consumable in-app purchase via StoreKit 2 / Google Play Billing
 // (@capgo/native-purchases). Everything happens on the device – no server, no account.
 
+// The app is currently published completely free: everything is unlocked and no purchase UI is shown.
+// To sell Premium again, set FREE_APP = false and re-install @capgo/native-purchases (see README).
+export const FREE_APP = true;
+
 export const PRODUCT_ID = 'bazi_premium';
 export const FREE_LESSONS = 7;          // lessons 1–7 are free
 export const FREE_CALCULATIONS = 5;     // new charts that can be calculated without Premium
@@ -17,11 +21,11 @@ import { lang, t } from './i18n.js';
 
 const Store = plugin('NativePurchases');
 
-let premium = TEST_BUILD || read(KEY, false); // cached so the app works offline
+let premium = FREE_APP || TEST_BUILD || read(KEY, false); // cached so the app works offline
 export const isTestBuild = TEST_BUILD;
 let price = FALLBACK_PRICE;
 const listeners = new Set();
-const setPremium = (v) => { if (TEST_BUILD) v = true; if (premium !== v) { premium = v; write(KEY, v); listeners.forEach((f) => f(v)); } };
+const setPremium = (v) => { if (TEST_BUILD || FREE_APP) v = true; if (premium !== v) { premium = v; write(KEY, v); listeners.forEach((f) => f(v)); } };
 
 export const isPremium = () => premium;
 export const onChange = (fn) => listeners.add(fn);
@@ -44,7 +48,7 @@ function owns(purchases) {
 
 /** Refresh entitlement and price from the store (call on start-up). */
 export async function init() {
-  if (!Store) return;
+  if (!Store || FREE_APP) return;
   try {
     const { products } = await Store.getProducts({ productIdentifiers: [PRODUCT_ID], productType: 'inapp' });
     if (products?.[0]?.priceString) price = products[0].priceString;

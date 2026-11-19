@@ -1,11 +1,15 @@
 # Publishing BaZi Academy on Google Play
 
+> **Current plan: free app, published by NSH Holding GmbH.** `FREE_APP = true` in `www/js/premium.js`, and the billing plugin is
+> not installed. So you can **skip** everything about in-app products, the payments/merchant profile and Premium texts below.
+> Price: free · In-app purchases: none · Ads: none.
+
 ## 1. One-time setup
 
 1. **Create a Google Play developer account** at <https://play.google.com/console> (one-time fee of US$25) as an **Organization** for NSH Holding GmbH.
    You need the GmbH's **D-U-N-S number**, the company website and a contact email/phone; Google verifies the company.
    (Organization accounts don't need the 12-testers/14-days closed test that new personal accounts require.)
-   Under *Settings → Payments profile*, set up the GmbH's merchant account (bank account, VAT ID). It's needed to sell the in-app purchase.
+   *(Only if you sell Premium later: under Settings → Payments profile, set up the GmbH's merchant account.)*
    Declare **trader status** (EU Digital Services Act): the company's address, phone and email are then shown on the store page.
 2. **Create an upload key** (keep the file and passwords safe; you need them for every update):
    ```bash
@@ -37,7 +41,7 @@ Bump `versionName` in `android/app/build.gradle` (and in the About screen in `ww
 
 ## 3. Create the app in Play Console
 
-### Premium in-app product
+### Premium in-app product (not needed while the app is free)
 
 Play only lets you create in-app products after you have uploaded a build that contains the billing library, so first upload the `.aab` to the *Internal testing* track. Then go to **Monetize with Play → Products → In-app products → Create product**:
 - Product ID: **`bazi_premium`** (must match `www/js/premium.js`)
@@ -48,7 +52,7 @@ To test without being charged, add your Google account under *Settings → Licen
 
 - App name: **BaZi Academy – Four Pillars**
 - Default language: English (United States)
-- App or game: App · Free (contains in-app purchases)
+- App or game: App · Free (no in-app purchases)
 - Category: **Education** (alternative: Lifestyle)
 - Package name: `com.baziacademy.app`. You can change it until the first upload; after that it is permanent. If you own a domain, the convention is its reverse, e.g. `com.example.bazi`.
 
@@ -97,8 +101,8 @@ To test without being charged, add your Google account under *Settings → Licen
 > SHARE & BACKUP
 > Share your chart as a beautiful image, and move your charts to a new phone with a backup file.
 >
-> FREE & PREMIUM
-> Lessons 1–7, all quizzes and 5 chart calculations are free. A one-time purchase unlocks all 15 lessons, unlimited charts, the detailed chart reading (core nature, favourable elements, weak spots and how to balance them, career, relationships, current luck phase), the full compatibility analysis with your ideal match, the year-ahead forecast and the almanac planner. No subscription.
+> COMPLETELY FREE
+> All 15 lessons, unlimited charts, the detailed chart reading (core nature, favourable elements, weak spots and how to balance them, career, relationships, current luck phase), compatibility with your ideal match, the year-ahead forecast, the almanac planner and the lunar calendar – free, without ads or subscription.
 >
 > PRIVATE BY DESIGN
 > Works completely offline. No account, no ads, no tracking. Your birth data never leaves your phone.
@@ -114,13 +118,13 @@ To test without being charged, add your Google account under *Settings → Licen
 
 | Item | Answer |
 |---|---|
-| Privacy policy URL | `https://<your-github-name>.github.io/<repo-name>/privacy.html`. Enable GitHub Pages (Settings → Pages → *Deploy from a branch* → `main` / `/docs`). Put your contact email into `docs/privacy.html` first. The repository must be **public** for free GitHub Pages; otherwise host the file anywhere else. |
+| Privacy policy URL | `https://<your-github-name>.github.io/<repo-name>/privacy.html` (German: `datenschutz.html`). Enable GitHub Pages (Settings → Pages → *Deploy from a branch* → `main` / `/docs`). Put your contact email into `docs/privacy.html` first. The repository must be **public** for free GitHub Pages; otherwise host the file anywhere else. |
 | Ads | No ads |
-| In-app purchases | Yes: one-time Premium unlock (€2.99) |
+| In-app purchases | No |
 | App access | All functionality available without login |
 | Content rating (IARC questionnaire) | Category "Reference, News, or Educational"; answer *No* to violence, sexuality, gambling and similar questions. Expected rating: Everyone / PEGI 3 / USK 0 |
 | Target audience | 13+ (or 18+); not designed for children |
-| Data safety | **No data collected, no data shared.** All data stays on the device and the app has no internet permission. Purchases are processed by Google Play Billing |
+| Data safety | **No data collected, no data shared.** All data stays on the device and the app has no internet permission. The app contains no purchases |
 | Government / financial / health app | No |
 
 ## 4. Release
@@ -172,8 +176,8 @@ In Play Console → *Grow users → Store presence → Main store listing* → *
 > JAHRESVORSCHAU
 > Deine Jahressäule und alle 12 Monate: Themen, beste Monate und aktivierte Sterne.
 >
-> KOSTENLOS & PREMIUM
-> Die Lektionen 1–7, alle Quizze und 5 Horoskop-Berechnungen sind kostenlos. Ein einmaliger Kauf schaltet alle 15 Lektionen, unbegrenzte Horoskope, die ausführliche Deutung (Wesenskern, günstige Elemente, Schwachstellen und ihr Ausgleich, Beruf, Beziehungen, aktuelle Glücksphase), die vollständige Kompatibilitätsanalyse, die Jahresvorschau und den Almanach-Planer frei. Kein Abo.
+> KOMPLETT KOSTENLOS
+> Alle 15 Lektionen, unbegrenzte Horoskope, die ausführliche Deutung (Wesenskern, günstige Elemente, Schwachstellen und ihr Ausgleich, Beruf, Beziehungen, aktuelle Glücksphase), Kompatibilität mit deinem idealen Partner, Jahresvorschau, Almanach-Planer und Mondkalender – kostenlos, ohne Werbung und ohne Abo.
 >
 > PRIVAT VON ANFANG AN
 > Funktioniert komplett offline. Kein Konto, keine Werbung, kein Tracking. Deine Geburtsdaten verlassen nie dein Handy.

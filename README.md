@@ -14,7 +14,8 @@ An offline app for Android and iPhone for learning Chinese astrology according t
   - 10-year luck pillars with starting age
   - charts are saved on the device; you can mark one as "my chart"
 - **Quiz**: endless, generated questions in 5 categories plus a mixed mode, with best scores.
-- **Premium** (one-time in-app purchase, €2.99): lessons 8–14, unlimited chart calculations (5 are free) and a detailed chart reading. It uses StoreKit 2 / Google Play Billing on the device (`@capgo/native-purchases`), with no server. Product ID `bazi_premium`, set in `www/js/premium.js`.
+- **Free:** the app is currently published completely free (`FREE_APP = true` in `www/js/premium.js`, billing plugin not installed). To sell Premium again: set `FREE_APP = false`, run `npm install --save-exact @capgo/native-purchases@8.9.6 && npx cap sync`, and follow the in-app-purchase sections of the store guides.
+- **Premium** (dormant; one-time in-app purchase, €2.99): lessons 8–14, unlimited chart calculations (5 are free) and a detailed chart reading. It uses StoreKit 2 / Google Play Billing on the device (`@capgo/native-purchases`), with no server. Product ID `bazi_premium`, set in `www/js/premium.js`.
 - **Compatibility**: compare two saved charts, quick check by date of birth, "your ideal match" (Day Masters, zodiac animals with birth years, elements). The full analysis is Premium.
 - **Almanac (Tong Shu)**: the 12 Day Officers, clash animal and personal clash days; the planner ("find a good day for…") is Premium.
 - **Daily tip**: optional local notifications, scheduled on the device for a rolling 30 days.
@@ -24,6 +25,7 @@ An offline app for Android and iPhone for learning Chinese astrology according t
 - **Backup**: export/import charts and progress as a JSON file (About screen).
 - **Lunar calendar** (Calendar tab): Chinese lunar dates incl. leap months, all 24 solar terms (equinoxes, solstices), new and full moons, traditional festivals; tap a day for its pillar, almanac officer and moon phase. Sun: truncated VSOP87 (~1″), moon phases: Meeus ch. 49.
 - **Reminders & calendar export** (Calendar tab): optional local notifications for full/new moons, equinoxes & solstices, solar terms and festivals (evening before, morning of, or exact time); export as an .ics file, or subscribe to the feeds in `docs/calendar/` (served by GitHub Pages; regenerate with `node tools/build-calendar-feeds.mjs 2025 2035`).
+- **Impressum:** publisher details in `www/js/publisher.js` (About screen) and `docs/impressum.html`.
 - **Today**: today's pillars, the next solar term, and how today relates to your own Day Master.
 - Fully offline, no tracking, light and dark mode.
 - **Languages:** English and German, following the phone's language (switchable under About → Language). UI texts use English source strings as keys (`t('…')` in `www/js/i18n.js`, German in `www/js/i18n/`); `node tools/i18n-keys.cjs --missing de` lists untranslated texts, and the tests fail if one is missing.

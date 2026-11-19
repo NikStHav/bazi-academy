@@ -1,5 +1,9 @@
 # Publishing BaZi Academy on the Apple App Store
 
+> **Current plan: free app, published by NSH Holding GmbH** (Organization account, needs the GmbH's D-U-N-S number).
+> `FREE_APP = true` and no purchase plugin, so **skip section 4** (in-app purchase) and the Paid Apps Agreement/banking/tax
+> steps – a free app only needs the Free Apps Agreement, which you accept when enrolling. Price: Free.
+
 You do **not** need your own Mac: the workflow `.github/workflows/ios.yml` builds and uploads the app on a GitHub-hosted Mac.
 With a Mac, you can do steps 4–5 in Xcode instead (`npx cap open ios`, then *Product → Archive → Distribute App*).
 
@@ -25,7 +29,7 @@ With a Mac, you can do steps 4–5 in Xcode instead (`npx cap open ios`, then *P
 - Platform: iOS · Name: **BaZi Academy: Four Pillars** (names must be unique on the App Store; alternatives: *BaZi Academy – Learn BaZi*, *Four Pillars Academy*)
 - Primary language: English (U.S.) · Bundle ID: `com.baziacademy.app` · SKU: `bazi-academy-ios` · Full access
 
-## 4. Create the Premium in-app purchase
+## 4. Create the Premium in-app purchase (skip while the app is free)
 
 App Store Connect → your app → **Monetization → In-App Purchases** → **+**:
 - Type: **Non-Consumable** · Reference name: `Premium` · Product ID: **`bazi_premium`** (must match `www/js/premium.js`)
@@ -67,7 +71,7 @@ Internal testing needs no review.
 | Support URL | `https://<your-github-name>.github.io/<repo>/` (`docs/index.html`) |
 | Privacy Policy URL | `https://<your-github-name>.github.io/<repo>/privacy.html` (`docs/privacy.html`) |
 | Copyright | `2026 NSH Holding GmbH` |
-| Price | Free (with in-app purchase) |
+| Price | Free |
 
 Put your contact email into `docs/index.html` and `docs/privacy.html`, then enable GitHub Pages: Settings → Pages → *Deploy from a branch* → `main` / `/docs`.
 Free GitHub Pages needs a public repository; otherwise host these two pages elsewhere.
@@ -84,7 +88,7 @@ Upload 3–8 of them, starting with the chart (`2-chart.png`) and the reading (`
 
 ## 8. App Privacy, age rating, compliance
 
-- **App Privacy** → *Data Collection*: **“No, we do not collect data from this app.”** → privacy label “Data Not Collected”. Purchases are processed by Apple (StoreKit) on the device; the app sends nothing to the developer.
+- **App Privacy** → *Data Collection*: **“No, we do not collect data from this app.”** → privacy label “Data Not Collected”. The app has no purchases and sends nothing to the developer.
 - **Age rating questionnaire**: answer *None/No* everywhere. The result is **4+**.
 - **Export compliance**: already answered in `Info.plist` (`ITSAppUsesNonExemptEncryption = NO`), so Apple won't ask.
 - **Content rights**: the app contains no third-party content.

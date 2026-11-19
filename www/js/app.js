@@ -8,6 +8,7 @@ import { buildReading } from './reading.js';
 import * as premium from './premium.js';
 import { plugin } from './cap.js';
 import { BUILD } from './build-flags.js';
+import { PUBLISHER } from './publisher.js';
 import { searchPlaces, utcOffsetFor, countryName } from './places.js';
 import { dayInfo, findDays, ACTIVITIES, OFFICERS, RATING_LABEL } from './almanac.js';
 import { compare, idealMatch } from './compat.js';
@@ -342,7 +343,7 @@ const routes = {
       ${premium.isPremium() ? '' : `<a class="card premium-banner" href="#/premium"><span class="pb-icon">✦</span><span><b>${t("Premium")}</b> · ${t('unlock lessons {a}–{b}, unlimited charts and detailed readings', { a: premium.FREE_LESSONS + 1, b: LESSONS.length })}</span><span class="pb-go">›</span></a>`}
       <div class="list">${LESSONS.map((l, i) => `<a class="card lesson-item ${state.done[l.id] ? 'done' : ''} ${premium.lessonIsLocked(i) ? 'locked' : ''}" href="#/lesson/${l.id}">
         <span class="badge">${premium.lessonIsLocked(i) ? '🔒' : state.done[l.id] ? '✓' : l.zh.slice(0, 2)}</span>
-        <span><span class="lvl">${i + 1} · ${t(l.level)}${i >= premium.FREE_LESSONS ? t(' · Premium') : ''}</span><div class="t">${l.title} <span class="muted" style="font-family:var(--serif);font-weight:400">${l.zh}</span></div><div class="s">${l.summary}</div></span></a>`).join('')}</div>
+        <span><span class="lvl">${i + 1} · ${t(l.level)}${i >= premium.FREE_LESSONS && !premium.FREE_APP ? t(' · Premium') : ''}</span><div class="t">${l.title} <span class="muted" style="font-family:var(--serif);font-weight:400">${l.zh}</span></div><div class="s">${l.summary}</div></span></a>`).join('')}</div>
       <a class="card about-link" href="#/about"><span>ⓘ</span><span><b>${t("About, privacy & backup")}</b><br><span class="small muted">${t("Backup and new phone, restore purchase, settings")}</span></span><span class="pb-go">›</span></a>`;
   },
 
@@ -729,6 +730,7 @@ const routes = {
   },
 
   premium() {
+    if (premium.FREE_APP) { go('#/learn', true); return; }
     setTitle(t('Premium'), true);
     const has = premium.isPremium();
     view.innerHTML = `<div class="card hero"><div class="big">✦</div><h2 style="margin:8px 0 4px">${t("BaZi Academy Premium")}</h2>
@@ -756,7 +758,7 @@ const routes = {
       <h3>${t("Birthplaces")}</h3>
       <p class="small">${t('City data © <a href="https://www.geonames.org" rel="noopener">GeoNames</a>, licensed under CC BY 4.0. Historical time zones come from your device.')}</p>
       <h3>${t("Privacy")}</h3>
-      <p class="small">${t("The app works offline. Birth data, charts and progress are stored only on your device. Nothing is sent to a server, and there is no tracking or advertising. Purchases are handled entirely by Apple or Google.")}</p>
+      <p class="small">${t("The app works offline. Birth data, charts and progress are stored only on your device. Nothing is sent to a server, and there is no tracking or advertising.")}</p>
       <h3>${t("Disclaimer")}</h3>
       <p class="small">${t("BaZi is a traditional cultural system. The content is for education and entertainment and is no substitute for professional medical, legal, financial or psychological advice.")}</p>
       <h3>${t("Backup & new phone")}</h3>
@@ -765,11 +767,16 @@ const routes = {
       <input type="file" id="bk-file" accept=".json,application/json" hidden>
       <h3>${t('Language')}</h3>
       <select id="lang-sel"><option value="auto" ${langSetting() === 'auto' ? 'selected' : ''}>${t('Automatic (phone language)')}</option>${Object.entries(LANGS).map(([k, v]) => `<option value="${k}" ${langSetting() === k ? 'selected' : ''}>${v}</option>`).join('')}</select>
-      <h3>${t("Premium")}</h3>
+      ${premium.FREE_APP ? '' : `<h3>${t("Premium")}</h3>
       ${premium.isTestBuild ? `<p class="tip">${t('Test build {b}: Premium is unlocked for testing. Store versions use the real purchase.', { b: BUILD })}</p>` : ''}
       <p class="small">${premium.isPremium() ? t('✦ Premium is active – thank you for supporting the app!') : `${t('Not purchased.')} <a href="#/premium">${t("See Premium")}</a>`}</p>
-      <button class="btn secondary block" id="restore" style="margin-bottom:10px">${t("Restore purchase")}</button>
+      <button class="btn secondary block" id="restore" style="margin-bottom:10px">${t("Restore purchase")}</button>`}
+      <h3 style="margin-top:20px">${t('Progress')}</h3>
       <button class="btn secondary block" id="reset">${t("Reset learning progress")}</button>
+      <h3>${t('Legal notice (Impressum)')}</h3>
+      <p class="small">${[PUBLISHER.company, PUBLISHER.street, PUBLISHER.city, PUBLISHER.country].map(esc).join('<br>')}</p>
+      <p class="small">${t('Represented by the managing director: {name}', { name: esc(PUBLISHER.director) })}<br>${t('Register: {reg}', { reg: esc(PUBLISHER.register) })}${PUBLISHER.vatId ? `<br>${t('VAT ID: {id}', { id: esc(PUBLISHER.vatId) })}` : ''}</p>
+      ${PUBLISHER.email || PUBLISHER.phone ? `<p class="small">${PUBLISHER.email ? `${t('Email:')} <a href="mailto:${esc(PUBLISHER.email)}">${esc(PUBLISHER.email)}</a>` : ''}${PUBLISHER.phone ? `<br>${t('Phone:')} ${esc(PUBLISHER.phone)}` : ''}</p>` : ''}
       <p class="small muted" style="text-align:center">${t('Version {v} · build {b}', { v: '1.0.0', b: BUILD })}</p></div>`;
     $('#bk-export').onclick = async () => {
       const json = JSON.stringify(makeBackup(state, { notify: notify.getSettings() }), null, 1);
@@ -790,7 +797,7 @@ const routes = {
       } catch (err) { alert(err instanceof SyntaxError ? t('This file is not a BaZi Academy backup.') : err.message); }
       e.target.value = '';
     };
-    $('#restore').onclick = async () => { const ok = await premium.restore(); alert(ok ? t('Premium restored.') : t('No previous purchase found for this store account.')); routes.about(); };
+    if ($('#restore')) $('#restore').onclick = async () => { const ok = await premium.restore(); alert(ok ? t('Premium restored.') : t('No previous purchase found for this store account.')); routes.about(); };
     $('#reset').onclick = () => { if (confirm(t('Reset lesson progress and quiz scores?'))) { state.done = {}; state.best = {}; save('done'); save('best'); go('#/learn'); } };
   },
 };
@@ -961,7 +968,7 @@ function bindPaywall() {
 function readingHtml(c) {
   const { sections } = buildReading(c);
   if (premium.isPremium()) {
-    return `<div class="card reading"><h3 style="margin-top:0">${t("Detailed reading")} <span class="pill">${t("Premium")}</span></h3>
+    return `<div class="card reading"><h3 style="margin-top:0">${t("Detailed reading")}${premium.FREE_APP ? '' : ` <span class="pill">${t("Premium")}</span>`}</h3>
       ${sections.map((s, i) => `<details ${i < 2 ? 'open' : ''}><summary>${s.title}</summary>${s.html}</details>`).join('')}</div>`;
   }
   return `<div class="card reading"><h3 style="margin-top:0">${t("Detailed reading")}</h3>
