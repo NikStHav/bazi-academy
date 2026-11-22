@@ -14,7 +14,7 @@ for (const f of files) {
   for (const m of src.matchAll(/\bt\(\s*[^'"()]+\?\s*(['"])((?:\\.|(?!\1).)*)\1\s*:\s*(['"])((?:\\.|(?!\3).)*)\3/g)) { keys.add(m[2]); keys.add(m[4]); }
 }
 // keys that are passed to t() as variables
-const DYNAMIC = ['Learn', 'Strong', 'Balanced to strong', 'Balanced to weak', 'Weak', 'Basics', 'Calendar', 'Core', 'Analysis',
+const DYNAMIC = ['Family', 'Partner', 'Friends', 'Clients', 'Work', 'Other', 'with your year branch {b}', 'with your month branch {b}', 'with your day branch {b}', 'with your hour branch {b}', 'Learn', 'Strong', 'Balanced to strong', 'Balanced to weak', 'Weak', 'Basics', 'Calendar', 'Core', 'Analysis',
   'Same element', 'I produce', 'I control', 'Controls me', 'Produces me', 'favourable', 'mixed', 'challenging',
   'Excellent', 'Good', 'Mixed', 'Challenging', 'Stem combination', 'Clash', 'Six Harmony', 'Harm', 'Self-punishment', 'Punishment',
   'Three Harmony (full)', 'Half Three Harmony', 'Punishment (full)', 'Punishment (partial)', 'Year', 'Month', 'Day', 'Hour', 'Chart',

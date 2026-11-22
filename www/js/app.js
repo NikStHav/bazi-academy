@@ -19,6 +19,10 @@ import { KINDS, collectEvents, buildIcs } from './ics.js';
 import { findStars, STARS, pillarListText } from './shensha.js';
 import { yearForecast, baziYearOf } from './forecast.js';
 import { makeBackup, validateBackup, mergeBackup } from './backup.js';
+import { hoursOfDay, hourBranchOf, DEITIES } from './hours.js';
+import { influencesFor } from './influences.js';
+import { lifeTimeline } from './timeline.js';
+import { MONTH_TEXT } from './forecast.js';
 import { GOD_TEXT, favourableElements } from './reading.js';
 
 // ---------- storage ----------
@@ -218,6 +222,12 @@ function chartHtml(entry) {
   ${starsCard(c)}
   ${readingHtml(c)}
   <a class="card premium-banner" href="#/forecast/${entry.id}"><span class="pb-icon">📅</span><span><b>${t('Year ahead {y}', { y: baziYearOf() })}</b> · ${t('your year and its 12 months')}</span><span class="pb-go">›</span></a>
+  <a class="card premium-banner" href="#/influences/${entry.id}"><span class="pb-icon">🧭</span><span><b>${t('Influences')}</b> · ${t('any date measured against this chart')}</span><span class="pb-go">›</span></a>
+  <a class="card premium-banner" href="#/timeline/${entry.id}"><span class="pb-icon">🧵</span><span><b>${t('Life timeline')}</b> · ${t('all luck pillars and years at a glance')}</span><span class="pb-go">›</span></a>
+  <div class="card"><h3 style="margin-top:0">${t('Group & notes')}</h3>
+    <label for="c-group">${t('Group')}</label><select id="c-group">${groupOptions(entry.group || '')}</select>
+    <label for="c-notes">${t('Notes')}</label><textarea id="c-notes" rows="4" maxlength="2000" placeholder="${t('e.g. what you know about this person, events to compare with the chart …')}">${esc(entry.notes || '')}</textarea>
+    <p class="help" id="c-saved">${t('Saved automatically on this device.')}</p></div>
   <div class="row" style="margin-bottom:10px"><button class="btn" id="share-chart">${t("⇪ Share as image")}</button><a class="btn secondary" href="#/match/${entry.id}">${t("♥ Compare")}</a></div>
   <div class="row"><button class="btn secondary" id="del-chart">${t("Delete")}</button><button class="btn secondary" id="mine-chart">${entry.mine ? t('★ My chart') : t('☆ Set as my chart')}</button></div>`;
 }
@@ -321,10 +331,10 @@ function bindBirthForm() {
   };
 }
 
-function saveChart(name, input, mine) {
+function saveChart(name, input, mine, group = '') {
   const id = Date.now().toString(36);
   if (mine) state.charts.forEach((c) => { c.mine = false; });
-  state.charts.unshift({ id, name, input, mine });
+  state.charts.unshift({ id, name, input, mine, group, notes: '', created: Date.now() });
   save('charts');
   if (mine) rescheduleTips();
   return id;
@@ -381,6 +391,9 @@ const routes = {
       bindPaywall();
       $('#del-chart').onclick = () => { if (confirm(t('Delete this chart?'))) { state.charts = state.charts.filter((c) => c.id !== id); save('charts'); go('#/chart', true); } };
       $('#mine-chart').onclick = () => { state.charts.forEach((c) => { c.mine = c.id === id ? !entry.mine : false; }); save('charts'); rescheduleTips(); routes.chart(id); };
+      $('#c-group').onchange = (e) => { entry.group = e.target.value; save('charts'); };
+      let noteTimer = 0;
+      $('#c-notes').oninput = (e) => { clearTimeout(noteTimer); noteTimer = setTimeout(() => { entry.notes = e.target.value; save('charts'); }, 400); };
       $('#share-chart').onclick = async (e) => { e.target.disabled = true;
         try { await shareChart(computeChart({ ...entry.input, ziHourNextDay: state.settings.ziHourNextDay }), entry.name); } catch { alert(t('Sharing is not available on this device.')); }
         e.target.disabled = false; };
@@ -395,26 +408,31 @@ const routes = {
           : `${t('You have used your {n} free calculations. Your saved charts stay available.', { n: premium.FREE_CALCULATIONS })} <a href="#/premium">${t("Get unlimited charts")}</a>`}</p>`}
         ${birthFieldsHtml()}
         <label class="check" style="margin-top:12px"><input type="checkbox" id="f-mine" ${state.charts.some((c) => c.mine) ? '' : 'checked'}> ${t("This is my own chart")}</label>
+        <label for="f-group">${t('Group')}</label><select id="f-group">${groupOptions('')}</select>
         <button class="btn block" style="margin-top:16px" type="submit">${t("Calculate")}</button>
       </form>
-      ${state.charts.length ? `<div class="card"><h3 style="margin-top:0">${t("Saved charts")}</h3>${state.charts.map((c) => {
-        const ch = computeChart({ ...c.input, ziHourNextDay: state.settings.ziHourNextDay });
-        return `<div class="saved"><span class="n" data-open="${c.id}"><b>${c.mine ? '<span class="star">★</span> ' : ''}${esc(c.name || t('Chart'))}</b><br>
-          <span class="small muted">${c.input.year}-${pad(c.input.month)}-${pad(c.input.day)} · <span style="font-family:var(--serif)">${PILLAR_KEYS.map((k) => (ch.pillars[k] ? pillarName(ch.pillars[k]) : '??')).join(' ')}</span></span></span>
-          <a class="icon-btn" href="#/chart/${c.id}" aria-label="${t('Open')}">›</a></div>`; }).join('')}</div>` : ''}
+      ${state.charts.length ? `<div class="card"><h3 style="margin-top:0">${t("Saved charts")} <span class="muted small">(${state.charts.length})</span></h3>
+        <input id="s-q" type="search" placeholder="${t('Search by name, year or notes')}" autocomplete="off">
+        <div class="row" style="margin-top:8px"><select id="s-group"><option value="*">${t('All groups')}</option>${groupOptions('', true)}</select>
+          <select id="s-sort"><option value="new">${t('Newest first')}</option><option value="name">${t('Name A–Z')}</option><option value="birth">${t('Birth date')}</option></select></div>
+        <div id="saved-list"></div></div>` : ''}
       <a class="card premium-banner" href="#/match"><span class="pb-icon">♥</span><span><b>${t("Compatibility")}</b> · ${t('compare two charts – partners, family, friends')}</span><span class="pb-go">›</span></a>
       <p class="small muted">${t("Charts are stored only on this device.")} ${t('<a href="#/about">Back them up</a> before you change phones.')}</p>`;
 
     const f = $('#chart-form');
     const birth = bindBirthForm();
-    view.querySelectorAll('[data-open]').forEach((el) => el.addEventListener('click', () => go('#/chart/' + el.dataset.open)));
+    if ($('#saved-list')) {
+      const renderSaved = () => renderSavedList($('#s-q').value, $('#s-group').value, $('#s-sort').value);
+      $('#s-q').oninput = renderSaved; $('#s-group').onchange = renderSaved; $('#s-sort').onchange = renderSaved;
+      renderSaved();
+    }
     f.addEventListener('submit', (e) => {
       e.preventDefault();
       const r = birth.read();
       if (!r) return;
       if (!premium.canCalculate()) { go('#/premium'); return; }
       premium.countCalculation();
-      const id = saveChart(r.name, r.input, $('#f-mine').checked);
+      const id = saveChart(r.name, r.input, $('#f-mine').checked, $('#f-group').value);
       go('#/chart/' + id);
     });
   },
@@ -471,7 +489,9 @@ const routes = {
       <p style="margin-top:-4px"><a href="#/calendar" style="text-decoration:none"><span style="font-family:var(--serif)">${lToday ? lToday.label : ''}</span> · ${mToday.icon} ${mToday.illumination}% · ${t('Lunar calendar')} ›</a></p>
       ${pillarsHtml(pseudo, false).replace(t('Day Master'), t('Day'))}
       <p class="small muted">${t("Ten Gods above are shown relative to today’s day stem.")}</p></div>
+      ${clockCard(now, mine ? computeChart({ ...mine.input, ziHourNextDay: state.settings.ziHourNextDay }) : null)}
       ${personal}
+      ${mine ? `<a class="card premium-banner" href="#/influences/${mine.id}"><span class="pb-icon">🧭</span><span><b>${t('Influences')}</b> · ${t('any date measured against your chart')}</span><span class="pb-go">›</span></a>` : ''}
       ${mine ? `<a class="card premium-banner" href="#/forecast/${mine.id}"><span class="pb-icon">📅</span><span><b>${t('Your year ahead {y}', { y: baziYearOf(now) })}</b> · ${t('{p} year and its 12 months', { p: pillarName(pillarFromIndex(baziYearOf(now) - 4)) })}</span><span class="pb-go">›</span></a>` : ''}
       ${almanacCard(now, mine ? computeChart({ ...mine.input, ziHourNextDay: state.settings.ziHourNextDay }) : null)}
       ${notifyCard()}
@@ -480,6 +500,7 @@ const routes = {
         <span class="muted">${fmtDate(nextTerm.ms)} – ${t('the {animal} {zh} month begins.', { animal: BRANCHES[(nextIdx + 2) % 12].animal, zh: BRANCHES[(nextIdx + 2) % 12].zh })}</span></p></div>
       <div class="card"><h3 style="margin-top:0">${t("Character of the day")}</h3>${stemSheet(p.day.stem)}</div>`;
     bindNotifyCard();
+    bindClock(now, mine ? computeChart({ ...mine.input, ziHourNextDay: state.settings.ziHourNextDay }) : null);
   },
 
   match(aId) {
@@ -729,6 +750,65 @@ const routes = {
     bindCalendarCards();
   },
 
+  influences(id) {
+    setTitle(t('Influences'), true);
+    const entry = state.charts.find((c) => c.id === id) || state.charts.find((c) => c.mine) || state.charts[0];
+    if (!entry) { view.innerHTML = `<div class="card"><p>${t("Calculate a chart first.")}</p><a class="btn block" href="#/chart">${t("Calculate a chart")}</a></div>`; return; }
+    const c = computeChart({ ...entry.input, ziHourNextDay: state.settings.ziHourNextDay });
+    const now = new Date();
+    view.innerHTML = `<div class="card"><h2 style="margin-top:0">${t('Influences')}</h2>
+        <p class="small muted">${t('The year, month, day and hour of any moment, measured against {name} ({dm}).', { name: esc(entry.name || t('this chart')), dm: STEMS[c.dayMaster].zh })}</p>
+        <div class="row"><div><label for="i-date">${t('Date')}</label><input id="i-date" type="date" min="1900-01-01" max="2100-12-31" value="${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}"></div>
+          <div><label for="i-time">${t('Time')}</label><input id="i-time" type="time" value="${pad(now.getHours())}:${pad(now.getMinutes())}"></div></div>
+        <button class="btn secondary block" id="i-now" style="margin-top:10px">${t('Now')}</button></div><div id="i-res"></div>`;
+    const LAYER = { year: t('Year pillar'), month: t('Month pillar'), day: t('Day pillar'), hour: t('Hour pillar') };
+    const WITH = { year: 'with your year branch {b}', month: 'with your month branch {b}', day: 'with your day branch {b}', hour: 'with your hour branch {b}' };
+    const render = () => {
+      const [y, m, d] = ($('#i-date').value || '').split('-').map(Number); if (!y) return;
+      const [hh, mm] = ($('#i-time').value || '12:00').split(':').map(Number);
+      const inf = influencesFor(c, new Date(y, m - 1, d, hh, mm));
+      const chip = (r) => `<span class="rate rate-${r}">${t(r)}</span>`;
+      $('#i-res').innerHTML = `<div class="card" data-dm="${c.dayMaster}"><h3 style="margin-top:0">${t('Overall')} ${chip(inf.overall)}</h3>
+          ${inf.luck ? `<p class="small">${t('Running luck pillar: {p} ({god}, since {y}).', { p: `<b style="font-family:var(--serif)">${STEMS[inf.luck.stem].zh}${BRANCHES[inf.luck.branch].zh}</b>`, god: TEN_GODS[inf.luck.god].name, y: inf.luck.year })}</p>` : ''}
+          <p class="small muted">${t('The day weighs most, then month, year and hour.')}</p></div>
+        ${inf.layers.map((l) => `<div class="card inf" data-dm="${c.dayMaster}">
+          <div class="fc-head"><span class="fc-pillar el-${STEMS[l.pillar.stem].el}">${pillarName(l.pillar)}</span>
+            <span><b>${LAYER[l.key]}</b><br><span class="small muted"><a href="javascript:void 0" data-god="${l.god}">${TEN_GODS[l.god].name}</a> · ${t('branch: {god}', { god: TEN_GODS[l.branchGod].name })}</span></span>${chip(l.rating.label)}</div>
+          <p class="small">${MONTH_TEXT[l.god]}</p>
+          ${l.combinesDM ? `<p class="small">💞 ${t('Its stem combines with your Day Master – attraction, opportunities and agreements.')}</p>` : ''}
+          ${l.relations.map((r) => `<p class="small">${r.rel.key === 'clash' ? '⚡' : r.rel.key === 'harm' || r.rel.key === 'punish' ? '⚠︎' : '🤝'} <b>${r.rel.label}</b> ${t(WITH[r.natal], { b: BRANCHES[c.pillars[r.natal].branch].zh })} – ${r.rel.note}.</p>`).join('')}
+          ${l.stars.length ? `<p class="small">${l.stars.map((st) => `${st.icon} ${st.name}`).join(' · ')} – ${t('activated')}</p>` : ''}</div>`).join('')}
+        <p class="small muted">${t('A traditional reading of timing for reflection – not a prediction.')}</p>`;
+    };
+    $('#i-date').onchange = render; $('#i-time').onchange = render;
+    $('#i-now').onclick = () => { const n = new Date(); $('#i-date').value = `${n.getFullYear()}-${pad(n.getMonth() + 1)}-${pad(n.getDate())}`; $('#i-time').value = `${pad(n.getHours())}:${pad(n.getMinutes())}`; render(); };
+    render();
+  },
+
+  timeline(id) {
+    setTitle(t('Life timeline'), true);
+    const entry = state.charts.find((c) => c.id === id) || state.charts.find((c) => c.mine) || state.charts[0];
+    if (!entry) { view.innerHTML = `<div class="card"><p>${t("Calculate a chart first.")}</p><a class="btn block" href="#/chart">${t("Calculate a chart")}</a></div>`; return; }
+    const c = computeChart({ ...entry.input, ziHourNextDay: state.settings.ziHourNextDay });
+    const yNow = new Date().getFullYear();
+    const chip = (r) => `<span class="rate rate-${r.label}">${t(r.label)}</span>`;
+    const phases = lifeTimeline(c);
+    view.innerHTML = `<div class="card"><h2 style="margin-top:0">${t('Life timeline')}</h2>
+        <p class="small muted">${t('{name}: luck pillars (大运) change every ten years; each year adds its own pillar (流年). Tap a phase to see its years.', { name: esc(entry.name || t('this chart')) })}</p></div>
+      <div class="tl" data-dm="${c.dayMaster}">${phases.map((ph) => {
+        const now = yNow >= ph.from && yNow <= ph.to;
+        return `<details class="card tl-phase ${now ? 'tl-now' : ''}" ${now ? 'open' : ''}><summary>
+          <span class="fc-pillar el-${STEMS[ph.pillar.stem].el}">${STEMS[ph.pillar.stem].zh}${BRANCHES[ph.pillar.branch].zh}</span>
+          <span><b>${ph.kind === 'childhood' ? t('Childhood') : TEN_GODS[ph.god].name}</b> ${ph.rating ? chip(ph.rating) : ''}${now ? ` <span class="pill">${t('now')}</span>` : ''}<br>
+          <span class="small muted">${t('age {a}–{b}', { a: ph.ageFrom, b: ph.ageTo })} · ${ph.from}–${ph.to}</span></span></summary>
+          <p class="small">${ph.kind === 'childhood' ? t('Before the first luck pillar, the month pillar sets the tone of childhood.') : GOD_TEXT[ph.god].luck}</p>
+          <div class="tl-years">${ph.years.map((y) => `<div class="tl-year ${y.year === yNow ? 'tl-cur' : ''}"><span>${y.year}</span><span class="muted">${t('age {n}', { n: y.age })}</span>
+            <span style="font-family:var(--serif)">${pillarName(y.pillar)}</span><span>${TEN_GODS[y.god].name}</span>
+            <span>${chip(y.rating)}${y.benming ? ` <span title="${t('zodiac year (本命年)')}">本</span>` : ''}${y.taiSuiClash ? ` <span title="${t('clash with your year branch (冲太岁)')}">冲</span>` : ''}</span></div>`).join('')}</div></details>`; }).join('')}</div>
+      <p class="small muted">${t('本 = your zodiac year (本命年) · 冲 = the year clashes your year branch (冲太岁).')}</p>`;
+    const cur = view.querySelector('.tl-cur'); if (cur) setTimeout(() => cur.scrollIntoView({ block: 'center' }), 50);
+  },
+
   premium() {
     if (premium.FREE_APP) { go('#/learn', true); return; }
     setTitle(t('Premium'), true);
@@ -801,6 +881,72 @@ const routes = {
     $('#reset').onclick = () => { if (confirm(t('Reset lesson progress and quiz scores?'))) { state.done = {}; state.best = {}; save('done'); save('best'); go('#/learn'); } };
   },
 };
+
+// ---------- chart management ----------
+const CHART_GROUPS = [['family', 'Family'], ['partner', 'Partner'], ['friends', 'Friends'], ['clients', 'Clients'], ['work', 'Work'], ['other', 'Other']];
+function groupOptions(sel, onlyGroups = false) {
+  return (onlyGroups ? '' : `<option value="">${t('No group')}</option>`) + CHART_GROUPS.map(([k, n]) => `<option value="${k}" ${sel === k ? 'selected' : ''}>${t(n)}</option>`).join('');
+}
+const groupName = (k) => { const g = CHART_GROUPS.find(([x]) => x === k); return g ? t(g[1]) : ''; };
+
+function renderSavedList(q, group, sort) {
+  const nq = String(q || '').trim().toLowerCase();
+  let list = state.charts.filter((c) => (group === '*' || (c.group || '') === group)
+    && (!nq || `${c.name || ''} ${c.input.year} ${c.notes || ''} ${c.input.place?.name || ''}`.toLowerCase().includes(nq)));
+  const bd = (c) => c.input.year * 10000 + c.input.month * 100 + c.input.day;
+  if (sort === 'name') list = [...list].sort((a, b) => (a.name || '').localeCompare(b.name || '', LOCALE));
+  else if (sort === 'birth') list = [...list].sort((a, b) => bd(a) - bd(b));
+  $('#saved-list').innerHTML = list.length ? list.map((c) => {
+    const ch = computeChart({ ...c.input, ziHourNextDay: state.settings.ziHourNextDay });
+    return `<div class="saved"><span class="n" data-open="${c.id}"><b>${c.mine ? '<span class="star">★</span> ' : ''}${esc(c.name || t('Chart'))}</b>${c.group ? ` <span class="chip">${groupName(c.group)}</span>` : ''}<br>
+      <span class="small muted">${c.input.year}-${pad(c.input.month)}-${pad(c.input.day)} · <span style="font-family:var(--serif)">${PILLAR_KEYS.map((k) => (ch.pillars[k] ? pillarName(ch.pillars[k]) : '??')).join(' ')}</span></span>
+      ${c.notes ? `<br><span class="small muted">📝 ${esc(c.notes.slice(0, 80))}${c.notes.length > 80 ? '…' : ''}</span>` : ''}</span>
+      <a class="icon-btn" href="#/chart/${c.id}" aria-label="${t('Open')}">›</a></div>`; }).join('') : `<p class="muted small">${t('No chart matches.')}</p>`;
+  $('#saved-list').querySelectorAll('[data-open]').forEach((el) => el.addEventListener('click', () => go('#/chart/' + el.dataset.open)));
+}
+
+// ---------- Chinese clock (时辰) ----------
+function clockSvg(hours, cur) {
+  const C = 120, R1 = 112, R0 = 66;
+  const pt = (deg, r) => [C + r * Math.cos(deg * Math.PI / 180), C + r * Math.sin(deg * Math.PI / 180)];
+  return `<svg viewBox="0 0 240 240" class="clock" role="img" aria-label="${t('Chinese double hours')}">${hours.map((h) => {
+    const a0 = -105 + h.branch * 30, a1 = a0 + 30;
+    const [x0, y0] = pt(a0, R1), [x1, y1] = pt(a1, R1), [x2, y2] = pt(a1, R0), [x3, y3] = pt(a0, R0);
+    const [tx, ty] = pt(a0 + 15, (R1 + R0) / 2);
+    const cls = h.lucky ? 'h-good' : h.deity.good && !h.dayClash ? 'h-mid' : 'h-bad';
+    return `<g class="${cls}${h.branch === cur ? ' h-now' : ''}"><path d="M${x0},${y0} A${R1},${R1} 0 0 1 ${x1},${y1} L${x2},${y2} A${R0},${R0} 0 0 0 ${x3},${y3} Z"/>
+      <text x="${tx}" y="${ty + 7}" text-anchor="middle">${BRANCHES[h.branch].zh}</text></g>`; }).join('')}
+    <text x="120" y="112" text-anchor="middle" class="c-big">${hours[cur].label}</text>
+    <text x="120" y="136" text-anchor="middle" class="c-small">${hours[cur].range}</text></svg>`;
+}
+
+function clockCard(now, mine) {
+  const day = pillarsForNow(now).day;
+  const hours = hoursOfDay(day, mine);
+  const cur = hourBranchOf(now.getHours());
+  const h = hours[cur];
+  const lucky = hours.filter((x) => x.lucky);
+  return `<div class="card" data-dm="${mine ? mine.dayMaster : ''}"><h3 style="margin-top:0">${t('Chinese clock 时辰')}</h3>
+    <div class="clock-wrap">${clockSvg(hours, cur)}</div>
+    <p><b>${t('Now: {b} hour {p}', { b: `${BRANCHES[cur].zh} ${BRANCHES[cur].animal}`, p: h.label })}</b> · ${h.deity.zh} ${h.deity.name} – ${h.deity.good ? t('Yellow Path (auspicious)') : t('Black Path (inauspicious)')}
+      ${mine ? `<br><span class="small">${t('For you: {god}', { god: TEN_GODS[h.god].name })}${h.personal.length ? ' · ⚠︎ ' + t('clashes your chart') : ''}</span>` : ''}</p>
+    <p class="small"><b>${t('Lucky hours today:')}</b> ${lucky.map((x) => `${x.range} ${BRANCHES[x.branch].zh}`).join(' · ') || '–'}</p>
+    <p class="small muted"><span class="dot h-good"></span>${t('lucky')} <span class="dot h-mid"></span>${t('neutral')} <span class="dot h-bad"></span>${t('avoid for important things')} ·
+      <a href="javascript:void 0" id="clock-more">${t('All 12 hours')}</a></p></div>`;
+}
+
+function bindClock(now, mine) {
+  const more = $('#clock-more');
+  if (!more) return;
+  more.onclick = () => {
+    const hours = hoursOfDay(pillarsForNow(now).day, mine);
+    openSheet(`<h2 style="margin-top:0">${t('The 12 hours of today')}</h2><p class="small muted">${t('Yellow Path hours (黄道) are traditionally auspicious; hours that clash the day or your chart are best avoided for important beginnings.')}</p>
+      <div class="alm-list">${hours.map((x) => `<div class="alm-row ${x.lucky ? 'r-best' : x.deity.good && !x.dayClash ? 'r-fair' : 'r-bad'}" style="cursor:default">
+        <span class="alm-date">${x.range} · <span style="font-family:var(--serif)">${x.label}</span></span>
+        <span class="alm-off" style="font-family:inherit"><span style="font-family:var(--serif)">${x.deity.zh}</span> ${x.deity.name}</span>
+        <span class="alm-rate">${x.lucky ? t('lucky') : x.dayClash ? t('clashes the day') : x.personal.length ? t('clashes your chart') : x.deity.good ? t('neutral') : t('avoid')}${x.god ? `<br><span class="small muted" style="font-weight:400">${TEN_GODS[x.god].name}</span>` : ''}</span></div>`).join('')}</div>`);
+  };
+}
 
 // ---------- lunar calendar ----------
 function calendarDay(y, m, d, mine) {
@@ -1016,7 +1162,7 @@ $('#back').addEventListener('click', () => { if (history.length > 1) history.bac
 function router() {
   closeSheet();
   const [, name = 'learn', arg] = (location.hash || '#/learn').split('/');
-  const tab = { lesson: 'learn', about: 'learn', premium: 'learn', match: 'chart', almanac: 'today', forecast: 'chart', welcome: '' }[name] ?? name;
+  const tab = { lesson: 'learn', about: 'learn', premium: 'learn', match: 'chart', almanac: 'today', forecast: 'chart', influences: 'chart', timeline: 'chart', welcome: '' }[name] ?? name;
   document.body.classList.toggle('no-tabs', name === 'welcome');
   document.querySelectorAll('.tabs a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));
   (routes[name] || routes.learn)(arg ? decodeURIComponent(arg) : undefined);

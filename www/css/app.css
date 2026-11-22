@@ -242,3 +242,23 @@ body.no-tabs main { padding-bottom: calc(32px + env(safe-area-inset-bottom)); }
 .feed-row { display: flex; align-items: center; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
 .feed-row span { flex: 1; }
 .feed-btn { min-height: 36px; padding: 6px 10px; font-size: 13px; flex: 0 0 auto; }
+
+/* Chinese clock */
+.clock-wrap { display: flex; justify-content: center; }
+.clock { width: 100%; max-width: 260px; }
+.clock path { stroke: var(--surface); stroke-width: 2; }
+.clock text { font-family: var(--serif); font-size: 17px; fill: #fff; }
+.clock .h-good path { fill: var(--ok); } .clock .h-mid path { fill: var(--metal); } .clock .h-bad path { fill: var(--bad); opacity: .75; }
+.clock .h-now path { stroke: var(--gold); stroke-width: 5; }
+.clock .c-big { fill: var(--text); font-size: 30px; font-weight: 700; } .clock .c-small { fill: var(--muted); font-family: system-ui; font-size: 13px; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px 0 6px; vertical-align: middle; }
+.dot.h-good { background: var(--ok); } .dot.h-mid { background: var(--metal); } .dot.h-bad { background: var(--bad); }
+/* Life timeline */
+.tl-phase summary { display: flex; gap: 12px; align-items: center; list-style: none; cursor: pointer; }
+.tl-phase summary::-webkit-details-marker { display: none; }
+.tl-now { border: 2px solid var(--gold); }
+.tl-years { display: flex; flex-direction: column; }
+.tl-year { display: grid; grid-template-columns: 3.2em 3.6em 2.6em 1fr auto; gap: 6px; align-items: center; font-size: 13px; padding: 6px 0; border-top: 1px solid var(--line); }
+.tl-cur { background: color-mix(in srgb, var(--gold) 18%, transparent); border-radius: 6px; }
+/* Notes */
+textarea { width: 100%; font: inherit; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--text); resize: vertical; }

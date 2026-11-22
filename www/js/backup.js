@@ -21,7 +21,8 @@ export function validateBackup(obj) {
 export function mergeBackup(state, backup) {
   const ids = new Set(state.charts.map((c) => c.id));
   const incoming = backup.charts.filter((c) => !ids.has(c.id))
-    .map((c) => ({ id: c.id, name: String(c.name || '').slice(0, 40), input: c.input, mine: !!c.mine }));
+    .map((c) => ({ id: c.id, name: String(c.name || '').slice(0, 40), input: c.input, mine: !!c.mine,
+      group: typeof c.group === 'string' ? c.group.slice(0, 20) : '', notes: typeof c.notes === 'string' ? c.notes.slice(0, 2000) : '' }));
   const hasMine = state.charts.some((c) => c.mine);
   if (hasMine) incoming.forEach((c) => { c.mine = false; });
   else { let seen = false; incoming.forEach((c) => { if (c.mine && !seen) seen = true; else c.mine = false; }); }

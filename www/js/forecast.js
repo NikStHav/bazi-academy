@@ -24,7 +24,7 @@ const MONTH_TEXT = {
 
 if (lang === 'de') Object.assign(MONTH_TEXT, MONTH_DE);
 
-function rate(chart, stem, branch) {
+export function rate(chart, stem, branch) {
   const { favourable } = favourableElements(chart);
   let s = 0;
   if (favourable.includes(STEMS[stem].el)) s += 1;
