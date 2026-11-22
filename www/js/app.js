@@ -27,6 +27,7 @@ import { dayPillarProfile } from './daypillars.js';
 import { stageOf } from './stages.js';
 import { GUIDE } from './guide.js';
 import { GOD_TEXT, favourableElements } from './reading.js';
+import { dailyReading, sectorElement } from './daily.js';
 
 // ---------- storage ----------
 const store = {
@@ -476,41 +477,27 @@ const routes = {
     const nextTerm = terms.find((x) => x.ms > now.getTime());
     const nextIdx = JIE_TERMS.findIndex((j) => j.lon === nextTerm.lon);
     const pseudo = { pillars: p, dayMaster: p.day.stem };
-    let personal = '';
-    if (mine) {
-      const c = computeChart({ ...mine.input, ziHourNextDay: state.settings.ziHourNextDay });
-      const dm = c.dayMaster;
-      const dGod = TEN_GODS[tenGod(dm, p.day.stem)], yGod = TEN_GODS[tenGod(dm, p.year.stem)];
-      const db = c.pillars.day.branch;
-      const rel = (b) => ((b - db + 12) % 12 === 6 ? t('clashes 冲 with your day branch {b} – a day for flexibility.', { b: BRANCHES[db].zh })
-        : (b + db) % 12 === 1 ? t('combines 合 with your day branch {b} – harmonious for relationships.', { b: BRANCHES[db].zh })
-        : (b - db + 12) % 4 === 0 && b !== db ? t('forms a Three Harmony with your day branch {b}.', { b: BRANCHES[db].zh }) : null);
-      const dRel = rel(p.day.branch);
-      personal = `<div class="card" data-dm="${dm}"><h3 style="margin-top:0">${t('For you:')} ${esc(mine.name || t('My chart'))} <span class="tx-${STEMS[dm].el}" style="font-family:var(--serif)">${STEMS[dm].zh}</span></h3>
-        <p>${t('Today’s stem {s} is your {god}.', { s: STEMS[p.day.stem].zh, god: `<a href="javascript:void 0" data-god="${tenGod(dm, p.day.stem)}"><b>${dGod.name}</b></a> ${dGod.zh}` })} ${dGod.desc}</p>
-        ${dRel ? `<p>${t('Today’s branch {b}', { b: BRANCHES[p.day.branch].zh })} ${dRel}</p>` : ''}
-        <p class="small muted">${t('This year’s stem {s} is your {god} ({zh}).', { s: STEMS[p.year.stem].zh, god: yGod.name, zh: yGod.zh })}</p></div>`;
-    } else {
-      personal = `<div class="card"><p>${t('Save your own chart (★) in the <a href="#/chart">Chart</a> tab to see how today relates to your Day Master.')}</p></div>`;
-    }
+    const myC = mine ? computeChart({ ...mine.input, ziHourNextDay: state.settings.ziHourNextDay }) : null;
     const lToday = lunarDate(now.getFullYear(), now.getMonth() + 1, now.getDate());
     const mToday = moonAge(now.getTime());
-    view.innerHTML = `<div class="card"><h2 style="margin-top:0">${now.toLocaleDateString(LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</h2>
+    const daily = dailyReading(myC, now);
+    view.innerHTML = `${dayCardHtml(daily, mine)}
+      <div class="card"><h2 style="margin-top:0">${now.toLocaleDateString(LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</h2>
       <p style="margin-top:-4px"><a href="#/calendar" style="text-decoration:none"><span style="font-family:var(--serif)">${lToday ? lToday.label : ''}</span> · ${mToday.icon} ${mToday.illumination}% · ${t('Lunar calendar')} ›</a></p>
       ${pillarsHtml(pseudo, false).replace(t('Day Master'), t('Day'))}
       <p class="small muted">${t("Ten Gods above are shown relative to today’s day stem.")}</p></div>
-      ${clockCard(now, mine ? computeChart({ ...mine.input, ziHourNextDay: state.settings.ziHourNextDay }) : null)}
-      ${personal}
+      ${clockCard(now, myC)}
       ${mine ? `<a class="card premium-banner" href="#/influences/${mine.id}"><span class="pb-icon">🧭</span><span><b>${t('Influences')}</b> · ${t('any date measured against your chart')}</span><span class="pb-go">›</span></a>` : ''}
       ${mine ? `<a class="card premium-banner" href="#/forecast/${mine.id}"><span class="pb-icon">📅</span><span><b>${t('Your year ahead {y}', { y: baziYearOf(now) })}</b> · ${t('{p} year and its 12 months', { p: pillarName(pillarFromIndex(baziYearOf(now) - 4)) })}</span><span class="pb-go">›</span></a>` : ''}
-      ${almanacCard(now, mine ? computeChart({ ...mine.input, ziHourNextDay: state.settings.ziHourNextDay }) : null)}
+      ${almanacCard(now, myC)}
       ${notifyCard()}
       <div class="card"><h3 style="margin-top:0">${t("Next solar term")}</h3>
         <p><span style="font-family:var(--serif);font-size:22px">${nextTerm.zh}</span> ${nextTerm.name}<br>
         <span class="muted">${fmtDate(nextTerm.ms)} – ${t('the {animal} {zh} month begins.', { animal: BRANCHES[(nextIdx + 2) % 12].animal, zh: BRANCHES[(nextIdx + 2) % 12].zh })}</span></p></div>
       <div class="card"><h3 style="margin-top:0">${t("Character of the day")}</h3>${stemSheet(p.day.stem)}</div>`;
     bindNotifyCard();
-    bindClock(now, mine ? computeChart({ ...mine.input, ziHourNextDay: state.settings.ziHourNextDay }) : null);
+    bindClock(now, myC);
+    bindDayCard(daily, now);
   },
 
   match(aId) {
@@ -906,6 +893,97 @@ const routes = {
 };
 
 // ---------- day pillar profiles ----------
+// ---- Daily card: a wheel of the 60 day pillars that always stops on today, then a reading in three layers ----
+const STAR_LABEL = ['', 'A day to take it slow', 'Mixed – go carefully', 'A balanced day', 'A good day', 'An excellent day'];
+const plainPillar = (s, b) => `${polEl(s)} · ${BRANCHES[b].animal}`;
+function dayWheelSvg() {
+  const R = 118, r = 80, sectors = [];
+  for (let i = 0; i < 60; i++) {
+    const a0 = (i * 6 - 3 - 90) * Math.PI / 180, a1 = (i * 6 + 3 - 90) * Math.PI / 180;
+    const pt = (rad, a) => `${(rad * Math.cos(a)).toFixed(2)} ${(rad * Math.sin(a)).toFixed(2)}`;
+    sectors.push(`<path class="el-${sectorElement(i)}" d="M${pt(R, a0)} A${R} ${R} 0 0 1 ${pt(R, a1)} L${pt(r, a1)} A${r} ${r} 0 0 0 ${pt(r, a0)}Z"/>`);
+  }
+  return `<svg viewBox="-130 -136 260 266" class="dw-svg" role="img" aria-label="${t('Wheel of the 60 day pillars')}">
+    <g id="dw-rot">${sectors.join('')}</g>
+    <circle r="76" class="dw-hub"/><text id="dw-zh" y="10" class="dw-zh">?</text><text id="dw-sub" y="36" class="dw-sub">${t('Tap to turn')}</text>
+    <path d="M-9 -134 L9 -134 L0 -114Z" class="dw-pointer"/></svg>`;
+}
+function dayCardHtml(d, mine) {
+  return `<div class="card daycard" id="daycard"><h3 style="margin-top:0">${t('Your day card')}</h3>
+    <p class="small muted" style="margin-top:-6px">${t('Turn the wheel of the 60 days – it stops on today’s pillar and shows what today means for you.')}</p>
+    <button class="dw-btn" id="dw-btn" aria-label="${t('Turn the wheel')}">${dayWheelSvg()}</button>
+    <div id="dw-result" hidden>${dayResultHtml(d, mine)}</div></div>`;
+}
+function dayResultHtml(d, mine) {
+  const p = d.pillar, th = d.theme;
+  const hours = d.hours.map((h) => `<span class="nw">${h.range}</span>`).join(', ');
+  const stars = '★'.repeat(d.stars) + '☆'.repeat(5 - d.stars);
+  const lucky = d.personal ? `<div class="dc-lucky">
+      ${hours ? `<span>🕐 ${t('Lucky hours:')} <b>${hours}</b></span>` : ''}
+      <span>🎨 ${t('Colour:')} <b>${esc(d.lucky.colour)}</b></span><span>🧭 ${t('Direction:')} <b>${d.lucky.direction}</b></span>
+      <span>🔢 ${t('Numbers:')} <b>${d.lucky.numbers.join(', ')}</b></span></div>`
+    : `${hours ? `<div class="dc-lucky"><span>🕐 ${t('Lucky hours:')} <b>${hours}</b></span></div>` : ''}`;
+  const why = [];
+  why.push(t('<b>Today’s energy:</b> the {p} day – {a} on {b}.', { p: `<span class="zh-inline">${pillarName(p)}</span>`, a: polEl(p.stem), b: `${ELEMENTS[BRANCHES[p.branch].el].name} (${BRANCHES[p.branch].animal})` }));
+  if (d.personal) {
+    const c = myChart(), dm = c.dayMaster, rel = d.rating.relation, db = c.pillars.day.branch;
+    why.push(t('<b>You and today:</b> your Day Master is {dm}. Today’s stem is your {god}: {meaning}', {
+      dm: `<span class="zh-inline tx-${STEMS[dm].el}">${STEMS[dm].zh}</span> ${polEl(dm)}`,
+      god: `<a href="javascript:void 0" data-god="${d.god}"><b>${TEN_GODS[d.god].name}</b></a>`, meaning: MONTH_TEXT[d.god] }));
+    why.push(['clash', 'harmony', 'trine', 'harm', 'punish'].includes(rel.key)
+      ? t('<b>Your day branch:</b> today’s {b} and your {n} form a {rel} – {note}.', { b: BRANCHES[p.branch].animal, n: BRANCHES[db].animal, rel: rel.label, note: rel.note })
+      : t('<b>Your day branch:</b> no strong interaction with today’s branch.'));
+    why.push(t('<b>Helpful elements:</b> yours are {fav}. Today brings {n} of 2.', { fav: d.favourable.map((e) => ELEMENTS[e].name).join(', '), n: d.elementsHelp }));
+  }
+  why.push(t('<b>Almanac:</b> a {name} day ({zh}) – {rating}.', { name: d.officer.name, zh: d.officer.zh, rating: RATING_LABEL[d.officer.rating] }));
+  return `<div class="dc-head"><span class="dc-stars" aria-label="${d.stars}/5">${stars}</span><span class="dc-label">${t(STAR_LABEL[d.stars])}</span></div>
+    <h3 class="dc-title">${th.icon} ${d.personal ? esc(th.title) : t('{name} day', { name: th.title })}</h3>
+    <p>${th.text}</p>
+    ${d.info.personalClash.length ? `<p class="tip">${t('Today {what}.', { what: d.info.personalClash.join(t(' and ')) })} ${t('Take it slow with big decisions.')}</p>` : ''}
+    <div class="dc-lists"><div><b>✅ ${t('Good for')}</b><ul>${th.do.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
+      <div><b>⚠️ ${t('Better avoid')}</b><ul>${th.avoid.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div></div>
+    ${lucky}
+    ${d.personal ? '' : `<p class="small">${t('Save your own chart (★) in the <a href="#/chart">Chart</a> tab to see how today relates to your Day Master.')}</p>`}
+    <details class="why"><summary>${t('Why? The BaZi behind it')}</summary>
+      <ol class="why-steps">${why.map((w) => `<li>${w}</li>`).join('')}</ol>
+      ${d.personal ? `<p class="small muted">${t('How the stars are counted: helpful elements and harmonies add, clashes subtract, plus the almanac rating of the day.')}</p>` : ''}
+      <p class="small">${t('Learn more:')} <a href="#/lesson/tengods">${t('The Ten Gods')}</a> · <a href="#/lesson/interactions">${t('Branch Interactions')}</a> · <a href="#/lesson/useful">${t('Useful God & Balance')}</a></p>
+    </details>
+    <p class="small muted dc-note">${t('Same day, same result: BaZi calculates your day – it is not chance.')} <a href="javascript:void 0" id="dw-again">${t('Turn again')}</a></p>`;
+}
+function bindDayCard(d, now) {
+  const key = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+  const rot = $('#dw-rot'), zh = $('#dw-zh'), sub = $('#dw-sub'), btn = $('#dw-btn'), res = $('#dw-result');
+  if (!rot) return;
+  const target = d.index;
+  const show = (i) => { zh.textContent = STEMS[i % 10].zh + BRANCHES[i % 12].zh; zh.setAttribute('class', `dw-zh tx-${sectorElement(i)}`); };
+  const finish = () => {
+    rot.setAttribute('transform', `rotate(${-target * 6})`); show(target);
+    sub.textContent = plainPillar(d.pillar.stem, d.pillar.branch);
+    res.hidden = false; btn.classList.add('done');
+  };
+  let spinning = false;
+  const spin = () => {
+    if (spinning) return; spinning = true; res.hidden = true; btn.classList.remove('done');
+    const reduce = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const end = -(3 * 360 + target * 6), dur = reduce ? 0 : 3200, t0 = performance.now();
+    let last = -1;
+    const frame = (tm) => {
+      const k = dur ? Math.min(1, (tm - t0) / dur) : 1;
+      const a = end * (1 - Math.pow(1 - k, 4));
+      rot.setAttribute('transform', `rotate(${a.toFixed(2)})`);
+      const i = ((Math.round(-a / 6) % 60) + 60) % 60;
+      if (i !== last) { show(i); if (k > 0.6) try { navigator.vibrate?.(6); } catch { /* ignore */ } last = i; }
+      if (k < 1) requestAnimationFrame(frame);
+      else { spinning = false; try { navigator.vibrate?.(30); } catch { /* ignore */ } finish(); state.settings.dayCard = key; save('settings'); $('#daycard')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); }
+    };
+    requestAnimationFrame(frame);
+  };
+  btn.addEventListener('click', spin);
+  res.addEventListener('click', (e) => { if (e.target.id === 'dw-again') spin(); });
+  if (state.settings.dayCard === key) finish();
+}
+
 function dayPillarHtml(s, b) {
   const pr = dayPillarProfile(s, b);
   return `<p class="dp-image"><span class="dp-zh">${pr.name}</span> ${esc(pr.image)}</p>

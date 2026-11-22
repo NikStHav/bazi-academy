@@ -175,7 +175,6 @@ export const DE_UI_1 = {
     'Finde gute Tage für Hochzeit, Umzug, Verträge, Eröffnungen, Reisen und Renovierung – passend zu deinem Horoskop',
   'Five Elements': 'Fünf Elemente',
   'Five Elements balance': 'Verteilung der Fünf Elemente',
-  'For you:': 'Für dich:',
   'Forward': 'Vorwärts',
   'Found as hidden stem in:': 'Verborgen enthalten in:',
   'Fr': 'Fr',

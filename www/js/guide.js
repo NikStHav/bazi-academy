@@ -17,7 +17,8 @@ const EN = [
 <li>Practise a few minutes a day in the <a href="#/quiz">Quiz</a> tab – every round is newly generated. Start with Five Elements and Stems, then move to Hidden Stems and Ten Gods.</li>
 <li>Tip: after each lesson, look for the topic in your own chart.</li></ul>`],
   ['☀️', 'Use it every day', `
-<ul><li><a href="#/today">Today</a> shows the day’s pillars, what the day means for you, the <b>Chinese clock</b> with today’s lucky hours, and the <b>almanac</b> (what the day suits and what to avoid).</li>
+<ul><li>Start with your <b>day card</b>: tap the wheel on the <a href="#/today">Today</a> screen. It stops on today’s pillar and shows stars, the theme of the day, what to do and avoid, and your lucky hours. Open <b>“Why?”</b> to see the BaZi reasons step by step.</li>
+<li><a href="#/today">Today</a> also shows the day’s pillars, what the day means for you, the <b>Chinese clock</b> with today’s lucky hours, and the <b>almanac</b> (what the day suits and what to avoid).</li>
 <li>Turn on the <b>daily tip</b> on the Today screen to get a short note about each day’s energy.</li>
 <li>The <a href="#/calendar">Calendar</a> tab shows lunar dates, solar terms, new and full moons and festivals. Tap any day for its details.</li></ul>`],
   ['🧭', 'Plan ahead', `
@@ -36,7 +37,7 @@ const EN = [
 <li><b>Reminders</b> and <b>Add to your calendar</b> (Calendar tab) bring full moons, solstices and festivals into your phone’s calendar.</li>
 <li>Back up regularly: <a href="#/about">About</a> → <b>Export</b>. On a new phone, use <b>Import</b>. You can also switch the language there.</li></ul>`],
   ['🗓️', 'Suggested routines', `
-<ul><li><b>Daily (2 minutes):</b> Today screen → day energy, lucky hours, almanac; one quiz round.</li>
+<ul><li><b>Daily (2 minutes):</b> Today screen → day card, lucky hours, almanac; one quiz round.</li>
 <li><b>Weekly:</b> one lesson; look at the next 7 days in the almanac; add notes about the week to your chart.</li>
 <li><b>Monthly:</b> check the new solar month in the Year ahead and the Calendar.</li>
 <li><b>Before big decisions:</b> Influences for the date + almanac planner.</li>
@@ -60,7 +61,8 @@ const DE = [
 <li>Übe täglich ein paar Minuten im Tab <a href="#/quiz">Quiz</a> – jede Runde wird neu erzeugt. Beginne mit den Fünf Elementen und Stämmen, dann folgen verborgene Stämme und Zehn Götter.</li>
 <li>Tipp: Suche nach jeder Lektion das Thema in deinem eigenen Horoskop.</li></ul>`],
   ['☀️', 'Jeden Tag nutzen', `
-<ul><li><a href="#/today">Heute</a> zeigt die Säulen des Tages, was der Tag für dich bedeutet, die <b>Chinesische Uhr</b> mit den heutigen Glücksstunden und den <b>Almanach</b> (wofür sich der Tag eignet und was du meiden solltest).</li>
+<ul><li>Beginne mit deiner <b>Tageskarte</b>: Tippe auf dem <a href="#/today">Heute</a>-Bildschirm auf das Rad. Es hält auf der heutigen Säule und zeigt Sterne, das Thema des Tages, was du tun und lassen solltest, und deine Glücksstunden. Öffne <b>„Warum?“</b>, um die BaZi-Gründe Schritt für Schritt zu sehen.</li>
+<li><a href="#/today">Heute</a> zeigt außerdem die Säulen des Tages, was der Tag für dich bedeutet, die <b>Chinesische Uhr</b> mit den heutigen Glücksstunden und den <b>Almanach</b> (wofür sich der Tag eignet und was du meiden solltest).</li>
 <li>Schalte auf dem Heute-Bildschirm den <b>Tagestipp</b> ein, um jeden Tag eine kurze Notiz zur Tagesenergie zu bekommen.</li>
 <li>Der Tab <a href="#/calendar">Kalender</a> zeigt Monddaten, Solarterme, Neu- und Vollmonde sowie Feste. Tippe auf einen Tag für Details.</li></ul>`],
   ['🧭', 'Vorausplanen', `
@@ -79,7 +81,7 @@ const DE = [
 <li><b>Erinnerungen</b> und <b>In deinen Kalender übernehmen</b> (Tab Kalender) bringen Vollmonde, Sonnenwenden und Feste in den Kalender deines Handys.</li>
 <li>Sichere regelmäßig: <a href="#/about">Über die App</a> → <b>Exportieren</b>. Auf einem neuen Handy nutzt du <b>Importieren</b>. Dort kannst du auch die Sprache wechseln.</li></ul>`],
   ['🗓️', 'Empfohlene Routinen', `
-<ul><li><b>Täglich (2 Minuten):</b> Heute → Tagesenergie, Glücksstunden, Almanach; eine Quiz-Runde.</li>
+<ul><li><b>Täglich (2 Minuten):</b> Heute → Tageskarte, Glücksstunden, Almanach; eine Quiz-Runde.</li>
 <li><b>Wöchentlich:</b> eine Lektion; die nächsten 7 Tage im Almanach ansehen; Notizen zur Woche in deinem Horoskop festhalten.</li>
 <li><b>Monatlich:</b> den neuen Sonnenmonat in der Jahresvorschau und im Kalender ansehen.</li>
 <li><b>Vor großen Entscheidungen:</b> Einflüsse für das Datum + Almanach-Planer.</li>

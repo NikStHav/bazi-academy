@@ -292,3 +292,35 @@ th, td { overflow-wrap: anywhere; }
 .feed-row { flex-wrap: wrap; }
 .feed-row span { flex: 1 1 140px; }
 .pillars .god { min-height: 3.95em; }
+
+/* Daily card: wheel of the 60 day pillars */
+.daycard { overflow: hidden; }
+.dw-btn { display: block; width: 100%; max-width: 300px; margin: 4px auto 0; padding: 0; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.dw-svg { display: block; width: 100%; height: auto; }
+.dw-svg path[class^="el-"] { fill: currentColor; stroke: var(--surface); stroke-width: 0.8; }
+.dw-svg .el-0 { color: var(--wood); } .dw-svg .el-1 { color: var(--fire); } .dw-svg .el-2 { color: var(--earth); } .dw-svg .el-3 { color: var(--metal); } .dw-svg .el-4 { color: var(--water); }
+.dw-svg .el-0, .dw-svg .el-1, .dw-svg .el-2, .dw-svg .el-3, .dw-svg .el-4 { background: none; }
+.dw-hub { fill: var(--surface); stroke: var(--line); }
+.dw-zh { font-family: var(--serif); font-size: 34px; font-weight: 700; text-anchor: middle; fill: currentColor; }
+.dw-sub { font-size: 10.5px; text-anchor: middle; fill: var(--muted); }
+.dw-pointer { fill: var(--accent); }
+.dw-btn:not(.done) .dw-hub { animation: dw-pulse 1.8s ease-in-out infinite; }
+@keyframes dw-pulse { 50% { stroke: var(--accent); stroke-width: 3; } }
+@media (prefers-reduced-motion: reduce) { .dw-btn:not(.done) .dw-hub { animation: none; } }
+#dw-result { animation: dc-in .35s ease-out; }
+@keyframes dc-in { from { opacity: 0; transform: translateY(8px); } }
+.dc-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.dc-stars { color: var(--gold); font-size: 24px; letter-spacing: 2px; }
+.dc-label { font-weight: 600; }
+.dc-title { margin: 8px 0 4px; }
+.dc-lists { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 4px 14px; }
+.dc-lists ul { margin: 4px 0 8px; padding-left: 20px; }
+.dc-lucky { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 10px; }
+.dc-lucky > span { background: var(--surface-2); border-radius: 999px; padding: 4px 10px; font-size: 14px; }
+.why { border-top: 1px solid var(--line); padding-top: 8px; margin-top: 6px; }
+.why summary { cursor: pointer; font-weight: 600; color: var(--accent); padding: 4px 0; }
+.why-steps { padding-left: 22px; margin: 8px 0; }
+.why-steps li { margin-bottom: 8px; }
+.zh-inline { font-family: var(--serif); }
+.dc-note { margin-bottom: 0; }
+.dc-lucky .nw { white-space: nowrap; }

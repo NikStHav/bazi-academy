@@ -21,7 +21,8 @@ const DYNAMIC = ['Family', 'Partner', 'Friends', 'Clients', 'Work', 'Other', 'wi
   'Apple', 'Google Play', 'app store', 'Prosperous', 'Resting', 'Trapped', 'Weak (Dead)',
   'The Day Master’s element is in season – at its peak.', 'The season produces the Day Master – well supported.',
   'The Day Master produces the season’s element – it is spending energy.', 'The Day Master must control the season’s element – tiring.',
-  'The season controls the Day Master – least seasonal support.'];
+  'The season controls the Day Master – least seasonal support.',
+  'A day to take it slow', 'Mixed – go carefully', 'A balanced day', 'A good day', 'An excellent day'];
 DYNAMIC.forEach((k) => keys.add(k));
 const list = [...keys].sort();
 if (process.argv[2] === '--missing') {
