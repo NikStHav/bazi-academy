@@ -83,4 +83,8 @@ export const DE_UI_3 = {
   'A short tour of everything BaZi Academy can do – and how to make it part of your day.': 'Ein kurzer Rundgang durch alles, was BaZi Academy kann – und wie du es in deinen Alltag einbaust.',
   'How to use the app': 'So nutzt du die App',
   'get the most out of BaZi Academy': 'hol das Beste aus BaZi Academy heraus',
+  'Text size': 'Textgröße',
+  'Normal': 'Normal',
+  'Large': 'Groß',
+  'Extra large': 'Sehr groß',
 };

@@ -35,7 +35,7 @@ App Store Connect → your app → **Monetization → In-App Purchases** → **+
 - Type: **Non-Consumable** · Reference name: `Premium` · Product ID: **`bazi_premium`** (must match `www/js/premium.js`)
 - Price: **€2.99** (choose the price point; Apple converts it for other countries)
 - Localization (English): Display name `BaZi Academy Premium`, description `All lessons, unlimited charts and detailed chart readings.`
-- Review information: a screenshot of the Premium screen (`store-screenshots/ios-6.9in/9-premium.png`) and the note: *“Unlocks lessons 8–15, unlimited chart calculations (5 are free), the detailed chart reading, the full compatibility analysis and the almanac planner.”*
+- Review information: a screenshot of the Premium screen (take a new one if you re-enable Premium) and the note: *“Unlocks lessons 8–15, unlimited chart calculations (5 are free), the detailed chart reading, the full compatibility analysis and the almanac planner.”*
 - Make sure *Family Sharing* is set as you like (on is customer-friendly).
 - When you submit the first app version, **add the in-app purchase to that version** (section *In-App Purchases and Subscriptions* on the version page). The first IAP must be reviewed together with an app version.
 
@@ -77,14 +77,14 @@ Put your contact email into `docs/index.html` and `docs/privacy.html`, then enab
 Free GitHub Pages needs a public repository; otherwise host these two pages elsewhere.
 
 **Promotional text** (≤170, can be changed anytime):
-> Understand the Four Pillars of Destiny step by step: 15 lessons, an accurate BaZi chart calculator, detailed chart readings and endless quizzes. Offline and private.
+> Understand the Four Pillars of Destiny step by step: 15 lessons, an accurate chart calculator, 60 day-pillar profiles, a lunar calendar and quizzes. Free and private.
 
 **Description:** use the full description from `PLAY_STORE.md`. It works unchanged.
 
-**Screenshots**: ready in `store-screenshots/`:
+**Screenshots**: ready in `store-screenshots/en/` (German: `store-screenshots/de/`):
 - `ios-6.9in/` (1320×2868): upload for the **6.9" iPhone** display size (required). Apple scales them down for smaller iPhones.
 - `ios-6.5in/` (1242×2688): only if App Store Connect asks for 6.5".
-Upload 3–8 of them, starting with the chart (`2-chart.png`) and the reading (`8-reading.png`). The app is iPhone-only, so no iPad screenshots are needed.
+Upload all 8 in order (chart, day pillar, reading, Chinese clock, lunar calendar, compatibility, life timeline, lesson). The app is iPhone-only, so no iPad screenshots are needed.
 
 ## 8. App Privacy, age rating, compliance
 
@@ -97,7 +97,7 @@ Upload 3–8 of them, starting with the chart (`2-chart.png`) and the reading (`
 
 In the version page, select the TestFlight build and add these **App Review notes**:
 
-> BaZi Academy is an educational app that teaches the classical Chinese system of BaZi (Four Pillars of Destiny) through 15 structured lessons with interactive diagrams, a quiz engine that generates practice questions, and an astronomical chart calculator (solar terms computed from the sun's ecliptic longitude). It is a learning tool, not a fortune-telling service. Lessons 1–7, the quizzes and 5 chart calculations are free; a one-time non-consumable purchase ("bazi_premium") unlocks lessons 8–15, unlimited charts, a detailed rule-based chart interpretation, the full compatibility analysis (comparing two birth dates the user enters; there is no contact with or matching of other users) and an almanac planner. Optional daily tips are local notifications scheduled on the device; they contain no advertising. Restore Purchase is on the Premium and About screens. The app works fully offline, requires no account and collects no data.
+> BaZi Academy is an educational app that teaches the classical Chinese system of BaZi (Four Pillars of Destiny) through 15 structured lessons with interactive diagrams, a quiz engine that generates practice questions, and an astronomical chart calculator (solar terms computed from the sun's ecliptic longitude). It is a learning tool, not a fortune-telling service. It also includes a rule-based chart interpretation, profiles of the 60 day pillars, a compatibility analysis (comparing two birth dates the user enters; there is no contact with or matching of other users), a traditional almanac and a Chinese lunar calendar with astronomically computed solar terms and moon phases. Everything is free: there are no in-app purchases, ads or accounts. Optional reminders are local notifications scheduled on the device; they contain no advertising. The app is available in English and German; an in-app guide (Learn → How to use the app) explains every feature. The app works fully offline, requires no account and collects no data.
 
 Review usually takes 1–3 days.
 
@@ -119,6 +119,6 @@ App Store Connect → your app → *App Information* → **Localizable Informati
 | Privacy Policy URL | `https://<your-github-name>.github.io/<repo>/datenschutz.html` |
 
 **Promotional text:**
-> Die Vier Säulen des Schicksals Schritt für Schritt verstehen: 15 Lektionen, ein genauer BaZi-Rechner, ausführliche Deutungen, Mondkalender und endlose Quizze. Offline und privat.
+> Die Vier Säulen des Schicksals Schritt für Schritt verstehen: 15 Lektionen, genauer Rechner, 60 Tagessäulen-Profile, Mondkalender und Quizze. Kostenlos und privat.
 
-**Description:** use the German full description from `PLAY_STORE.md`. For the in-app purchase, also add a German localization: display name `BaZi Academy Premium`, description `Alle Lektionen, unbegrenzte Horoskope und ausführliche Deutungen.`
+**Description:** use the German full description from `PLAY_STORE.md`. Screenshots: `store-screenshots/de/ios-6.9in/`.

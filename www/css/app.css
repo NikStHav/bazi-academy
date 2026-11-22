@@ -275,3 +275,20 @@ textarea { width: 100%; font: inherit; padding: 10px 12px; border-radius: 10px; 
 .guide .g-icon { font-size: 22px; }
 .guide .lesson-body { margin-top: 8px; }
 .guide li { margin-bottom: 6px; }
+
+/* Text size (About → Text size): scales the content area, not the bars */
+main { zoom: var(--text-zoom, 1); }
+
+/* Layout hardening for narrow phones, long German words and large text */
+html[lang="de"] body { hyphens: auto; -webkit-hyphens: auto; }
+.pillars { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.pillars > div, .grid > *, .row > * { min-width: 0; }
+.pillars .ch, .grid .ch { min-width: 0; }
+.pillars .god, .pillars .lbl, .grid .small { overflow-wrap: anywhere; }
+.grid.g5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.grid.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+table { table-layout: fixed; }
+th, td { overflow-wrap: anywhere; }
+.feed-row { flex-wrap: wrap; }
+.feed-row span { flex: 1 1 140px; }
+.pillars .god { min-height: 3.95em; }

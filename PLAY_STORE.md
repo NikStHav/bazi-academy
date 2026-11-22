@@ -81,7 +81,11 @@ To test without being charged, add your Google account under *Settings → Licen
 > • Five Elements balance and Day Master strength
 > • Clashes, harmonies, punishments and harms
 > • 10-year luck pillars with starting age
+> • Growth stages (長生 cycle) of the Day Master in every pillar
 > Tap any character to learn what it means.
+>
+> YOUR DAY PILLAR
+> A personal profile for each of the 60 day pillars: character, strengths, relationships and the spouse palace.
 >
 > PRACTISE
 > Endless quiz rounds on elements, stems, branches, hidden stems and Ten Gods.
@@ -92,17 +96,26 @@ To test without being charged, add your Google account under *Settings → Licen
 > TODAY & ALMANAC
 > Today’s pillars, the Day Officer of the traditional Chinese almanac (Tong Shu) with what the day suits and what to avoid, your personal clash days, and an optional daily tip notification. Plan weddings, moves, contracts, launches and journeys on good days.
 >
+> CHINESE CLOCK
+> The 12 double hours (時辰) live: the current hour pillar, lucky hours of the day (Yellow and Black Path) and what each hour means for you.
+>
+> INFLUENCES & LIFE TIMELINE
+> See how any day, month or year interacts with your chart, and your whole life at a glance: every luck pillar and year rated, with your current phase highlighted.
+>
 > LUNAR CALENDAR
 > The Chinese lunar calendar with all 24 solar terms – equinoxes and solstices included – new and full moons with exact times, and traditional festivals such as Chinese New Year, Lantern, Dragon Boat and Mid-Autumn.
 >
 > YEAR AHEAD
 > Your annual pillar and all 12 months: themes, best months and activated stars.
 >
-> SHARE & BACKUP
-> Share your chart as a beautiful image, and move your charts to a new phone with a backup file.
+> CHARTS, SHARE & BACKUP
+> Save charts for family, partners and friends in groups with notes. Share a chart as a beautiful image, export lunar dates to your phone calendar, and move everything to a new phone with a backup file.
+>
+> EASY TO USE
+> A built-in guide shows how to get the most out of every feature. Adjustable text size, dark mode, English and German.
 >
 > COMPLETELY FREE
-> All 15 lessons, unlimited charts, the detailed chart reading (core nature, favourable elements, weak spots and how to balance them, career, relationships, current luck phase), compatibility with your ideal match, the year-ahead forecast, the almanac planner and the lunar calendar – free, without ads or subscription.
+> All 15 lessons, unlimited charts, the 60 day-pillar profiles, the detailed chart reading (core nature, favourable elements, weak spots and how to balance them, career, relationships, current luck phase), compatibility with your ideal match, the year-ahead forecast, life timeline, Chinese clock, almanac planner and lunar calendar – free, without ads or subscription.
 >
 > PRIVATE BY DESIGN
 > Works completely offline. No account, no ads, no tracking. Your birth data never leaves your phone.
@@ -112,7 +125,7 @@ To test without being charged, add your Google account under *Settings → Licen
 **Graphics** (in `resources/`):
 - App icon 512×512: `play-icon-512.png`
 - Feature graphic 1024×500: `feature-graphic.png`
-- Phone screenshots: ready in `store-screenshots/android-phone/` (1080×1920). Upload 4–8 of them.
+- Phone screenshots: ready in `store-screenshots/en/android-phone/` (1080×1920). Upload all 8 in order: chart, day pillar, reading, Chinese clock, lunar calendar, compatibility, life timeline, lesson.
 
 ### App content (Policy section)
 
@@ -166,6 +179,10 @@ In Play Console → *Grow users → Store presence → Main store listing* → *
 > • Verteilung der Fünf Elemente und Stärke des Tagesmeisters
 > • Zusammenstöße, Harmonien, Strafen und Schäden
 > • Zehnjährige Glückssäulen mit Startalter
+> • Wachstumsphasen (長生-Zyklus) des Tagesmeisters in jeder Säule
+>
+> DEINE TAGESSÄULE
+> Ein persönliches Profil für jede der 60 Tagessäulen: Charakter, Stärken, Beziehungen und der Partnerpalast.
 >
 > LIEBE & KOMPATIBILITÄT
 > Vergleiche zwei Horoskope oder prüfe eine neue Bekanntschaft per Geburtsdatum. Entdecke deinen idealen Partner: welche Tagesmeister, Tierkreiszeichen und Elemente am besten zu dir passen.
@@ -173,15 +190,27 @@ In Play Console → *Grow users → Store presence → Main store listing* → *
 > HEUTE, ALMANACH & MONDKALENDER
 > Die Säulen des Tages, der Tagesbeamte des traditionellen chinesischen Almanachs (Tong Shu), deine persönlichen Zusammenstoß-Tage und ein optionaler Tagestipp. Der Mondkalender zeigt alle 24 Solarterme – inklusive Tagundnachtgleichen und Sonnenwenden –, Neu- und Vollmonde mit genauer Uhrzeit und traditionelle Feste. Erinnerungen und Export in deinen Kalender inklusive.
 >
+> CHINESISCHE UHR
+> Die 12 Doppelstunden (時辰) live: die aktuelle Stundensäule, die Glücksstunden des Tages (Gelber und Schwarzer Pfad) und was jede Stunde für dich bedeutet.
+>
+> EINFLÜSSE & LEBENSZEITLEISTE
+> Sieh, wie jeder Tag, Monat oder jedes Jahr auf dein Horoskop wirkt – und dein ganzes Leben auf einen Blick: alle Glückssäulen und Jahre bewertet, deine aktuelle Phase hervorgehoben.
+>
 > JAHRESVORSCHAU
 > Deine Jahressäule und alle 12 Monate: Themen, beste Monate und aktivierte Sterne.
 >
+> HOROSKOPE, TEILEN & BACKUP
+> Speichere Horoskope von Familie, Partnern und Freunden in Gruppen mit Notizen. Teile ein Horoskop als schönes Bild und übertrage alles per Backup-Datei auf ein neues Handy.
+>
+> EINFACH ZU BEDIENEN
+> Eine eingebaute Anleitung zeigt, wie du jede Funktion optimal nutzt. Einstellbare Textgröße, dunkler Modus, Deutsch und Englisch.
+>
 > KOMPLETT KOSTENLOS
-> Alle 15 Lektionen, unbegrenzte Horoskope, die ausführliche Deutung (Wesenskern, günstige Elemente, Schwachstellen und ihr Ausgleich, Beruf, Beziehungen, aktuelle Glücksphase), Kompatibilität mit deinem idealen Partner, Jahresvorschau, Almanach-Planer und Mondkalender – kostenlos, ohne Werbung und ohne Abo.
+> Alle 15 Lektionen, unbegrenzte Horoskope, die 60 Tagessäulen-Profile, die ausführliche Deutung (Wesenskern, günstige Elemente, Schwachstellen und ihr Ausgleich, Beruf, Beziehungen, aktuelle Glücksphase), Kompatibilität mit deinem idealen Partner, Jahresvorschau, Lebenszeitleiste, Chinesische Uhr, Almanach-Planer und Mondkalender – kostenlos, ohne Werbung und ohne Abo.
 >
 > PRIVAT VON ANFANG AN
 > Funktioniert komplett offline. Kein Konto, keine Werbung, kein Tracking. Deine Geburtsdaten verlassen nie dein Handy.
 >
 > BaZi ist ein traditionelles Kultursystem. Diese App dient der Bildung und Unterhaltung und ersetzt keine professionelle Beratung.
 
-**Screenshots:** take German screenshots by switching the app to *Deutsch* (About → Language) or by using a phone set to German.
+**Screenshots:** ready in `store-screenshots/de/android-phone/` (1080×1920). Upload them under the German translation.

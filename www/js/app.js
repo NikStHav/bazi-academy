@@ -864,6 +864,8 @@ const routes = {
       <div class="row" style="margin-bottom:10px"><button class="btn secondary" id="bk-export">${t("⇪ Export")}</button><button class="btn secondary" id="bk-import">${t("⇩ Import")}</button></div>
       <input type="file" id="bk-file" accept=".json,application/json" hidden>
       <p><a class="btn secondary block" href="#/guide">🧭 ${t('How to use the app')}</a></p>
+      <h3>${t('Text size')}</h3>
+      <div class="seg" id="ts-sel">${[['1', t('Normal')], ['1.15', t('Large')], ['1.3', t('Extra large')]].map(([v, n]) => `<button type="button" data-ts="${v}" class="${String(state.settings.textSize || 1) === v ? 'on' : ''}">${n}</button>`).join('')}</div>
       <h3>${t('Language')}</h3>
       <select id="lang-sel"><option value="auto" ${langSetting() === 'auto' ? 'selected' : ''}>${t('Automatic (phone language)')}</option>${Object.entries(LANGS).map(([k, v]) => `<option value="${k}" ${langSetting() === k ? 'selected' : ''}>${v}</option>`).join('')}</select>
       ${premium.FREE_APP ? '' : `<h3>${t("Premium")}</h3>
@@ -882,6 +884,8 @@ const routes = {
       try { await shareTextFile(`bazi-academy-backup-${new Date().toISOString().slice(0, 10)}.json`, json); } catch { alert(t('The backup could not be saved on this device.')); }
     };
     $('#lang-sel').onchange = (e) => { setLang(e.target.value); location.reload(); };
+    $('#ts-sel').onclick = (e) => { const b = e.target.closest('[data-ts]'); if (!b) return;
+      state.settings.textSize = Number(b.dataset.ts); save('settings'); applyTextSize(); routes.about(); };
     $('#bk-import').onclick = () => $('#bk-file').click();
     $('#bk-file').onchange = async (e) => {
       const file = e.target.files?.[0]; if (!file) return;
@@ -1208,6 +1212,8 @@ function router() {
   view.scrollTop = 0;
 }
 window.addEventListener('hashchange', router);
+function applyTextSize() { document.documentElement.style.setProperty('--text-zoom', String(state.settings.textSize || 1)); }
+applyTextSize();
 document.documentElement.lang = lang;
 document.querySelectorAll('.tabs a span:last-child').forEach((s) => { s.textContent = t(s.textContent); });
 $('#back').setAttribute('aria-label', t('Back'));
