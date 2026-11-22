@@ -23,6 +23,9 @@ import { hoursOfDay, hourBranchOf, DEITIES } from './hours.js';
 import { influencesFor } from './influences.js';
 import { lifeTimeline } from './timeline.js';
 import { MONTH_TEXT } from './forecast.js';
+import { dayPillarProfile } from './daypillars.js';
+import { stageOf } from './stages.js';
+import { GUIDE } from './guide.js';
 import { GOD_TEXT, favourableElements } from './reading.js';
 
 // ---------- storage ----------
@@ -160,11 +163,16 @@ const WIDGETS = {
       .map(([r, a, b]) => `<tr><td>${t(r)}</td>${[a, b].map((k) => `<td><a href="javascript:void 0" data-god="${k}">${TEN_GODS[k].name}</a><br><span class="small muted" style="font-family:var(--serif)">${TEN_GODS[k].zh}</span></td>`).join('')}</tr>`).join('')}</table>`,
   'tengod-trainer': trainer,
   stars: () => `<table>${Object.values(STARS).map((st) => `<tr><td style="font-size:20px">${st.icon}</td><td><b>${st.name}</b> <span style="font-family:var(--serif)">${st.zh}</span><br><span class="small">${st.desc}</span></td></tr>`).join('')}</table>`,
+  daypillars: () => `<div class="jiazi">${Array.from({ length: 60 }, (_, i) => { const p = pillarFromIndex(i);
+      return `<div class="dp-cell" data-dp="${i}" style="cursor:pointer">${pillarName(p)}<small>${i + 1}</small></div>`; }).join('')}</div>
+    <p class="small muted">${t('Tap a day pillar to read its profile.')}</p>`,
   phases: () => `<table>${SEASON_PHASES.map((p) => `<tr><td style="font-family:var(--serif);font-size:22px;color:var(--accent)">${p.zh}</td><td><b>${p.name}</b><br><span class="small">${p.desc}</span></td></tr>`).join('')}</table>`,
 };
 
 function renderWidgets(root) {
   root.querySelectorAll('[data-widget]').forEach((el) => { const w = WIDGETS[el.dataset.widget]; if (w) el.innerHTML = w(); });
+  root.querySelectorAll('[data-dp]').forEach((el) => el.addEventListener('click', () => { const p = pillarFromIndex(+el.dataset.dp);
+    openSheet(`<h2 style="margin-top:0">${t('Day pillar {p}', { p: pillarName(p) })}</h2>${dayPillarHtml(p.stem, p.branch)}`); }));
   const sel = $('#tg-dm', root);
   if (sel) sel.addEventListener('change', () => { trainerDm = Number(sel.value); const host = sel.closest('[data-widget]'); host.innerHTML = trainer(); renderWidgets(host.parentElement); });
 }
@@ -208,6 +216,7 @@ function chartHtml(entry) {
       ? t('A stronger Day Master is classically balanced by <b>Output, Wealth and Power</b>: {els}.', { els: [1, 2, 3].map((d) => ELEMENTS[(dm.el + d) % 5].name).join(', ') })
       : t('A weaker Day Master is classically supported by <b>Resource and Companions</b>: {els}.', { els: [4, 0].map((d) => ELEMENTS[(dm.el + d) % 5].name).join(', ') })}</p>
   </div>
+  ${dayPillarCard(c)}
   <div class="card"><h3 style="margin-top:0">${t("Five Elements balance")}</h3><div class="bars">
     ${c.elements.map((e) => `<div class="bar" data-el="${e.el}" style="cursor:pointer"><span class="tx-${e.el}" style="font-weight:600">${ELEMENTS[e.el].zh} ${ELEMENTS[e.el].name}</span>
       <span class="track"><i style="width:${e.pct}%;background:var(--${ELEMENTS[e.el].key})"></i></span><span class="small">${e.pct}%</span></div>`).join('')}</div>
@@ -350,6 +359,7 @@ const routes = {
         <p>${done === LESSONS.length ? t('Course complete! Keep practising with the quiz and charts.') : t('{done} of {n} lessons completed.', { done, n: LESSONS.length })}</p>
         <div class="progress"><i style="width:${(done / LESSONS.length) * 100}%"></i></div>
         ${next ? `<a class="btn" style="margin-top:14px;background:var(--gold);color:#1b1410" href="#/lesson/${next.id}">${done ? t('Continue') : t('Start')}: ${next.title}</a>` : ''}</div>
+      <a class="card premium-banner" href="#/guide"><span class="pb-icon">🧭</span><span><b>${t('How to use the app')}</b> · ${t('get the most out of BaZi Academy')}</span><span class="pb-go">›</span></a>
       ${premium.isPremium() ? '' : `<a class="card premium-banner" href="#/premium"><span class="pb-icon">✦</span><span><b>${t("Premium")}</b> · ${t('unlock lessons {a}–{b}, unlimited charts and detailed readings', { a: premium.FREE_LESSONS + 1, b: LESSONS.length })}</span><span class="pb-go">›</span></a>`}
       <div class="list">${LESSONS.map((l, i) => `<a class="card lesson-item ${state.done[l.id] ? 'done' : ''} ${premium.lessonIsLocked(i) ? 'locked' : ''}" href="#/lesson/${l.id}">
         <span class="badge">${premium.lessonIsLocked(i) ? '🔒' : state.done[l.id] ? '✓' : l.zh.slice(0, 2)}</span>
@@ -647,6 +657,7 @@ const routes = {
       const star = findStars(c)[0];
       view.innerHTML = `<div class="card hero"><div class="big" style="font-family:var(--serif)">${dm.zh}</div>
           <h2 style="margin:8px 0 4px">${t('{name}, you are {pe}', { name: esc(entry.name), pe: polEl(c.dayMaster) })}</h2>
+          <p style="margin:0 0 6px"><b>${t('Your day pillar {p}: {img}', { p: pillarName(c.pillars.day), img: esc(dayPillarProfile(c.pillars.day.stem, c.pillars.day.branch).image) })}</b></p>
           <p>“${dm.image}” – ${dm.desc.slice(dm.desc.indexOf('. ') + 2) || dm.desc}</p></div>
         <div class="card">${pillarsHtml(c, false)}</div>
         <div class="card"><h3 style="margin-top:0">${t("Three things about you")}</h3><ul class="weak-list">
@@ -750,6 +761,13 @@ const routes = {
     bindCalendarCards();
   },
 
+  guide() {
+    setTitle(t('How to use the app'), true);
+    view.innerHTML = `<div class="card hero"><div class="big">🧭</div><h2 style="margin:8px 0 4px">${t('How to use the app')}</h2>
+        <p>${t('A short tour of everything BaZi Academy can do – and how to make it part of your day.')}</p></div>
+      ${GUIDE.map(([icon, title, html], i) => `<details class="card guide" ${i === 0 ? 'open' : ''}><summary><span class="g-icon">${icon}</span><b>${title}</b></summary><div class="lesson-body">${html}</div></details>`).join('')}`;
+  },
+
   influences(id) {
     setTitle(t('Influences'), true);
     const entry = state.charts.find((c) => c.id === id) || state.charts.find((c) => c.mine) || state.charts[0];
@@ -845,6 +863,7 @@ const routes = {
       <p class="small">${t('Your charts and progress live only on this phone. Save a backup file (e.g. to Google Drive, iCloud or email) and import it on your new phone.')}</p>
       <div class="row" style="margin-bottom:10px"><button class="btn secondary" id="bk-export">${t("⇪ Export")}</button><button class="btn secondary" id="bk-import">${t("⇩ Import")}</button></div>
       <input type="file" id="bk-file" accept=".json,application/json" hidden>
+      <p><a class="btn secondary block" href="#/guide">🧭 ${t('How to use the app')}</a></p>
       <h3>${t('Language')}</h3>
       <select id="lang-sel"><option value="auto" ${langSetting() === 'auto' ? 'selected' : ''}>${t('Automatic (phone language)')}</option>${Object.entries(LANGS).map(([k, v]) => `<option value="${k}" ${langSetting() === k ? 'selected' : ''}>${v}</option>`).join('')}</select>
       ${premium.FREE_APP ? '' : `<h3>${t("Premium")}</h3>
@@ -881,6 +900,26 @@ const routes = {
     $('#reset').onclick = () => { if (confirm(t('Reset lesson progress and quiz scores?'))) { state.done = {}; state.best = {}; save('done'); save('best'); go('#/learn'); } };
   },
 };
+
+// ---------- day pillar profiles ----------
+function dayPillarHtml(s, b) {
+  const pr = dayPillarProfile(s, b);
+  return `<p class="dp-image"><span class="dp-zh">${pr.name}</span> ${esc(pr.image)}</p>
+    <p>${pr.character}</p>
+    <p class="small">${t('{name}: {stem} on {branch}.', { name: pr.name, stem: `${STEMS[s].zh} ${pr.stemEl.name}`, branch: `${BRANCHES[b].zh} ${BRANCHES[b].animal}` })} ${pr.seat}
+      ${t('Its spouse palace holds <b>{god}</b>.', { god: pr.seatGodName })}</p>
+    <p class="small"><b>${t('Growth stage:')}</b> ${pr.stage.zh} ${pr.stage.name} – ${pr.stage.desc}</p>
+    ${pr.special.map((x) => `<p class="tip"><b>${x.zh} ${x.name}</b> – ${x.desc}</p>`).join('')}`;
+}
+
+function dayPillarCard(c) {
+  const d = c.pillars.day;
+  const stages = PILLAR_KEYS.filter((k) => c.pillars[k]).map((k) => { const st = stageOf(c.dayMaster, c.pillars[k].branch);
+    return `<div><div class="lbl">${PILLAR_LABEL[k]}</div><div class="dp-stage">${st.zh}</div><div class="small">${st.name}</div></div>`; }).join('');
+  return `<div class="card" data-dm="${c.dayMaster}"><h3 style="margin-top:0">${t('Your day pillar 日柱')}</h3>${dayPillarHtml(d.stem, d.branch)}
+    <h4>${t('The Day Master’s growth stages in your pillars')}</h4><div class="pillars dp-stages">${stages}</div>
+    <p class="small muted">${t('Stages like Peak (帝旺) or Coming of Age (临官) show where the Day Master is strong; Tomb (墓) or Extinction (绝) show where it rests.')} <a href="#/lesson/daymaster">${t('All 60 day pillars')}</a></p></div>`;
+}
 
 // ---------- chart management ----------
 const CHART_GROUPS = [['family', 'Family'], ['partner', 'Partner'], ['friends', 'Friends'], ['clients', 'Clients'], ['work', 'Work'], ['other', 'Other']];
@@ -1162,7 +1201,7 @@ $('#back').addEventListener('click', () => { if (history.length > 1) history.bac
 function router() {
   closeSheet();
   const [, name = 'learn', arg] = (location.hash || '#/learn').split('/');
-  const tab = { lesson: 'learn', about: 'learn', premium: 'learn', match: 'chart', almanac: 'today', forecast: 'chart', influences: 'chart', timeline: 'chart', welcome: '' }[name] ?? name;
+  const tab = { lesson: 'learn', guide: 'learn', about: 'learn', premium: 'learn', match: 'chart', almanac: 'today', forecast: 'chart', influences: 'chart', timeline: 'chart', welcome: '' }[name] ?? name;
   document.body.classList.toggle('no-tabs', name === 'welcome');
   document.querySelectorAll('.tabs a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));
   (routes[name] || routes.learn)(arg ? decodeURIComponent(arg) : undefined);

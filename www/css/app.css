@@ -262,3 +262,16 @@ body.no-tabs main { padding-bottom: calc(32px + env(safe-area-inset-bottom)); }
 .tl-cur { background: color-mix(in srgb, var(--gold) 18%, transparent); border-radius: 6px; }
 /* Notes */
 textarea { width: 100%; font: inherit; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--text); resize: vertical; }
+
+/* Day pillars */
+.dp-image { font-size: 17px; font-weight: 600; }
+.dp-zh { font-family: var(--serif); font-size: 26px; color: var(--accent); margin-right: 6px; vertical-align: middle; }
+.dp-stage { font-family: var(--serif); font-size: 22px; color: var(--accent); }
+.dp-stages { margin-bottom: 6px; }
+
+/* Guide */
+.guide summary { display: flex; gap: 10px; align-items: center; cursor: pointer; font-size: 16px; list-style: none; }
+.guide summary::-webkit-details-marker { display: none; }
+.guide .g-icon { font-size: 22px; }
+.guide .lesson-body { margin-top: 8px; }
+.guide li { margin-bottom: 6px; }

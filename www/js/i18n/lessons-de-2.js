@@ -27,6 +27,9 @@ export const LESSONS_DE_2 = [
 <li><b>Was umgibt mich?</b> – Welche Elemente stützen mich, welche bringe ich hervor, kontrolliere ich oder werde ich kontrolliert? (Lektion Zehn Götter)</li>
 </ol>
 <p>Ein 甲-Holz-Tagesmeister, im Frühling geboren, ist ein Baum in vollem Wachstum; im Herbst geboren, steht er scharfen Metall-Äxten gegenüber – derselbe Stamm, eine ganz andere Geschichte.</p>
+<h3>Die 60 Tagessäulen</h3>
+<p>Zusammen mit seinem Zweig bildet der Tagesmeister die <b>Tagessäule</b> (日柱). Der Zweig ist der „Sitz“ des Tagesmeisters und sein Partnerpalast – 甲子 und 甲午 sind beide Yang-Holz und doch sehr verschiedene Menschen.</p>
+<div data-widget="daypillars"></div>
 <p class="tip">Berechne dein eigenes Horoskop im Tab <b>Horoskop</b> und tippe auf deinen Tagesmeister, um mehr zu lesen.</p>`,
     quiz: [
       { q: 'Der Tagesmeister ist …', options: ['Der Jahreszweig', 'Der Tagesstamm', 'Der Monatsstamm', 'Der Stundenzweig'], answer: 1, explain: 'Der Stamm der Tagessäule.' },

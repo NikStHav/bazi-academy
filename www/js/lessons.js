@@ -158,6 +158,9 @@ const LESSONS_EN = [
 <li><b>What surrounds me?</b> – Which elements support me, and which do I produce, control, or get controlled by? (Ten Gods lesson)</li>
 </ol>
 <p>A 甲 Wood Day Master born in spring is a tree in full growth; born in autumn, it faces sharp Metal axes – the same stem, a very different story.</p>
+<h3>The 60 day pillars</h3>
+<p>Together with its branch, the Day Master forms the <b>day pillar</b> (日柱). The branch is the “seat” of the Day Master and its spouse palace – so 甲子 and 甲午 are both Yang Wood, yet very different people.</p>
+<div data-widget="daypillars"></div>
 <p class="tip">Calculate your own chart in the <b>Chart</b> tab and tap your Day Master to read about it.</p>`,
     quiz: [
       { q: 'The Day Master is …', options: ['The year branch', 'The day stem', 'The month stem', 'The hour branch'], answer: 1, explain: 'The stem of the day pillar.' },
