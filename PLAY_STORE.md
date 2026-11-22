@@ -93,6 +93,9 @@ To test without being charged, add your Google account under *Settings → Licen
 > LOVE & COMPATIBILITY
 > Compare two charts – Day Masters, spouse palaces, zodiac animals and element balance – or quickly check someone new by date of birth. Discover your ideal match: which Day Masters, zodiac animals and elements suit you best.
 >
+> YOUR DAY CARD
+> Turn the wheel of the 60 days: it stops on today’s pillar and shows your day at a glance – stars, the theme of the day, what to do and what to avoid, lucky hours, colour and direction. Tap “Why?” to see the BaZi behind it, step by step.
+>
 > TODAY & ALMANAC
 > Today’s pillars, the Day Officer of the traditional Chinese almanac (Tong Shu) with what the day suits and what to avoid, your personal clash days, and an optional daily tip notification. Plan weddings, moves, contracts, launches and journeys on good days.
 >
@@ -125,7 +128,7 @@ To test without being charged, add your Google account under *Settings → Licen
 **Graphics** (in `resources/`):
 - App icon 512×512: `play-icon-512.png`
 - Feature graphic 1024×500: `feature-graphic.png`
-- Phone screenshots: ready in `store-screenshots/en/android-phone/` (1080×1920). Upload all 8 in order: chart, day pillar, reading, Chinese clock, lunar calendar, compatibility, life timeline, lesson.
+- Phone screenshots: ready in `store-screenshots/en/android-phone/` (1080×1920). Google Play allows 8 phone screenshots: upload `1-day-card` to `8-compatibility` in order (leave out `9-life-timeline`).
 
 ### App content (Policy section)
 
@@ -184,6 +187,9 @@ In Play Console → *Grow users → Store presence → Main store listing* → *
 > DEINE TAGESSÄULE
 > Ein persönliches Profil für jede der 60 Tagessäulen: Charakter, Stärken, Beziehungen und der Partnerpalast.
 >
+> DEINE TAGESKARTE
+> Dreh das Rad der 60 Tage: Es hält auf der heutigen Säule und zeigt deinen Tag auf einen Blick – Sterne, das Thema des Tages, was du tun und lassen solltest, Glücksstunden, Farbe und Richtung. Tippe auf „Warum?“, um das BaZi dahinter Schritt für Schritt zu sehen.
+>
 > LIEBE & KOMPATIBILITÄT
 > Vergleiche zwei Horoskope oder prüfe eine neue Bekanntschaft per Geburtsdatum. Entdecke deinen idealen Partner: welche Tagesmeister, Tierkreiszeichen und Elemente am besten zu dir passen.
 >
@@ -213,4 +219,4 @@ In Play Console → *Grow users → Store presence → Main store listing* → *
 >
 > BaZi ist ein traditionelles Kultursystem. Diese App dient der Bildung und Unterhaltung und ersetzt keine professionelle Beratung.
 
-**Screenshots:** ready in `store-screenshots/de/android-phone/` (1080×1920). Upload them under the German translation.
+**Screenshots:** ready in `store-screenshots/de/android-phone/` (1080×1920). Upload `1-day-card` to `8-compatibility` under the German translation.

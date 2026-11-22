@@ -84,7 +84,7 @@ Free GitHub Pages needs a public repository; otherwise host these two pages else
 **Screenshots**: ready in `store-screenshots/en/` (German: `store-screenshots/de/`):
 - `ios-6.9in/` (1320×2868): upload for the **6.9" iPhone** display size (required). Apple scales them down for smaller iPhones.
 - `ios-6.5in/` (1242×2688): only if App Store Connect asks for 6.5".
-Upload all 8 in order (chart, day pillar, reading, Chinese clock, lunar calendar, compatibility, life timeline, lesson). The app is iPhone-only, so no iPad screenshots are needed.
+Upload all 9 in order, starting with the day card (`1-day-card.png`). The app is iPhone-only, so no iPad screenshots are needed.
 
 ## 8. App Privacy, age rating, compliance
 
