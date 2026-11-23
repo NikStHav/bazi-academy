@@ -1110,7 +1110,7 @@ function calendarDay(y, m, d, mine) {
 }
 
 // ---------- reminders & calendar export ----------
-const FEED_BASE = 'https://niksthav.github.io/bazi-academy/calendar/';
+const FEED_BASE = 'https://baziacademy.app/calendar/';
 const FEEDS = [['lunar.ics', t('Moons, equinoxes, solstices & festivals')], ['full-moons.ics', t('Full moons')], ['seasons.ics', t('Equinoxes & solstices')],
   ['solar-terms.ics', t('All 24 solar terms')], ['festivals.ics', t('Chinese festivals')]];
 

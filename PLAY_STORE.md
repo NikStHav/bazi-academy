@@ -54,7 +54,7 @@ To test without being charged, add your Google account under *Settings → Licen
 - Default language: English (United States)
 - App or game: App · Free (no in-app purchases)
 - Category: **Education** (alternative: Lifestyle)
-- Package name: `com.baziacademy.app`. You can change it until the first upload; after that it is permanent. If you own a domain, the convention is its reverse, e.g. `com.example.bazi`.
+- Package name: `app.baziacademy` (the reverse of the domain baziacademy.app). It is permanent after the first upload.
 
 ### Store listing
 
@@ -134,7 +134,7 @@ To test without being charged, add your Google account under *Settings → Licen
 
 | Item | Answer |
 |---|---|
-| Privacy policy URL | `https://<your-github-name>.github.io/<repo-name>/privacy.html` (German: `datenschutz.html`). Enable GitHub Pages (Settings → Pages → Source **GitHub Actions**, then run the workflow *BaZi Academy (Website)*). Put your contact email into `docs/privacy.html` first. The repository must be **public** for free GitHub Pages; otherwise host the file anywhere else. |
+| Privacy policy URL | `https://baziacademy.app/privacy.html` (German: `https://baziacademy.app/datenschutz.html`). Enable GitHub Pages (Settings → Pages → Source **GitHub Actions**, then run the workflow *BaZi Academy (Website)*). Put your contact email into `docs/privacy.html` first. The repository must be **public** for free GitHub Pages; otherwise host the file anywhere else. |
 | Ads | No ads |
 | In-app purchases | No |
 | App access | All functionality available without login |

@@ -110,5 +110,4 @@ The same app also runs in the browser as a free "shop window" for the store apps
 - A generated service worker (`app/sw.js`) makes it work offline and installable ("Add to home screen").
 - Store links: fill in `www/js/store-links.js` once the apps are live (until then the cards say "coming soon").
 - Publish: Settings → Pages → Source **GitHub Actions**, then run the workflow *BaZi Academy (Website)*.
-  The site is then at `https://<user>.github.io/bazi-academy/` and the app at `/app/`.
-  For your own domain, add it under Settings → Pages → Custom domain.
+  The site is at `https://baziacademy.app/` (custom domain, set under Settings → Pages → Custom domain) and the web app at `https://baziacademy.app/app/`.

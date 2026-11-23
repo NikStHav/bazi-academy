@@ -20,14 +20,14 @@ With a Mac, you can do steps 4–5 in Xcode instead (`npx cap open ios`, then *P
 
 [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list) → **+** → App IDs → App:
 - Description: `BaZi Academy`
-- Bundle ID (explicit): `com.baziacademy.app`. It can't be changed after the first upload. If you own a domain, the convention is its reverse, e.g. `com.example.bazi`. Change it in `capacitor.config.json` and `ios/App/App.xcodeproj/project.pbxproj` (`PRODUCT_BUNDLE_IDENTIFIER`).
+- Bundle ID (explicit): `app.baziacademy` (the reverse of the domain baziacademy.app). It can't be changed after the first upload. Change it in `capacitor.config.json` and `ios/App/App.xcodeproj/project.pbxproj` (`PRODUCT_BUNDLE_IDENTIFIER`).
 - No capabilities needed.
 
 ## 3. Create the app in App Store Connect
 
 [App Store Connect](https://appstoreconnect.apple.com) → Apps → **+** → New App:
 - Platform: iOS · Name: **BaZi Academy: Four Pillars** (names must be unique on the App Store; alternatives: *BaZi Academy – Learn BaZi*, *Four Pillars Academy*)
-- Primary language: English (U.S.) · Bundle ID: `com.baziacademy.app` · SKU: `bazi-academy-ios` · Full access
+- Primary language: English (U.S.) · Bundle ID: `app.baziacademy` · SKU: `bazi-academy-ios` · Full access
 
 ## 4. Create the Premium in-app purchase (skip while the app is free)
 
@@ -68,8 +68,8 @@ Internal testing needs no review.
 | Subtitle (≤30) | Learn Chinese Astrology |
 | Category | Primary **Education**, secondary **Reference** |
 | Keywords (≤100) | `bazi,four pillars,chinese astrology,five elements,wu xing,ten gods,zodiac,destiny,feng shui,saju` |
-| Support URL | `https://<your-github-name>.github.io/<repo>/` (`docs/index.html`) |
-| Privacy Policy URL | `https://<your-github-name>.github.io/<repo>/privacy.html` (`docs/privacy.html`) |
+| Support URL | `https://baziacademy.app/` (`docs/index.html`) |
+| Privacy Policy URL | `https://baziacademy.app/privacy.html` (`docs/privacy.html`) |
 | Copyright | `2026 NSH Holding GmbH` |
 | Price | Free |
 
@@ -116,7 +116,7 @@ App Store Connect → your app → *App Information* → **Localizable Informati
 | Name (≤30) | BaZi Academy: Vier Säulen |
 | Subtitle (≤30) | Chinesische Astrologie lernen |
 | Keywords (≤100) | `bazi,vier säulen,chinesische astrologie,fünf elemente,zehn götter,horoskop,mondkalender,feng shui` |
-| Privacy Policy URL | `https://<your-github-name>.github.io/<repo>/datenschutz.html` |
+| Privacy Policy URL | `https://baziacademy.app/datenschutz.html` |
 
 **Promotional text:**
 > Die Vier Säulen des Schicksals Schritt für Schritt verstehen: 15 Lektionen, genauer Rechner, 60 Tagessäulen-Profile, Mondkalender und Quizze. Kostenlos und privat.

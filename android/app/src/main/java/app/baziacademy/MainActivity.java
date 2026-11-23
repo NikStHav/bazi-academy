@@ -1,4 +1,4 @@
-package com.baziacademy.app;
+package app.baziacademy;
 
 import com.getcapacitor.BridgeActivity;
 
