@@ -44,7 +44,6 @@ export const DE_UI_1 = {
   'About': 'Über die App',
   'About {ab}% of the second chart consists of the first person’s favourable elements, and {ba}% the other way round.':
     'Etwa {ab} % des zweiten Horoskops bestehen aus den günstigen Elementen der ersten Person, und {ba} % umgekehrt.',
-  'About, privacy & backup': 'Über die App, Datenschutz & Sicherung',
   'Activated stars:': 'Aktivierte Sterne:',
   'Activities:': 'Aktivitäten:',
   'Add to your calendar': 'In deinen Kalender übernehmen',
@@ -70,7 +69,6 @@ export const DE_UI_1 = {
   'Back': 'Zurück',
   'Back to today': 'Zurück zu heute',
   'Backup & new phone': 'Sicherung & neues Handy',
-  'Backup and new phone, restore purchase, settings': 'Sicherung und neues Handy, Kauf wiederherstellen, Einstellungen',
   'Backward': 'Rückwärts',
   'Balance & favourable elements': 'Gleichgewicht & günstige Elemente',
   'Balanced to strong': 'Ausgewogen bis stark',

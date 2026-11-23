@@ -6,7 +6,7 @@ export const PUBLISHER = {
   country: 'Deutschland / Germany',
   director: 'Nikolaus Stangenberg-Haverkamp',
   register: 'Amtsgericht Bad Homburg v. d. Höhe, HRB 15492',
-  email: '',   // TODO before release: contact email (required in the Impressum)
+  email: 'support@baziacademy.app',
   phone: '',   // optional
   vatId: '',   // USt-IdNr., if the company has one
 };

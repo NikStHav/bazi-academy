@@ -131,4 +131,10 @@ export const DE_UI_3 = {
   'lessons {a}–{b}, unlimited charts and detailed readings': 'Lektionen {a}–{b}, unbegrenzte Horoskope und ausführliche Deutungen',
   'In the app': 'In der App',
   'This lesson is in the app.': 'Diese Lektion gibt es in der App.',
+  'App version': 'App-Version',
+  'Language, text size, contact, backup and new phone': 'Sprache, Textgröße, Kontakt, Backup und neues Handy',
+  'Questions, ideas or a problem? Write to us – we read every message.': 'Fragen, Ideen oder ein Problem? Schreib uns – wir lesen jede Nachricht.',
+  'Settings, support & backup': 'Einstellungen, Support & Backup',
+  'Support': 'Support',
+  'Your app version and language are added to the email so we can help faster. No other data is sent.': 'App-Version und Sprache werden der E-Mail angefügt, damit wir schneller helfen können. Sonst wird nichts übermittelt.',
 };

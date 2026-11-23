@@ -35,7 +35,8 @@ const EN = [
 <li>Use notes like a journal: write down important events and compare them with the chart, the year and the luck pillar – the best way to test BaZi against real life.</li>
 <li><b>Share as image</b> sends a chart card to friends.</li>
 <li><b>Reminders</b> and <b>Add to your calendar</b> (Calendar tab) bring full moons, solstices and festivals into your phone’s calendar.</li>
-<li>Back up regularly: <a href="#/about">About</a> → <b>Export</b>. On a new phone, use <b>Import</b>. You can also switch the language there.</li></ul>`],
+<li>Back up regularly: <a href="#/about">About</a> → <b>Export</b>. On a new phone, use <b>Import</b>. </li>
+<li>The two buttons at the top right are on every screen: <b>EN/DE</b> switches the language, <b>ⓘ</b> opens settings, text size, backup and <b>support</b> – write to us at any time.</li></ul>`],
   ['🗓️', 'Suggested routines', `
 <ul><li><b>Daily (2 minutes):</b> Today screen → day card, lucky hours, almanac; one quiz round.</li>
 <li><b>Weekly:</b> one lesson; look at the next 7 days in the almanac; add notes about the week to your chart.</li>
@@ -79,7 +80,8 @@ const DE = [
 <li>Nutze die Notizen wie ein Tagebuch: Halte wichtige Ereignisse fest und vergleiche sie mit Horoskop, Jahr und Glückssäule – so prüfst du BaZi am besten am echten Leben.</li>
 <li><b>Als Bild teilen</b> schickt eine Horoskop-Karte an Freunde.</li>
 <li><b>Erinnerungen</b> und <b>In deinen Kalender übernehmen</b> (Tab Kalender) bringen Vollmonde, Sonnenwenden und Feste in den Kalender deines Handys.</li>
-<li>Sichere regelmäßig: <a href="#/about">Über die App</a> → <b>Exportieren</b>. Auf einem neuen Handy nutzt du <b>Importieren</b>. Dort kannst du auch die Sprache wechseln.</li></ul>`],
+<li>Sichere regelmäßig: <a href="#/about">Über die App</a> → <b>Exportieren</b>. Auf einem neuen Handy nutzt du <b>Importieren</b>. </li>
+<li>Die zwei Knöpfe oben rechts gibt es auf jedem Bildschirm: <b>DE/EN</b> wechselt die Sprache, <b>ⓘ</b> öffnet Einstellungen, Textgröße, Backup und den <b>Support</b> – schreib uns jederzeit.</li></ul>`],
   ['🗓️', 'Empfohlene Routinen', `
 <ul><li><b>Täglich (2 Minuten):</b> Heute → Tageskarte, Glücksstunden, Almanach; eine Quiz-Runde.</li>
 <li><b>Wöchentlich:</b> eine Lektion; die nächsten 7 Tage im Almanach ansehen; Notizen zur Woche in deinem Horoskop festhalten.</li>

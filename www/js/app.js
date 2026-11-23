@@ -367,7 +367,7 @@ const routes = {
       <div class="list">${LESSONS.map((l, i) => `<a class="card lesson-item ${state.done[l.id] ? 'done' : ''} ${premium.lessonIsLocked(i) ? 'locked' : ''}" href="#/lesson/${l.id}">
         <span class="badge">${premium.lessonIsLocked(i) ? '🔒' : state.done[l.id] ? '✓' : l.zh.slice(0, 2)}</span>
         <span><span class="lvl">${i + 1} · ${t(l.level)}${i >= premium.FREE_LESSONS && !premium.FREE_APP ? t(' · Premium') : ''}</span><div class="t">${l.title} <span class="muted" style="font-family:var(--serif);font-weight:400">${l.zh}</span></div><div class="s">${l.summary}</div></span></a>`).join('')}</div>
-      <a class="card about-link" href="#/about"><span>ⓘ</span><span><b>${t("About, privacy & backup")}</b><br><span class="small muted">${t("Backup and new phone, restore purchase, settings")}</span></span><span class="pb-go">›</span></a>`;
+      <a class="card about-link" href="#/about"><span>ⓘ</span><span><b>${t('Settings, support & backup')}</b><br><span class="small muted">${t('Language, text size, contact, backup and new phone')}</span></span><span class="pb-go">›</span></a>`;
   },
 
   lesson(id) {
@@ -854,7 +854,11 @@ const routes = {
 
   about() {
     setTitle(t('About'), true);
-    view.innerHTML = `<div class="card"><h2 style="margin-top:0">BaZi Academy</h2>
+    view.innerHTML = `<div class="card"><h2 style="margin-top:0">${t('Support')}</h2>
+      <p class="small">${t('Questions, ideas or a problem? Write to us – we read every message.')}</p>
+      <a class="btn block mail-btn" href="${supportMailto()}">✉️ ${esc(PUBLISHER.email)}</a>
+      <p class="small muted" style="margin-bottom:0">${t('Your app version and language are added to the email so we can help faster. No other data is sent.')}</p></div>
+      <div class="card"><h2 style="margin-top:0">BaZi Academy</h2>
       <p>${t('An introduction to BaZi (八字), the Four Pillars of Destiny: Yin and Yang, the Five Elements, the Heavenly Stems and Earthly Branches, the Ten Gods and luck pillars, with a chart calculator and quizzes.')}</p>
       <h3>${t("How charts are calculated")}</h3>
       <p class="small">${t('The year and month pillars follow the 24 solar terms (the year starts at Li Chun), calculated from the sun’s apparent longitude. Day pillars follow the continuous 60-day cycle. Hour pillars follow the five-rats rule. True solar time is optional.')}</p>
@@ -1324,12 +1328,30 @@ function runQuiz(host, questions, onFinish, onRetry) {
 function setTitle(title, back = false) { $('#title').textContent = title; $('#back').hidden = !back; }
 function go(hash, replace = false) { if (replace) location.replace(hash); else location.hash = hash; }
 $('#back').addEventListener('click', () => { if (history.length > 1) history.back(); else go('#/learn'); });
+function supportMailto() {
+  const subject = `BaZi Academy – ${t('Support')}`;
+  const body = `\n\n\n---\n${t('App version')}: ${BUILD}${WEB_BUILD ? ' (web)' : ''} · ${lang.toUpperCase()}`;
+  return `mailto:${PUBLISHER.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+$('#lang-btn').textContent = lang.toUpperCase();
+$('#lang-btn').setAttribute('aria-label', t('Language'));
+$('#info-btn').setAttribute('aria-label', t('Settings, support & backup'));
+$('#info-btn').addEventListener('click', () => go('#/about'));
+$('#lang-btn').addEventListener('click', () => {
+  openSheet(`<h2 style="margin-top:0">🌐 ${t('Language')}</h2><div class="lang-pick">
+    ${[['auto', t('Automatic (phone language)')], ...Object.entries(LANGS)].map(([k, v]) => `<button class="btn ${langSetting() === k ? '' : 'secondary'} block" data-setlang="${k}">${v}</button>`).join('')}</div>`);
+  $('#sheet-body').querySelectorAll('[data-setlang]').forEach((b) => b.addEventListener('click', () => {
+    if (b.dataset.setlang === langSetting()) { closeSheet(); return; }
+    setLang(b.dataset.setlang); location.reload();
+  }));
+});
 
 function router() {
   closeSheet();
   const [, name = 'today', arg] = (location.hash || '#/today').split('/');
   const tab = { lesson: 'learn', guide: 'learn', about: 'learn', premium: 'learn', match: 'chart', almanac: 'today', forecast: 'chart', influences: 'chart', timeline: 'chart', welcome: '' }[name] ?? name;
   document.body.classList.toggle('no-tabs', name === 'welcome');
+  document.body.classList.toggle('on-about', name === 'about');
   document.querySelectorAll('.tabs a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));
   (routes[name] || routes.today)(arg ? decodeURIComponent(arg) : undefined);
   if (WEB_BUILD && name !== 'welcome') view.insertAdjacentHTML('beforeend', webFooter());

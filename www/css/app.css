@@ -327,3 +327,9 @@ th, td { overflow-wrap: anywhere; }
 .lang-pick .btn + .btn { margin-top: 10px; }
 .store-btns { display: grid; gap: 10px; }
 .web-foot { text-align: center; margin: 18px 0 8px; }
+.topbar .hbtn { background: rgba(255,255,255,.14); color: inherit; border: 0; border-radius: 999px; min-width: 34px; height: 32px; padding: 0 9px; font: 600 13px/32px system-ui, sans-serif; cursor: pointer; }
+.topbar .hbtn:active { background: rgba(255,255,255,.28); }
+.no-tabs .topbar #info-btn, .on-about .topbar #info-btn { display: none; }
+@media (max-width: 359px) { .topbar .logo { display: none; } }
+.mail-btn { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 359px) { .mail-btn { font-size: 14px; padding-left: 8px; padding-right: 8px; } }
