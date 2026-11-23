@@ -193,7 +193,6 @@ export const UI_2 = {
   "Stages like Peak (帝旺) or Coming of Age (临官) show where the Day Master is strong; Tomb (墓) or Extinction (绝) show where it rests.": "Fases como Apogeo (帝旺) o Mayoría de edad (临官) muestran dónde el Maestro del Día es fuerte; Tumba (墓) o Extinción (绝) muestran dónde descansa.",
   "Start": "Empezar",
   "Start learning BaZi": "Empezar a aprender BaZi",
-  "Start typing a city, e.g. Bad Homburg": "Empieza a escribir una ciudad, p. ej., Madrid",
   "Stem combination": "Combinación de tallos",
   "Stems count 1; hidden stems 1 / 0.5 / 0.3; month branch ×1.5.": "Los tallos cuentan 1; los tallos ocultos 1 / 0,5 / 0,3; la rama del mes ×1,5.",
   "Stems five apart combine: {pair}.": "Los tallos separados por cinco se combinan: {pair}.",

@@ -9,7 +9,7 @@ import * as premium from './premium.js';
 import { plugin } from './cap.js';
 import { BUILD } from './build-flags.js';
 import { PUBLISHER } from './publisher.js';
-import { searchPlaces, utcOffsetFor, countryName } from './places.js';
+import { searchPlaces, utcOffsetFor, countryName, tzUncertain } from './places.js';
 import { dayInfo, findDays, ACTIVITIES, OFFICERS, RATING_LABEL } from './almanac.js';
 import { compare, idealMatch } from './compat.js';
 import * as notify from './notify.js';
@@ -258,7 +258,7 @@ function birthFieldsHtml() {
         <label>${t("Gender")} <span class="help">${t('(determines the direction of the luck pillars)')}</span></label>
         <div class="seg" id="f-gender"><button type="button" data-v="f">${t("Female")}</button><button type="button" data-v="m" class="on">${t("Male")}</button></div>
         <label for="f-place">${t("Birthplace")}</label>
-        <div class="place-wrap"><input id="f-place" autocomplete="off" placeholder="${t('Start typing a city, e.g. Bad Homburg')}" role="combobox" aria-expanded="false" aria-controls="f-place-list">
+        <div class="place-wrap"><input id="f-place" autocomplete="off" placeholder="${t('City or postcode, e.g. {city} or {code}', ({ de: { city: 'Bad Homburg', code: '61348' }, es: { city: 'Madrid', code: '28013' } })[lang] || { city: 'New York', code: '10001' })}" role="combobox" aria-expanded="false" aria-controls="f-place-list">
           <div class="place-list" id="f-place-list" role="listbox" hidden></div></div>
         <div class="help" id="f-place-help">${t('Sets the time zone (incl. historical daylight saving) and true solar time automatically.')}</div>
         <label class="check" id="f-solar-row" hidden><input type="checkbox" id="f-solar" checked> ${t("Use true solar time for the birthplace")}</label>
@@ -288,7 +288,12 @@ function bindBirthForm() {
       const [hh, mm] = ($('#f-time').value || '12:00').split(':').map(Number);
       if (place) {
         const off = utcOffsetFor(place.tz, y, m, d, hh, mm);
-        if (off !== null) { setTzValue(off); $('#f-tz-help').textContent = t('Set from {place} ({tz}) for this date', { place: place.name, tz: place.tz }) + (off !== utcOffsetFor(place.tz, y, 1, 15) ? t(' – daylight saving time') : '') + '.'; return; }
+        if (off !== null) {
+          setTzValue(off);
+          $('#f-tz-help').textContent = t('Set from {place} ({tz}) for this date', { place: place.name, tz: place.tz }) + (off !== utcOffsetFor(place.tz, y, 1, 15) ? t(' – daylight saving time') : '') + '.'
+            + (tzUncertain(place.cc, y) ? ' ⚠︎ ' + t('Time zone records before 1970 are less certain for this region. If you know the official time at the birthplace, check this value.') : '');
+          return;
+        }
       }
       if (tzTouched) return;
       setTzValue(-new Date(y, m - 1, d, hh, mm).getTimezoneOffset() / 60);
@@ -297,7 +302,7 @@ function bindBirthForm() {
     let results = [], active = -1, searchSeq = 0;
     const closeList = () => { list.hidden = true; placeIn.setAttribute('aria-expanded', 'false'); active = -1; };
     const choose = (c) => {
-      place = c; placeIn.value = `${c.name}, ${countryName(c.cc)}`; closeList();
+      place = c; placeIn.value = `${c.postcode ? c.postcode + ' ' : ''}${c.name}, ${countryName(c.cc)}`; closeList();
       $('#f-lon').value = c.lon.toFixed(2); $('#f-solar-row').hidden = false; $('#f-solar').checked = true;
       $('#f-place-help').textContent = `${c.lat.toFixed(2)}°, ${c.lon.toFixed(2)}° · ${t('time zone')} ${c.tz}`;
       setTz();
@@ -309,7 +314,7 @@ function bindBirthForm() {
       if (seq !== searchSeq) return; // a newer keystroke is already being handled
       results = found; active = -1;
       if (!found.length) { list.innerHTML = placeIn.value.trim().length >= 2 ? `<div class="place-none">${t("No match – try another spelling or enter the longitude under Advanced.")}</div>` : ''; list.hidden = !list.innerHTML; return; }
-      list.innerHTML = found.map((c, i) => `<div class="place-opt" role="option" data-i="${i}"><b>${esc(c.name)}</b> <span class="muted">${esc(countryName(c.cc))}</span></div>`).join('');
+      list.innerHTML = found.map((c, i) => `<div class="place-opt" role="option" data-i="${i}"><b>${c.postcode ? esc(c.postcode) + ' ' : ''}${esc(c.name)}</b> <span class="muted">${esc([c.region, countryName(c.cc)].filter(Boolean).join(', '))}</span></div>`).join('');
       list.hidden = false; placeIn.setAttribute('aria-expanded', 'true');
     });
     list.addEventListener('mousedown', (e) => e.preventDefault()); // keep focus so the click registers
@@ -338,7 +343,7 @@ function bindBirthForm() {
       state.settings.ziHourNextDay = $('#f-zi').checked; save('settings');
       return { name: $('#f-name').value.trim(), input: { year, month, day, hour, minute, tzOffset: Number($('#f-tz').value), timeUnknown: $('#f-unknown').checked,
         gender: $('#f-gender .on').dataset.v, longitude: lon === '' ? null : Number(lon),
-        place: place ? { name: place.name, cc: place.cc, lat: place.lat, lon: place.lon, tz: place.tz } : null } };
+        place: place ? { name: place.name, cc: place.cc, lat: place.lat, lon: place.lon, tz: place.tz, ...(place.region ? { region: place.region } : {}), ...(place.postcode ? { postcode: place.postcode } : {}) } : null } };
     },
   };
 }

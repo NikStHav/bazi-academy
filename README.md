@@ -45,7 +45,9 @@ www/js/quiz.js     question generators
 www/js/reading.js  detailed chart reading (Premium)
 www/js/premium.js  in-app purchase, free limits
 www/js/places.js   birthplace search, historical UTC offsets (Intl)
-www/js/cities-data.js  generated city list: node tools/build-cities.cjs <dir with all-the-cities + tz-lookup>
+www/js/cities-data.js  generated place list (GeoNames, ≥ 1,000 inhabitants, with region and EN/DE/ES names)
+www/js/postal-data.js  generated postcodes (GeoNames; Europe, Africa, North and South America)
+                       both: node tools/build-places.cjs <GeoNames folder> (see the header of that file)
 www/js/compat.js   compatibility and ideal match
 www/js/shensha.js  symbolic stars (神煞)
 www/js/forecast.js year-ahead forecast (流年)

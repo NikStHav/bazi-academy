@@ -53,7 +53,6 @@ export const UI_2 = {
   'Spouse palaces (day branches)': 'Partnerpaläste (Tageszweige)',
   'Start': 'Starten',
   'Start learning BaZi': 'BaZi lernen',
-  'Start typing a city, e.g. Bad Homburg': 'Ort eingeben, z. B. Bad Homburg',
   'Stem combination': 'Stammkombination',
   'Stems count 1; hidden stems 1 / 0.5 / 0.3; month branch ×1.5.': 'Stämme zählen 1; verborgene Stämme 1 / 0,5 / 0,3; Monatszweig ×1,5.',
   'Stems five apart combine: {pair}.': 'Stämme im Abstand von fünf verbinden sich: {pair}.',
