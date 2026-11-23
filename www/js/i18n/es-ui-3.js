@@ -242,4 +242,11 @@ export const UI_3 = {
   "🔒 Ideal spouse-palace branches": "🔒 Ramas ideales en el palacio de la pareja",
   "City or postcode, e.g. {city} or {code}": "Ciudad o código postal, p. ej., {city} o {code}",
   "Time zone records before 1970 are less certain for this region. If you know the official time at the birthplace, check this value.": "Para esta región, los datos de zona horaria anteriores a 1970 son menos seguros. Si conoces la hora oficial de entonces en el lugar de nacimiento, comprueba este valor.",
+  "Appearance": "Apariencia",
+  "Automatic": "Automático",
+  "Dark": "Oscuro",
+  "Language and appearance": "Idioma y apariencia",
+  "Light": "Claro",
+  "More settings, support & backup": "Más ajustes, soporte y copia de seguridad",
+  "Settings": "Ajustes",
 };

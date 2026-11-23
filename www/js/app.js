@@ -880,6 +880,8 @@ const routes = {
       <div class="row" style="margin-bottom:10px"><button class="btn secondary" id="bk-export">${t("⇪ Export")}</button><button class="btn secondary" id="bk-import">${t("⇩ Import")}</button></div>
       <input type="file" id="bk-file" accept=".json,application/json" hidden>
       <p><a class="btn secondary block" href="#/guide">🧭 ${t('How to use the app')}</a></p>
+      <h3>${t('Appearance')}</h3>
+      ${segHtml('th-sel', 'theme', THEMES(), state.settings.theme || 'auto')}
       <h3>${t('Text size')}</h3>
       <div class="seg" id="ts-sel">${[['1', t('Normal')], ['1.15', t('Large')], ['1.3', t('Extra large')]].map(([v, n]) => `<button type="button" data-ts="${v}" class="${String(state.settings.textSize || 1) === v ? 'on' : ''}">${n}</button>`).join('')}</div>
       <h3>${t('Language')}</h3>
@@ -903,6 +905,8 @@ const routes = {
     $('#lang-sel').onchange = (e) => { setLang(e.target.value); location.reload(); };
     $('#ts-sel').onclick = (e) => { const b = e.target.closest('[data-ts]'); if (!b) return;
       state.settings.textSize = Number(b.dataset.ts); save('settings'); applyTextSize(); routes.about(); };
+    $('#th-sel').onclick = (e) => { const b = e.target.closest('[data-theme]'); if (!b) return;
+      state.settings.theme = b.dataset.theme; save('settings'); applyTheme(); routes.about(); };
     $('#bk-import').onclick = () => $('#bk-file').click();
     $('#bk-file').onchange = async (e) => {
       const file = e.target.files?.[0]; if (!file) return;
@@ -1341,17 +1345,38 @@ function supportMailto() {
   return `mailto:${PUBLISHER.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 $('#lang-btn').textContent = lang.toUpperCase();
-$('#lang-btn').setAttribute('aria-label', t('Language'));
+$('#lang-btn').setAttribute('aria-label', t('Language and appearance'));
 $('#info-btn').setAttribute('aria-label', t('Settings, support & backup'));
 $('#info-btn').addEventListener('click', () => go('#/about'));
-$('#lang-btn').addEventListener('click', () => {
-  openSheet(`<h2 style="margin-top:0">🌐 ${t('Language')}</h2><div class="lang-pick">
-    ${[['auto', t('Automatic (phone language)')], ...Object.entries(LANGS)].map(([k, v]) => `<button class="btn ${langSetting() === k ? '' : 'secondary'} block" data-setlang="${k}">${v}</button>`).join('')}</div>`);
-  $('#sheet-body').querySelectorAll('[data-setlang]').forEach((b) => b.addEventListener('click', () => {
+// Quick settings (header button on every screen): language, appearance and text size.
+const THEMES = () => [['auto', t('Automatic')], ['light', '☀️ ' + t('Light')], ['dark', '🌙 ' + t('Dark')]];
+const TEXT_SIZES = () => [['1', t('Normal')], ['1.15', t('Large')], ['1.3', t('Extra large')]];
+const segHtml = (id, attr, opts, cur) => `<div class="seg seg-wrap" id="${id}">${opts.map(([v, n]) => `<button type="button" data-${attr}="${v}" class="${cur === v ? 'on' : ''}">${n}</button>`).join('')}</div>`;
+function quickSettingsHtml() {
+  return `<h2 style="margin-top:0">⚙︎ ${t('Settings')}</h2>
+    <h3>🌐 ${t('Language')}</h3><div class="lang-pick">
+    ${[['auto', t('Automatic (phone language)')], ...Object.entries(LANGS)].map(([k, v]) => `<button class="btn ${langSetting() === k ? '' : 'secondary'} block" data-setlang="${k}">${v}</button>`).join('')}</div>
+    <h3>🌗 ${t('Appearance')}</h3>${segHtml('qs-theme', 'theme', THEMES(), state.settings.theme || 'auto')}
+    <h3>🔠 ${t('Text size')}</h3>${segHtml('qs-ts', 'ts', TEXT_SIZES(), String(state.settings.textSize || 1))}
+    <p style="margin-bottom:0"><a href="#/about" class="small">${t('More settings, support & backup')} ›</a></p>`;
+}
+function bindSettingsControls(root, rerender) {
+  root.querySelectorAll('[data-setlang]').forEach((b) => b.addEventListener('click', () => {
     if (b.dataset.setlang === langSetting()) { closeSheet(); return; }
     setLang(b.dataset.setlang); location.reload();
   }));
-});
+  root.querySelectorAll('[data-theme]').forEach((b) => b.addEventListener('click', () => {
+    state.settings.theme = b.dataset.theme; save('settings'); applyTheme(); rerender();
+  }));
+  root.querySelectorAll('[data-ts]').forEach((b) => b.addEventListener('click', () => {
+    state.settings.textSize = Number(b.dataset.ts); save('settings'); applyTextSize(); rerender();
+  }));
+}
+function openQuickSettings() {
+  openSheet(quickSettingsHtml());
+  bindSettingsControls($('#sheet-body'), openQuickSettings);
+}
+$('#lang-btn').addEventListener('click', openQuickSettings);
 
 function router() {
   closeSheet();
@@ -1371,6 +1396,15 @@ function webFooter() {
 if (WEB_BUILD && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 function applyTextSize() { document.documentElement.style.setProperty('--text-zoom', String(state.settings.textSize || 1)); }
 applyTextSize();
+/** Light / dark / automatic: html[data-theme] overrides the phone setting (see app.css). */
+function applyTheme() {
+  const th = state.settings.theme || 'auto';
+  if (th === 'auto') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = th;
+  const dark = th === 'dark' || (th === 'auto' && globalThis.matchMedia?.('(prefers-color-scheme: dark)').matches);
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#3a1d1a' : '#7a2e2e');
+}
+applyTheme();
+globalThis.matchMedia?.('(prefers-color-scheme: dark)').addEventListener?.('change', applyTheme);
 document.documentElement.lang = lang;
 document.querySelectorAll('.tabs a span:last-child').forEach((s) => { s.textContent = t(s.textContent); });
 $('#back').setAttribute('aria-label', t('Back'));

@@ -53,7 +53,7 @@ export const GUIDE = [
 <li><b>Compartir como imagen</b> envía una tarjeta de la carta a tus amigos.</li>
 <li>Los <b>recordatorios</b> y <b>Añadir a tu calendario</b> (pestaña Calendario) llevan las lunas llenas, los solsticios y las fiestas al calendario de tu teléfono.</li>
 <li>Haz copias de seguridad con regularidad: <a href="#/about">Acerca de</a> → <b>Exportar</b>. En un teléfono nuevo, usa <b>Importar</b>.</li>
-<li>Los dos botones de arriba a la derecha están en todas las pantallas: el <b>botón de idioma</b> (ES · EN · DE) cambia el idioma y <b>ⓘ</b> abre los ajustes, el tamaño del texto, la copia de seguridad y el <b>soporte</b> – escríbenos cuando quieras.</li></ul>`],
+<li>Los dos botones de arriba a la derecha están en todas las pantallas: el <b>botón de idioma</b> (ES · EN · DE) abre los ajustes rápidos – idioma, <b>modo claro u oscuro</b> y tamaño del texto – y <b>ⓘ</b> abre todos los ajustes, la copia de seguridad y el <b>soporte</b> – escríbenos cuando quieras.</li></ul>`],
   ['🗓️', 'Rutinas sugeridas', `
 <ul><li><b>Cada día (2 minutos):</b> pantalla Hoy → carta del día, horas de suerte, almanaque; una ronda del cuestionario.</li>
 <li><b>Cada semana:</b> una lección; mira los próximos 7 días en el almanaque; añade notas sobre la semana a tu carta.</li>

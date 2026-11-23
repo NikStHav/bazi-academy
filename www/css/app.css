@@ -6,12 +6,18 @@
   --serif: 'Noto Serif CJK SC', 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
   color-scheme: light;
 }
+/* Dark theme: follows the phone unless the user picked Light or Dark (html[data-theme]). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #17130f; --surface: #221c17; --surface-2: #2c251e; --text: #efe7dc; --muted: #a99d90; --line: #3a3128;
     --accent: #e08a6f; --accent-2: #f0a58a; --gold: #e9c46a; --metal: #b4bfcc; --water: #6aa1e6;
     --shadow: 0 1px 2px rgba(0,0,0,.4); color-scheme: dark;
   }
+}
+:root[data-theme="dark"] {
+    --bg: #17130f; --surface: #221c17; --surface-2: #2c251e; --text: #efe7dc; --muted: #a99d90; --line: #3a3128;
+    --accent: #e08a6f; --accent-2: #f0a58a; --gold: #e9c46a; --metal: #b4bfcc; --water: #6aa1e6;
+    --shadow: 0 1px 2px rgba(0,0,0,.4); color-scheme: dark;
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 [hidden] { display: none !important; }
@@ -20,7 +26,8 @@ body { background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -ap
   display: flex; flex-direction: column; overscroll-behavior-y: none; }
 .topbar { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 8px; padding: calc(env(safe-area-inset-top) + 10px) 16px 10px;
   background: var(--accent); color: #fff; }
-@media (prefers-color-scheme: dark) { .topbar { background: #3a1d1a; } }
+@media (prefers-color-scheme: dark) { :where(:root:not([data-theme="light"])) .topbar { background: #3a1d1a; } }
+:where(:root[data-theme="dark"]) .topbar { background: #3a1d1a; }
 .topbar h1 { font-size: 18px; margin: 0; flex: 1; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .topbar .logo { font-family: var(--serif); font-size: 20px; opacity: .85; }
 .back { background: none; border: 0; color: inherit; font-size: 30px; line-height: 1; padding: 0 8px 4px 0; cursor: pointer; }
@@ -59,7 +66,8 @@ a { color: var(--accent); }
 .tip::before { content: '💡 '; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 0; border-radius: 12px; padding: 12px 18px; font: inherit; font-weight: 600;
   background: var(--accent); color: #fff; cursor: pointer; text-decoration: none; min-height: 46px; }
-@media (prefers-color-scheme: dark) { .btn { color: #1b1410; } }
+@media (prefers-color-scheme: dark) { :where(:root:not([data-theme="light"])) .btn { color: #1b1410; } }
+:where(:root[data-theme="dark"]) .btn { color: #1b1410; }
 .btn.secondary { background: var(--surface-2); color: var(--text); }
 .btn.block { width: 100%; }
 .btn:disabled { opacity: .5; }
@@ -333,3 +341,4 @@ th, td { overflow-wrap: anywhere; }
 @media (max-width: 359px) { .topbar .logo { display: none; } }
 .mail-btn { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 359px) { .mail-btn { font-size: 14px; padding-left: 8px; padding-right: 8px; } }
+.seg-wrap { flex-wrap: wrap; } .seg-wrap button { flex: 1 1 30%; min-width: 0; }

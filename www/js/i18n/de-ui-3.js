@@ -139,4 +139,11 @@ export const UI_3 = {
   'Your app version and language are added to the email so we can help faster. No other data is sent.': 'App-Version und Sprache werden der E-Mail angefügt, damit wir schneller helfen können. Sonst wird nichts übermittelt.',
   "City or postcode, e.g. {city} or {code}": "Ort oder Postleitzahl, z. B. {city} oder {code}",
   "Time zone records before 1970 are less certain for this region. If you know the official time at the birthplace, check this value.": "Für diese Region sind die Zeitzonen-Daten vor 1970 weniger sicher. Wenn du die damals offizielle Uhrzeit am Geburtsort kennst, prüfe diesen Wert.",
+  "Appearance": "Darstellung",
+  "Automatic": "Automatisch",
+  "Dark": "Dunkel",
+  "Language and appearance": "Sprache und Darstellung",
+  "Light": "Hell",
+  "More settings, support & backup": "Weitere Einstellungen, Support & Backup",
+  "Settings": "Einstellungen",
 };

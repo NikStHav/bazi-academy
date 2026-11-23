@@ -37,7 +37,7 @@ const EN = [
 <li><b>Share as image</b> sends a chart card to friends.</li>
 <li><b>Reminders</b> and <b>Add to your calendar</b> (Calendar tab) bring full moons, solstices and festivals into your phone’s calendar.</li>
 <li>Back up regularly: <a href="#/about">About</a> → <b>Export</b>. On a new phone, use <b>Import</b>. </li>
-<li>The two buttons at the top right are on every screen: the <b>language button</b> (EN · DE · ES) switches the language, <b>ⓘ</b> opens settings, text size, backup and <b>support</b> – write to us at any time.</li></ul>`],
+<li>The two buttons at the top right are on every screen: the <b>language button</b> (EN · DE · ES) opens quick settings – language, <b>light or dark mode</b> and text size – and <b>ⓘ</b> opens all settings, backup and <b>support</b> – write to us at any time.</li></ul>`],
   ['🗓️', 'Suggested routines', `
 <ul><li><b>Daily (2 minutes):</b> Today screen → day card, lucky hours, almanac; one quiz round.</li>
 <li><b>Weekly:</b> one lesson; look at the next 7 days in the almanac; add notes about the week to your chart.</li>
@@ -82,7 +82,7 @@ const DE = [
 <li><b>Als Bild teilen</b> schickt eine Horoskop-Karte an Freunde.</li>
 <li><b>Erinnerungen</b> und <b>In deinen Kalender übernehmen</b> (Tab Kalender) bringen Vollmonde, Sonnenwenden und Feste in den Kalender deines Handys.</li>
 <li>Sichere regelmäßig: <a href="#/about">Über die App</a> → <b>Exportieren</b>. Auf einem neuen Handy nutzt du <b>Importieren</b>. </li>
-<li>Die zwei Knöpfe oben rechts gibt es auf jedem Bildschirm: der <b>Sprachknopf</b> (DE · EN · ES) wechselt die Sprache, <b>ⓘ</b> öffnet Einstellungen, Textgröße, Backup und den <b>Support</b> – schreib uns jederzeit.</li></ul>`],
+<li>Die zwei Knöpfe oben rechts gibt es auf jedem Bildschirm: der <b>Sprachknopf</b> (DE · EN · ES) öffnet die Schnelleinstellungen – Sprache, <b>heller oder dunkler Modus</b> und Textgröße –, <b>ⓘ</b> öffnet alle Einstellungen, das Backup und den <b>Support</b> – schreib uns jederzeit.</li></ul>`],
   ['🗓️', 'Empfohlene Routinen', `
 <ul><li><b>Täglich (2 Minuten):</b> Heute → Tageskarte, Glücksstunden, Almanach; eine Quiz-Runde.</li>
 <li><b>Wöchentlich:</b> eine Lektion; die nächsten 7 Tage im Almanach ansehen; Notizen zur Woche in deinem Horoskop festhalten.</li>
