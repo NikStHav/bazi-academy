@@ -1,5 +1,5 @@
 // German UI texts, part 1 (A–P). Keys are the English source strings.
-export const DE_UI_1 = {
+export const UI_1 = {
   ' (approximate – birth time unknown)': ' (ungefähr – Geburtszeit unbekannt)',
   ' A new BaZi month begins.': ' Ein neuer BaZi-Monat beginnt.',
   ' Clash with your chart – take it easy.': ' Zusammenstoß mit deinem Horoskop – lass es ruhig angehen.',

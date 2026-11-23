@@ -5,7 +5,7 @@ import { favourableElements } from './reading.js';
 import { branchRelation } from './compat.js';
 import { starsActivatedBy } from './shensha.js';
 import { lang } from './i18n.js';
-import { MONTH_TEXT as MONTH_DE } from './i18n/de-misc.js';
+import { MISC } from './i18n/packs.js';
 
 const mod = (a, n) => ((a % n) + n) % n;
 
@@ -22,7 +22,7 @@ const MONTH_TEXT = {
   DR: 'Support and learning – mentors, courses, rest and family.',
 };
 
-if (lang === 'de') Object.assign(MONTH_TEXT, MONTH_DE);
+if (MISC?.MONTH_TEXT) Object.assign(MONTH_TEXT, MISC.MONTH_TEXT);
 
 export function rate(chart, stem, branch) {
   const { favourable } = favourableElements(chart);

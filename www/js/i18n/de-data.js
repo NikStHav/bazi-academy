@@ -1,12 +1,12 @@
 // German content for data.js (same order as the English arrays).
-export const ELEMENTS_DE = [
+export const ELEMENTS = [
   { name: 'Holz', season: 'Frühling', direction: 'Osten', traits: 'Wachstum, Güte, Planung, Flexibilität, Streben nach oben.' },
   { name: 'Feuer', season: 'Sommer', direction: 'Süden', traits: 'Wärme, Ausdruck, Leidenschaft, Sichtbarkeit, Begeisterung.' },
   { name: 'Erde', season: 'Übergänge zwischen den Jahreszeiten', direction: 'Mitte', traits: 'Stabilität, Vertrauen, Nährendes, Verlässlichkeit, Vermittlung.' },
   { name: 'Metall', season: 'Herbst', direction: 'Westen', traits: 'Struktur, Gerechtigkeit, Entschlossenheit, Verfeinerung, Disziplin.' },
   { name: 'Wasser', season: 'Winter', direction: 'Norden', traits: 'Weisheit, Anpassungsfähigkeit, Kommunikation, Tiefe, Fluss.' },
 ];
-export const STEMS_DE = [
+export const STEMS = [
   { image: 'Hoher Baum', desc: 'Yang-Holz – der große Baum. Aufrecht, prinzipientreu, eine natürliche Führungspersönlichkeit, die stetig nach oben wächst; kann stur sein und lässt sich schwer biegen.' },
   { image: 'Blumen, Ranken, Gras', desc: 'Yin-Holz – Blumen und Ranken. Anmutig, anpassungsfähig und einfallsreich; findet einen Weg um Hindernisse herum und gedeiht durch Verbindungen.' },
   { image: 'Die Sonne', desc: 'Yang-Feuer – die Sonne. Großzügig, strahlend, offen und optimistisch; scheint für alle, kann aber überwältigend oder ungeduldig sein.' },
@@ -18,7 +18,7 @@ export const STEMS_DE = [
   { image: 'Ozean, großer Fluss', desc: 'Yang-Wasser – der Ozean. Intelligent, dynamisch, abenteuerlustig und frei fließend; kann rastlos oder überwältigend sein.' },
   { image: 'Regen, Tau, Nebel', desc: 'Yin-Wasser – Regen und Nebel. Intuitiv, sanft, fantasievoll und still beharrlich; nährt auf subtile Weise.' },
 ];
-export const BRANCHES_DE = [
+export const BRANCHES = [
   { animal: 'Ratte', month: 'Dez. (Da Xue → Xiao Han)' }, { animal: 'Büffel', month: 'Jan. (Xiao Han → Li Chun)' },
   { animal: 'Tiger', month: 'Feb. (Li Chun → Jing Zhe)' }, { animal: 'Hase', month: 'März (Jing Zhe → Qing Ming)' },
   { animal: 'Drache', month: 'Apr. (Qing Ming → Li Xia)' }, { animal: 'Schlange', month: 'Mai (Li Xia → Mang Zhong)' },
@@ -26,7 +26,7 @@ export const BRANCHES_DE = [
   { animal: 'Affe', month: 'Aug. (Li Qiu → Bai Lu)' }, { animal: 'Hahn', month: 'Sep. (Bai Lu → Han Lu)' },
   { animal: 'Hund', month: 'Okt. (Han Lu → Li Dong)' }, { animal: 'Schwein', month: 'Nov. (Li Dong → Da Xue)' },
 ];
-export const TEN_GODS_DE = {
+export const TEN_GODS = {
   F: { name: 'Freund', short: 'Fr', rel: 'Gleiches Element, gleiche Polarität',
     desc: 'Gleichgestellte, Geschwister, Selbstständigkeit und Unabhängigkeit. Stärkt den Tagesmeister; zu viel davon kann Sturheit oder Konkurrenz bedeuten.' },
   RW: { name: 'Rivale', short: 'Ri', rel: 'Gleiches Element, entgegengesetzte Polarität',
@@ -48,6 +48,6 @@ export const TEN_GODS_DE = {
   DR: { name: 'Direkte Ressource', short: 'dRs', rel: 'Element, das mich hervorbringt, entgegengesetzte Polarität',
     desc: 'Unterstützung, Bildung, Mutter, Schutz und Geduld. Nährt und stärkt den Tagesmeister.' },
 };
-export const JIE_NAMES_DE = ['Li Chun – Frühlingsanfang', 'Jing Zhe – Erwachen der Insekten', 'Qing Ming – Klarheit und Helligkeit', 'Li Xia – Sommeranfang',
+export const JIE_NAMES = ['Li Chun – Frühlingsanfang', 'Jing Zhe – Erwachen der Insekten', 'Qing Ming – Klarheit und Helligkeit', 'Li Xia – Sommeranfang',
   'Mang Zhong – Ähren im Korn', 'Xiao Shu – Kleine Hitze', 'Li Qiu – Herbstanfang', 'Bai Lu – Weißer Tau', 'Han Lu – Kalter Tau',
   'Li Dong – Winteranfang', 'Da Xue – Großer Schnee', 'Xiao Han – Kleine Kälte'];

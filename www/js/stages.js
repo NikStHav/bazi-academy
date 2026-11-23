@@ -1,5 +1,6 @@
 // The twelve growth stages (长生十二宫) of a stem in a branch.
 import { lang } from './i18n.js';
+import { EXTRA } from './i18n/packs.js';
 
 const mod = (a, n) => ((a % n) + n) % n;
 // Branch of 长生 (Birth) per stem: Yang stems run forward from it, Yin stems backward.
@@ -33,7 +34,7 @@ const DE = [
   ['胎', 'Empfängnis', 'Ideen entstehen – fantasievoll und voller Pläne, die noch reifen.'],
   ['养', 'Nähren', 'Genährt werden – sanft, unterstützt und Schritt für Schritt wachsend.'],
 ];
-export const STAGES = (lang === 'de' ? DE : EN).map(([zh, name, desc], i) => ({ index: i, zh, name, desc }));
+export const STAGES = (lang === 'de' ? DE : EXTRA?.STAGES || EN).map(([zh, name, desc], i) => ({ index: i, zh, name, desc }));
 
 /** Growth stage of `stem` in `branch`. */
 export function stageOf(stem, branch) {

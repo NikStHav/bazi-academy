@@ -1,5 +1,5 @@
 // Lektionen 8–15 (Deutsch)
-export const LESSONS_DE_2 = [
+export const LESSONS_2 = [
   {
     id: 'hidden', title: 'Verborgene Stämme', zh: '藏干', level: 'Core',
     summary: 'Die Stämme, die in jedem Zweig verborgen sind.',

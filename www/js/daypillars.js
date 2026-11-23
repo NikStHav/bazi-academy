@@ -4,9 +4,9 @@ import { tenGod, cycleIndex } from './bazi.js';
 import { stageOf } from './stages.js';
 import { lang, t } from './i18n.js';
 import { DAY_PILLARS_EN } from './daypillars-en.js';
-import { DAY_PILLARS_DE } from './i18n/daypillars-de.js';
+import { DAY_PILLARS } from './i18n/packs.js';
 
-const TEXTS = lang === 'de' ? DAY_PILLARS_DE : DAY_PILLARS_EN;
+const TEXTS = DAY_PILLARS_EN.map((x, i) => DAY_PILLARS?.[i] || x);
 const mod = (a, n) => ((a % n) + n) % n;
 const KUI_GANG = [16, 28, 34, 46];   // 庚辰 壬辰 戊戌 庚戌
 const GOAT_BLADE = [42, 48, 54];     // 丙午 壬子 戊午

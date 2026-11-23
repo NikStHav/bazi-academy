@@ -1,5 +1,5 @@
 // German UI texts, part 2 (P–Z, lower case, symbols). Keys are the English source strings.
-export const DE_UI_2 = {
+export const UI_2 = {
   'Punishment': 'Strafe',
   'Punishment (full)': 'Strafe (vollständig)',
   'Punishment (partial)': 'Strafe (teilweise)',

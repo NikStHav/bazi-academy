@@ -2,7 +2,8 @@
 import { STEMS, BRANCHES } from './data.js';
 import { PILLAR_KEYS, PILLAR_LABEL } from './bazi.js';
 import { lang, t } from './i18n.js';
-import { STARS as STARS_DE } from './i18n/de-misc.js';
+import { MISC } from './i18n/packs.js';
+const STARS_L = MISC?.STARS;
 
 const mod = (a, n) => ((a % n) + n) % n;
 // Trine groups: 申子辰 (Water), 寅午戌 (Fire), 巳酉丑 (Metal), 亥卯未 (Wood) – keyed by branch % 4.
@@ -44,7 +45,7 @@ export const STARS = {
     pillar: { year: 'distance from family roots', month: 'career changes or unconventional paths', day: 'independence; relationships need extra care', hour: 'unusual plans; fewer attachments later' } },
 };
 
-if (lang === 'de') for (const k of Object.keys(STARS)) Object.assign(STARS[k], STARS_DE[k]);
+if (STARS_L) for (const k of Object.keys(STARS)) Object.assign(STARS[k], STARS_L[k]);
 
 /** Void (旬空) branches of a pillar index (0–59). */
 export const voidBranches = (index) => { const start = index - (index % 10); const b0 = start % 12; return [mod(b0 + 10, 12), mod(b0 + 11, 12)]; };
@@ -80,10 +81,15 @@ export function starsActivatedBy(chart, branch) {
 }
 
 const DE_PILLAR = { year: 'Jahres', month: 'Monats', day: 'Tages', hour: 'Stunden' };
+const ES_PILLAR = { year: 'del año', month: 'del mes', day: 'del día', hour: 'de la hora' };
 export const pillarListText = (pillars) => {
   if (lang === 'de') { // "Jahressäule", "Jahres- und Tagessäule", "Jahres-, Monats- und Tagessäule"
     const p = pillars.map((k) => DE_PILLAR[k]);
     return p.length === 1 ? `${p[0]}säule` : `${p.slice(0, -1).map((x) => x + '-').join(', ')} und ${p[p.length - 1]}säule`;
+  }
+  if (lang === 'es') { // "pilar del año", "pilares del año y del día"
+    const p = pillars.map((k) => ES_PILLAR[k]);
+    return `${p.length > 1 ? 'pilares' : 'pilar'} ${p.length > 1 ? `${p.slice(0, -1).join(', ')} y ${p[p.length - 1]}` : p[0]}`;
   }
   return t(pillars.length > 1 ? '{list} pillars' : '{list} pillar', { list: pillars.map((k) => PILLAR_LABEL[k]).join(t(' and ')) });
 };

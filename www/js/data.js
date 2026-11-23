@@ -92,11 +92,11 @@ export const JIE_TERMS = [
 
 // ---------- localisation: apply translated texts in place (before any other module reads them) ----------
 import { lang } from './i18n.js';
-import { ELEMENTS_DE, STEMS_DE, BRANCHES_DE, TEN_GODS_DE, JIE_NAMES_DE } from './i18n/de-data.js';
-if (lang === 'de') {
-  ELEMENTS.forEach((e, i) => Object.assign(e, ELEMENTS_DE[i]));
-  STEMS.forEach((s, i) => Object.assign(s, STEMS_DE[i]));
-  BRANCHES.forEach((b, i) => Object.assign(b, BRANCHES_DE[i]));
-  for (const k of Object.keys(TEN_GODS)) Object.assign(TEN_GODS[k], TEN_GODS_DE[k]);
-  JIE_TERMS.forEach((j, i) => { j.name = JIE_NAMES_DE[i]; });
+import { DATA as L } from './i18n/packs.js';
+if (L) {
+  ELEMENTS.forEach((e, i) => Object.assign(e, L.ELEMENTS[i]));
+  STEMS.forEach((s, i) => Object.assign(s, L.STEMS[i]));
+  BRANCHES.forEach((b, i) => Object.assign(b, L.BRANCHES[i]));
+  for (const k of Object.keys(TEN_GODS)) Object.assign(TEN_GODS[k], L.TEN_GODS[k]);
+  JIE_TERMS.forEach((j, i) => { if (L.JIE_NAMES[i]) j.name = L.JIE_NAMES[i]; });
 }

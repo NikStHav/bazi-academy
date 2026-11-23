@@ -7,6 +7,7 @@ import { rate } from './forecast.js';
 import { dayInfo } from './almanac.js';
 import { hoursOfDay } from './hours.js';
 import { lang } from './i18n.js';
+import { EXTRA } from './i18n/packs.js';
 
 const mod = (a, n) => ((a % n) + n) % n;
 
@@ -85,7 +86,7 @@ export function dailyReading(chart, date = new Date()) {
   const r = rate(chart, p.stem, p.branch);
   const { favourable } = favourableElements(chart);
   const score = r.score + OFFICER_SCORE[officer.rating] - (info.personalClash.length ? 0.5 : 0);
-  const base = (THEMES[lang] || THEMES.en)[god];
+  const base = (THEMES[lang] || EXTRA?.DAILY_THEMES || THEMES.en)[god];
   const theme = { ...base, do: [...base.do.slice(0, 2), firstItems(officer.good, 1)[0]], avoid: [base.avoid[0], firstItems(officer.avoid, 1)[0]] };
   // Lucky element: today's own element if it helps you, else your main favourable element.
   const luckyEl = [STEMS[p.stem].el, BRANCHES[p.branch].el].find((e) => favourable.includes(e)) ?? favourable[0];

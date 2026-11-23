@@ -2,7 +2,9 @@
 // New/full moons: J. Meeus, Astronomical Algorithms, ch. 49 (accuracy about a minute).
 import { sunLongitude, findSolarLongitude, jdFromMs, msFromJd } from './bazi.js';
 import { lang } from './i18n.js';
-import { SOLAR_TERM_NAMES, FESTIVALS } from './i18n/de-misc.js';
+import { MISC } from './i18n/packs.js';
+const SOLAR_TERM_NAMES = MISC?.SOLAR_TERM_NAMES || {};
+const FESTIVALS = MISC?.FESTIVALS || {};
 
 const DEG = Math.PI / 180;
 const DAY = 86400000;
@@ -15,7 +17,7 @@ export const SOLAR_TERMS = [
   [135, '立秋', 'Start of Autumn'], [150, '处暑', 'End of Heat'], [165, '白露', 'White Dew'], [180, '秋分', 'Autumn Equinox'],
   [195, '寒露', 'Cold Dew'], [210, '霜降', 'Frost’s Descent'], [225, '立冬', 'Start of Winter'], [240, '小雪', 'Minor Snow'],
   [255, '大雪', 'Major Snow'], [270, '冬至', 'Winter Solstice'], [285, '小寒', 'Minor Cold'], [300, '大寒', 'Major Cold'],
-].map(([lon, zh, name]) => ({ lon, zh, name: lang === 'de' ? SOLAR_TERM_NAMES[lon] : name, major: lon % 90 === 0 }));
+].map(([lon, zh, name]) => ({ lon, zh, name: SOLAR_TERM_NAMES[lon] || name, major: lon % 90 === 0 }));
 
 const NM = [[-0.40720, 0, 0, 1, 0], [0.17241, 1, 1, 0, 0], [0.01608, 0, 0, 2, 0], [0.01039, 0, 0, 0, 2], [0.00739, 1, -1, 1, 0],
   [-0.00514, 1, 1, 1, 0], [0.00208, 2, 2, 0, 0], [-0.00111, 0, 0, 1, -2], [-0.00057, 0, 0, 1, 2], [0.00056, 1, 1, 2, 0],
@@ -159,7 +161,7 @@ export function dayEvents(year, month, day) {
   }
   const terms = solarTermsBetween(start, end);
   for (const t of terms) if (TERM_FESTIVALS[t.lon]) festivals.push(TERM_FESTIVALS[t.lon]);
-  return { lunar, festivals: festivals.map(([zh, name, desc]) => (lang === 'de' && FESTIVALS[zh] ? { zh, name: FESTIVALS[zh][0], desc: FESTIVALS[zh][1] } : { zh, name, desc })), terms, moon: moonEvents(start, end) };
+  return { lunar, festivals: festivals.map(([zh, name, desc]) => (FESTIVALS[zh] ? { zh, name: FESTIVALS[zh][0], desc: FESTIVALS[zh][1] } : { zh, name, desc })), terms, moon: moonEvents(start, end) };
 }
 
 /** Moon age in days (0 = new moon) and a phase emoji for an instant. */

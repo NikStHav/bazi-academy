@@ -115,7 +115,7 @@ To test without being charged, add your Google account under *Settings → Licen
 > Save charts for family, partners and friends in groups with notes. Share a chart as a beautiful image, export lunar dates to your phone calendar, and move everything to a new phone with a backup file.
 >
 > EASY TO USE
-> A built-in guide shows how to get the most out of every feature. Adjustable text size, dark mode, English and German.
+> A built-in guide shows how to get the most out of every feature. Adjustable text size, dark mode, English, German and Spanish.
 >
 > COMPLETELY FREE
 > All 15 lessons, unlimited charts, the 60 day-pillar profiles, the detailed chart reading (core nature, favourable elements, weak spots and how to balance them, career, relationships, current luck phase), compatibility with your ideal match, the year-ahead forecast, life timeline, Chinese clock, almanac planner and lunar calendar – free, without ads or subscription.
@@ -209,7 +209,7 @@ In Play Console → *Grow users → Store presence → Main store listing* → *
 > Speichere Horoskope von Familie, Partnern und Freunden in Gruppen mit Notizen. Teile ein Horoskop als schönes Bild und übertrage alles per Backup-Datei auf ein neues Handy.
 >
 > EINFACH ZU BEDIENEN
-> Eine eingebaute Anleitung zeigt, wie du jede Funktion optimal nutzt. Einstellbare Textgröße, dunkler Modus, Deutsch und Englisch.
+> Eine eingebaute Anleitung zeigt, wie du jede Funktion optimal nutzt. Einstellbare Textgröße, dunkler Modus, Deutsch, Englisch und Spanisch.
 >
 > KOMPLETT KOSTENLOS
 > Alle 15 Lektionen, unbegrenzte Horoskope, die 60 Tagessäulen-Profile, die ausführliche Deutung (Wesenskern, günstige Elemente, Schwachstellen und ihr Ausgleich, Beruf, Beziehungen, aktuelle Glücksphase), Kompatibilität mit deinem idealen Partner, Jahresvorschau, Lebenszeitleiste, Chinesische Uhr, Almanach-Planer und Mondkalender – kostenlos, ohne Werbung und ohne Abo.
@@ -220,3 +220,75 @@ In Play Console → *Grow users → Store presence → Main store listing* → *
 > BaZi ist ein traditionelles Kultursystem. Diese App dient der Bildung und Unterhaltung und ersetzt keine professionelle Beratung.
 
 **Screenshots:** ready in `store-screenshots/de/android-phone/` (1080×1920). Upload `1-day-card` to `8-compatibility` under the German translation.
+
+## Spanish store listing (Español)
+
+In Play Console → *Main store listing* → **Manage translations → Add your own translations**, add **Spanish (Latin America) es-419**, **Spanish (Spain) es-ES** and **Spanish (United States) es-US**, and paste the same texts into all three. The texts use neutral Spanish that works in all three markets.
+
+**App name:** BaZi Academy: Cuatro Pilares
+
+**Short description** (max. 80 characters):
+> Aprende astrología china: Cuatro Pilares, Cinco Elementos y Diez Dioses
+
+**Full description:**
+> Descubre paso a paso el BaZi (八字), los Cuatro Pilares del Destino, uno de los grandes sistemas clásicos de la astrología china.
+>
+> APRENDE
+> 15 lecciones claras te llevan de los fundamentos al análisis real de una carta:
+> • El Yin y el Yang y los Cinco Elementos (Madera, Fuego, Tierra, Metal, Agua)
+> • Los 10 Tallos Celestiales y las 12 Ramas Terrestres
+> • El ciclo de los 60 Jiazi y el calendario solar (términos solares)
+> • Los tallos ocultos, el Maestro del Día y los Diez Dioses
+> • Fuerza estacional, choques y combinaciones, estrellas simbólicas (Noble Celestial, Flor de Melocotón, Caballo Viajero …), pilares de la suerte, el Dios Útil
+> Cada lección incluye diagramas interactivos y un cuestionario, y puedes practicar con rondas de preguntas infinitas.
+>
+> CALCULA
+> Una calculadora precisa de los Cuatro Pilares basada en los términos solares reales:
+> • Pilares del año, del mes, del día y de la hora
+> • Búsqueda del lugar de nacimiento: zona horaria, horario de verano histórico y hora solar verdadera, automáticamente
+> • Los Diez Dioses de cada tallo y tallo oculto
+> • Equilibrio de los Cinco Elementos y fuerza del Maestro del Día
+> • Choques, armonías, castigos y daños
+> • Pilares de la suerte de 10 años con edad de inicio
+> • Fases de crecimiento (ciclo 長生) del Maestro del Día en cada pilar
+> Toca cualquier carácter para saber lo que significa.
+>
+> TU PILAR DEL DÍA
+> Un perfil personal para cada uno de los 60 pilares del día: carácter, fortalezas, relaciones y el palacio de la pareja.
+>
+> TU CARTA DEL DÍA
+> Gira la rueda de los 60 días: se detiene en el pilar de hoy y te muestra tu día de un vistazo – estrellas, el tema del día, qué hacer y qué evitar, horas de suerte, color y dirección. Toca «¿Por qué?» para ver paso a paso el BaZi que hay detrás.
+>
+> AMOR Y COMPATIBILIDAD
+> Compara dos cartas – Maestros del Día, palacios de la pareja, animales del zodiaco y equilibrio de elementos – o comprueba rápidamente a alguien nuevo con su fecha de nacimiento. Descubre tu pareja ideal: qué Maestros del Día, animales y elementos te convienen más.
+>
+> HOY Y ALMANAQUE
+> Los pilares del día, el Oficial del Día del almanaque chino tradicional (Tong Shu) con lo que favorece y lo que conviene evitar, tus días de choque personales y un consejo diario opcional. Planifica bodas, mudanzas, contratos, lanzamientos y viajes en días buenos.
+>
+> RELOJ CHINO
+> Las 12 horas dobles (時辰) en directo: el pilar de la hora actual, las horas de suerte del día (Camino Amarillo y Negro) y lo que significa cada hora para ti.
+>
+> INFLUENCIAS Y LÍNEA DE LA VIDA
+> Mira cómo cualquier día, mes o año interactúa con tu carta, y toda tu vida de un vistazo: cada pilar de la suerte y cada año valorados, con tu fase actual resaltada.
+>
+> CALENDARIO LUNAR
+> El calendario lunar chino con los 24 términos solares – equinoccios y solsticios incluidos –, lunas nuevas y llenas con hora exacta y fiestas tradicionales como el Año Nuevo Chino, la Fiesta de los Faroles, el Bote del Dragón y el Medio Otoño. Con recordatorios y exportación a tu calendario.
+>
+> EL AÑO POR DELANTE
+> Tu pilar anual y los 12 meses: temas, mejores meses y estrellas activadas.
+>
+> CARTAS, COMPARTIR Y COPIA DE SEGURIDAD
+> Guarda cartas de familia, parejas y amigos en grupos con notas. Comparte una carta como una bonita imagen y pásalo todo a un teléfono nuevo con un archivo de copia de seguridad.
+>
+> FÁCIL DE USAR
+> Una guía integrada te muestra cómo sacar el máximo partido de cada función. Tamaño del texto ajustable, modo oscuro, español, inglés y alemán.
+>
+> COMPLETAMENTE GRATIS
+> Todas las lecciones, cartas ilimitadas, la lectura detallada, la compatibilidad, la previsión del año, la línea de la vida, el almanaque y el calendario lunar – gratis, sin anuncios ni suscripción.
+>
+> PRIVADA POR DISEÑO
+> Funciona completamente sin conexión. Sin cuenta, sin anuncios, sin seguimiento. Tus datos de nacimiento nunca salen de tu teléfono.
+>
+> El BaZi es un sistema cultural tradicional. Esta app tiene fines educativos y de entretenimiento y no sustituye el asesoramiento profesional.
+
+**Screenshots:** ready in `store-screenshots/es/android-phone/` (1080×1920). Upload `1-day-card` to `8-compatibility`.

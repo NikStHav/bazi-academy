@@ -2,7 +2,7 @@
 import { BRANCHES } from './data.js';
 import { computeChart } from './bazi.js';
 import { lang, t } from './i18n.js';
-import * as DE from './i18n/de-misc.js';
+import { MISC as DE } from './i18n/packs.js';
 
 const mod = (a, n) => ((a % n) + n) % n;
 
@@ -45,10 +45,10 @@ export const ACTIVITIES = [
   { key: 'renovation', name: 'Renovation or building', icon: '🔨', officers: [3, 5, 8] },
 ];
 
-if (lang === 'de') {
+if (DE) {
   OFFICERS.forEach((o, i) => Object.assign(o, DE.OFFICERS[i]));
   Object.assign(RATING_LABEL, DE.RATING_LABEL);
-  ACTIVITIES.forEach((a, i) => { a.name = DE.ACTIVITIES[i]; });
+  ACTIVITIES.forEach((a, i) => { a.name = DE.ACTIVITIES?.[i] || a.name; });
 }
 
 /** Almanac info for a local calendar date. `mine` (optional) is the user's chart. */

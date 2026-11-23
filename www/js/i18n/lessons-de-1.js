@@ -1,5 +1,5 @@
 // Lektionen 1–7 (Deutsch)
-export const LESSONS_DE_1 = [
+export const LESSONS_1 = [
   {
     id: 'intro', title: 'Was ist BaZi?', zh: '八字', level: 'Basics',
     summary: 'Die „Acht Zeichen“ – eine Landkarte der Energien im Moment der Geburt.',

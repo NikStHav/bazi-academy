@@ -1,5 +1,5 @@
 // Tagessäulen-Profile (日柱), Index = Position im 60er-Zyklus (0 = 甲子). [Bild, Charakter]
-export const DAY_PILLARS_DE = [
+export const DAY_PILLARS = [
   ['Ein großer Baum am Winterfluss', 'Intelligent, idealistisch und prinzipientreu, mit einem tiefen Wissensschatz. Vom Wasser genährt, wächst dieser Baum hoch, sehnt sich aber nach Wärme – Ermutigung und Anerkennung bringen das Beste in dir hervor.'],
   ['Eine Blume im gefrorenen Feld', 'Geduldig, widerstandsfähig und still entschlossen. Du blühst, wo andere aufgeben, hältst in schweren Zeiten durch und schätzt Sicherheit und Treue.'],
   ['Sonnenaufgang über dem Bergwald', 'Energiegeladen, großzügig und visionär – eine natürliche Führungspersönlichkeit, die andere begeistert. Mutig und optimistisch, manchmal ungeduldig mit langsameren Menschen.'],

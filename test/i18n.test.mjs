@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { LESSONS_DE_1 } from '../www/js/i18n/lessons-de-1.js';
-import { LESSONS_DE_2 } from '../www/js/i18n/lessons-de-2.js';
+import { LESSONS_1 as LESSONS_DE_1 } from '../www/js/i18n/lessons-de-1.js';
+import { LESSONS_2 as LESSONS_DE_2 } from '../www/js/i18n/lessons-de-2.js';
 import { LESSONS } from '../www/js/lessons.js';
 
 test('every German lesson matches its English original', () => {

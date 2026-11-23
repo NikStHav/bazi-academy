@@ -2,6 +2,7 @@
 import { STEMS, BRANCHES } from './data.js';
 import { tenGod } from './bazi.js';
 import { lang } from './i18n.js';
+import { EXTRA } from './i18n/packs.js';
 
 const mod = (a, n) => ((a % n) + n) % n;
 
@@ -16,7 +17,8 @@ export const DEITIES = [
 ];
 const DE_NAMES = ['Grüner Drache', 'Lichte Halle', 'Himmlische Strafe', 'Zinnoberroter Vogel', 'Goldene Truhe', 'Himmlische Tugend',
   'Weißer Tiger', 'Jadehalle', 'Himmlisches Gefängnis', 'Schwarze Schildkröte', 'Hüter des Lebens', 'Geringelte Schlange'];
-if (lang === 'de') DEITIES.forEach((d, i) => { d.name = DE_NAMES[i]; });
+const NAMES_L = lang === 'de' ? DE_NAMES : EXTRA?.DEITY_NAMES;
+if (NAMES_L) DEITIES.forEach((d, i) => { d.name = NAMES_L[i] || d.name; });
 
 // Hour branch of the Green Dragon for each day branch (寅申需加子，卯酉却在寅，辰戌龙位上，巳亥午中寻，子午临申地，丑未戌上行).
 const DRAGON = { 0: 8, 6: 8, 1: 10, 7: 10, 2: 0, 8: 0, 3: 2, 9: 2, 4: 4, 10: 4, 5: 6, 11: 6 };

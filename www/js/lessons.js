@@ -291,7 +291,6 @@ const LESSONS_EN = [
 
 // ---------- localisation ----------
 import { lang } from './i18n.js';
-import { LESSONS_DE_1 } from './i18n/lessons-de-1.js';
-import { LESSONS_DE_2 } from './i18n/lessons-de-2.js';
-const DE = Object.fromEntries([...LESSONS_DE_1, ...LESSONS_DE_2].map((l) => [l.id, l]));
-export const LESSONS = lang === 'de' ? LESSONS_EN.map((l) => DE[l.id] || l) : LESSONS_EN;
+import { LESSONS as PACK } from './i18n/packs.js';
+const TR = PACK ? Object.fromEntries(PACK.map((l) => [l.id, l])) : {};
+export const LESSONS = LESSONS_EN.map((l) => TR[l.id] || l);

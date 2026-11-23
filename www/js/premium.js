@@ -8,7 +8,7 @@ export const FREE_APP = true;
 export const PRODUCT_ID = 'bazi_premium';
 export const FREE_LESSONS = 7;          // lessons 1–7 are free
 export const FREE_CALCULATIONS = 5;     // new charts that can be calculated without Premium
-export const FALLBACK_PRICE = lang === 'de' ? '2,99 €' : '€2.99';
+export const FALLBACK_PRICE = lang === 'en' ? '€2.99' : '2,99 €';
 
 const KEY = 'bazi.premium';
 const CALC_KEY = 'bazi.calculations';

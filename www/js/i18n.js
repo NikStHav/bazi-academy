@@ -1,9 +1,10 @@
 // Minimal i18n: English source strings are the keys; other languages map them to translations.
-import { DE_UI } from './i18n/de-ui.js';
+import { UI as DE_UI } from './i18n/de-ui.js';
+import { UI as ES_UI } from './i18n/es-ui.js';
 
 const KEY = 'bazi.lang';
-export const LANGS = { en: 'English', de: 'Deutsch' };
-const DICTS = { de: DE_UI };
+export const LANGS = { en: 'English', de: 'Deutsch', es: 'Español' };
+const DICTS = { de: DE_UI, es: ES_UI };
 
 function stored() { try { const v = globalThis.localStorage?.getItem(KEY); return v && LANGS[v] ? v : null; } catch { return null; } }
 function detect() {
@@ -11,13 +12,14 @@ function detect() {
   if (forced && LANGS[forced]) return forced;
   const s = stored(); if (s) return s;
   const nav = String(globalThis.navigator?.languages?.[0] || globalThis.navigator?.language || 'en').toLowerCase();
-  return nav.startsWith('de') ? 'de' : 'en';
+  const code = nav.slice(0, 2);
+  return LANGS[code] ? code : 'en';
 }
 
 export const lang = detect();
 const navLang = String(globalThis.navigator?.language || '');
 /** Locale for dates and numbers: the device locale if it matches the app language, else a default for the language. */
-export const LOCALE = navLang.toLowerCase().startsWith(lang) ? navLang : { de: 'de-DE', en: 'en-GB' }[lang];
+export const LOCALE = navLang.toLowerCase().startsWith(lang) ? navLang : { de: 'de-DE', en: 'en-GB', es: 'es-ES' }[lang];
 export const langSetting = () => stored() || 'auto';
 export function setLang(v) {
   try { if (v === 'auto') globalThis.localStorage?.removeItem(KEY); else globalThis.localStorage?.setItem(KEY, v); } catch { /* ignore */ }

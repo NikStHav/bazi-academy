@@ -28,7 +28,7 @@ const list = [...keys].sort();
 if (process.argv[2] === '--missing') {
   const lang = process.argv[3] || 'de';
   import(path.join(dir, 'i18n', `${lang}-ui.js`)).then((m) => {
-    const dict = m.DE_UI;
+    const dict = m.UI;
     const miss = list.filter((k) => !(k in dict));
     const unused = Object.keys(dict).filter((k) => !keys.has(k));
     console.log(JSON.stringify({ total: list.length, missing: miss, unused }, null, 1));

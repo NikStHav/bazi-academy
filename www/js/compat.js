@@ -3,7 +3,7 @@ import { STEMS, BRANCHES, ELEMENTS, TEN_GODS } from './data.js';
 import { tenGod } from './bazi.js';
 import { favourableElements } from './reading.js';
 import { t, lang } from './i18n.js';
-import { ROLE as ROLE_DE } from './i18n/de-misc.js';
+import { MISC } from './i18n/packs.js';
 
 const mod = (a, n) => ((a % n) + n) % n;
 
@@ -15,7 +15,7 @@ const ROLE = {
   IR: 'an unconventional teacher and thought partner', DR: 'a caring supporter who makes you feel safe',
 };
 
-if (lang === 'de') Object.assign(ROLE, ROLE_DE);
+if (MISC?.ROLE) Object.assign(ROLE, MISC.ROLE);
 
 /** Relation between two branches → { key, label, score (0–1), note } */
 export function branchRelation(a, b) {

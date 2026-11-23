@@ -28,7 +28,9 @@ An offline app for Android and iPhone for learning Chinese astrology according t
 - **Impressum:** publisher details in `www/js/publisher.js` (About screen) and `docs/impressum.html`.
 - **Today**: today's pillars, the next solar term, and how today relates to your own Day Master.
 - Fully offline, no tracking, light and dark mode.
-- **Languages:** English and German, following the phone's language (switchable under About → Language). UI texts use English source strings as keys (`t('…')` in `www/js/i18n.js`, German in `www/js/i18n/`); `node tools/i18n-keys.cjs --missing de` lists untranslated texts, and the tests fail if one is missing.
+- **Languages:** English, German and Spanish (neutral Spanish, *tú*), following the phone's language (switchable with the language button in the header). UI texts use English source strings as keys (`t('…')` in `www/js/i18n.js`, translations in `www/js/i18n/<lang>-ui-*.js`); `node tools/i18n-keys.cjs --missing es` lists untranslated texts, and the tests fail if one is missing.
+  - Content packs per language live in `www/js/i18n/` (`<lang>-data`, `<lang>-misc`, `<lang>-reading`, `lessons-<lang>-1/2`, `daypillars-<lang>`, `es-extra` for guide, stages, hour deities and day-card themes) and are selected in `www/js/i18n/packs.js`.
+  - To add a language: copy the Spanish files, translate them, register them in `packs.js` and `LANGS`/`DICTS` in `i18n.js`, and add a test like `test/i18n-es.test.mjs`.
 
 ## Tech
 

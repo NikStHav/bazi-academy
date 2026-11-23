@@ -660,11 +660,13 @@ const routes = {
     }
     const phoneLang = String(navigator.languages?.[0] || navigator.language || 'en').toLowerCase();
     if (step === 'lang' || (!step && langSetting() === 'auto' && !phoneLang.startsWith('en'))) {
-      view.innerHTML = `<div class="card hero"><div class="big">八字</div><h2 style="margin:8px 0 4px">Sprache wählen</h2>
-          <p class="muted" style="margin:0">Choose your language</p></div>
+      const HEAD = { en: 'Choose your language', de: 'Sprache wählen', es: 'Elige tu idioma' };
+      const NOTE = { en: 'You can change this anytime with the language button at the top right.', de: 'Du kannst das jederzeit mit dem Sprachknopf oben rechts ändern.', es: 'Puedes cambiarlo cuando quieras con el botón de idioma de arriba a la derecha.' };
+      view.innerHTML = `<div class="card hero"><div class="big">八字</div><h2 style="margin:8px 0 4px">${HEAD[lang] || HEAD.en}</h2>
+          <p class="muted" style="margin:0">${Object.entries(HEAD).filter(([k]) => k !== lang).map(([, v]) => v).join(' · ')}</p></div>
         <div class="card lang-pick">${Object.entries(LANGS).sort(([a], [b]) => (b === lang) - (a === lang))
           .map(([k, v]) => `<button class="btn ${k === lang ? '' : 'secondary'} block" data-lang="${k}">${v}</button>`).join('')}
-          <p class="small muted" style="text-align:center;margin-bottom:0">Du kannst das jederzeit unter „Über die App“ ändern. · You can change this anytime in About.</p></div>`;
+          <p class="small muted" style="text-align:center;margin-bottom:0">${NOTE[lang] || NOTE.en}</p></div>`;
       view.querySelectorAll('[data-lang]').forEach((b) => b.addEventListener('click', () => {
         const v = b.dataset.lang; setLang(v);
         if (v === lang) go('#/welcome/start', true); else { location.replace('#/welcome/start'); location.reload(); }
@@ -1359,7 +1361,7 @@ function router() {
 }
 window.addEventListener('hashchange', router);
 function webFooter() {
-  return `<p class="web-foot small muted"><a href="../impressum.html">${t('Legal notice (Impressum)')}</a> · <a href="../${lang === 'de' ? 'datenschutz' : 'privacy'}.html">${t('Privacy')}</a> · <a href="#/premium">${t('Get the app')}</a></p>`;
+  return `<p class="web-foot small muted"><a href="../impressum.html">${t('Legal notice (Impressum)')}</a> · <a href="../${{ de: 'datenschutz', es: 'privacidad' }[lang] || 'privacy'}.html">${t('Privacy')}</a> · <a href="#/premium">${t('Get the app')}</a></p>`;
 }
 if (WEB_BUILD && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 function applyTextSize() { document.documentElement.style.setProperty('--text-zoom', String(state.settings.textSize || 1)); }

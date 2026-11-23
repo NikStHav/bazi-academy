@@ -1,5 +1,5 @@
 // German UI texts, part 3 (influences, Chinese clock, life timeline, chart management).
-export const DE_UI_3 = {
+export const UI_3 = {
   'A traditional reading of timing for reflection – not a prediction.': 'Eine traditionelle Deutung des Zeitpunkts zum Nachdenken – keine Vorhersage.',
   'All 12 hours': 'Alle 12 Stunden',
   'All groups': 'Alle Gruppen',

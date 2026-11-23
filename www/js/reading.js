@@ -3,7 +3,7 @@ import { STEMS, BRANCHES, ELEMENTS, TEN_GODS } from './data.js';
 import { tenGod, pillarFromIndex } from './bazi.js';
 import { findStars, pillarListText } from './shensha.js';
 import { t, lang } from './i18n.js';
-import * as DE from './i18n/de-reading.js';
+import { READING as DE } from './i18n/packs.js';
 
 const mod = (a, n) => ((a % n) + n) % n;
 
@@ -123,12 +123,12 @@ const GROUPS = [
     none: 'No Resource stars: you learn by doing and are used to fending for yourself. Mentors and rest are worth seeking out.' },
 ];
 
-if (lang === 'de') {
-  ELEMENT_ADVICE.splice(0, 5, ...DE.ELEMENT_ADVICE);
-  Object.assign(GOD_TEXT, DE.GOD_TEXT);
-  GROUPS.forEach((g, i) => Object.assign(g, DE.GROUPS[i]));
-  LACK.splice(0, 5, ...DE.LACK);
-  EXCESS.splice(0, 5, ...DE.EXCESS);
+if (DE) {
+  if (DE.ELEMENT_ADVICE?.length === 5) ELEMENT_ADVICE.splice(0, 5, ...DE.ELEMENT_ADVICE);
+  for (const k of Object.keys(DE.GOD_TEXT || {})) Object.assign(GOD_TEXT[k], DE.GOD_TEXT[k]);
+  GROUPS.forEach((g, i) => Object.assign(g, DE.GROUPS?.[i]));
+  if (DE.LACK?.length === 5) LACK.splice(0, 5, ...DE.LACK);
+  if (DE.EXCESS?.length === 5) EXCESS.splice(0, 5, ...DE.EXCESS);
   Object.assign(PILLAR_AREA, DE.PILLAR_AREA);
 }
 

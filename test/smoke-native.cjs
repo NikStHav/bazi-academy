@@ -19,7 +19,7 @@ const server = http.createServer((req, res) => {
   const base = `http://localhost:${server.address().port}/index.html`;
   const browser = await chromium.launch();
   let failed = false;
-  for (const [platform, uiLang] of [['android', 'en'], ['ios', 'en'], ['android', 'de']]) {
+  for (const [platform, uiLang] of [['android', 'en'], ['ios', 'en'], ['android', 'de'], ['ios', 'es']]) {
     const ctx = await browser.newContext({ ...devices[platform === 'ios' ? 'iPhone 15' : 'Pixel 7'] });
     await ctx.addInitScript(([pf, ul]) => {
       localStorage.setItem('bazi.lang', ul);

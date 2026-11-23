@@ -122,3 +122,19 @@ App Store Connect → your app → *App Information* → **Localizable Informati
 > Die Vier Säulen des Schicksals Schritt für Schritt verstehen: 15 Lektionen, genauer Rechner, 60 Tagessäulen-Profile, Mondkalender und Quizze. Kostenlos und privat.
 
 **Description:** use the German full description from `PLAY_STORE.md`. Screenshots: `store-screenshots/de/ios-6.9in/`.
+
+## Spanish localization (Español)
+
+App Store Connect → your app → *App Information* → **Localizable Information** → add **Spanish (Mexico)** and **Spanish (Spain)**. Use the same texts for both; they are written in neutral Spanish. Mexico's Spanish is also shown to Spanish-speaking users in the US.
+
+| Field | Text |
+|---|---|
+| Name (≤30) | BaZi Academy: Cuatro Pilares |
+| Subtitle (≤30) | Aprende astrología china |
+| Keywords (≤100) | `bazi,cuatro pilares,astrología china,cinco elementos,diez dioses,horóscopo chino,calendario lunar` |
+| Privacy Policy URL | `https://baziacademy.app/privacidad.html` |
+
+**Promotional text:**
+> Entiende paso a paso los Cuatro Pilares del Destino: 15 lecciones, calculadora precisa, 60 perfiles de pilares del día, calendario lunar y cuestionarios. Gratis.
+
+**Description:** use the Spanish full description from `PLAY_STORE.md`. Screenshots: `store-screenshots/es/ios-6.9in/`.
