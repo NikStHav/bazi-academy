@@ -109,5 +109,6 @@ The same app also runs in the browser as a free "shop window" for the store apps
   the year forecast and the almanac planner show "available in the app" cards; there are no notifications.
 - A generated service worker (`app/sw.js`) makes it work offline and installable ("Add to home screen").
 - Store links: fill in `www/js/store-links.js` once the apps are live (until then the cards say "coming soon").
+- Before publishing: `node tools/check-release.cjs` must pass (Impressum address and contact email set).
 - Publish: Settings → Pages → Source **GitHub Actions**, then run the workflow *BaZi Academy (Website)*.
   The site is at `https://baziacademy.app/` (custom domain, set under Settings → Pages → Custom domain) and the web app at `https://baziacademy.app/app/`.

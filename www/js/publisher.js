@@ -1,7 +1,7 @@
 // Publisher details for the Impressum (legal notice, required in Germany) – keep in sync with docs/impressum.html.
 export const PUBLISHER = {
   company: 'NSH Holding GmbH',
-  street: 'Ottilienstraße 17',
+  street: 'ADDRESS PENDING', // TODO before release: new business address (c/o) – also in docs/impressum.html
   city: '61348 Bad Homburg v. d. Höhe',
   country: 'Deutschland / Germany',
   director: 'Nikolaus Stangenberg-Haverkamp',

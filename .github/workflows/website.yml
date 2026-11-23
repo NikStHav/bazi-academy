@@ -29,6 +29,8 @@ jobs:
       - run: npm ci
       - name: Unit tests
         run: npm test
+      - name: Release check (Impressum address and email)
+        run: node tools/check-release.cjs
       - name: Build website
         run: node tools/build-web.cjs dist/site ${{ github.run_number }}
       - uses: actions/configure-pages@v5
