@@ -13,7 +13,8 @@
     "build:apk": "npx cap sync android && cd android && ./gradlew assembleDebug",
     "build:ios-sim": "npx cap sync ios && xcodebuild -project ios/App/App.xcodeproj -scheme App -sdk iphonesimulator -configuration Debug CODE_SIGNING_ALLOWED=NO build",
     "smoke": "node test/smoke-native.cjs",
-    "vendor": "cp node_modules/@capacitor/core/dist/capacitor.js www/js/vendor/capacitor.js"
+    "vendor": "cp node_modules/@capacitor/core/dist/capacitor.js www/js/vendor/capacitor.js",
+    "build:web": "node tools/build-web.cjs dist/site"
   },
   "dependencies": {
     "@capacitor/android": "^8.6.0",

@@ -325,3 +325,5 @@ th, td { overflow-wrap: anywhere; }
 .dc-note { margin-bottom: 0; }
 .dc-lucky .nw { white-space: nowrap; }
 .lang-pick .btn + .btn { margin-top: 10px; }
+.store-btns { display: grid; gap: 10px; }
+.web-foot { text-align: center; margin: 18px 0 8px; }

@@ -69,3 +69,18 @@ test('store builds never ship with the test unlock', () => {
   const src = readFileSync(new URL('../www/js/build-flags.js', import.meta.url), 'utf8');
   assert.match(src, /export const TEST_BUILD = false;/);
 });
+
+test('the repository keeps WEB_BUILD off; the website build switches it on', async () => {
+  const src = readFileSync(new URL('../www/js/build-flags.js', import.meta.url), 'utf8');
+  assert.match(src, /export const WEB_BUILD = false;/);
+  const { execFileSync } = await import('node:child_process');
+  const { mkdtempSync, existsSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const { join } = await import('node:path');
+  const out = join(mkdtempSync(join(tmpdir(), 'bazi-web-')), 'site');
+  execFileSync('node', [new URL('../tools/build-web.cjs', import.meta.url).pathname, out, 'test']);
+  assert.match(readFileSync(join(out, 'app/js/build-flags.js'), 'utf8'), /WEB_BUILD = true;/);
+  const sw = readFileSync(join(out, 'app/sw.js'), 'utf8');
+  for (const f of ['index.html', 'js/app.js', 'js/daily.js', 'css/app.css', 'manifest.webmanifest']) assert.ok(sw.includes(`"${f}"`), f);
+  for (const f of ['impressum.html', 'datenschutz.html', 'privacy.html', 'app/index.html']) assert.ok(existsSync(join(out, f)), f);
+});

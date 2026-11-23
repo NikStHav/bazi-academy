@@ -134,7 +134,7 @@ To test without being charged, add your Google account under *Settings → Licen
 
 | Item | Answer |
 |---|---|
-| Privacy policy URL | `https://<your-github-name>.github.io/<repo-name>/privacy.html` (German: `datenschutz.html`). Enable GitHub Pages (Settings → Pages → *Deploy from a branch* → `main` / `/docs`). Put your contact email into `docs/privacy.html` first. The repository must be **public** for free GitHub Pages; otherwise host the file anywhere else. |
+| Privacy policy URL | `https://<your-github-name>.github.io/<repo-name>/privacy.html` (German: `datenschutz.html`). Enable GitHub Pages (Settings → Pages → Source **GitHub Actions**, then run the workflow *BaZi Academy (Website)*). Put your contact email into `docs/privacy.html` first. The repository must be **public** for free GitHub Pages; otherwise host the file anywhere else. |
 | Ads | No ads |
 | In-app purchases | No |
 | App access | All functionality available without login |

@@ -99,3 +99,16 @@ See **[APP_STORE.md](APP_STORE.md)** for publishing on the Apple App Store.
 The GitHub Actions workflow `.github/workflows/android.yml` runs the tests, builds a debug APK on every push, and builds a signed `.aab` once the signing secrets are configured. `.github/workflows/ios.yml` builds the app for the iOS simulator on every push and uploads a signed build to TestFlight once the App Store Connect secrets are configured.
 
 See **[PLAY_STORE.md](PLAY_STORE.md)** for publishing on Google Play.
+
+## Website (web version)
+
+The same app also runs in the browser as a free "shop window" for the store apps:
+
+- `npm run build:web` builds `dist/site/`: the pages from `docs/` at the root and the web app under `app/`.
+- In the web build `WEB_BUILD = true`: lessons 8–15, the detailed reading, the full compatibility analysis,
+  the year forecast and the almanac planner show "available in the app" cards; there are no notifications.
+- A generated service worker (`app/sw.js`) makes it work offline and installable ("Add to home screen").
+- Store links: fill in `www/js/store-links.js` once the apps are live (until then the cards say "coming soon").
+- Publish: Settings → Pages → Source **GitHub Actions**, then run the workflow *BaZi Academy (Website)*.
+  The site is then at `https://<user>.github.io/bazi-academy/` and the app at `/app/`.
+  For your own domain, add it under Settings → Pages → Custom domain.

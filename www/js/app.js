@@ -26,6 +26,8 @@ import { MONTH_TEXT } from './forecast.js';
 import { dayPillarProfile } from './daypillars.js';
 import { stageOf } from './stages.js';
 import { GUIDE } from './guide.js';
+import { STORE_LINKS } from './store-links.js';
+import { WEB_BUILD } from './build-flags.js';
 import { GOD_TEXT, favourableElements } from './reading.js';
 import { dailyReading, sectorElement } from './daily.js';
 
@@ -361,7 +363,7 @@ const routes = {
         <div class="progress"><i style="width:${(done / LESSONS.length) * 100}%"></i></div>
         ${next ? `<a class="btn" style="margin-top:14px;background:var(--gold);color:#1b1410" href="#/lesson/${next.id}">${done ? t('Continue') : t('Start')}: ${next.title}</a>` : ''}</div>
       <a class="card premium-banner" href="#/guide"><span class="pb-icon">🧭</span><span><b>${t('How to use the app')}</b> · ${t('get the most out of BaZi Academy')}</span><span class="pb-go">›</span></a>
-      ${premium.isPremium() ? '' : `<a class="card premium-banner" href="#/premium"><span class="pb-icon">✦</span><span><b>${t("Premium")}</b> · ${t('unlock lessons {a}–{b}, unlimited charts and detailed readings', { a: premium.FREE_LESSONS + 1, b: LESSONS.length })}</span><span class="pb-go">›</span></a>`}
+      ${premium.isPremium() ? '' : premium.WEB ? `<a class="card premium-banner" href="#/premium"><span class="pb-icon">📱</span><span><b>${t('Get the app')}</b> · ${t('lessons {a}–{b}, unlimited charts and detailed readings', { a: premium.FREE_LESSONS + 1, b: LESSONS.length })}</span><span class="pb-go">›</span></a>` : `<a class="card premium-banner" href="#/premium"><span class="pb-icon">✦</span><span><b>${t("Premium")}</b> · ${t('unlock lessons {a}–{b}, unlimited charts and detailed readings', { a: premium.FREE_LESSONS + 1, b: LESSONS.length })}</span><span class="pb-go">›</span></a>`}
       <div class="list">${LESSONS.map((l, i) => `<a class="card lesson-item ${state.done[l.id] ? 'done' : ''} ${premium.lessonIsLocked(i) ? 'locked' : ''}" href="#/lesson/${l.id}">
         <span class="badge">${premium.lessonIsLocked(i) ? '🔒' : state.done[l.id] ? '✓' : l.zh.slice(0, 2)}</span>
         <span><span class="lvl">${i + 1} · ${t(l.level)}${i >= premium.FREE_LESSONS && !premium.FREE_APP ? t(' · Premium') : ''}</span><div class="t">${l.title} <span class="muted" style="font-family:var(--serif);font-weight:400">${l.zh}</span></div><div class="s">${l.summary}</div></span></a>`).join('')}</div>
@@ -375,9 +377,9 @@ const routes = {
     setTitle(l.title, true);
     const next = LESSONS[idx + 1];
     if (premium.lessonIsLocked(idx)) {
-      view.innerHTML = `<div class="lvl small" style="color:var(--gold)">${t('LESSON {n}', { n: idx + 1 })} · ${t(l.level).toUpperCase()} · PREMIUM</div>
+      view.innerHTML = `<div class="lvl small" style="color:var(--gold)">${t('LESSON {n}', { n: idx + 1 })} · ${t(l.level).toUpperCase()} · ${premium.WEB ? t('In the app').toUpperCase() : 'PREMIUM'}</div>
         <h2>${l.title} <span style="font-family:var(--serif);color:var(--accent)">${l.zh}</span></h2>
-        <p>${l.summary}</p>${paywallCard(t('This lesson is part of Premium.'))}`;
+        <p>${l.summary}</p>${paywallCard(premium.WEB ? t('This lesson is in the app.') : t('This lesson is part of Premium.'))}`;
       bindPaywall();
       return;
     }
@@ -415,7 +417,7 @@ const routes = {
       <form class="card" id="chart-form" autocomplete="off">
         <h2 style="margin-top:0">${t("Calculate a chart")}</h2>
         ${premium.isPremium() ? '' : `<p class="small ${premium.calculationsLeft() ? 'muted' : ''}" id="calc-left">${premium.calculationsLeft()
-          ? `${t('{left} of {n} free calculations left', { left: premium.calculationsLeft(), n: premium.FREE_CALCULATIONS })} · <a href="#/premium">${t("Unlimited with Premium")}</a>`
+          ? `${t('{left} of {n} free calculations left', { left: premium.calculationsLeft(), n: premium.FREE_CALCULATIONS })} · <a href="#/premium">${premium.WEB ? t('Unlimited in the app') : t("Unlimited with Premium")}</a>`
           : `${t('You have used your {n} free calculations. Your saved charts stay available.', { n: premium.FREE_CALCULATIONS })} <a href="#/premium">${t("Get unlimited charts")}</a>`}</p>`}
         ${birthFieldsHtml()}
         <label class="check" style="margin-top:12px"><input type="checkbox" id="f-mine" ${state.charts.some((c) => c.mine) ? '' : 'checked'}> ${t("This is my own chart")}</label>
@@ -830,6 +832,7 @@ const routes = {
   },
 
   premium() {
+    if (premium.WEB) { appPage(); return; }
     if (premium.FREE_APP) { go('#/learn', true); return; }
     setTitle(t('Premium'), true);
     const has = premium.isPremium();
@@ -870,7 +873,8 @@ const routes = {
       <div class="seg" id="ts-sel">${[['1', t('Normal')], ['1.15', t('Large')], ['1.3', t('Extra large')]].map(([v, n]) => `<button type="button" data-ts="${v}" class="${String(state.settings.textSize || 1) === v ? 'on' : ''}">${n}</button>`).join('')}</div>
       <h3>${t('Language')}</h3>
       <select id="lang-sel"><option value="auto" ${langSetting() === 'auto' ? 'selected' : ''}>${t('Automatic (phone language)')}</option>${Object.entries(LANGS).map(([k, v]) => `<option value="${k}" ${langSetting() === k ? 'selected' : ''}>${v}</option>`).join('')}</select>
-      ${premium.FREE_APP ? '' : `<h3>${t("Premium")}</h3>
+      ${premium.WEB ? `<h3>${t('Get the app')}</h3><p class="small">${t('The app adds all lessons, unlimited charts, detailed readings, reminders and works offline.')}</p>${storeButtons()}` : ''}
+      ${premium.FREE_APP || premium.WEB ? '' : `<h3>${t("Premium")}</h3>
       ${premium.isTestBuild ? `<p class="tip">${t('Test build {b}: Premium is unlocked for testing. Store versions use the real purchase.', { b: BUILD })}</p>` : ''}
       <p class="small">${premium.isPremium() ? t('✦ Premium is active – thank you for supporting the app!') : `${t('Not purchased.')} <a href="#/premium">${t("See Premium")}</a>`}</p>
       <button class="btn secondary block" id="restore" style="margin-bottom:10px">${t("Restore purchase")}</button>`}
@@ -1228,7 +1232,32 @@ function bindNotifyCard() {
 }
 
 // ---------- premium helpers ----------
+function storeButtons() {
+  const b = [['ios', ' App Store'], ['android', '▶ Google Play']].filter(([k]) => STORE_LINKS[k]);
+  if (!b.length) return `<p class="tip" style="text-align:center">${t('Coming soon to the App Store and Google Play.')}</p>`;
+  return `<div class="store-btns">${b.map(([k, n]) => `<a class="btn block" href="${STORE_LINKS[k]}" target="_blank" rel="noopener">${n}</a>`).join('')}</div>`;
+}
+function appCard(reason) {
+  return `<div class="card paywall"><div class="pw-icon">📱</div><h3>${reason}</h3>
+    <p class="small">${t('Available in the BaZi Academy app for iPhone and Android: all lessons, unlimited charts, detailed readings, compatibility and the almanac planner.')}</p>
+    ${storeButtons()}<a class="small" href="#/premium" style="display:block;text-align:center;margin-top:10px">${t("What’s included?")}</a></div>`;
+}
+function appPage() {
+  setTitle(t('Get the app'), true);
+  view.innerHTML = `<div class="card hero"><div class="big">📱</div><h2 style="margin:8px 0 4px">${t('BaZi Academy for iPhone and Android')}</h2>
+      <p>${t('The website shows the basics. The app has everything – and works offline.')}</p></div>
+    <div class="card"><ul class="benefits">
+      <li><b>${t('All {n} lessons', { n: LESSONS.length })}</b><span>${t("Hidden Stems, Day Master, Ten Gods, strength, interactions, luck pillars and the useful god")}</span></li>
+      <li><b>${t("Unlimited chart calculations")}</b><span>${t("Charts for family, friends and partners – save as many as you like")}</span></li>
+      <li><b>${t("Detailed chart reading")}</b><span>${t("Core nature, favourable elements, weak spots and how to balance them, career, relationships and your current luck phase")}</span></li>
+      <li><b>${t("Year-ahead forecast")}</b><span>${t("Your annual pillar and all 12 months: themes, best months, activated stars")}</span></li>
+      <li><b>${t("Love & compatibility")}</b><span>${t("Your ideal match, a quick check for someone new, and the full analysis of two charts")}</span></li>
+      <li><b>${t("Almanac planner")}</b><span>${t("Find good days for weddings, moving, contracts, launches, travel and renovation – personalised to your chart")}</span></li>
+      <li><b>${t('Reminders')}</b><span>${t('Daily tip, full moons, solar terms and festivals as notifications')}</span></li></ul>
+      ${storeButtons()}</div>`;
+}
 function paywallCard(reason) {
+  if (premium.WEB) return appCard(reason);
   return `<div class="card paywall"><div class="pw-icon">✦</div><h3>${reason}</h3>
     <p class="small">${t("Unlock all lessons, unlimited charts, detailed readings, compatibility and the almanac planner with a one-time purchase.")}</p>
     <button class="btn block buy-btn">${t('Unlock Premium – {price}', { price: premium.getPrice() })}</button>
@@ -1303,9 +1332,14 @@ function router() {
   document.body.classList.toggle('no-tabs', name === 'welcome');
   document.querySelectorAll('.tabs a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));
   (routes[name] || routes.today)(arg ? decodeURIComponent(arg) : undefined);
+  if (WEB_BUILD && name !== 'welcome') view.insertAdjacentHTML('beforeend', webFooter());
   view.scrollTop = 0;
 }
 window.addEventListener('hashchange', router);
+function webFooter() {
+  return `<p class="web-foot small muted"><a href="../impressum.html">${t('Legal notice (Impressum)')}</a> · <a href="../${lang === 'de' ? 'datenschutz' : 'privacy'}.html">${t('Privacy')}</a> · <a href="#/premium">${t('Get the app')}</a></p>`;
+}
+if (WEB_BUILD && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 function applyTextSize() { document.documentElement.style.setProperty('--text-zoom', String(state.settings.textSize || 1)); }
 applyTextSize();
 document.documentElement.lang = lang;

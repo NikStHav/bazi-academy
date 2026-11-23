@@ -73,7 +73,7 @@ Internal testing needs no review.
 | Copyright | `2026 NSH Holding GmbH` |
 | Price | Free |
 
-Put your contact email into `docs/index.html` and `docs/privacy.html`, then enable GitHub Pages: Settings → Pages → *Deploy from a branch* → `main` / `/docs`.
+Put your contact email into `docs/index.html` and `docs/privacy.html`, then enable GitHub Pages: Settings → Pages → Source **GitHub Actions**, and run the workflow *BaZi Academy (Website)* (Actions → Run workflow). It publishes `docs/` and the web app under `/app/`.
 Free GitHub Pages needs a public repository; otherwise host these two pages elsewhere.
 
 **Promotional text** (≤170, can be changed anytime):
