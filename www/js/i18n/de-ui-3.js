@@ -117,4 +117,7 @@ export const DE_UI_3 = {
   'Wheel of the 60 day pillars': 'Rad der 60 Tagessäulen',
   'Why? The BaZi behind it': 'Warum? Das BaZi dahinter',
   'Your day card': 'Deine Tageskarte',
+  'Change language': 'Sprache ändern',
+  'Lesson {n}: {title}': 'Lektion {n}: {title}',
+  'Turn my first day card': 'Meine erste Tageskarte drehen',
 };

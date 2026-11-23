@@ -625,7 +625,7 @@ const routes = {
         <p style="text-align:center"><a href="javascript:void 0" id="w-skip" class="small">${t("Skip for now")}</a></p>`;
       $('#f-name').placeholder = t('Your name');
       const birth = bindBirthForm();
-      $('#w-skip').onclick = () => { finish(); go('#/learn', true); };
+      $('#w-skip').onclick = () => { finish(); go('#/today', true); };
       $('#w-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const r = birth.read(); if (!r) return;
@@ -651,8 +651,22 @@ const routes = {
           <li><b>${t('Season')} ${c.strength.phase.zh} ${c.strength.phase.name}.</b> ${c.strength.phase.desc}</li>
           <li><b>${t('Strongest element: {el} ({pct}%).', { el: ELEMENTS[top.el].name, pct: top.pct })}</b> ${ELEMENTS[top.el].traits}</li>
           <li><b>${star ? `${star.icon} ${star.name} ${star.zh}.` : t('Favourable: {els}.', { els: fav.map((x) => ELEMENTS[x].name).join(', ') })}</b> ${star ? star.desc : t('These elements balance your chart.')}</li></ul></div>
-        <a class="btn block" href="#/chart/${entry.id}">${t("See my full chart")}</a>
+        <a class="btn block" href="#/today">🎡 ${t("Turn my first day card")}</a>
+        <a class="btn secondary block" style="margin-top:10px" href="#/chart/${entry.id}">${t("See my full chart")}</a>
         <a class="btn secondary block" style="margin-top:10px" href="#/lesson/intro">${t("Start learning BaZi")}</a>`;
+      return;
+    }
+    const phoneLang = String(navigator.languages?.[0] || navigator.language || 'en').toLowerCase();
+    if (step === 'lang' || (!step && langSetting() === 'auto' && !phoneLang.startsWith('en'))) {
+      view.innerHTML = `<div class="card hero"><div class="big">八字</div><h2 style="margin:8px 0 4px">Sprache wählen</h2>
+          <p class="muted" style="margin:0">Choose your language</p></div>
+        <div class="card lang-pick">${Object.entries(LANGS).sort(([a], [b]) => (b === lang) - (a === lang))
+          .map(([k, v]) => `<button class="btn ${k === lang ? '' : 'secondary'} block" data-lang="${k}">${v}</button>`).join('')}
+          <p class="small muted" style="text-align:center;margin-bottom:0">Du kannst das jederzeit unter „Über die App“ ändern. · You can change this anytime in About.</p></div>`;
+      view.querySelectorAll('[data-lang]').forEach((b) => b.addEventListener('click', () => {
+        const v = b.dataset.lang; setLang(v);
+        if (v === lang) go('#/welcome/start', true); else { location.replace('#/welcome/start'); location.reload(); }
+      }));
       return;
     }
     view.innerHTML = `<div class="card hero"><div class="big">八字</div><h2 style="margin:8px 0 4px">${t("Welcome to BaZi Academy")}</h2>
@@ -662,8 +676,9 @@ const routes = {
         <li><b>${t("Learn step by step")}</b><span>${t('{n} lessons from Yin and Yang to symbolic stars and luck pillars', { n: LESSONS.length })}</span></li>
         <li><b>${t("Every day")}</b><span>${t("Almanac, daily energy and compatibility")}</span></li></ul>
         <a class="btn block" href="#/welcome/form">${t("Get my chart")}</a>
-        <p style="text-align:center;margin-bottom:0"><a href="javascript:void 0" id="w-skip" class="small">${t("Skip, just explore")}</a></p></div>`;
-    $('#w-skip').onclick = () => { finish(); go('#/learn', true); };
+        <p style="text-align:center;margin-bottom:0"><a href="javascript:void 0" id="w-skip" class="small">${t("Skip, just explore")}</a></p></div>
+      <p style="text-align:center"><a href="#/welcome/lang" class="small muted">🌐 ${LANGS[lang]} · ${t('Change language')}</a></p>`;
+    $('#w-skip').onclick = () => { finish(); go('#/today', true); };
   },
 
   forecast(id) {
@@ -912,7 +927,8 @@ function dayCardHtml(d, mine) {
   return `<div class="card daycard" id="daycard"><h3 style="margin-top:0">${t('Your day card')}</h3>
     <p class="small muted" style="margin-top:-6px">${t('Turn the wheel of the 60 days – it stops on today’s pillar and shows what today means for you.')}</p>
     <button class="dw-btn" id="dw-btn" aria-label="${t('Turn the wheel')}">${dayWheelSvg()}</button>
-    <div id="dw-result" hidden>${dayResultHtml(d, mine)}</div></div>`;
+    <div id="dw-result" hidden>${dayResultHtml(d, mine)}</div></div>
+    ${(() => { const next = LESSONS.find((l) => !state.done[l.id]); return next ? `<a class="card premium-banner" href="#/lesson/${next.id}"><span class="pb-icon">学</span><span><b>${t('Continue learning')}</b> · ${t('Lesson {n}: {title}', { n: LESSONS.indexOf(next) + 1, title: next.title })}</span><span class="pb-go">›</span></a>` : ''; })()}`;
 }
 function dayResultHtml(d, mine) {
   const p = d.pillar, th = d.theme;
@@ -1282,11 +1298,11 @@ $('#back').addEventListener('click', () => { if (history.length > 1) history.bac
 
 function router() {
   closeSheet();
-  const [, name = 'learn', arg] = (location.hash || '#/learn').split('/');
+  const [, name = 'today', arg] = (location.hash || '#/today').split('/');
   const tab = { lesson: 'learn', guide: 'learn', about: 'learn', premium: 'learn', match: 'chart', almanac: 'today', forecast: 'chart', influences: 'chart', timeline: 'chart', welcome: '' }[name] ?? name;
   document.body.classList.toggle('no-tabs', name === 'welcome');
   document.querySelectorAll('.tabs a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));
-  (routes[name] || routes.learn)(arg ? decodeURIComponent(arg) : undefined);
+  (routes[name] || routes.today)(arg ? decodeURIComponent(arg) : undefined);
   view.scrollTop = 0;
 }
 window.addEventListener('hashchange', router);
@@ -1295,7 +1311,7 @@ applyTextSize();
 document.documentElement.lang = lang;
 document.querySelectorAll('.tabs a span:last-child').forEach((s) => { s.textContent = t(s.textContent); });
 $('#back').setAttribute('aria-label', t('Back'));
-if (!state.charts.length && !store.get('onboarded', false) && ['', '#', '#/', '#/learn'].includes(location.hash)) location.replace('#/welcome');
+if (!state.charts.length && !store.get('onboarded', false) && ['', '#', '#/', '#/today'].includes(location.hash)) location.replace('#/welcome');
 router();
 window.__baziStarted = true;
 premium.onChange(() => router());
@@ -1307,7 +1323,7 @@ const CapApp = plugin('App');
 if (CapApp) {
   Promise.resolve().then(() => CapApp.addListener('backButton', ({ canGoBack }) => {
     if (!sheet.hidden) closeSheet();
-    else if (canGoBack && (location.hash || '#/learn') !== '#/learn') history.back();
+    else if (canGoBack && !['', '#', '#/', '#/today'].includes(location.hash)) history.back();
     else CapApp.exitApp();
   })).catch(() => {});
 }
