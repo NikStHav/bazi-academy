@@ -92,9 +92,9 @@ export function stemPicturesHtml() {
     return `<button type="button" class="dg-stem el-${s.el}" data-stem="${i}" aria-label="${s.py} – ${s.image}">${svgIcon(STEM_ICON[i], 34)}
       <span class="zh">${s.zh}</span><span class="py">${s.py}</span><span class="mn">${String(s.image).split(/[,،、]/)[0]}</span></button>`; };
   return `<div class="dg dg-stems">
-    <div class="dg-stems-head">${ELEMENTS.map((e, i) => `<span class="tx-${i}">${e.zh} ${e.name}</span>`).join('')}</div>
+    <div class="dg-stems-grid"><div class="dg-stems-head">${ELEMENTS.map((e, i) => `<span class="tx-${i}">${e.zh} ${e.name}</span>`).join('')}</div>
     <div class="dg-row-lbl">☀️ ${t('Yang')}</div><div class="dg-stems-row">${[0, 2, 4, 6, 8].map(card).join('')}</div>
-    <div class="dg-row-lbl">🌙 ${t('Yin')}</div><div class="dg-stems-row">${[1, 3, 5, 7, 9].map(card).join('')}</div>
+    <div class="dg-row-lbl">🌙 ${t('Yin')}</div><div class="dg-stems-row">${[1, 3, 5, 7, 9].map(card).join('')}</div></div>
     <p class="small muted">${t('Each element appears twice: a strong Yang picture on top and a softer Yin picture below. Tap a picture to read its personality.')}</p></div>`;
 }
 

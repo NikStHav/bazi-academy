@@ -305,4 +305,9 @@ export const UI_3 = {
   "Solid: harm · dashed: punishment · ringed animals punish themselves.": "Continua: daño · discontinua: castigo · los animales con anillo se castigan a sí mismos.",
   "Tap an animal to see all its relations.": "Toca un animal para ver todas sus relaciones.",
   "Three animals four steps apart form a strong team of one element.": "Tres animales separados por cuatro casillas forman un equipo fuerte de un elemento.",
+  "Enlarge picture": "Ampliar imagen",
+  "Zoom in": "Acercar",
+  "Zoom out": "Alejar",
+  "Close": "Cerrar",
+  "Pinch or use + / − to zoom, drag to move.": "Pellizca o usa + / − para hacer zoom; arrastra para moverte.",
 };

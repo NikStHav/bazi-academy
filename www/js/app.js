@@ -106,6 +106,53 @@ function godSheet(key) {
   return `<h2>${g.name} <span style="font-family:var(--serif)">${g.zh}</span></h2><p class="muted">${g.py} · ${g.rel}</p><p>${g.desc}</p>`;
 }
 
+// ---------- enlarged lesson pictures ----------
+let zoomEl = null;
+function closeZoom() { if (!zoomEl) return false; zoomEl.remove(); zoomEl = null; return true; }
+function openZoom(dg) {
+  closeZoom();
+  // Copy the picture as it is now (e.g. with a selected element); the copy is for looking, not tapping.
+  const pic = dg.querySelector('.dg-pic svg, svg.dg-svg, .dg-yy-top, .dg-stems-grid') || dg;
+  const clone = (pic.classList.contains('dg-stems-grid') ? pic : pic).cloneNode(true);
+  clone.removeAttribute('id');
+  zoomEl = document.createElement('div');
+  zoomEl.className = 'zoom no-sheet';
+  zoomEl.setAttribute('role', 'dialog');
+  zoomEl.setAttribute('aria-label', t('Enlarge picture'));
+  zoomEl.innerHTML = `<div class="zoom-bar"><button type="button" data-zm="-" aria-label="${t('Zoom out')}">−</button><span class="zoom-pct">100%</span>
+    <button type="button" data-zm="+" aria-label="${t('Zoom in')}">+</button><span style="flex:1"></span><button type="button" class="zoom-x" aria-label="${t('Close')}">✕</button></div>
+    <div class="zoom-body"><div class="zoom-inner"></div></div><p class="zoom-hint">${t('Pinch or use + / − to zoom, drag to move.')}</p>`;
+  zoomEl.querySelector('.zoom-inner').appendChild(clone);
+  document.body.appendChild(zoomEl);
+  const body = zoomEl.querySelector('.zoom-body'), inner = zoomEl.querySelector('.zoom-inner');
+  let z = 1;
+  const base = () => Math.min(body.clientWidth, body.clientHeight) - 16;
+  const set = (nz, cx = 0.5, cy = 0.5) => {
+    nz = Math.max(1, Math.min(4, nz));
+    const before = { x: (body.scrollLeft + body.clientWidth * cx) / (inner.offsetWidth || 1), y: (body.scrollTop + body.clientHeight * cy) / (inner.offsetHeight || 1) };
+    z = nz; inner.style.width = `${base() * z}px`;
+    body.scrollLeft = before.x * inner.offsetWidth - body.clientWidth * cx;
+    body.scrollTop = before.y * inner.offsetHeight - body.clientHeight * cy;
+    zoomEl.querySelector('.zoom-pct').textContent = `${Math.round(z * 100)}%`;
+  };
+  set(1);
+  zoomEl.querySelector('.zoom-x').onclick = closeZoom;
+  zoomEl.querySelectorAll('[data-zm]').forEach((b) => { b.onclick = () => set(z * (b.dataset.zm === '+' ? 1.5 : 1 / 1.5)); });
+  // Pinch with two fingers; double tap toggles 1× / 2.5×.
+  let pinch = null, lastTap = 0;
+  const dist = (e) => Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+  body.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 2) pinch = { d: dist(e), z };
+    else if (e.touches.length === 1) { const now = Date.now(); if (now - lastTap < 300) set(z > 1.2 ? 1 : 2.5); lastTap = now; }
+  }, { passive: true });
+  body.addEventListener('touchmove', (e) => { if (pinch && e.touches.length === 2) { e.preventDefault(); set(pinch.z * dist(e) / pinch.d); } }, { passive: false });
+  body.addEventListener('touchend', () => { pinch = null; });
+  body.addEventListener('wheel', (e) => { if (e.ctrlKey) { e.preventDefault(); set(z * (e.deltaY < 0 ? 1.1 : 0.9)); } }, { passive: false });
+  zoomEl.querySelector('.zoom-x').focus();
+}
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeZoom(); });
+window.addEventListener('hashchange', closeZoom);
+
 // ---------- glossary ----------
 /** A small "?" button that explains a BaZi term in plain words. */
 const q = (id) => { const g = glossaryEntry(id); return g ? `<button type="button" class="term-q" data-term="${id}" aria-label="${esc(t('Explain: {term}', { term: g.term }))}">?</button>` : ''; };
@@ -179,6 +226,12 @@ function renderWidgets(root) {
   root.querySelectorAll('[data-widget]').forEach((el) => { const w = WIDGETS[el.dataset.widget]; if (w) el.innerHTML = w(); });
   bindDiagrams(root);
   bindRelations(root);
+  // A magnifier on every lesson picture: opens it full-screen, zoomable.
+  root.querySelectorAll('.dg').forEach((d) => {
+    if (d.querySelector(':scope > .dg-tools')) return;
+    d.insertAdjacentHTML('afterbegin', `<div class="dg-tools"><button type="button" class="dg-zoom">🔍 ${t('Enlarge picture')}</button></div>`);
+    d.querySelector(':scope > .dg-tools .dg-zoom').addEventListener('click', (e) => { e.stopPropagation(); openZoom(d); });
+  });
   root.querySelectorAll('[data-dp]').forEach((el) => el.addEventListener('click', () => { const p = pillarFromIndex(+el.dataset.dp);
     openSheet(`<h2 style="margin-top:0">${t('Day pillar {p}', { p: pillarName(p) })}</h2>${dayPillarHtml(p.stem, p.branch)}`); }));
   const sel = $('#tg-dm', root);
@@ -1445,7 +1498,8 @@ rescheduleTips(); // keep the rolling 30-day window of daily tips filled
 const CapApp = plugin('App');
 if (CapApp) {
   Promise.resolve().then(() => CapApp.addListener('backButton', ({ canGoBack }) => {
-    if (!sheet.hidden) closeSheet();
+    if (closeZoom()) { /* closed the enlarged picture */ }
+    else if (!sheet.hidden) closeSheet();
     else if (canGoBack && !['', '#', '#/', '#/today'].includes(location.hash)) history.back();
     else CapApp.exitApp();
   })).catch(() => {});
