@@ -63,10 +63,11 @@ const fmtDate = (ms) => { const d = new Date(ms); return `${d.getFullYear()}-${p
 const polEl = (s) => t(STEMS[s].yang ? 'Yang {el}' : 'Yin {el}', { el: ELEMENTS[STEMS[s].el].name });
 
 function stemTile(s, cls = '') {
-  return `<button class="ch el-${STEMS[s].el} ${cls}" data-stem="${s}" aria-label="${polEl(s)}"><span class="zh">${STEMS[s].zh}</span><span class="py">${STEMS[s].py}</span></button>`;
+  // Every character carries its pinyin and its meaning: stems show the element ("Bǐng · Fire"), branches the animal.
+  return `<button class="ch el-${STEMS[s].el} ${cls}" data-stem="${s}" aria-label="${STEMS[s].py} – ${polEl(s)}"><span class="zh">${STEMS[s].zh}</span><span class="py">${STEMS[s].py}</span><span class="mn">${ELEMENTS[STEMS[s].el].name}</span></button>`;
 }
 function branchTile(b, cls = '') {
-  return `<button class="ch el-${BRANCHES[b].el} ${cls}" data-branch="${b}" aria-label="${BRANCHES[b].animal}"><span class="zh">${BRANCHES[b].zh}</span><span class="py">${BRANCHES[b].animal}</span></button>`;
+  return `<button class="ch el-${BRANCHES[b].el} ${cls}" data-branch="${b}" aria-label="${BRANCHES[b].py} – ${BRANCHES[b].animal}"><span class="zh">${BRANCHES[b].zh}</span><span class="py">${BRANCHES[b].py}</span><span class="mn">${BRANCHES[b].animal}</span></button>`;
 }
 
 // ---------- detail sheet ----------
@@ -201,7 +202,7 @@ function pillarsHtml(c, withHidden = true) {
     return `<div class="${k === 'day' ? 'dm' : ''}"><div class="lbl">${PILLAR_LABEL[k]}</div>
       <div class="god" ${godKey ? `data-god="${godKey}"` : ''}>${god}</div>
       ${stemTile(p.stem, 'stem')}${branchTile(p.branch)}
-      ${withHidden ? `<div class="hidden-row">${BRANCHES[p.branch].hidden.map((s) => `<span><b class="tx-${STEMS[s].el}">${STEMS[s].zh}</b> ${TEN_GODS[tenGod(dm, s)].short}</span>`).join('')}</div>` : ''}
+      ${withHidden ? `<div class="hidden-row">${BRANCHES[p.branch].hidden.map((s) => `<span data-stem="${s}" role="button" title="${STEMS[s].py} – ${polEl(s)}"><b class="tx-${STEMS[s].el}">${STEMS[s].zh}</b> ${STEMS[s].py} <span class="muted">${TEN_GODS[tenGod(dm, s)].short}</span></span>`).join('')}</div>` : ''}
     </div>`;
   }).join('')}</div>`;
 }

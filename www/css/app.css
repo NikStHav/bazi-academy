@@ -342,3 +342,8 @@ th, td { overflow-wrap: anywhere; }
 .mail-btn { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 359px) { .mail-btn { font-size: 14px; padding-left: 8px; padding-right: 8px; } }
 .seg-wrap { flex-wrap: wrap; } .seg-wrap button { flex: 1 1 30%; min-width: 0; }
+.ch .mn { font-size: 11px; line-height: 1.15; opacity: .92; font-weight: 600; }
+.ch.sm .mn { font-size: 9px; }
+.hidden-row [data-stem] { cursor: pointer; }
+@media (max-width: 359px) { .hidden-row span[data-stem] { white-space: normal; line-height: 1.25; } .hidden-row { font-size: 11px; } }
+.pillars .hidden-row span[data-stem] { overflow-wrap: anywhere; }
