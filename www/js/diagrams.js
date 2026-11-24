@@ -33,7 +33,8 @@ const m5 = (n) => ((n % 5) + 5) % 5;
 
 function cycleSvg(sel) {
   const C = 160, R = 108;
-  const pts = ELEMENTS.map((_, i) => { const a = (-90 + i * 72) * Math.PI / 180; return [C + R * Math.cos(a), C + R * Math.sin(a)]; });
+  // Fire (south, summer, midday) at the top as in classical Chinese diagrams, then clockwise Earth, Metal, Water, Wood.
+  const pts = ELEMENTS.map((_, i) => { const a = (-90 + (i - 1) * 72) * Math.PI / 180; return [C + R * Math.cos(a), C + R * Math.sin(a)]; });
   const on = (a, b, kind) => sel === null || (kind === 'gen' ? a === sel || b === sel : a === sel || b === sel);
   const line = (a, b, kind, shrink) => {
     const [x1, y1] = pts[a], [x2, y2] = pts[b]; const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy);
