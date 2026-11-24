@@ -28,6 +28,7 @@ export const LESSONS_1 = [
     summary: 'Las dos fuerzas complementarias detrás de cada carácter.',
     body: `
 <p>Todo fenómeno contiene dos aspectos complementarios: el <b>Yang</b> (阳) – activo, luminoso, expansivo, hacia fuera – y el <b>Yin</b> (阴) – receptivo, oscuro, que se contrae, hacia dentro.</p>
+<div data-widget="yinyang"></div>
 <p>Ninguno de los dos es «bueno» o «malo». Dependen el uno del otro y se transforman constantemente el uno en el otro: el mediodía (máximo Yang) se convierte en noche; pleno invierno (máximo Yin) se convierte en primavera.</p>
 <h3>En el BaZi</h3>
 <p>Cada uno de los cinco elementos aparece dos veces entre los diez Tallos Celestiales: una vez Yang y una vez Yin. La Madera Yang 甲 es un árbol alto; la Madera Yin 乙 es una enredadera en flor. El mismo elemento, una expresión muy distinta.</p>

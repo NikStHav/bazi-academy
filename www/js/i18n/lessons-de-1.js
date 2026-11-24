@@ -28,6 +28,7 @@ export const LESSONS_1 = [
     summary: 'Die zwei sich ergänzenden Kräfte hinter jedem Zeichen.',
     body: `
 <p>Jedes Phänomen enthält zwei sich ergänzende Aspekte: <b>Yang</b> (阳) – aktiv, hell, ausdehnend, nach außen – und <b>Yin</b> (阴) – empfangend, dunkel, zusammenziehend, nach innen.</p>
+<div data-widget="yinyang"></div>
 <p>Keines ist „gut“ oder „schlecht“. Sie bedingen einander und wandeln sich ständig ineinander: Der Mittag (höchstes Yang) wird zur Nacht; der Mittwinter (höchstes Yin) wird zum Frühling.</p>
 <h3>Im BaZi</h3>
 <p>Jedes der fünf Elemente erscheint unter den zehn Himmelsstämmen zweimal: einmal Yang und einmal Yin. Yang-Holz 甲 ist ein hoher Baum; Yin-Holz 乙 eine blühende Ranke. Gleiches Element, ganz unterschiedlicher Ausdruck.</p>

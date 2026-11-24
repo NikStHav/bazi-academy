@@ -279,7 +279,6 @@ export const UI_1 = {
   'Opposite branches clash: {pair}.': 'Gegenüberliegende Zweige stoßen zusammen: {pair}.',
   'Or import a file': 'Oder eine Datei importieren',
   'Order: {list}.': 'Reihenfolge: {list}.',
-  'Pairs of the same colour share an element: first Yang, then Yin. Tap to explore.': 'Paare gleicher Farbe teilen ein Element: zuerst Yang, dann Yin. Tippe zum Entdecken.',
   'Partners whose <b>day</b> branch is {list} harmonise with your spouse palace {b}.': 'Partner, deren <b>Tages</b>zweig {list} ist, harmonieren mit deinem Partnerpalast {b}.',
   'Perfect score! 🎉': 'Volle Punktzahl! 🎉',
   'Period': 'Zeitraum',

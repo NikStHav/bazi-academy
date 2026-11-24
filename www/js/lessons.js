@@ -28,6 +28,7 @@ const LESSONS_EN = [
     summary: 'The two complementary forces behind every character.',
     body: `
 <p>Every phenomenon contains two complementary aspects: <b>Yang</b> (阳) – active, bright, expanding, outward – and <b>Yin</b> (阴) – receptive, dark, contracting, inward.</p>
+<div data-widget="yinyang"></div>
 <p>Neither is “good” or “bad”. They depend on each other and constantly transform into each other: midday (peak Yang) turns into night; midwinter (peak Yin) turns into spring.</p>
 <h3>In BaZi</h3>
 <p>Each of the five elements appears twice among the ten Heavenly Stems: once Yang and once Yin. Yang Wood 甲 is a tall tree; Yin Wood 乙 is a flowering vine. Same element, very different expression.</p>

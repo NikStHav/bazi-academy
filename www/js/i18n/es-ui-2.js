@@ -105,7 +105,6 @@ export const UI_2 = {
   "Other": "Otros",
   "Overall": "En conjunto",
   "Own-root day": "Día de raíz propia",
-  "Pairs of the same colour share an element: first Yang, then Yin. Tap to explore.": "Los pares del mismo color comparten un elemento: primero Yang, después Yin. Toca para explorar.",
   "Partner": "Pareja",
   "Partners whose <b>day</b> branch is {list} harmonise with your spouse palace {b}.": "Las parejas cuya rama del <b>día</b> es {list} armonizan con tu palacio de la pareja {b}.",
   "Perfect score! 🎉": "¡Puntuación perfecta! 🎉",

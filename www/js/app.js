@@ -26,6 +26,7 @@ import { MONTH_TEXT } from './forecast.js';
 import { dayPillarProfile } from './daypillars.js';
 import { stageOf } from './stages.js';
 import { GUIDE } from './guide.js';
+import { elementsCycleHtml, yinYangHtml, stemPicturesHtml, branchWheelHtml, bindDiagrams } from './diagrams.js';
 import { GLOSSARY, glossaryEntry } from './glossary.js';
 import { normalize } from './places.js';
 import { STORE_LINKS } from './store-links.js';
@@ -133,22 +134,6 @@ document.addEventListener('click', (e) => {
 });
 
 // ---------- widgets ----------
-function cycleSvg() {
-  const pts = ELEMENTS.map((_, i) => { const a = (-90 + i * 72) * Math.PI / 180; return [150 + 105 * Math.cos(a), 150 + 105 * Math.sin(a)]; });
-  const line = (a, b, cls, shrink = 30) => {
-    const [x1, y1] = pts[a], [x2, y2] = pts[b]; const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy);
-    return `<line x1="${x1 + dx / L * shrink}" y1="${y1 + dy / L * shrink}" x2="${x2 - dx / L * shrink}" y2="${y2 - dy / L * shrink}" class="${cls}" marker-end="url(#ar-${cls})"/>`;
-  };
-  return `<div class="cycle"><svg viewBox="0 0 300 300" role="img" aria-label="${t('Producing and controlling cycles')}">
-    <defs>${['gen', 'ctl'].map((c) => `<marker id="ar-${c}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="${c === 'gen' ? 'var(--ok)' : 'var(--bad)'}"/></marker>`).join('')}</defs>
-    <style>.gen{stroke:var(--ok);stroke-width:2.5}.ctl{stroke:var(--bad);stroke-width:1.5;stroke-dasharray:5 4}</style>
-    ${ELEMENTS.map((_, i) => line(i, (i + 1) % 5, 'gen')).join('')}
-    ${ELEMENTS.map((_, i) => line(i, (i + 2) % 5, 'ctl')).join('')}
-    ${ELEMENTS.map((e, i) => `<g data-el="${i}" style="cursor:pointer"><circle cx="${pts[i][0]}" cy="${pts[i][1]}" r="26" fill="var(--${e.key})"/>
-      <text x="${pts[i][0]}" y="${pts[i][1] + 8}" text-anchor="middle" fill="#fff" font-size="24" font-family="var(--serif)">${e.zh}</text></g>`).join('')}
-  </svg><p class="small muted" style="text-align:center"><span style="color:var(--ok)">${t("━ produces 生")}</span> · <span style="color:var(--bad)">${t("┅ controls 克")}</span></p></div>`;
-}
-
 function wheelSvg() {
   const pt = (i, r) => { const a = (-90 + i * 30) * Math.PI / 180; return [150 + r * Math.cos(a), 150 + r * Math.sin(a)]; };
   let lines = '';
@@ -173,11 +158,11 @@ const WIDGETS = {
     return `<div class="card"><div class="small muted" style="margin-bottom:6px">${t('Example: 1 Jan 2000, 12:00 (Beijing)')}</div>${pillarsHtml(c, false)}</div>`; },
   elements: () => `<div class="grid g5">${ELEMENTS.map((e, i) => `<button class="ch el-${i}" data-el="${i}"><span class="zh">${e.zh}</span><span class="py">${e.name}</span></button>`).join('')}</div>
     <p class="small muted">${t("Tap an element for details.")}</p>`,
-  cycle: cycleSvg,
+  cycle: elementsCycleHtml,
+  yinyang: yinYangHtml,
   wheel: wheelSvg,
-  stems: () => `<div class="grid g5">${STEMS.map((_, i) => stemTile(i)).join('')}</div>
-    <p class="small muted">${t("Pairs of the same colour share an element: first Yang, then Yin. Tap to explore.")}</p>`,
-  branches: () => `<div class="grid g4">${BRANCHES.map((_, i) => branchTile(i)).join('')}</div>`,
+  stems: stemPicturesHtml,
+  branches: branchWheelHtml,
   jiazi: () => { const cur = pillarsForNow().year.index;
     return `<div class="jiazi">${Array.from({ length: 60 }, (_, i) => { const p = pillarFromIndex(i);
       return `<div class="${i === cur ? 'cur' : ''}">${pillarName(p)}<small>${i + 1}</small></div>`; }).join('')}</div>
@@ -202,6 +187,7 @@ const WIDGETS = {
 
 function renderWidgets(root) {
   root.querySelectorAll('[data-widget]').forEach((el) => { const w = WIDGETS[el.dataset.widget]; if (w) el.innerHTML = w(); });
+  bindDiagrams(root);
   root.querySelectorAll('[data-dp]').forEach((el) => el.addEventListener('click', () => { const p = pillarFromIndex(+el.dataset.dp);
     openSheet(`<h2 style="margin-top:0">${t('Day pillar {p}', { p: pillarName(p) })}</h2>${dayPillarHtml(p.stem, p.branch)}`); }));
   const sel = $('#tg-dm', root);

@@ -274,8 +274,6 @@ export const UI_2 = {
   '⇩ Import': '⇩ Importieren',
   '⇪ Export': '⇪ Exportieren',
   '⇪ Share as image': '⇪ Als Bild teilen',
-  '━ produces 生': '━ bringt hervor 生',
-  '┅ controls 克': '┅ kontrolliert 克',
   '★ My chart': '★ Mein Horoskop',
   '☆ Set as my chart': '☆ Als mein Horoskop festlegen',
   '♥ Compare': '♥ Vergleichen',
