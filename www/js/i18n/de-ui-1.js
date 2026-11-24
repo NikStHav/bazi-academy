@@ -86,7 +86,6 @@ export const UI_1 = {
   'Birthplaces': 'Geburtsorte',
   'Both are {el} Day Masters – you understand each other easily but may compete.': 'Beide sind {el}-Tagesmeister – ihr versteht euch leicht, konkurriert aber vielleicht.',
   'Branch': 'Zweig',
-  'Branch wheel with clashes': 'Zweig-Rad mit Zusammenstößen',
   'Browser preview – simulate buying Premium?': 'Browser-Vorschau – Premium-Kauf simulieren?',
   'Calculate': 'Berechnen',
   'Calculate a chart': 'Horoskop berechnen',

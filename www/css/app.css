@@ -400,3 +400,13 @@ th, td { overflow-wrap: anywhere; }
 .dg-month { font-size: 9px; font-weight: 700; fill: var(--text); }
 .dg-center { font-size: 26px; fill: var(--muted); }
 .dg-center-sm { font-size: 10px; fill: var(--muted); }
+.dg-tabs { margin-bottom: 8px; } .dg-tabs button { font-size: 13px; padding: 9px 6px; }
+.dg-rl { stroke-width: 3; stroke-linecap: round; }
+.dg-rl-clash { stroke: var(--bad); stroke-dasharray: 7 5; }
+.dg-rl-six { stroke-width: 4; }
+.dg-rl-harm { stroke: var(--earth); stroke-width: 2.5; }
+.dg-rl-pun { stroke: var(--bad); stroke-width: 2; stroke-dasharray: 3 4; }
+.dg-tri { fill-opacity: .14; stroke-width: 3; stroke-linejoin: round; }
+.dg-selfp { stroke: var(--bad); stroke-width: 3; stroke-dasharray: 3 3; }
+.dg-rel-txt { margin: 4px 0 8px; }
+.dg-rel-on { outline: 2px solid var(--gold); }

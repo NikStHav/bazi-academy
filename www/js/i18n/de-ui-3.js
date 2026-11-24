@@ -198,4 +198,11 @@ export const UI_3 = {
   "Sun": "Sonne",
   "Moon": "Mond",
   "At the top: the Rat – midnight and midwinter.": "Oben: die Ratte – Mitternacht und Mittwinter.",
+  "Clashes and harmonies of the twelve branches": "Zusammenstöße und Harmonien der zwölf Zweige",
+  "Harms bring hidden irritation; punishments bring tension and obligations.": "Schäden bringen verborgene Irritationen, Strafen bringen Spannung und Verpflichtungen.",
+  "Opposite animals clash – movement, change and friction, but also fresh starts.": "Gegenüberliegende Tiere stoßen zusammen – Bewegung, Wandel und Reibung, aber auch Neuanfänge.",
+  "Pairs that attract each other and bond. Each pair leans towards an element.": "Paare, die einander anziehen und sich verbinden. Jedes Paar neigt zu einem Element.",
+  "Solid: harm · dashed: punishment · ringed animals punish themselves.": "Durchgezogen: Schaden · gestrichelt: Strafe · umrandete Tiere bestrafen sich selbst.",
+  "Tap an animal to see all its relations.": "Tippe auf ein Tier, um alle seine Beziehungen zu sehen.",
+  "Three animals four steps apart form a strong team of one element.": "Drei Tiere im Abstand von vier Feldern bilden ein starkes Team eines Elements.",
 };

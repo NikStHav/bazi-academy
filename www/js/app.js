@@ -26,7 +26,7 @@ import { MONTH_TEXT } from './forecast.js';
 import { dayPillarProfile } from './daypillars.js';
 import { stageOf } from './stages.js';
 import { GUIDE } from './guide.js';
-import { elementsCycleHtml, yinYangHtml, stemPicturesHtml, branchWheelHtml, bindDiagrams } from './diagrams.js';
+import { elementsCycleHtml, yinYangHtml, stemPicturesHtml, branchWheelHtml, relationsHtml, bindDiagrams, bindRelations } from './diagrams.js';
 import { GLOSSARY, glossaryEntry } from './glossary.js';
 import { normalize } from './places.js';
 import { STORE_LINKS } from './store-links.js';
@@ -134,16 +134,6 @@ document.addEventListener('click', (e) => {
 });
 
 // ---------- widgets ----------
-function wheelSvg() {
-  const pt = (i, r) => { const a = (-90 + i * 30) * Math.PI / 180; return [150 + r * Math.cos(a), 150 + r * Math.sin(a)]; };
-  let lines = '';
-  for (let i = 0; i < 6; i++) { const [x1, y1] = pt(i, 95), [x2, y2] = pt(i + 6, 95); lines += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--bad)" stroke-dasharray="4 4" stroke-width="1.2"/>`; }
-  return `<div class="wheel"><svg viewBox="0 0 300 300" role="img" aria-label="${t('Branch wheel with clashes')}">${lines}
-    ${BRANCHES.map((b, i) => { const [x, y] = pt(i, 120); return `<g data-branch="${i}" style="cursor:pointer"><circle cx="${x}" cy="${y}" r="20" fill="var(--${ELEMENTS[b.el].key})"/>
-      <text x="${x}" y="${y + 7}" text-anchor="middle" fill="#fff" font-size="19" font-family="var(--serif)">${b.zh}</text></g>`; }).join('')}
-    <text x="150" y="155" text-anchor="middle" font-size="12" fill="var(--muted)">${t("dashed = clash 冲")}</text></svg></div>`;
-}
-
 let trainerDm = 0;
 function trainer() {
   return `<div class="card" data-dm="${trainerDm}"><h3 style="margin-top:0">${t("Ten Gods trainer")}</h3>
@@ -160,7 +150,7 @@ const WIDGETS = {
     <p class="small muted">${t("Tap an element for details.")}</p>`,
   cycle: elementsCycleHtml,
   yinyang: yinYangHtml,
-  wheel: wheelSvg,
+  wheel: relationsHtml,
   stems: stemPicturesHtml,
   branches: branchWheelHtml,
   jiazi: () => { const cur = pillarsForNow().year.index;
@@ -188,6 +178,7 @@ const WIDGETS = {
 function renderWidgets(root) {
   root.querySelectorAll('[data-widget]').forEach((el) => { const w = WIDGETS[el.dataset.widget]; if (w) el.innerHTML = w(); });
   bindDiagrams(root);
+  bindRelations(root);
   root.querySelectorAll('[data-dp]').forEach((el) => el.addEventListener('click', () => { const p = pillarFromIndex(+el.dataset.dp);
     openSheet(`<h2 style="margin-top:0">${t('Day pillar {p}', { p: pillarName(p) })}</h2>${dayPillarHtml(p.stem, p.branch)}`); }));
   const sel = $('#tg-dm', root);

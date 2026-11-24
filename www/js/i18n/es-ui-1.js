@@ -98,7 +98,6 @@ export const UI_1 = {
   "Both are {el} Day Masters – you understand each other easily but may compete.": "Ambos son Maestros del Día de {el} – se entienden fácilmente, pero pueden competir.",
   "Branch": "Rama",
   "Branch Interactions": "Interacciones de las ramas",
-  "Branch wheel with clashes": "Rueda de las ramas con choques",
   "Browser preview – simulate buying Premium?": "Vista previa del navegador – ¿simular la compra de Premium?",
   "Calculate": "Calcular",
   "Calculate a chart": "Calcular una carta",

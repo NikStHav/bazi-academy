@@ -211,7 +211,6 @@ export const UI_2 = {
   'clashes your day branch {b} (relationships, health)': 'stößt mit deinem Tageszweig {b} zusammen (Beziehungen, Gesundheit)',
   'clashes your year branch {b}': 'stößt mit deinem Jahreszweig {b} zusammen',
   'compare two charts – partners, family, friends': 'zwei Horoskope vergleichen – Partner, Familie, Freunde',
-  'dashed = clash 冲': 'gestrichelt = Zusammenstoß 冲',
   'e.g. 13.40 for Berlin, −74.00 for New York': 'z. B. 13,40 für Berlin, −74,00 für New York',
   'e.g. Me, Anna, …': 'z. B. Ich, Anna, …',
   'favourable': 'günstig',

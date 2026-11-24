@@ -135,3 +135,75 @@ export function bindDiagrams(root) {
     box.addEventListener('keydown', (e) => { const n = e.target.closest('[data-cyc]'); if (n && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pick(Number(n.dataset.cyc)); } });
   });
 }
+
+// ---------- 5. Clashes and harmonies on the zodiac wheel ----------
+const SIX_HARMONY = [[0, 1, 2], [2, 11, 0], [3, 10, 1], [4, 9, 3], [5, 8, 4], [6, 7, 1]]; // [a, b, element]
+const THREE_HARMONY = [[8, 0, 4, 4], [11, 3, 7, 0], [2, 6, 10, 1], [5, 9, 1, 3]];      // [a, b, c, element]
+const HARMS = [[0, 7], [1, 6], [2, 5], [3, 4], [8, 11], [9, 10]];
+const PUNISH = [[2, 5, 8], [1, 10, 7], [0, 3]];
+const SELF_PUNISH = [4, 6, 9, 11];
+const REL_MODES = () => [['clash', `${t('Clash')} 冲`], ['six', `${t('Six Harmony')} 六合`], ['three', `${t('Three Harmony')} 三合`], ['harm', `${t('Harm')} · ${t('Punishment')}`]];
+const REL_TEXT = () => ({
+  clash: t('Opposite animals clash – movement, change and friction, but also fresh starts.'),
+  six: t('Pairs that attract each other and bond. Each pair leans towards an element.'),
+  three: t('Three animals four steps apart form a strong team of one element.'),
+  harm: t('Harms bring hidden irritation; punishments bring tension and obligations.'),
+});
+function relSvg(mode, sel) {
+  const C = 170, R = 128;
+  const pt = (i, r = R) => { const a = (i * 30 - 90) * Math.PI / 180; return [C + r * Math.cos(a), C + r * Math.sin(a)]; };
+  const touches = (list) => sel === null || list.includes(sel);
+  const seg = (a, b, cls, color, list) => { const [x1, y1] = pt(a, R - 24), [x2, y2] = pt(b, R - 24);
+    return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" class="${cls}${touches(list) ? '' : ' dg-dim'}"${color ? ` style="stroke:var(--${ELEMENTS[color].key})"` : ''}/>`; };
+  let lines = '';
+  if (mode === 'clash') for (let i = 0; i < 6; i++) lines += seg(i, i + 6, 'dg-rl dg-rl-clash', null, [i, i + 6]);
+  if (mode === 'six') for (const [a, b, el] of SIX_HARMONY) lines += seg(a, b, 'dg-rl dg-rl-six', el, [a, b]);
+  if (mode === 'three') for (const [a, b, c, el] of THREE_HARMONY) {
+    const list = [a, b, c]; const p = [a, b, c].map((i) => pt(i, R - 24));
+    lines += `<polygon points="${p.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')}" class="dg-tri${touches(list) ? '' : ' dg-dim'}" style="stroke:var(--${ELEMENTS[el].key});fill:var(--${ELEMENTS[el].key})"/>`;
+  }
+  if (mode === 'harm') {
+    for (const [a, b] of HARMS) lines += seg(a, b, 'dg-rl dg-rl-harm', null, [a, b]);
+    for (const g of PUNISH) for (let k = 0; k < g.length; k++) if (g.length > 2 || k === 0) lines += seg(g[k], g[(k + 1) % g.length], 'dg-rl dg-rl-pun', null, g);
+  }
+  const nodes = BRANCHES.map((b, i) => { const [x, y] = pt(i); const self = mode === 'harm' && SELF_PUNISH.includes(i);
+    return `<g data-rel="${i}" class="dg-node${sel === i ? ' dg-sel' : ''}${sel !== null && sel !== i ? ' dg-faint' : ''}" role="button" tabindex="0" aria-label="${b.py} – ${b.animal}">
+      <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="24" fill="var(--${ELEMENTS[b.el].key})"${self ? ' class="dg-selfp"' : ''}/>
+      <text x="${x.toFixed(1)}" y="${(y - 3).toFixed(1)}" text-anchor="middle" font-size="15">${ANIMAL[i]}</text>
+      <text x="${x.toFixed(1)}" y="${(y + 15).toFixed(1)}" text-anchor="middle" class="dg-zh">${b.zh}</text></g>`; }).join('');
+  return `<svg viewBox="0 0 340 340" class="dg-svg" role="img" aria-label="${t('Clashes and harmonies of the twelve branches')}">${lines}${nodes}</svg>`;
+}
+function relCaption(mode, sel) {
+  const head = `<p class="small dg-rel-txt">${REL_TEXT()[mode]}${mode === 'harm' ? ` <span class="muted">${t('Solid: harm · dashed: punishment · ringed animals punish themselves.')}</span>` : ''}</p>`;
+  if (sel === null) return `${head}<p class="small muted dg-hint">👆 ${t('Tap an animal to see all its relations.')}</p>`;
+  const nm = (i) => `<b class="tx-${BRANCHES[i].el}">${BRANCHES[i].zh} ${BRANCHES[i].animal}</b>`;
+  const el = (e) => `<b class="tx-${e}">${ELEMENTS[e].zh} ${ELEMENTS[e].name}</b>`;
+  const six = SIX_HARMONY.find(([a, b]) => a === sel || b === sel), three = THREE_HARMONY.find((g) => g.slice(0, 3).includes(sel));
+  const harm = HARMS.find(([a, b]) => a === sel || b === sel), pun = PUNISH.find((g) => g.includes(sel));
+  const other = (pair) => (pair[0] === sel ? pair[1] : pair[0]);
+  const items = [
+    ['clash', t('Clash'), nm((sel + 6) % 12)],
+    ['six', t('Six Harmony'), `${nm(other(six))} → ${el(six[2])}`],
+    ['three', t('Three Harmony'), `${three.slice(0, 3).map(nm).join(' · ')} → ${el(three[3])}`],
+    ['harm', t('Harm'), nm(other(harm))],
+    ['harm', t('Punishment'), pun ? pun.filter((x) => x !== sel).map(nm).join(' · ') : SELF_PUNISH.includes(sel) ? t('Self-punishment') : '–'],
+  ];
+  return `${head}<ul class="dg-rel">${items.map(([m, lbl, v]) => `<li class="${m === mode ? 'dg-rel-on' : ''}"><span class="dg-tag dg-tag-${m === 'clash' || m === 'harm' ? 'ctl' : 'gen'}">${lbl}</span><br>${v}</li>`).join('')}</ul>`;
+}
+export function relationsHtml() {
+  return `<div class="dg dg-relations" data-dg="relations" data-mode="clash">
+    <div class="seg seg-wrap dg-tabs">${REL_MODES().map(([k, n]) => `<button type="button" data-relmode="${k}" class="${k === 'clash' ? 'on' : ''}">${n}</button>`).join('')}</div>
+    <div class="dg-pic">${relSvg('clash', null)}</div><div class="dg-cap">${relCaption('clash', null)}</div></div>`;
+}
+export function bindRelations(root) {
+  root.querySelectorAll('[data-dg="relations"]').forEach((box) => {
+    let mode = 'clash', sel = null;
+    const draw = () => { box.querySelector('.dg-pic').innerHTML = relSvg(mode, sel); box.querySelector('.dg-cap').innerHTML = relCaption(mode, sel);
+      box.querySelectorAll('[data-relmode]').forEach((b) => b.classList.toggle('on', b.dataset.relmode === mode)); };
+    box.addEventListener('click', (e) => {
+      const m = e.target.closest('[data-relmode]'); if (m) { mode = m.dataset.relmode; draw(); return; }
+      const n = e.target.closest('[data-rel]'); if (n) { const i = Number(n.dataset.rel); sel = sel === i ? null : i; draw(); }
+    });
+    box.addEventListener('keydown', (e) => { const n = e.target.closest('[data-rel]'); if (n && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); const i = Number(n.dataset.rel); sel = sel === i ? null : i; draw(); } });
+  });
+}
