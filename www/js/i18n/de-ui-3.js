@@ -146,4 +146,5 @@ export const UI_3 = {
   "Light": "Hell",
   "More settings, support & backup": "Weitere Einstellungen, Support & Backup",
   "Settings": "Einstellungen",
+  " – daylight saving time (the hour pillar uses standard time)": " – Sommerzeit (die Stundensäule nutzt die Normalzeit)",
 };

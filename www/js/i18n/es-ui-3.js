@@ -249,4 +249,5 @@ export const UI_3 = {
   "Light": "Claro",
   "More settings, support & backup": "Más ajustes, soporte y copia de seguridad",
   "Settings": "Ajustes",
+  " – daylight saving time (the hour pillar uses standard time)": " – horario de verano (el pilar de la hora usa la hora estándar)",
 };

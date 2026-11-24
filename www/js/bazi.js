@@ -44,16 +44,20 @@ export function equationOfTime(ms) {
 /**
  * Compute a BaZi chart.
  * input: { year, month, day, hour, minute, tzOffset (hours, e.g. 1 for CET), longitude?, timeUnknown?,
- *          gender: 'm'|'f', ziHourNextDay?: boolean (default true) }
+ *          gender: 'm'|'f', ziHourNextDay?: boolean (default true),
+ *          stdOffset?: number – the birthplace's standard-time offset; when given, clock time in the hour
+ *          pillar is read without daylight saving time (classical practice) }
  */
 export function computeChart(input) {
   const { year, month, day, hour = 12, minute = 0, tzOffset = 0, longitude = null,
-    timeUnknown = false, gender = 'm', ziHourNextDay = true } = input;
+    timeUnknown = false, gender = 'm', ziHourNextDay = true, stdOffset = null } = input;
 
   const utcMs = Date.UTC(year, month - 1, day, hour, minute) - tzOffset * 3600000;
 
-  // Local time used for day & hour pillars: true solar time if longitude is given, otherwise clock time.
-  let localMs = utcMs + tzOffset * 3600000;
+  // Local time used for day & hour pillars: true solar time if longitude is given, otherwise standard time
+  // (clock time without daylight saving) when the zone's standard offset is known, else the clock time.
+  const baseOffset = stdOffset !== null && stdOffset !== undefined && Number.isFinite(Number(stdOffset)) ? Number(stdOffset) : tzOffset;
+  let localMs = utcMs + baseOffset * 3600000;
   let solarCorrectionMin = 0;
   if (longitude !== null && longitude !== '' && !Number.isNaN(Number(longitude)) && !timeUnknown) {
     const solarMs = utcMs + (Number(longitude) / 15) * 3600000 + equationOfTime(utcMs) * 60000;
@@ -85,7 +89,10 @@ export function computeChart(input) {
   let hourP = null;
   if (!timeUnknown) {
     const hb = Math.floor(((lh + 1) % 24) / 2);
-    const hs = mod(dayP.stem * 2 + hb, 10);
+    // The hour pillars run in an unbroken 60-hour cycle: 23:00–24:00 always opens the next day's cycle.
+    // With "late Zi" (day changes at midnight) the day pillar stays, but the hour stem follows the next day.
+    const hourBaseStem = lh === 23 && !ziHourNextDay ? dayP.stem + 1 : dayP.stem;
+    const hs = mod(hourBaseStem * 2 + hb, 10);
     hourP = { stem: hs, branch: hb, index: cycleIndex(hs, hb) };
   }
 

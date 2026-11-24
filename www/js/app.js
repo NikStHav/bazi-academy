@@ -43,6 +43,16 @@ const state = {
   settings: store.get('settings', { ziHourNextDay: true }),
 };
 const save = (k) => store.set(k, state[k]);
+/** Standard-time offset (no daylight saving) of a time zone in a year: the smaller of January and July. */
+function standardOffset(tz, year) {
+  const a = utcOffsetFor(tz, year, 1, 15), b = utcOffsetFor(tz, year, 7, 15);
+  return a === null || b === null ? null : Math.min(a, b);
+}
+// Charts saved before standard time was stored: add it from the birthplace (hour pillar without daylight saving).
+if (state.charts.some((c) => c.input?.place?.tz && c.input.stdOffset === undefined)) {
+  state.charts.forEach((c) => { if (c.input?.place?.tz && c.input.stdOffset === undefined) c.input.stdOffset = standardOffset(c.input.place.tz, c.input.year); });
+  store.set('charts', state.charts);
+}
 
 // ---------- helpers ----------
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -290,7 +300,7 @@ function bindBirthForm() {
         const off = utcOffsetFor(place.tz, y, m, d, hh, mm);
         if (off !== null) {
           setTzValue(off);
-          $('#f-tz-help').textContent = t('Set from {place} ({tz}) for this date', { place: place.name, tz: place.tz }) + (off !== utcOffsetFor(place.tz, y, 1, 15) ? t(' – daylight saving time') : '') + '.'
+          $('#f-tz-help').textContent = t('Set from {place} ({tz}) for this date', { place: place.name, tz: place.tz }) + (off !== standardOffset(place.tz, y) ? t(' – daylight saving time (the hour pillar uses standard time)') : '') + '.'
             + (tzUncertain(place.cc, y) ? ' ⚠︎ ' + t('Time zone records before 1970 are less certain for this region. If you know the official time at the birthplace, check this value.') : '');
           return;
         }
@@ -343,6 +353,7 @@ function bindBirthForm() {
       state.settings.ziHourNextDay = $('#f-zi').checked; save('settings');
       return { name: $('#f-name').value.trim(), input: { year, month, day, hour, minute, tzOffset: Number($('#f-tz').value), timeUnknown: $('#f-unknown').checked,
         gender: $('#f-gender .on').dataset.v, longitude: lon === '' ? null : Number(lon),
+        stdOffset: place ? standardOffset(place.tz, year) : null,
         place: place ? { name: place.name, cc: place.cc, lat: place.lat, lon: place.lon, tz: place.tz, ...(place.region ? { region: place.region } : {}), ...(place.postcode ? { postcode: place.postcode } : {}) } : null } };
     },
   };

@@ -10,7 +10,6 @@ export const UI_1 = {
   " The shortest day – Yin peaks and Yang is reborn.": " El día más corto – el Yin alcanza su punto máximo y el Yang renace.",
   " and ": " y ",
   " · Premium": " · Premium",
-  " – daylight saving time": " – horario de verano",
   " – now": " – ahora",
   "(determines the direction of the luck pillars)": "(determina la dirección de los pilares de la suerte)",
   "(time unknown)": "(hora desconocida)",
