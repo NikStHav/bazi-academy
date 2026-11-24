@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
     const page = await ctx.newPage();
     const errors = [];
     page.on('pageerror', (e) => errors.push(e.message));
-    for (const route of ['#/learn', '#/lesson/intro', '#/lesson/hidden', '#/chart', '#/chart/a', '#/quiz', '#/quiz/mixed', '#/today', '#/premium', '#/match', '#/almanac', '#/about', '#/lesson/stars', '#/forecast', '#/forecast/a', '#/welcome', '#/welcome/form', '#/welcome/a', '#/calendar', '#/calendar/2026-02', '#/calendar/2023-03', '#/influences/a', '#/timeline/a', '#/influences', '#/timeline', '#/guide', '#/lesson/daymaster']) {
+    for (const route of ['#/learn', '#/lesson/intro', '#/lesson/hidden', '#/chart', '#/chart/a', '#/quiz', '#/quiz/mixed', '#/today', '#/premium', '#/match', '#/almanac', '#/about', '#/lesson/stars', '#/forecast', '#/forecast/a', '#/welcome', '#/welcome/form', '#/welcome/a', '#/calendar', '#/calendar/2026-02', '#/calendar/2023-03', '#/influences/a', '#/timeline/a', '#/influences', '#/timeline', '#/guide', '#/glossary', '#/lesson/daymaster']) {
       await page.goto(base + route); await page.waitForTimeout(150);
       const text = (await page.locator('#view').innerText()).trim();
       if (text.length < 40) { failed = true; console.error(`✗ ${platform} ${route}: screen is blank`); }

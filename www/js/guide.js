@@ -16,7 +16,8 @@ const EN = [
 <ul><li>Work through the <a href="#/learn">15 lessons</a> in order – each builds on the previous one. The diagrams are interactive: tap elements, stems and branches.</li>
 <li>Finish each lesson with <b>“Check yourself”</b>. A lesson counts as completed when at least half the answers are right.</li>
 <li>Practise a few minutes a day in the <a href="#/quiz">Quiz</a> tab – every round is newly generated. Start with Five Elements and Stems, then move to Hidden Stems and Ten Gods.</li>
-<li>Tip: after each lesson, look for the topic in your own chart.</li></ul>`],
+<li>Tip: after each lesson, look for the topic in your own chart.</li>
+<li>A word you don’t know? The <a href="#/glossary">BaZi glossary</a> explains every term in plain words – and the small <b>?</b> buttons on the chart open the right entry.</li></ul>`],
   ['☀️', 'Use it every day', `
 <ul><li>Start with your <b>day card</b>: tap the wheel on the <a href="#/today">Today</a> screen. It stops on today’s pillar and shows stars, the theme of the day, what to do and avoid, and your lucky hours. Open <b>“Why?”</b> to see the BaZi reasons step by step.</li>
 <li><a href="#/today">Today</a> also shows the day’s pillars, what the day means for you, the <b>Chinese clock</b> with today’s lucky hours, and the <b>almanac</b> (what the day suits and what to avoid).</li>
@@ -61,7 +62,8 @@ const DE = [
 <ul><li>Arbeite die <a href="#/learn">15 Lektionen</a> der Reihe nach durch – jede baut auf der vorherigen auf. Die Grafiken sind interaktiv: Tippe auf Elemente, Stämme und Zweige.</li>
 <li>Schließe jede Lektion mit <b>„Teste dich“</b> ab. Eine Lektion gilt als abgeschlossen, wenn mindestens die Hälfte der Antworten stimmt.</li>
 <li>Übe täglich ein paar Minuten im Tab <a href="#/quiz">Quiz</a> – jede Runde wird neu erzeugt. Beginne mit den Fünf Elementen und Stämmen, dann folgen verborgene Stämme und Zehn Götter.</li>
-<li>Tipp: Suche nach jeder Lektion das Thema in deinem eigenen Horoskop.</li></ul>`],
+<li>Tipp: Suche nach jeder Lektion das Thema in deinem eigenen Horoskop.</li>
+<li>Ein Wort, das du nicht kennst? Das <a href="#/glossary">BaZi-Glossar</a> erklärt jeden Begriff in einfachen Worten – und die kleinen <b>?</b>-Knöpfe im Horoskop öffnen den passenden Eintrag.</li></ul>`],
   ['☀️', 'Jeden Tag nutzen', `
 <ul><li>Beginne mit deiner <b>Tageskarte</b>: Tippe auf dem <a href="#/today">Heute</a>-Bildschirm auf das Rad. Es hält auf der heutigen Säule und zeigt Sterne, das Thema des Tages, was du tun und lassen solltest, und deine Glücksstunden. Öffne <b>„Warum?“</b>, um die BaZi-Gründe Schritt für Schritt zu sehen.</li>
 <li><a href="#/today">Heute</a> zeigt außerdem die Säulen des Tages, was der Tag für dich bedeutet, die <b>Chinesische Uhr</b> mit den heutigen Glücksstunden und den <b>Almanach</b> (wofür sich der Tag eignet und was du meiden solltest).</li>

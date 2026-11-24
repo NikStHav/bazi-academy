@@ -347,3 +347,15 @@ th, td { overflow-wrap: anywhere; }
 .hidden-row [data-stem] { cursor: pointer; }
 @media (max-width: 359px) { .hidden-row span[data-stem] { white-space: normal; line-height: 1.25; } .hidden-row { font-size: 11px; } }
 .pillars .hidden-row span[data-stem] { overflow-wrap: anywhere; }
+
+/* Glossary */
+.term-q { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; margin-left: 4px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--surface-2); color: var(--accent); font: 700 13px/1 system-ui, sans-serif; cursor: pointer; vertical-align: middle; }
+.gl-list { display: grid; gap: 8px; }
+.gl-item { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; border: 0; font: inherit; color: inherit; cursor: pointer; margin: 0; }
+.gl-zh { font-family: var(--serif); font-size: 22px; color: var(--accent); min-width: 54px; text-align: center; }
+.gl-tx { flex: 1; min-width: 0; }
+.gl-head { display: flex; align-items: baseline; gap: 10px; }
+.gl-head .gl-zh { font-size: 30px; min-width: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--line); background: var(--surface-2); color: var(--text); border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 14px; cursor: pointer; }

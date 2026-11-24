@@ -32,7 +32,8 @@ export const GUIDE = [
 <ul><li>Recorre las <a href="#/learn">15 lecciones</a> en orden – cada una se apoya en la anterior. Los diagramas son interactivos: toca elementos, tallos y ramas.</li>
 <li>Termina cada lección con <b>«Ponte a prueba»</b>. Una lección cuenta como completada cuando al menos la mitad de las respuestas son correctas.</li>
 <li>Practica unos minutos al día en la pestaña <a href="#/quiz">Cuestionario</a> – cada ronda se genera de nuevo. Empieza por los Cinco Elementos y los tallos, y pasa después a los tallos ocultos y los Diez Dioses.</li>
-<li>Consejo: después de cada lección, busca el tema en tu propia carta.</li></ul>`],
+<li>Consejo: después de cada lección, busca el tema en tu propia carta.</li>
+<li>¿Una palabra que no conoces? El <a href="#/glossary">glosario BaZi</a> explica cada término con palabras sencillas – y los pequeños botones <b>?</b> de la carta abren la entrada correspondiente.</li></ul>`],
   ['☀️', 'Úsala cada día', `
 <ul><li>Empieza con tu <b>carta del día</b>: toca la rueda en la pantalla <a href="#/today">Hoy</a>. Se detiene en el pilar de hoy y muestra estrellas, el tema del día, qué hacer y qué evitar, y tus horas de suerte. Abre <b>«¿Por qué?»</b> para ver las razones del BaZi paso a paso.</li>
 <li><a href="#/today">Hoy</a> muestra también los pilares del día, lo que significa el día para ti, el <b>reloj chino</b> con las horas de suerte de hoy y el <b>almanaque</b> (para qué es propicio el día y qué evitar).</li>

@@ -78,3 +78,16 @@ test('Spanish content modules load and render', () => {
   `], { encoding: 'utf8', env: { ...process.env, BAZI_LANG: 'es' } });
   assert.deepEqual(JSON.parse(out.trim()), []);
 });
+
+test('glossary: every term has EN, DE and ES text and a valid lesson', async () => {
+  const src = (await import('node:fs')).readFileSync(new URL('../www/js/glossary.js', import.meta.url), 'utf8');
+  const { GLOSSARY } = await import('../www/js/glossary.js');
+  const { LESSONS } = await import('../www/js/lessons.js');
+  assert.ok(GLOSSARY.length >= 30);
+  const ids = new Set(LESSONS.map((l) => l.id));
+  for (const g of GLOSSARY) {
+    assert.ok(g.zh && g.py && g.term && g.short && g.text, g.id);
+    if (g.lesson) assert.ok(ids.has(g.lesson), `${g.id} → ${g.lesson}`);
+    for (const l of ['en', 'de', 'es']) assert.ok(new RegExp(`\\['${g.id}',[\\s\\S]*?\\b${l}: \\[`).test(src), `${g.id} ${l}`);
+  }
+});

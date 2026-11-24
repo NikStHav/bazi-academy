@@ -26,6 +26,8 @@ import { MONTH_TEXT } from './forecast.js';
 import { dayPillarProfile } from './daypillars.js';
 import { stageOf } from './stages.js';
 import { GUIDE } from './guide.js';
+import { GLOSSARY, glossaryEntry } from './glossary.js';
+import { normalize } from './places.js';
 import { STORE_LINKS } from './store-links.js';
 import { WEB_BUILD } from './build-flags.js';
 import { GOD_TEXT, favourableElements } from './reading.js';
@@ -102,6 +104,21 @@ function godSheet(key) {
   const g = TEN_GODS[key];
   return `<h2>${g.name} <span style="font-family:var(--serif)">${g.zh}</span></h2><p class="muted">${g.py} · ${g.rel}</p><p>${g.desc}</p>`;
 }
+
+// ---------- glossary ----------
+/** A small "?" button that explains a BaZi term in plain words. */
+const q = (id) => { const g = glossaryEntry(id); return g ? `<button type="button" class="term-q" data-term="${id}" aria-label="${esc(t('Explain: {term}', { term: g.term }))}">?</button>` : ''; };
+function glossarySheet(id) {
+  const g = glossaryEntry(id); if (!g) return '';
+  const l = g.lesson && LESSONS.find((x) => x.id === g.lesson);
+  return `<div class="gl-head"><span class="gl-zh">${g.zh}</span><span class="muted">${g.py}</span></div>
+    <h2 style="margin:6px 0 4px">${esc(g.term)}</h2><p><b>${esc(g.short)}</b></p><p>${g.text}</p>
+    <p class="small">${l ? `<a href="#/lesson/${l.id}">📘 ${t('Open the lesson')}: ${esc(l.title)} ›</a><br>` : ''}<a href="#/glossary">📖 ${t('All terms')} ›</a></p>`;
+}
+document.addEventListener('click', (e) => {
+  const term = e.target.closest('[data-term]');
+  if (term && !term.closest('.gl-list')) { e.preventDefault(); openSheet(glossarySheet(term.dataset.term)); return; }
+});
 
 document.addEventListener('click', (e) => {
   const tg = e.target.closest('[data-stem],[data-branch],[data-god],[data-el]');
@@ -220,9 +237,10 @@ function chartHtml(entry) {
       ${c.solarCorrectionMin ? ` · ${t('true solar time {m} min', { m: (c.solarCorrectionMin > 0 ? '+' : '') + c.solarCorrectionMin })}` : ''}</div>
     <div style="margin-top:12px">${pillarsHtml(c)}</div>
     <p class="small muted" style="margin-bottom:0">${t("Tap any character for its meaning. Small letters under the branches are the Ten Gods of the hidden stems.")}</p>
+    <p class="small" style="margin:6px 0 0">${t('New to BaZi?')} ${['pillar', 'daymaster', 'tengods', 'hidden'].map((id) => `<a href="javascript:void 0" data-term="${id}">${esc(glossaryEntry(id).term)}</a>`).join(' · ')} · <a href="#/glossary">${t('All terms')} ›</a></p>
   </div>
   <div class="card" data-dm="${c.dayMaster}">
-    <h3 style="margin-top:0">${t("Day Master:")} <span class="tx-${dm.el}" style="font-family:var(--serif)">${dm.zh}</span> ${dm.py} – ${polEl(c.dayMaster)}</h3>
+    <h3 style="margin-top:0">${t("Day Master:")} <span class="tx-${dm.el}" style="font-family:var(--serif)">${dm.zh}</span> ${dm.py} – ${polEl(c.dayMaster)} ${q('daymaster')}</h3>
     <p>${dm.desc}</p>
     <p><span class="chip">${t('Season:')} ${c.strength.phase.zh} ${c.strength.phase.name}</span><span class="chip">${t('Support ≈ {n}%', { n: c.strength.ratio })}</span><span class="chip">${t(c.strength.label)}</span></p>
     <p class="small muted">${c.strength.phase.desc} ${t('The support score counts Companion and Resource elements (month branch weighted double). It is a learning aid, not a full judgement.')}</p>
@@ -231,14 +249,14 @@ function chartHtml(entry) {
       : t('A weaker Day Master is classically supported by <b>Resource and Companions</b>: {els}.', { els: [4, 0].map((d) => ELEMENTS[(dm.el + d) % 5].name).join(', ') })}</p>
   </div>
   ${dayPillarCard(c)}
-  <div class="card"><h3 style="margin-top:0">${t("Five Elements balance")}</h3><div class="bars">
+  <div class="card"><h3 style="margin-top:0">${t("Five Elements balance")} ${q('elements')}</h3><div class="bars">
     ${c.elements.map((e) => `<div class="bar" data-el="${e.el}" style="cursor:pointer"><span class="tx-${e.el}" style="font-weight:600">${ELEMENTS[e.el].zh} ${ELEMENTS[e.el].name}</span>
       <span class="track"><i style="width:${e.pct}%;background:var(--${ELEMENTS[e.el].key})"></i></span><span class="small">${e.pct}%</span></div>`).join('')}</div>
     <p class="small muted">${t('Stems count 1; hidden stems 1 / 0.5 / 0.3; month branch ×1.5.')}</p></div>
-  <div class="card"><h3 style="margin-top:0">${t("Interactions")}</h3>
+  <div class="card"><h3 style="margin-top:0">${t("Interactions")} ${q('clash')}</h3>
     ${c.interactions.length ? c.interactions.map((x) => `<div class="inter"><b>${x.chars}</b> ${x.label} <span class="muted small">${x.zh} · ${x.whereLabel}</span><div class="small">${x.note}</div></div>`).join('')
       : `<p class="muted">${t("No major combinations or clashes between the natal pillars.")}</p>`}</div>
-  <div class="card" data-dm="${c.dayMaster}"><h3 style="margin-top:0">${t("Luck Pillars 大运")}</h3>
+  <div class="card" data-dm="${c.dayMaster}"><h3 style="margin-top:0">${t("Luck Pillars 大运")} ${q('luck')}</h3>
     <p class="small muted">${c.luck.forward ? t('Forward') : t('Backward')} · ${t('first luck pillar starts at about {y} years {m} months', { y: c.luck.startYears, m: c.luck.startMonths })}${i.timeUnknown ? t(' (approximate – birth time unknown)') : ''}.</p>
     <div class="luck">${c.luck.pillars.map((p) => `<div class="${curLuck && p.year === curLuck.year ? 'now' : ''}"><div>${p.year}</div><div class="muted">${t('age {n}', { n: Math.floor(p.age) })}</div>
       ${stemTile(p.stem, 'sm')}${branchTile(p.branch, 'sm')}<div>${TEN_GODS[tenGod(c.dayMaster, p.stem)].short}</div></div>`).join('')}</div></div>
@@ -384,6 +402,7 @@ const routes = {
       <div class="list">${LESSONS.map((l, i) => `<a class="card lesson-item ${state.done[l.id] ? 'done' : ''} ${premium.lessonIsLocked(i) ? 'locked' : ''}" href="#/lesson/${l.id}">
         <span class="badge">${premium.lessonIsLocked(i) ? '🔒' : state.done[l.id] ? '✓' : l.zh.slice(0, 2)}</span>
         <span><span class="lvl">${i + 1} · ${t(l.level)}${i >= premium.FREE_LESSONS && !premium.FREE_APP ? t(' · Premium') : ''}</span><div class="t">${l.title} <span class="muted" style="font-family:var(--serif);font-weight:400">${l.zh}</span></div><div class="s">${l.summary}</div></span></a>`).join('')}</div>
+      <a class="card premium-banner" href="#/glossary"><span class="pb-icon">📖</span><span><b>${t('BaZi glossary')}</b> · ${t('all terms explained in plain words')}</span><span class="pb-go">›</span></a>
       <a class="card about-link" href="#/about"><span>ⓘ</span><span><b>${t('Settings, support & backup')}</b><br><span class="small muted">${t('Language, text size, contact, backup and new phone')}</span></span><span class="pb-go">›</span></a>`;
   },
 
@@ -402,6 +421,7 @@ const routes = {
     }
     view.innerHTML = `<article class="lesson-body"><div class="lvl small" style="color:var(--gold)">${t('LESSON {n}', { n: idx + 1 })} · ${t(l.level).toUpperCase()}</div>
       <h2>${l.title} <span style="font-family:var(--serif);color:var(--accent)">${l.zh}</span></h2>${l.body}</article>
+      ${(() => { const terms = GLOSSARY.filter((g) => g.lesson === l.id); return terms.length ? `<div class="card"><h3 style="margin-top:0">📖 ${t('Terms in this lesson')}</h3><div class="chips">${terms.map((g) => `<button type="button" class="chip" data-term="${g.id}"><span style="font-family:var(--serif)">${g.zh}</span> ${esc(g.term)}</button>`).join('')}</div></div>` : ''; })()}
       <div class="card" id="lq"><h3 style="margin-top:0">${t("Check yourself")}</h3><div id="lq-body"></div></div>
       <div class="row">${idx > 0 ? `<a class="btn secondary" href="#/lesson/${LESSONS[idx - 1].id}">${t("‹ Previous")}</a>` : ''}
         ${next ? `<a class="btn" href="#/lesson/${next.id}">${t("Next ›")}</a>` : `<a class="btn" href="#/quiz">${t("Go to the quiz ›")}</a>`}</div>`;
@@ -784,6 +804,23 @@ const routes = {
     bindCalendarCards();
   },
 
+  glossary() {
+    setTitle(t('BaZi glossary'), true);
+    const item = (g) => `<button type="button" class="card gl-item" data-term="${g.id}"><span class="gl-zh">${g.zh}</span>
+      <span class="gl-tx"><b>${esc(g.term)}</b> <span class="muted small">${g.py}</span><br><span class="small">${esc(g.short)}</span></span><span class="pb-go">›</span></button>`;
+    view.innerHTML = `<div class="card hero"><div class="big">📖</div><h2 style="margin:8px 0 4px">${t('BaZi glossary')}</h2>
+        <p>${t('All BaZi terms explained in plain words – tap a term for details.')}</p></div>
+      <input id="gl-q" type="search" autocomplete="off" placeholder="${t('Search terms')}" style="margin-bottom:12px">
+      <div class="gl-list" id="gl-list">${GLOSSARY.map(item).join('')}</div>`;
+    const key = (g) => normalize(`${g.term} ${g.short} ${g.py} ${g.zh}`);
+    $('#gl-q').addEventListener('input', (e) => {
+      const qn = normalize(e.target.value);
+      const hits = GLOSSARY.filter((g) => !qn || key(g).includes(qn) || g.zh.includes(e.target.value.trim()));
+      $('#gl-list').innerHTML = hits.length ? hits.map(item).join('') : `<p class="muted">${t('No term found.')}</p>`;
+    });
+    $('#gl-list').addEventListener('click', (e) => { const b = e.target.closest('[data-term]'); if (b) openSheet(glossarySheet(b.dataset.term)); });
+  },
+
   guide() {
     setTitle(t('How to use the app'), true);
     view.innerHTML = `<div class="card hero"><div class="big">🧭</div><h2 style="margin:8px 0 4px">${t('How to use the app')}</h2>
@@ -1045,7 +1082,7 @@ function dayPillarCard(c) {
   const d = c.pillars.day;
   const stages = PILLAR_KEYS.filter((k) => c.pillars[k]).map((k) => { const st = stageOf(c.dayMaster, c.pillars[k].branch);
     return `<div><div class="lbl">${PILLAR_LABEL[k]}</div><div class="dp-stage">${st.zh}</div><div class="small">${st.name}</div></div>`; }).join('');
-  return `<div class="card" data-dm="${c.dayMaster}"><h3 style="margin-top:0">${t('Your day pillar 日柱')}</h3>${dayPillarHtml(d.stem, d.branch)}
+  return `<div class="card" data-dm="${c.dayMaster}"><h3 style="margin-top:0">${t('Your day pillar 日柱')} ${q('daypillar')}</h3>${dayPillarHtml(d.stem, d.branch)}
     <h4>${t('The Day Master’s growth stages in your pillars')}</h4><div class="pillars dp-stages">${stages}</div>
     <p class="small muted">${t('Stages like Peak (帝旺) or Coming of Age (临官) show where the Day Master is strong; Tomb (墓) or Extinction (绝) show where it rests.')} <a href="#/lesson/daymaster">${t('All 60 day pillars')}</a></p></div>`;
 }
@@ -1205,7 +1242,7 @@ function bindCalendarCards() {
 // ---------- symbolic stars ----------
 function starsCard(c) {
   const stars = findStars(c);
-  return `<div class="card"><h3 style="margin-top:0">${t("Symbolic stars 神煞")}</h3>${stars.length
+  return `<div class="card"><h3 style="margin-top:0">${t("Symbolic stars 神煞")} ${q('stars')}</h3>${stars.length
     ? stars.map((st) => `<div class="inter"><b>${st.icon} ${st.name} ${st.zh}</b> <span class="muted small">${pillarListText(st.pillars)}</span><div class="small">${st.desc}</div></div>`).join('')
     : `<p class="muted small">${t("None of the main symbolic stars appear in this chart.")}</p>`}
     <p class="small muted" style="margin-bottom:0"><a href="#/lesson/stars">${t("What are symbolic stars?")}</a></p></div>`;
@@ -1393,7 +1430,7 @@ $('#lang-btn').addEventListener('click', openQuickSettings);
 function router() {
   closeSheet();
   const [, name = 'today', arg] = (location.hash || '#/today').split('/');
-  const tab = { lesson: 'learn', guide: 'learn', about: 'learn', premium: 'learn', match: 'chart', almanac: 'today', forecast: 'chart', influences: 'chart', timeline: 'chart', welcome: '' }[name] ?? name;
+  const tab = { lesson: 'learn', guide: 'learn', glossary: 'learn', about: 'learn', premium: 'learn', match: 'chart', almanac: 'today', forecast: 'chart', influences: 'chart', timeline: 'chart', welcome: '' }[name] ?? name;
   document.body.classList.toggle('no-tabs', name === 'welcome');
   document.body.classList.toggle('on-about', name === 'about');
   document.querySelectorAll('.tabs a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));
