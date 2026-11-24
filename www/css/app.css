@@ -426,3 +426,15 @@ th, td { overflow-wrap: anywhere; }
 .zoom-inner .dg-taiji { width: 40%; height: auto; }
 .zoom-inner .dg-yy-top { flex-wrap: nowrap; font-size: 18px; }
 .zoom-hint { text-align: center; font-size: 13px; color: #6f655c; margin: 6px 0 10px; }
+
+/* Day stars explained */
+.dc-sum { margin: 4px 0 6px; }
+.pts { display: inline-block; min-width: 38px; text-align: center; font: 700 12px/1.6 system-ui, sans-serif; border-radius: 999px; padding: 0 6px; background: var(--surface-2); color: var(--muted); }
+.pts-up { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
+.pts-down { background: color-mix(in srgb, var(--bad) 16%, transparent); color: var(--bad); }
+.pts-list { list-style: none; padding: 0; margin: 0 0 8px; }
+.pts-list li { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid var(--line); }
+.pts-list li .pts { flex: 0 0 auto; margin-top: 2px; }
+.pts-total { border-bottom: 0 !important; }
+.pts-scale { width: 100%; } .pts-scale td { padding: 5px 4px; } .pts-scale tr.on { background: var(--surface-2); font-weight: 600; }
+.dc-stars-sm { color: var(--gold); white-space: nowrap; letter-spacing: 1px; }

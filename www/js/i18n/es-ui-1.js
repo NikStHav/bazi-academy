@@ -227,7 +227,6 @@ export const UI_1 = {
   "Hour pillar": "Pilar de la hora",
   "Hours": "Horas",
   "How charts are calculated": "Cómo se calculan las cartas",
-  "How the stars are counted: helpful elements and harmonies add, clashes subtract, plus the almanac rating of the day.": "Cómo se cuentan las estrellas: los elementos favorables y las armonías suman, los choques restan, y se añade la valoración del almanaque para el día.",
   "How to balance:": "Cómo equilibrarlo:",
   "How to use the app": "Cómo usar la app",
   "How you see each other": "Cómo se ven mutuamente",

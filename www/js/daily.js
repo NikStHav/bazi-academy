@@ -79,19 +79,29 @@ export function dailyReading(chart, date = new Date()) {
   const hours = hoursOfDay(p, chart).filter((h) => h.lucky && h.branch >= 3 && h.branch <= 10).slice(0, 3);
   if (!chart) {
     const score = OFFICER_SCORE[officer.rating] + 0.5;
-    return { personal: false, pillar: p, index, info, officer, stars: starsOf(score), hours,
+    const factors = [{ key: 'base', points: 0.5 }, { key: 'officer', points: OFFICER_SCORE[officer.rating] }];
+    return { personal: false, pillar: p, index, info, officer, score, factors, stars: starsOf(score), hours,
       theme: { icon: '📜', title: officer.name, text: officer.desc, do: firstItems(officer.good, 3), avoid: firstItems(officer.avoid, 2) } };
   }
   const god = tenGod(chart.dayMaster, p.stem);
   const r = rate(chart, p.stem, p.branch);
   const { favourable } = favourableElements(chart);
   const score = r.score + OFFICER_SCORE[officer.rating] - (info.personalClash.length ? 0.5 : 0);
+  // The same points, one by one, so the app can show how the stars come about.
+  const stemEl = STEMS[p.stem].el, branchEl = BRANCHES[p.branch].el, rk = r.relation.key;
+  const factors = [
+    { key: 'stem', el: stemEl, points: favourable.includes(stemEl) ? 1 : 0 },
+    { key: 'branch', el: branchEl, points: favourable.includes(branchEl) ? 1 : 0 },
+    { key: 'rel', rel: r.relation, points: rk === 'clash' ? -1.5 : rk === 'harm' || rk === 'punish' ? -0.5 : rk === 'harmony' || rk === 'trine' ? 0.5 : 0 },
+    { key: 'officer', points: OFFICER_SCORE[officer.rating] },
+    ...(info.personalClash.length ? [{ key: 'pclash', points: -0.5 }] : []),
+  ];
   const base = (THEMES[lang] || EXTRA?.DAILY_THEMES || THEMES.en)[god];
   const theme = { ...base, do: [...base.do.slice(0, 2), firstItems(officer.good, 1)[0]], avoid: [base.avoid[0], firstItems(officer.avoid, 1)[0]] };
   // Lucky element: today's own element if it helps you, else your main favourable element.
   const luckyEl = [STEMS[p.stem].el, BRANCHES[p.branch].el].find((e) => favourable.includes(e)) ?? favourable[0];
   return {
-    personal: true, pillar: p, index, info, officer, god, rating: r, favourable, score, stars: starsOf(score), theme, hours,
+    personal: true, pillar: p, index, info, officer, god, rating: r, favourable, score, factors, stars: starsOf(score), theme, hours,
     elementsHelp: [STEMS[p.stem].el, BRANCHES[p.branch].el].filter((e) => favourable.includes(e)).length,
     lucky: { el: luckyEl, colour: firstItems(ELEMENT_ADVICE[luckyEl].colors, 1)[0], direction: ELEMENTS[luckyEl].direction, numbers: NUMBERS[luckyEl] },
   };

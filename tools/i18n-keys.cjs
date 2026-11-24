@@ -23,7 +23,8 @@ const DYNAMIC = ['Family', 'Partner', 'Friends', 'Clients', 'Work', 'Other', 'wi
   'The Day Master produces the season’s element – it is spending energy.', 'The Day Master must control the season’s element – tiring.',
   'The season controls the Day Master – least seasonal support.',
   'A day to take it slow', 'Mixed – go carefully', 'A balanced day', 'A good day', 'An excellent day',
-  'Active', 'Receptive', 'Bright', 'Dark', 'Warm', 'Cool', 'Day', 'Night', 'Summer', 'Winter', 'Outward, expanding', 'Inward, contracting', 'Sun', 'Moon'];
+  'Active', 'Receptive', 'Bright', 'Dark', 'Warm', 'Cool', 'Day', 'Night', 'Summer', 'Winter', 'Outward, expanding', 'Inward, contracting', 'Sun', 'Moon',
+  'A day to take it easy – rest, routine and patience work best.', 'Some headwind today – fine for routine, go carefully with big steps.', 'An ordinary day – what helps you and what challenges you roughly balance out.', 'A good day – more helps you today than holds you back.', 'Lots of tailwind today – a great day to start things that matter to you.'];
 DYNAMIC.forEach((k) => keys.add(k));
 const list = [...keys].sort();
 if (process.argv[2] === '--missing') {

@@ -1008,6 +1008,44 @@ const routes = {
 // ---------- day pillar profiles ----------
 // ---- Daily card: a wheel of the 60 day pillars that always stops on today, then a reading in three layers ----
 const STAR_LABEL = ['', 'A day to take it slow', 'Mixed – go carefully', 'A balanced day', 'A good day', 'An excellent day'];
+// One plain sentence per star level, for people new to BaZi.
+const STAR_MEANING = ['', 'A day to take it easy – rest, routine and patience work best.',
+  'Some headwind today – fine for routine, go carefully with big steps.',
+  'An ordinary day – what helps you and what challenges you roughly balance out.',
+  'A good day – more helps you today than holds you back.',
+  'Lots of tailwind today – a great day to start things that matter to you.'];
+const fmtPts = (p) => (p === 0 ? '±0' : `${p > 0 ? '+' : '−'}${Math.abs(p).toLocaleString(LOCALE)}`);
+const ptsBadge = (p) => `<span class="pts ${p > 0 ? 'pts-up' : p < 0 ? 'pts-down' : ''}">${fmtPts(p)}</span>`;
+/** The day's points, one plain line per factor. */
+function factorText(f, d) {
+  const el = (e) => `${ELEMENTS[e].zh} ${ELEMENTS[e].name}`;
+  switch (f.key) {
+    case 'stem': return f.points ? t('Today’s stem brings {el} – one of your helpful elements.', { el: el(f.el) }) : t('Today’s stem brings {el} – not one of your helpful elements.', { el: el(f.el) });
+    case 'branch': return f.points ? t('Today’s branch brings {el} – one of your helpful elements.', { el: el(f.el) }) : t('Today’s branch brings {el} – not one of your helpful elements.', { el: el(f.el) });
+    case 'rel': return f.points > 0 ? t('Today’s animal gets on well with your day animal ({rel}).', { rel: f.rel.label })
+      : f.points === -1.5 ? t('Today’s animal clashes with your day animal – things get moving.')
+        : f.points < 0 ? t('A little friction between today’s animal and your day animal ({rel}).', { rel: f.rel.label })
+          : t('No special contact between today’s animal and your day animal.');
+    case 'officer': return t('Traditional almanac: a {name} day – {rating}.', { name: d.officer.name, rating: RATING_LABEL[d.officer.rating] });
+    case 'pclash': return t('Today clashes with your birth animal or your day animal.');
+    case 'base': return t('Without your own chart: an average starting value.');
+    default: return '';
+  }
+}
+function starsSheet(d) {
+  const total = d.factors.reduce((a, f) => a + f.points, 0);
+  const scale = [[5, '2'], [4, '1'], [3, '0'], [2, '−1'], [1, '']];
+  return `<h2 style="margin-top:0">${'★'.repeat(d.stars)}${'☆'.repeat(5 - d.stars)} ${t('{n} of 5 stars', { n: d.stars })}</h2>
+    <p>${t(STAR_MEANING[d.stars])}</p>
+    <h3>${t('How today’s stars come about')}</h3>
+    <ul class="pts-list">${d.factors.map((f) => `<li>${ptsBadge(f.points)}<span>${factorText(f, d)}</span></li>`).join('')}
+      <li class="pts-total">${ptsBadge(total)}<span><b>${t('Total')}</b> → ${t('{n} of 5 stars', { n: d.stars })}: ${t(STAR_LABEL[d.stars])}</span></li></ul>
+    ${d.personal ? '' : `<p class="small">${t('Save your own chart (★) in the <a href="#/chart">Chart</a> tab to see how today relates to your Day Master.')}</p>`}
+    <h3>${t('The star scale')}</h3>
+    <table class="pts-scale">${scale.map(([n, min]) => `<tr class="${n === d.stars ? 'on' : ''}"><td class="dc-stars-sm">${'★'.repeat(n)}${'☆'.repeat(5 - n)}</td><td>${t(STAR_LABEL[n])}</td><td class="small muted nw">${min ? `≥ ${min}` : '< −1'} ${t('points')}</td></tr>`).join('')}</table>
+    <p class="small muted">${t('The stars are a simple guide from traditional BaZi rules, not a prediction. The theme of the day and the tips matter more than the number.')}</p>
+    <p class="small"><a href="javascript:void 0" data-term="daystars">📖 ${t('BaZi glossary')}</a></p>`;
+}
 const plainPillar = (s, b) => `${polEl(s)} · ${BRANCHES[b].animal}`;
 function dayWheelSvg() {
   const R = 118, r = 80, sectors = [];
@@ -1047,10 +1085,12 @@ function dayResultHtml(d, mine) {
     why.push(['clash', 'harmony', 'trine', 'harm', 'punish'].includes(rel.key)
       ? t('<b>Your day branch:</b> today’s {b} and your {n} form a {rel} – {note}.', { b: BRANCHES[p.branch].animal, n: BRANCHES[db].animal, rel: rel.label, note: rel.note })
       : t('<b>Your day branch:</b> no strong interaction with today’s branch.'));
-    why.push(t('<b>Helpful elements:</b> yours are {fav}. Today brings {n} of 2.', { fav: d.favourable.map((e) => ELEMENTS[e].name).join(', '), n: d.elementsHelp }));
+    why[why.length - 1] += ' ' + ptsBadge(d.factors.find((f) => f.key === 'rel').points);
+    why.push(t('<b>Helpful elements:</b> yours are {fav}. Today brings {n} of 2.', { fav: d.favourable.map((e) => ELEMENTS[e].name).join(', '), n: d.elementsHelp }) + ' ' + ptsBadge(d.elementsHelp));
   }
-  why.push(t('<b>Almanac:</b> a {name} day ({zh}) – {rating}.', { name: d.officer.name, zh: d.officer.zh, rating: RATING_LABEL[d.officer.rating] }));
+  why.push(t('<b>Almanac:</b> a {name} day ({zh}) – {rating}.', { name: d.officer.name, zh: d.officer.zh, rating: RATING_LABEL[d.officer.rating] }) + ' ' + ptsBadge(d.factors.find((f) => f.key === 'officer').points));
   return `<div class="dc-head"><span class="dc-stars" aria-label="${d.stars}/5">${stars}</span><span class="dc-label">${t(STAR_LABEL[d.stars])}</span></div>
+    <p class="dc-sum">${t(STAR_MEANING[d.stars])} <a href="javascript:void 0" id="dc-how" class="nw">${t('How are the stars worked out?')} ›</a></p>
     <h3 class="dc-title">${th.icon} ${d.personal ? esc(th.title) : t('{name} day', { name: th.title })}</h3>
     <p>${th.text}</p>
     ${d.info.personalClash.length ? `<p class="tip">${t('Today {what}.', { what: d.info.personalClash.join(t(' and ')) })} ${t('Take it slow with big decisions.')}</p>` : ''}
@@ -1060,7 +1100,7 @@ function dayResultHtml(d, mine) {
     ${d.personal ? '' : `<p class="small">${t('Save your own chart (★) in the <a href="#/chart">Chart</a> tab to see how today relates to your Day Master.')}</p>`}
     <details class="why"><summary>${t('Why? The BaZi behind it')}</summary>
       <ol class="why-steps">${why.map((w) => `<li>${w}</li>`).join('')}</ol>
-      ${d.personal ? `<p class="small muted">${t('How the stars are counted: helpful elements and harmonies add, clashes subtract, plus the almanac rating of the day.')}</p>` : ''}
+      <p class="small muted">${t('The numbers are the points behind today’s stars.')} <a href="javascript:void 0" class="dc-how2">${t('How are the stars worked out?')} ›</a></p>
       <p class="small">${t('Learn more:')} <a href="#/lesson/tengods">${t('The Ten Gods')}</a> · <a href="#/lesson/interactions">${t('Branch Interactions')}</a> · <a href="#/lesson/useful">${t('Useful God & Balance')}</a></p>
     </details>
     <p class="small muted dc-note">${t('Same day, same result: BaZi calculates your day – it is not chance.')} <a href="javascript:void 0" id="dw-again">${t('Turn again')}</a></p>`;
@@ -1094,7 +1134,7 @@ function bindDayCard(d, now) {
     requestAnimationFrame(frame);
   };
   btn.addEventListener('click', spin);
-  res.addEventListener('click', (e) => { if (e.target.id === 'dw-again') spin(); });
+  res.addEventListener('click', (e) => { if (e.target.id === 'dw-again') spin(); else if (e.target.closest('#dc-how, .dc-how2')) openSheet(starsSheet(d)); });
   if (state.settings.dayCard === key) finish();
 }
 
