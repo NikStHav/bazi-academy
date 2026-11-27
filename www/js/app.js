@@ -26,7 +26,8 @@ import { MONTH_TEXT } from './forecast.js';
 import { dayPillarProfile } from './daypillars.js';
 import { stageOf } from './stages.js';
 import { GUIDE } from './guide.js';
-import { elementsCycleHtml, yinYangHtml, stemPicturesHtml, branchWheelHtml, relationsHtml, bindDiagrams, bindRelations } from './diagrams.js';
+import { lessonRound } from './lesson-quiz.js';
+import { elementsCycleHtml, yinYangHtml, stemPicturesHtml, branchWheelHtml, relationsHtml, relListHtml, bindDiagrams, bindRelations } from './diagrams.js';
 import { GLOSSARY, glossaryEntry } from './glossary.js';
 import { normalize } from './places.js';
 import { STORE_LINKS } from './store-links.js';
@@ -198,6 +199,11 @@ const WIDGETS = {
   cycle: elementsCycleHtml,
   yinyang: yinYangHtml,
   wheel: relationsHtml,
+  'rel-clash': () => relListHtml('clash'),
+  'rel-six': () => relListHtml('six'),
+  'rel-three': () => relListHtml('three'),
+  'rel-season': () => relListHtml('season'),
+  'rel-harm': () => relListHtml('harm'),
   stems: stemPicturesHtml,
   branches: branchWheelHtml,
   jiazi: () => { const cur = pillarsForNow().year.index;
@@ -456,10 +462,12 @@ const routes = {
       <div class="row">${idx > 0 ? `<a class="btn secondary" href="#/lesson/${LESSONS[idx - 1].id}">${t("‹ Previous")}</a>` : ''}
         ${next ? `<a class="btn" href="#/lesson/${next.id}">${t("Next ›")}</a>` : `<a class="btn" href="#/quiz">${t("Go to the quiz ›")}</a>`}</div>`;
     renderWidgets(view);
-    runQuiz($('#lq-body'), l.quiz, (score) => {
-      if (score >= Math.ceil(l.quiz.length / 2)) { state.done[l.id] = true; save('done'); }
-      return score >= Math.ceil(l.quiz.length / 2) ? t('Lesson completed ✓') : t('Read the lesson again and retry to complete it.');
-    });
+    // 5 questions from a pool of 20+; "Try again" keeps 3 and brings 2 new ones.
+    const startQuiz = (retry) => runQuiz($('#lq-body'), lessonRound(l.id, 5, retry), (score) => {
+      if (score >= 3) { state.done[l.id] = true; save('done'); }
+      return `${score >= 3 ? t('Lesson completed ✓') : t('Read the lesson again and retry to complete it.')}<br><span class="small muted">${t('Try again: 3 questions stay, 2 new ones come in.')}</span>`;
+    }, () => startQuiz(true));
+    startQuiz(false);
   },
 
   chart(id) {

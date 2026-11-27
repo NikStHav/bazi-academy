@@ -82,15 +82,20 @@ export const LESSONS_2 = [
     body: `
 <p>Zweige wirken aufeinander ein. Die wichtigsten Wechselwirkungen:</p>
 <h3>Sechs Zusammenstöße 六冲 – Gegenüber auf dem Tierkreis</h3>
-<p>子午 · 丑未 · 寅申 · 卯酉 · 辰戌 · 巳亥 – Bewegung, Wandel, Konflikt. Ein Zusammenstoß mit dem Tageszweig kann den Beziehungspalast berühren.</p>
+<p>Tiere, die sich auf dem Rad gegenüberstehen – Bewegung, Wandel, Konflikt. Ein Zusammenstoß mit dem Tageszweig kann den Beziehungspalast berühren.</p>
+<div data-widget="rel-clash"></div>
 <h3>Sechs Harmonien 六合</h3>
-<p>子丑 · 寅亥 · 卯戌 · 辰酉 · 巳申 · 午未 – Bindungen, Anziehung, Zusammenarbeit.</p>
+<p>Bindungen, Anziehung, Zusammenarbeit – jedes Paar neigt zu einem Element.</p>
+<div data-widget="rel-six"></div>
 <h3>Drei Harmonien 三合</h3>
-<p>申子辰 Wasser · 亥卯未 Holz · 寅午戌 Feuer · 巳酉丑 Metall – ein kraftvoller Rahmen, der ein Element stärkt. Zwei von drei einschließlich der Mitte (子 卯 午 酉) bilden eine halbe Kombination.</p>
+<p>Ein kraftvoller Rahmen, der ein Element stärkt. Zwei der drei bilden eine halbe Kombination, wenn eines davon das mittlere Tier ist (子 Ratte, 卯 Hase, 午 Pferd, 酉 Hahn).</p>
+<div data-widget="rel-three"></div>
 <h3>Richtungskombinationen 三会</h3>
-<p>Die drei Zweige einer Jahreszeit: 寅卯辰 Holz, 巳午未 Feuer, 申酉戌 Metall, 亥子丑 Wasser.</p>
+<p>Die drei Tiere einer Jahreszeit zusammen:</p>
+<div data-widget="rel-season"></div>
 <h3>Strafen 刑 und Schäden 害</h3>
-<p>寅巳申 und 丑戌未 sind die klassischen drei Strafen; 子卯 ist die „unhöfliche“ Strafe. Schäden (子未, 丑午, 寅巳, 卯辰, 申亥, 酉戌) deuten auf verborgene Reibung hin.</p>
+<p>Die klassischen Strafen bringen Spannung und Verpflichtungen; 子 Ratte und 卯 Hase bilden die „unhöfliche“ Strafe. Schäden deuten auf verborgene Reibung hin.</p>
+<div data-widget="rel-harm"></div>
 <div data-widget="wheel"></div>`,
     quiz: [
       { q: 'Welcher Zweig stößt mit 子 Ratte zusammen?', options: ['丑 Büffel', '午 Pferd', '卯 Hase', '酉 Hahn'], answer: 1, explain: 'Gegenüber: 子午 stoßen zusammen.' },

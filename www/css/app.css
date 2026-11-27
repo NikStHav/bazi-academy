@@ -438,3 +438,6 @@ th, td { overflow-wrap: anywhere; }
 .pts-total { border-bottom: 0 !important; }
 .pts-scale { width: 100%; } .pts-scale td { padding: 5px 4px; } .pts-scale tr.on { background: var(--surface-2); font-weight: 600; }
 .dc-stars-sm { color: var(--gold); white-space: nowrap; letter-spacing: 1px; }
+.rel-list { list-style: none; padding: 0; margin: 6px 0 10px; display: grid; gap: 6px; }
+.rel-list li { background: var(--surface-2); border-radius: 10px; padding: 7px 10px; line-height: 1.7; }
+.dg-tag-harm { background: var(--earth); }

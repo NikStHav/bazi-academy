@@ -175,7 +175,7 @@ function relSvg(mode, sel) {
 }
 function relCaption(mode, sel) {
   const head = `<p class="small dg-rel-txt">${REL_TEXT()[mode]}${mode === 'harm' ? ` <span class="muted">${t('Solid: harm · dashed: punishment · ringed animals punish themselves.')}</span>` : ''}</p>`;
-  if (sel === null) return `${head}<p class="small muted dg-hint">👆 ${t('Tap an animal to see all its relations.')}</p>`;
+  if (sel === null) return `${head}${relListHtml(mode === 'clash' ? 'clash' : mode === 'six' ? 'six' : mode === 'three' ? 'three' : 'harm')}<p class="small muted dg-hint">👆 ${t('Tap an animal to see all its relations.')}</p>`;
   const nm = (i) => `<b class="tx-${BRANCHES[i].el}">${BRANCHES[i].zh} ${BRANCHES[i].animal}</b>`;
   const el = (e) => `<b class="tx-${e}">${ELEMENTS[e].zh} ${ELEMENTS[e].name}</b>`;
   const six = SIX_HARMONY.find(([a, b]) => a === sel || b === sel), three = THREE_HARMONY.find((g) => g.slice(0, 3).includes(sel));
@@ -207,3 +207,22 @@ export function bindRelations(root) {
     box.addEventListener('keydown', (e) => { const n = e.target.closest('[data-rel]'); if (n && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); const i = Number(n.dataset.rel); sel = sel === i ? null : i; draw(); } });
   });
 }
+
+// ---------- 6. The relations written out: animals and elements instead of bare characters ----------
+const DIRECTIONAL = [[2, 3, 4, 0], [5, 6, 7, 1], [8, 9, 10, 3], [11, 0, 1, 4]];
+const bName = (i) => `<span class="nw"><b class="tx-${BRANCHES[i].el}">${BRANCHES[i].zh}</b> ${BRANCHES[i].animal}</span>`;
+const eName = (e) => `<span class="nw"><b class="tx-${e}">${ELEMENTS[e].zh}</b> ${ELEMENTS[e].name}</span>`;
+/** A plain list of one kind of branch relation, e.g. "申 Monkey · 子 Rat · 辰 Dragon → 水 Water". */
+export function relListHtml(kind) {
+  let rows = [];
+  if (kind === 'clash') rows = range6().map((i) => `${bName(i)} ⟷ ${bName(i + 6)}`);
+  if (kind === 'six') rows = SIX_HARMONY.map(([a, b, el]) => `${bName(a)} + ${bName(b)} → ${eName(el)}`);
+  if (kind === 'three') rows = THREE_HARMONY.map(([a, b, c, el]) => `${bName(a)} · ${bName(b)} · ${bName(c)} → ${eName(el)}`);
+  if (kind === 'season') rows = DIRECTIONAL.map(([a, b, c, el]) => `${bName(a)} · ${bName(b)} · ${bName(c)} → ${eName(el)} <span class="muted">(${ELEMENTS[el].season})</span>`);
+  if (kind === 'harm') rows = [
+    ...PUNISH.map((g) => `<span class="dg-tag dg-tag-ctl">${t('Punishment')}</span> ${g.map(bName).join(' · ')}`),
+    `<span class="dg-tag dg-tag-ctl">${t('Self-punishment')}</span> ${SELF_PUNISH.map(bName).join(' · ')}`,
+    ...HARMS.map(([a, b]) => `<span class="dg-tag dg-tag-harm">${t('Harm')}</span> ${bName(a)} ⟷ ${bName(b)}`)];
+  return `<ul class="rel-list">${rows.map((r) => `<li>${r}</li>`).join('')}</ul>`;
+}
+const range6 = () => [0, 1, 2, 3, 4, 5];

@@ -214,15 +214,20 @@ const LESSONS_EN = [
     body: `
 <p>Branches interact with each other. The most important interactions:</p>
 <h3>Six Clashes 六冲 – opposites on the zodiac wheel</h3>
-<p>子午 · 丑未 · 寅申 · 卯酉 · 辰戌 · 巳亥 – movement, change, conflict. A clash with the day branch can affect the relationship palace.</p>
+<p>Animals opposite each other on the wheel – movement, change, conflict. A clash with the day branch can affect the relationship palace.</p>
+<div data-widget="rel-clash"></div>
 <h3>Six Harmonies 六合</h3>
-<p>子丑 · 寅亥 · 卯戌 · 辰酉 · 巳申 · 午未 – bonds, attraction, cooperation.</p>
+<p>Bonds, attraction, cooperation – each pair leans towards an element.</p>
+<div data-widget="rel-six"></div>
 <h3>Three Harmonies 三合</h3>
-<p>申子辰 Water · 亥卯未 Wood · 寅午戌 Fire · 巳酉丑 Metal – a powerful frame that strengthens one element. Two of three including the centre (子 卯 午 酉) form a half combination.</p>
+<p>A powerful frame that strengthens one element. Two of the three, if one of them is the middle animal (子 Rat, 卯 Rabbit, 午 Horse, 酉 Rooster), form a half combination.</p>
+<div data-widget="rel-three"></div>
 <h3>Directional combinations 三会</h3>
-<p>The three branches of one season: 寅卯辰 Wood, 巳午未 Fire, 申酉戌 Metal, 亥子丑 Water.</p>
+<p>The three animals of one season together:</p>
+<div data-widget="rel-season"></div>
 <h3>Punishments 刑 and Harms 害</h3>
-<p>寅巳申 and 丑戌未 are the classic three punishments; 子卯 is the “uncivil” punishment. Harms (子未, 丑午, 寅巳, 卯辰, 申亥, 酉戌) indicate hidden friction.</p>
+<p>The classic punishments bring tension and obligations; 子 Rat and 卯 Rabbit form the “uncivil” punishment. Harms indicate hidden friction.</p>
+<div data-widget="rel-harm"></div>
 <div data-widget="wheel"></div>`,
     quiz: [
       { q: 'Which branch clashes with 子 Rat?', options: ['丑 Ox', '午 Horse', '卯 Rabbit', '酉 Rooster'], answer: 1, explain: 'Opposites: 子午 clash.' },

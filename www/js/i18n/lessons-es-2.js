@@ -82,15 +82,20 @@ export const LESSONS_2 = [
     body: `
 <p>Las ramas interactúan entre sí. Las interacciones más importantes:</p>
 <h3>Seis Choques 六冲 – opuestos en la rueda del zodiaco</h3>
-<p>子午 · 丑未 · 寅申 · 卯酉 · 辰戌 · 巳亥 – movimiento, cambio, conflicto. Un choque con la rama del día puede afectar al palacio de la relación.</p>
+<p>Animales enfrentados en la rueda – movimiento, cambio, conflicto. Un choque con la rama del día puede afectar al palacio de la relación.</p>
+<div data-widget="rel-clash"></div>
 <h3>Seis Armonías 六合</h3>
-<p>子丑 · 寅亥 · 卯戌 · 辰酉 · 巳申 · 午未 – vínculos, atracción, cooperación.</p>
+<p>Vínculos, atracción, cooperación – cada pareja tiende hacia un elemento.</p>
+<div data-widget="rel-six"></div>
 <h3>Triple Armonía 三合</h3>
-<p>申子辰 Agua · 亥卯未 Madera · 寅午戌 Fuego · 巳酉丑 Metal – un marco poderoso que refuerza un elemento. Dos de tres, incluido el centro (子 卯 午 酉), forman una media combinación.</p>
+<p>Un marco poderoso que refuerza un elemento. Dos de los tres forman una media combinación si uno de ellos es el animal del centro (子 Rata, 卯 Conejo, 午 Caballo, 酉 Gallo).</p>
+<div data-widget="rel-three"></div>
 <h3>Combinaciones direccionales 三会</h3>
-<p>Las tres ramas de una estación: 寅卯辰 Madera, 巳午未 Fuego, 申酉戌 Metal, 亥子丑 Agua.</p>
+<p>Los tres animales de una estación juntos:</p>
+<div data-widget="rel-season"></div>
 <h3>Castigos 刑 y daños 害</h3>
-<p>寅巳申 y 丑戌未 son los tres castigos clásicos; 子卯 es el castigo «descortés». Los daños (子未, 丑午, 寅巳, 卯辰, 申亥, 酉戌) indican fricciones ocultas.</p>
+<p>Los castigos clásicos traen tensión y obligaciones; 子 Rata y 卯 Conejo forman el castigo «descortés». Los daños indican fricciones ocultas.</p>
+<div data-widget="rel-harm"></div>
 <div data-widget="wheel"></div>`,
     quiz: [
       { q: '¿Qué rama choca con 子 Rata?', options: ['丑 Buey', '午 Caballo', '卯 Conejo', '酉 Gallo'], answer: 1, explain: 'Opuestos: 子午 chocan.' },
