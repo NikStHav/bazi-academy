@@ -487,9 +487,13 @@ const routes = {
         ${next ? `<a class="btn" style="margin-top:14px;background:var(--gold);color:#1b1410" href="#/lesson/${next.id}">${done ? t('Continue') : t('Start')}: ${next.title}</a>` : ''}</div>
       <a class="card premium-banner" href="#/guide"><span class="pb-icon">🧭</span><span><b>${t('How to use the app')}</b> · ${t('get the most out of BaZi Academy')}</span><span class="pb-go">›</span></a>
       ${premium.isPremium() ? '' : premium.WEB ? `<a class="card premium-banner" href="#/premium"><span class="pb-icon">📱</span><span><b>${t('Get the app')}</b> · ${t('lessons {a}–{b}, unlimited charts and detailed readings', { a: premium.FREE_LESSONS + 1, b: LESSONS.length })}</span><span class="pb-go">›</span></a>` : `<a class="card premium-banner" href="#/premium"><span class="pb-icon">✦</span><span><b>${t("Premium")}</b> · ${t('unlock lessons {a}–{b}, unlimited charts and detailed readings', { a: premium.FREE_LESSONS + 1, b: LESSONS.length })}</span><span class="pb-go">›</span></a>`}
-      <div class="list">${LESSONS.map((l, i) => `<a class="card lesson-item ${state.done[l.id] ? 'done' : ''} ${premium.lessonIsLocked(i) ? 'locked' : ''}" href="#/lesson/${l.id}">
+      ${[...new Set(LESSONS.map((l) => l.level))].map((lvl) => { const group = LESSONS.filter((l) => l.level === lvl); const gd = group.filter((l) => state.done[l.id]).length;
+        return `<div class="lvl-head"><h3>${t(lvl)}</h3><span class="small muted">${t('{done} of {n}', { done: gd, n: group.length })}</span></div>
+        <div class="progress lvl-prog"><i style="width:${(gd / group.length) * 100}%"></i></div>
+        <div class="list">${group.map((l) => { const i = LESSONS.indexOf(l); const here = next && l.id === next.id;
+          return `<a class="card lesson-item ${state.done[l.id] ? 'done' : ''} ${here ? 'here' : ''} ${premium.lessonIsLocked(i) ? 'locked' : ''}" href="#/lesson/${l.id}">
         <span class="badge">${premium.lessonIsLocked(i) ? '🔒' : state.done[l.id] ? '✓' : l.zh.slice(0, 2)}</span>
-        <span><span class="lvl">${i + 1} · ${t(l.level)}${i >= premium.FREE_LESSONS && !premium.FREE_APP ? t(' · Premium') : ''}</span><div class="t">${l.title} <span class="muted" style="font-family:var(--serif);font-weight:400">${l.zh}</span></div><div class="s">${l.summary}</div></span></a>`).join('')}</div>
+        <span><span class="lvl">${t('Lesson {n}', { n: i + 1 })}${i >= premium.FREE_LESSONS && !premium.FREE_APP ? t(' · Premium') : ''}${here ? ` <span class="here-tag">📍 ${t('You are here')}</span>` : ''}</span><div class="t">${l.title} <span class="muted" style="font-family:var(--serif);font-weight:400">${l.zh}</span></div><div class="s">${l.summary}</div></span></a>`; }).join('')}</div>`; }).join('')}
       <a class="card premium-banner" href="#/glossary"><span class="pb-icon">📖</span><span><b>${t('BaZi glossary')}</b> · ${t('all terms explained in plain words')}</span><span class="pb-go">›</span></a>
       <a class="card about-link" href="#/about"><span>ⓘ</span><span><b>${t('Settings, support & backup')}</b><br><span class="small muted">${t('Language, text size, contact, backup and new phone')}</span></span><span class="pb-go">›</span></a>`;
   },
@@ -583,6 +587,18 @@ const routes = {
   },
 
   quiz(cat) {
+    const lessonQ = cat && cat.startsWith('lesson-') ? LESSONS.find((l) => 'lesson-' + l.id === cat) : null;
+    if (lessonQ) {
+      setTitle(t('Quiz: {name}', { name: lessonQ.title }), true);
+      view.innerHTML = '<div class="card" id="qz"></div>';
+      runQuiz($('#qz'), lessonRound(lessonQ.id, 10), (score) => {
+        const prev = state.best[cat] || 0;
+        if (score > prev) { state.best[cat] = score; save('best'); }
+        return `${score > prev && prev ? t('New personal best! 🎉') : score === 10 ? t('Perfect score! 🎉') : t('Best: {n}/10', { n: Math.max(score, prev) })}
+          <br><a class="small" href="#/lesson/${lessonQ.id}">📘 ${t('Read the lesson again')}</a>`;
+      }, () => routes.quiz(cat));
+      return;
+    }
     if (cat && (CATEGORIES[cat] || cat === 'mixed')) {
       const name = cat === 'mixed' ? t('Mixed') : CATEGORIES[cat].name;
       setTitle(t('Quiz: {name}', { name }), true);
@@ -596,9 +612,24 @@ const routes = {
     }
     setTitle(t('Quiz'));
     const cats = [...Object.entries(CATEGORIES), ['mixed', { name: t('Mixed'), zh: '综合' }]];
-    view.innerHTML = `<p class="muted">${t("Endless practice: every round has 10 freshly generated questions.")}</p>
+    const AFTER = { elements: 'elements', stems: 'stems', branches: 'branches', hidden: 'hidden', tengods: 'tengods' };
+    const doneL = LESSONS.filter((l) => state.done[l.id]);
+    const lastDone = doneL[doneL.length - 1], next = LESSONS.find((l) => !state.done[l.id]);
+    const lessonNo = (id) => LESSONS.findIndex((l) => l.id === id) + 1;
+    const rec = !doneL.length
+      ? `<a class="card premium-banner rec" href="#/lesson/${LESSONS[0].id}"><span class="pb-icon">💡</span><span><b>${t('Recommended for you')}</b><br><span class="small">${t('New here? Read lesson 1 first – each lesson ends with a short quiz.')}</span></span><span class="pb-go">›</span></a>`
+      : `<a class="card premium-banner rec" href="#/quiz/lesson-${lastDone.id}"><span class="pb-icon">💡</span><span><b>${t('Recommended for you')}</b><br><span class="small">${t('Practise what you learned last: {title}', { title: lastDone.title })}</span></span><span class="pb-go">›</span></a>`;
+    const bestTxt = (k) => (state.best[k] !== undefined ? t('Best {n}/10', { n: state.best[k] }) : t('Not played yet'));
+    view.innerHTML = `${rec}
+      <h3 class="sec-head">${t('Quiz per lesson')}</h3>
+      <p class="small muted" style="margin-top:-4px">${t('10 questions about one lesson. Lessons you have not read yet are marked – you can still try them.')}</p>
+      <div class="card qz-lessons">${LESSONS.map((l, i) => `<a class="qz-row ${next && l.id === next.id ? 'here' : ''}" href="#/quiz/lesson-${l.id}">
+        <span class="qz-n ${state.done[l.id] ? 'ok' : ''}">${state.done[l.id] ? '✓' : i + 1}</span>
+        <span class="qz-t"><b>${l.title}</b><br><span class="small muted">${state.done[l.id] ? bestTxt('lesson-' + l.id) : next && l.id === next.id ? t('Your next lesson') : t('Not read yet')}</span></span><span class="pb-go">›</span></a>`).join('')}</div>
+      <h3 class="sec-head">${t('Endless practice')}</h3>
+      <p class="small muted" style="margin-top:-4px">${t("Endless practice: every round has 10 freshly generated questions.")}</p>
       <div class="cat-grid">${cats.map(([k, c]) => `<button class="cat" data-cat="${k}"><div class="zh">${c.zh}</div><div><b>${c.name}</b></div>
-        <div class="best">${state.best[k] !== undefined ? t('Best {n}/10', { n: state.best[k] }) : t('Not played yet')}</div></button>`).join('')}</div>`;
+        <div class="best">${bestTxt(k)}</div>${AFTER[k] && !state.done[AFTER[k]] ? `<div class="small muted">💡 ${t('Tip: read lesson {n} first', { n: lessonNo(AFTER[k]) })}</div>` : ''}</button>`).join('')}</div>`;
     view.querySelectorAll('[data-cat]').forEach((b) => b.addEventListener('click', () => go('#/quiz/' + b.dataset.cat)));
   },
 
@@ -615,7 +646,16 @@ const routes = {
     const lToday = lunarDate(now.getFullYear(), now.getMonth() + 1, now.getDate());
     const mToday = moonAge(now.getTime());
     const daily = dailyReading(myC, now);
+    const alm = dayInfo(now.getFullYear(), now.getMonth() + 1, now.getDate(), myC);
+    const luckyH = hoursOfDay(p.day, myC).filter((x) => x.lucky);
+    const moreOpen = !!state.settings.todayMore;
     view.innerHTML = `${dayCardHtml(daily, mine)}
+      <div class="card today-brief"><h3 style="margin-top:0">${now.toLocaleDateString(LOCALE, { weekday: 'long', day: 'numeric', month: 'long' })}</h3>
+        <p><span class="officer r-${alm.officer.rating}">${alm.officer.zh}</span> <b>${t('{name} day', { name: alm.officer.name })}</b> – ${RATING_LABEL[alm.officer.rating]}<br>
+        <span class="small"><b>${t("Good for:")}</b> ${alm.officer.good}</span></p>
+        <p class="small" style="margin-bottom:0"><b>${t('Lucky hours today:')}</b> ${luckyH.map((x) => `${x.range} ${BRANCHES[x.branch].animal}`).join(' · ') || '–'}</p></div>
+      <details class="today-more" id="today-more" ${moreOpen ? 'open' : ''}><summary class="card more-sum"><span><b>${t('More about today')}</b><br>
+        <span class="small muted">${t('Pillars of the day, Chinese clock, almanac, solar term and more')}</span></span></summary>
       <div class="card"><h2 style="margin-top:0">${now.toLocaleDateString(LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</h2>
       <p style="margin-top:-4px"><a href="#/calendar" style="text-decoration:none"><span style="font-family:var(--serif)">${lToday ? lToday.label : ''}</span> · ${mToday.icon} ${mToday.illumination}% · ${t('Lunar calendar')} ›</a></p>
       ${pillarsHtml(pseudo, false).replace(t('Day Master'), t('Day'))}
@@ -628,7 +668,8 @@ const routes = {
       <div class="card"><h3 style="margin-top:0">${t("Next solar term")}</h3>
         <p><span style="font-family:var(--serif);font-size:22px">${nextTerm.zh}</span> ${nextTerm.name}<br>
         <span class="muted">${fmtDate(nextTerm.ms)} – ${t('the {animal} {zh} month begins.', { animal: BRANCHES[(nextIdx + 2) % 12].animal, zh: BRANCHES[(nextIdx + 2) % 12].zh })}</span></p></div>
-      <div class="card"><h3 style="margin-top:0">${t("Character of the day")}</h3>${stemSheet(p.day.stem)}</div>`;
+      <div class="card"><h3 style="margin-top:0">${t("Character of the day")}</h3>${stemSheet(p.day.stem)}</div></details>`;
+    $('#today-more').addEventListener('toggle', (e) => { state.settings.todayMore = e.target.open; save('settings'); });
     bindNotifyCard();
     bindClock(now, myC);
     bindDayCard(daily, now);
