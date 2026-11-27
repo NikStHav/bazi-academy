@@ -545,4 +545,6 @@ export const UI_3 = {
   "You are here": "Estás aquí",
   "Your next lesson": "Tu próxima lección",
   "{done} of {n}": "{done} de {n}",
+  "The gold frame marks your Day Master – that is you.": "El marco dorado señala tu Maestro del Día – ese eres tú.",
+  "{b} holds only one hidden stem – that is normal for this branch.": "{b} contiene solo un tallo oculto – es lo normal en esta rama.",
 };

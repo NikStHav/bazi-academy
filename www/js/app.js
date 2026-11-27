@@ -314,7 +314,8 @@ function chartHtml(entry) {
       ${c.solarCorrectionMin ? ` · ${t('true solar time {m} min', { m: (c.solarCorrectionMin > 0 ? '+' : '') + c.solarCorrectionMin })}` : ''}</div>
     ${viewToggleHtml()}
     <div style="margin-top:8px">${pillarsHtml(c)}</div>
-    <p class="small muted" style="margin-bottom:0">${t('Tap any character for its meaning.')} ${t('Under each branch: its hidden stems.')}</p>
+    <p class="small muted" style="margin-bottom:0">${t('Tap any character for its meaning.')} ${t('The gold frame marks your Day Master – that is you.')} ${t('Under each branch: its hidden stems.')}${(() => { const one = PILLAR_KEYS.map((k) => c.pillars[k]).filter((p) => p && BRANCHES[p.branch].hidden.length === 1).map((p) => p.branch);
+      return one.length ? ' ' + t('{b} holds only one hidden stem – that is normal for this branch.', { b: [...new Set(one)].map((x) => `${BRANCHES[x].zh}\u00a0${BRANCHES[x].animal}`).join(', ') }) : ''; })()}</p>
     <p class="small" style="margin:6px 0 0">${t('New to BaZi?')} ${['pillar', 'daymaster', 'tengods', 'hidden'].map((id) => `<a href="javascript:void 0" data-term="${id}">${esc(glossaryEntry(id).term)}</a>`).join(' · ')} · <a href="#/glossary">${t('All terms')} ›</a></p>
   </div>
   <div class="card"><h3 style="margin-top:0">${t('In a nutshell')}</h3>${threeThingsHtml(c)}
