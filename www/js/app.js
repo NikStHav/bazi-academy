@@ -27,7 +27,7 @@ import { dayPillarProfile } from './daypillars.js';
 import { stageOf } from './stages.js';
 import { GUIDE } from './guide.js';
 import { lessonRound } from './lesson-quiz.js';
-import { elementsCycleHtml, yinYangHtml, stemPicturesHtml, branchWheelHtml, relationsHtml, relListHtml, bindDiagrams, bindRelations } from './diagrams.js';
+import { elementsCycleHtml, yinYangHtml, stemPicturesHtml, branchWheelHtml, relationsHtml, relListHtml, threeLifeHtml, lifeStagesHtml, bindDiagrams, bindRelations, bindLife } from './diagrams.js';
 import { GLOSSARY, glossaryEntry } from './glossary.js';
 import { normalize } from './places.js';
 import { STORE_LINKS } from './store-links.js';
@@ -98,6 +98,11 @@ function threeHarmony(b) {
   const g = [start, (start + 4) % 12, (start + 8) % 12];
   return `${g.map((x) => `${BRANCHES[x].zh}\u00a0${BRANCHES[x].animal}`).join(' · ')} → ${ELEMENTS[BRANCHES[g[1]].el].name}`;
 }
+function lifeSentence(b) {
+  const start = [b, (b + 4) % 12, (b + 8) % 12].find((x) => x % 3 === 2);
+  const nm = (x) => `${BRANCHES[x].zh}\u00a0${BRANCHES[x].animal}`;
+  return t('{el} is born in {a}, strongest in {b} and stored in {c}.', { el: ELEMENTS[BRANCHES[(start + 4) % 12].el].name, a: nm(start), b: nm((start + 4) % 12), c: nm((start + 8) % 12) });
+}
 function branchSheet(b) {
   const br = BRANCHES[b];
   return `<div class="head">${branchTile(b)}<div><h2 style="margin:0">${br.zh} ${br.py} – ${br.animal}</h2>
@@ -106,7 +111,8 @@ function branchSheet(b) {
     <tr><th>${t("Hidden stems")}</th><td>${br.hidden.map((s, i) => `<span class="tx-${STEMS[s].el}" style="font-family:var(--serif);font-size:18px">${STEMS[s].zh}</span> ${[t('main'), t('middle'), t('residual')][i]}`).join(' · ')}</td></tr>
     <tr><th>${t("Clashes with")}</th><td>${BRANCHES[(b + 6) % 12].zh} ${BRANCHES[(b + 6) % 12].animal}</td></tr>
     <tr><th>${t("Six Harmony")}</th><td>${BRANCHES[(13 - b) % 12].zh} ${BRANCHES[(13 - b) % 12].animal}</td></tr>
-    <tr><th>${t("Three Harmony")}</th><td>${threeHarmony(b)}</td></tr></table>`;
+    <tr><th>${t("Three Harmony")}</th><td>${threeHarmony(b)}</td></tr></table>
+    <p class="small muted">${lifeSentence(b)} <a href="#/lesson/interactions">${t('Why?')}</a></p>`;
 }
 function godSheet(key) {
   const g = TEN_GODS[key];
@@ -210,6 +216,8 @@ const WIDGETS = {
   'rel-three': () => relListHtml('three'),
   'rel-season': () => relListHtml('season'),
   'rel-harm': () => relListHtml('harm'),
+  'three-life': threeLifeHtml,
+  'life-stages': lifeStagesHtml,
   stems: stemPicturesHtml,
   branches: branchWheelHtml,
   jiazi: () => { const cur = pillarsForNow().year.index;
@@ -238,6 +246,7 @@ function renderWidgets(root) {
   root.querySelectorAll('[data-widget]').forEach((el) => { const w = WIDGETS[el.dataset.widget]; if (w) el.innerHTML = w(); });
   bindDiagrams(root);
   bindRelations(root);
+  bindLife(root);
   // A magnifier on every lesson picture: opens it full-screen, zoomable.
   root.querySelectorAll('.dg').forEach((d) => {
     if (d.querySelector(':scope > .dg-tools')) return;
@@ -1168,7 +1177,7 @@ function dayPillarCard(c) {
     return `<div><div class="lbl">${PILLAR_LABEL[k]}</div><div class="dp-stage">${st.zh}</div><div class="small">${st.name}</div></div>`; }).join('');
   return `<div class="card" data-dm="${c.dayMaster}"><h3 style="margin-top:0">${t('Your day pillar 日柱')} ${q('daypillar')}</h3>${dayPillarHtml(d.stem, d.branch)}
     <h4>${t('The Day Master’s growth stages in your pillars')}</h4><div class="pillars dp-stages">${stages}</div>
-    <p class="small muted">${t('Stages like Peak (帝旺) or Coming of Age (临官) show where the Day Master is strong; Tomb (墓) or Extinction (绝) show where it rests.')} <a href="#/lesson/daymaster">${t('All 60 day pillars')}</a></p></div>`;
+    <p class="small muted">${t('Stages like Peak (帝旺) or Coming of Age (临官) show where the Day Master is strong; Tomb (墓) or Extinction (绝) show where it rests.')} <a href="#/lesson/lifestages">${t('The twelve growth stages')}</a> · <a href="#/lesson/daymaster">${t('All 60 day pillars')}</a></p></div>`;
 }
 
 // ---------- chart management ----------

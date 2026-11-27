@@ -4,6 +4,7 @@
 import { STEMS, BRANCHES, ELEMENTS, TEN_GODS } from './data.js';
 import { tenGod, seasonPhase, SEASON_PHASES, pillarFromIndex, pillarName } from './bazi.js';
 import { STARS } from './shensha.js';
+import { STAGES, stageBranch, stageOf } from './stages.js';
 import { LESSONS } from './lessons.js';
 import { t } from './i18n.js';
 
@@ -131,6 +132,8 @@ const GEN = {
     ...THREE.map((g) => mc(t('Which element does the Three Harmony {g} strengthen?', { g: g.slice(0, 3).map(bL).join(' · ') }), elN(g[3]), ELS, t('{g} → {el}.', { g: groupName(g), el: elN(g[3]) }))),
     ...range(12).map((b) => { const g = THREE.find((x) => x.slice(0, 3).includes(b));
       return mc(t('In which element team (Three Harmony) is {x}?', { x: bL(b) }), elN(g[3]), [0, 1, 3, 4].map(elN), t('{g} → {el}.', { g: g.slice(0, 3).map(bL).join(' · '), el: elN(g[3]) })); }),
+    ...THREE.flatMap(([a, b, c, el]) => { const why = t('{el} is born in {a}, strongest in {b} and stored in {c}.', { el: elN(el), a: bL(a), b: bL(b), c: bL(c) });
+      return [[t('Where is {el} born?'), a], [t('Where is {el} strongest?'), b], [t('Where is {el} stored?'), c]].map(([q, x]) => mc(q.replace('{el}', elN(el)), bL(x), BRANCH_L, why)); }),
     ...HARMS.map(([a, b]) => mc(t('Which animal forms a Harm (hidden friction) with {x}?', { x: bL(a) }), bL(b), BRANCH_L, t('{a} and {b} form a Harm.', { a: bL(a), b: bL(b) }))),
   ],
   stars: () => [
@@ -140,6 +143,20 @@ const GEN = {
     ...THREE.map((g) => mc(t('For the group {g}, the Peach Blossom is …', { g: groupName(g) }), bL(PEACH[g[0] % 4]), BRANCH_L, t('Peach Blossom 桃花 follows the Three Harmony group of the day or year branch.'))),
     ...THREE.map((g) => mc(t('For the group {g}, the Travelling Horse is …', { g: groupName(g) }), bL(HORSE[g[0] % 4]), BRANCH_L, t('The Travelling Horse is the animal that clashes the first animal of the group.'))),
   ],
+  lifestages: () => {
+    const stL = (k) => `${STAGES[k].zh} ${STAGES[k].name}`, ST_L = range(12).map(stL);
+    const dir = (x) => (STEMS[x].yang ? t('Forward') : t('Backward'));
+    return [
+      ...range(10).map((x) => mc(t('Where is {s} born?', { s: sL(x) }), bL(stageBranch(x, 0)), BRANCH_L, t('{s} is born in {b}.', { s: sL(x), b: bL(stageBranch(x, 0)) }))),
+      ...range(10).map((x) => mc(t('In which branch does {s} reach its Peak 帝旺?', { s: sL(x) }), bL(stageBranch(x, 4)), BRANCH_L,
+        t('{s} is born in {b} and counts {dir}: the Peak is the 5th stage.', { s: sL(x), b: bL(stageBranch(x, 0)), dir: dir(x).toLowerCase() }))),
+      ...range(10).map((x) => mc(t('In which direction does {s} count the growth stages?', { s: sL(x) }), dir(x), [t('Forward'), t('Backward')], t('Yang stems walk forward, Yin stems backward.'), 2)),
+      ...range(12).map((k) => mc(t('Which growth stage comes after {x}?', { x: stL(k) }), stL((k + 1) % 12), ST_L, ST_L.slice(k, k + 3).concat(k > 9 ? ST_L.slice(0, k - 9) : []).join(' → '))),
+      ...range(12).map((k) => mc(t('Which growth stage means: {d}', { d: STAGES[k].desc }), stL(k), ST_L, stL(k))),
+      ...range(10).map((x) => { const b = (x * 5 + 3) % 12; const st = stageOf(x, b);
+        return mc(t('Which growth stage is {s} in {b}?', { s: sL(x), b: bL(b) }), stL(st.index), ST_L, t('{s} is born in {b} and counts {dir}.', { s: sL(x), b: bL(stageBranch(x, 0)), dir: dir(x).toLowerCase() })); }),
+    ];
+  },
   luck: () => [
     ...[[true, 'm', 1], [false, 'f', 1], [false, 'm', 0], [true, 'f', 0]].map(([yang, g, fwd]) => mc(t('{y} year, {g}: which way do the luck pillars run?', { y: yy(yang), g: g === 'm' ? t('male') : t('female') }), fwd ? t('Forward') : t('Backward'), [t('Forward'), t('Backward')],
       t('Yang year + male or Yin year + female → forward; otherwise backward.'), 2)),

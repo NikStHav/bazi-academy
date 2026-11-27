@@ -90,6 +90,12 @@ export const LESSONS_2 = [
 <h3>Triple Armonía 三合</h3>
 <p>Un marco poderoso que refuerza un elemento. Dos de los tres forman una media combinación si uno de ellos es el animal del centro (子 Rata, 卯 Conejo, 午 Caballo, 酉 Gallo).</p>
 <div data-widget="rel-three"></div>
+<h3>¿Cómo funciona una Triple Armonía?</h3>
+<p>Cada grupo cuenta la historia de vida de <b>un elemento</b>: el animal donde <b>nace</b>, el animal donde está en su <b>apogeo</b> y el animal donde se <b>almacena</b>. Piensa en una planta: brota, florece por completo y se cosecha y se guarda.</p>
+<div data-widget="three-life"></div>
+<p><b>Ejemplo Agua:</b> 申 Mono es Metal, y el Metal produce Agua – dentro lleva un poco de Agua (壬), así que el Agua nace aquí. 子 Rata es pleno invierno, Agua pura – el apogeo. 辰 Dragón es Tierra, pero esconde algo de Agua (癸), como un embalse – aquí se almacena el Agua.</p>
+<p><b>La regla fácil:</b> el animal del medio es siempre uno de los cuatro animales «puros» – 子 Rata, 卯 Conejo, 午 Caballo o 酉 Gallo. Su elemento es el elemento de todo el grupo. Los otros dos están cuatro puestos antes y después en la rueda, así que los tres forman un triángulo. La Tierra no tiene grupo propio: se reparte entre los cuatro animales almacén 辰 Dragón, 未 Cabra, 戌 Perro y 丑 Buey.</p>
+<p class="tip">Volverás a encontrar estos tres momentos: en la lección de Estrellas simbólicas (Dosel = almacén, Caballo Viajero) y en la lección avanzada sobre las Doce Fases de Crecimiento.</p>
 <h3>Combinaciones direccionales 三会</h3>
 <p>Los tres animales de una estación juntos:</p>
 <div data-widget="rel-season"></div>
@@ -117,6 +123,7 @@ export const LESSONS_2 = [
 </ul>
 <h3>Dónde aparecen</h3>
 <p>El pilar de una estrella indica <i>dónde</i> actúa: una Flor de Melocotón en la rama del día apunta al romance en las relaciones cercanas; en la rama del mes, al carisma en el trabajo. Cuando un año o un pilar de la suerte trae la rama de una estrella, la estrella se «activa» – un año del Caballo Viajero suele traer viajes o una mudanza.</p>
+<p><b>¿Por qué estas ramas?</b> Siguen la historia de vida del elemento del grupo (ver Interacciones de las ramas): el Dosel es el animal <b>almacén</b>, el Caballo Viajero choca con el animal del <b>nacimiento</b> y pone las cosas en movimiento, y la Flor de Melocotón es la fase «Baño», justo después del nacimiento – joven, encantadora e inquieta.</p>
 <p class="tip">La página de tu carta muestra tus estrellas simbólicas, y la previsión del año indica cuáles activa cada año y cada mes.</p>`,
     quiz: [
       { q: '¿Qué estrella representa el romance y el encanto?', options: ['Caballo Viajero', 'Flor de Melocotón', 'Dosel', 'Vacío'], answer: 1, explain: 'Flor de Melocotón 桃花 – atracción y popularidad.' },
@@ -159,6 +166,43 @@ export const LESSONS_2 = [
     quiz: [
       { q: 'Un Maestro del Día muy débil suele beneficiarse de …', options: ['la Riqueza', 'el Poder', 'los Recursos', 'la Expresión'], answer: 2, explain: 'El Recurso apoya y fortalece al Maestro del Día.' },
       { q: '调候 se refiere al …', options: ['Ajuste del clima', 'Combinación de tallos', 'Pilares de la suerte', 'Tallos ocultos'], answer: 0, explain: 'Equilibrar calor y frío, sequedad y humedad.' },
+    ],
+  },
+  {
+    id: 'lifestages', title: 'Las Doce Fases de Crecimiento', zh: '十二长生', level: 'Advanced',
+    summary: 'Cómo cada tallo nace, alcanza su apogeo y descansa a lo largo de las doce ramas.',
+    body: `
+<p>Esta es una lección <b>avanzada</b>. Se basa en las Triples Armonías: allí viste que un elemento nace, alcanza su apogeo y se almacena. En realidad, cada Tallo Celestial recorre un ciclo de vida completo de <b>doce fases</b> (十二长生) – una fase por cada una de las doce ramas.</p>
+<h3>Las doce fases – una vida en cuatro etapas</h3>
+<ul>
+<li><b>Crecer:</b> 长生 Nacimiento → 沐浴 Baño (un bebé al que bañan – encantador pero vulnerable) → 冠带 Corona (arreglarse como adolescente)</li>
+<li><b>Fuerte:</b> 临官 Mayoría de edad (vida laboral, responsabilidad) → 帝旺 Apogeo (la cima de la fuerza)</li>
+<li><b>Debilitarse:</b> 衰 Declive → 病 Enfermedad → 死 Muerte</li>
+<li><b>Descansar y renovarse:</b> 墓 Tumba (guardado) → 绝 Extinción (lo viejo se ha ido) → 胎 Concepción → 养 Nutrición (crecer en el vientre) – y el ciclo vuelve a empezar con el Nacimiento.</li>
+</ul>
+<p class="tip">No te asustes por nombres como «Enfermedad» o «Muerte»: son imágenes clásicas de la fuerza de un elemento, no predicciones sobre tu salud o tu vida.</p>
+<div data-widget="life-stages"></div>
+<h3>Cómo se cuenta</h3>
+<ol>
+<li>Busca la rama de <b>Nacimiento</b> del tallo: 甲 Madera → 亥 Cerdo, 丙 Fuego y 戊 Tierra → 寅 Tigre, 庚 Metal → 巳 Serpiente, 壬 Agua → 申 Mono. Para los tallos Yin: 乙 → 午 Caballo, 丁 y 己 → 酉 Gallo, 辛 → 子 Rata, 癸 → 卯 Conejo.</li>
+<li>Los <b>tallos Yang</b> avanzan desde ahí <b>hacia delante</b> (en sentido horario), una fase por rama. Los <b>tallos Yin</b> van <b>hacia atrás</b>.</li>
+</ol>
+<p>Ejemplo 甲 Madera: Nacimiento en 亥 Cerdo, Baño en 子 Rata, Corona en 丑 Buey, Mayoría de edad en 寅 Tigre, Apogeo en 卯 Conejo, Declive en 辰 Dragón … Tumba en 未 Cabra.</p>
+<p>La Tierra 戊 y 己 sigue aquí al Fuego (la visión clásica más común). Algunas escuelas hacen que los tallos Yin compartan sin más el ciclo de su pareja Yang; la app usa el cómputo clásico «el Yin va hacia atrás».</p>
+<h3>Conexiones que ya conoces</h3>
+<ul>
+<li><b>Triple Armonía:</b> Nacimiento, Apogeo y Tumba de un tallo Yang son justo los tres animales de su grupo – 壬 Agua: 申 Mono, 子 Rata, 辰 Dragón.</li>
+<li><b>Estrella de Prosperidad 禄</b> = la fase Mayoría de edad del Maestro del Día; <b>Filo de Cabra 羊刃</b> = el Apogeo de un Maestro del Día Yang.</li>
+<li><b>Flor de Melocotón 桃花</b> = la fase Baño del elemento del grupo; <b>Dosel 华盖</b> = su Tumba.</li>
+<li><b>Fuerza:</b> un Maestro del Día nacido en un mes en el que está en Mayoría de edad o Apogeo es fuerte; en Muerte, Tumba o Extinción es débil y necesita apoyo.</li>
+</ul>
+<h3>Leerlo en una carta</h3>
+<p>Mira la fase del <b>Maestro del Día</b> en cada rama de la carta. La rama del <b>mes</b> muestra su fuerza por la estación; la rama del <b>día</b> (su propio asiento) muestra cuánto apoyo interior tiene – un Maestro del Día sentado sobre Nacimiento, Mayoría de edad o Apogeo pisa suelo firme. Las fases fuertes dan raíz; las débiles indican que el Maestro del Día descansa allí. Como siempre, las fases son un factor entre muchos y nunca pesan más que el equilibrio general.</p>
+<p class="tip">Tu carta muestra la fase de crecimiento del Maestro del Día en cada pilar (tarjeta «Tu pilar del día»).</p>`,
+    quiz: [
+      { q: '¿Dónde nace 甲 Madera?', options: ['亥 Cerdo', '寅 Tigre', '午 Caballo', '申 Mono'], answer: 0, explain: '甲 Madera nace en 亥 Cerdo y avanza desde ahí.' },
+      { q: 'Los tallos Yin cuentan las fases …', options: ['Hacia delante', 'Hacia atrás', 'No las cuentan', 'Solo en verano'], answer: 1, explain: 'Los tallos Yang van hacia delante; los Yin, hacia atrás.' },
+      { q: 'Nacimiento, Apogeo y Tumba de un tallo Yang forman una …', options: ['Seis Armonías', 'Triple Armonía', 'Choque', 'Castigo'], answer: 1, explain: 'Para 壬 Agua: 申 Mono, 子 Rata, 辰 Dragón – la Triple Armonía del Agua.' },
     ],
   },
 ];

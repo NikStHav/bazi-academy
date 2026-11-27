@@ -90,6 +90,12 @@ export const LESSONS_2 = [
 <h3>Drei Harmonien 三合</h3>
 <p>Ein kraftvoller Rahmen, der ein Element stärkt. Zwei der drei bilden eine halbe Kombination, wenn eines davon das mittlere Tier ist (子 Ratte, 卯 Hase, 午 Pferd, 酉 Hahn).</p>
 <div data-widget="rel-three"></div>
+<h3>Wie funktioniert eine Drei-Harmonie?</h3>
+<p>Jede Gruppe erzählt die Lebensgeschichte <b>eines Elements</b>: das Tier, in dem es <b>geboren</b> wird, das Tier, in dem es auf dem <b>Höhepunkt</b> ist, und das Tier, in dem es <b>gespeichert</b> wird. Denk an eine Pflanze: Sie keimt, steht in voller Blüte und wird geerntet und eingelagert.</p>
+<div data-widget="three-life"></div>
+<p><b>Beispiel Wasser:</b> 申 Affe ist Metall, und Metall bringt Wasser hervor – in ihm steckt etwas Wasser (壬), also wird Wasser hier geboren. 子 Ratte ist Mittwinter, reines Wasser – der Höhepunkt. 辰 Drache ist Erde, verbirgt aber etwas Wasser (癸), wie ein Stausee – hier wird Wasser gespeichert.</p>
+<p><b>Die einfache Regel:</b> Das mittlere Tier ist immer eines der vier „reinen“ Tiere – 子 Ratte, 卯 Hase, 午 Pferd oder 酉 Hahn. Sein Element ist das Element der ganzen Gruppe. Die anderen beiden stehen vier Plätze davor und dahinter auf dem Rad, die drei bilden also ein Dreieck. Erde hat keine eigene Gruppe: Sie verteilt sich auf die vier Speicher-Tiere 辰 Drache, 未 Ziege, 戌 Hund und 丑 Büffel.</p>
+<p class="tip">Diese drei Momente begegnen dir wieder: in der Lektion Symbolsterne (Baldachin = Speicher, Reisepferd) und in der Lektion für Fortgeschrittene über die Zwölf Wachstumsphasen.</p>
 <h3>Richtungskombinationen 三会</h3>
 <p>Die drei Tiere einer Jahreszeit zusammen:</p>
 <div data-widget="rel-season"></div>
@@ -117,6 +123,7 @@ export const LESSONS_2 = [
 </ul>
 <h3>Wo sie erscheinen</h3>
 <p>Die Säule eines Sterns zeigt, <i>wo</i> er wirkt: eine Pfirsichblüte im Tageszweig deutet auf Romantik in engen Beziehungen, im Monatszweig auf Ausstrahlung im Beruf. Bringt ein Jahr oder eine Glückssäule den Zweig eines Sterns, wird der Stern „aktiviert“ – ein Reisepferd-Jahr bringt oft Reisen oder einen Umzug.</p>
+<p><b>Warum gerade diese Zweige?</b> Sie folgen der Lebensgeschichte des Gruppen-Elements (siehe Wechselwirkungen der Zweige): Der Baldachin ist das <b>Speicher</b>-Tier, das Reisepferd stößt mit dem <b>Geburts</b>-Tier zusammen und bringt Bewegung, und die Pfirsichblüte ist die Phase „Bad“ direkt nach der Geburt – jung, charmant und rastlos.</p>
 <p class="tip">Deine Horoskopseite listet deine Symbolsterne, und die Jahresvorschau zeigt, welche jedes Jahr und jeder Monat aktiviert.</p>`,
     quiz: [
       { q: 'Welcher Stern steht für Romantik und Charme?', options: ['Reisepferd', 'Pfirsichblüte', 'Baldachin', 'Leere'], answer: 1, explain: 'Pfirsichblüte 桃花 – Anziehung und Beliebtheit.' },
@@ -159,6 +166,43 @@ export const LESSONS_2 = [
     quiz: [
       { q: 'Ein sehr schwacher Tagesmeister profitiert meist von …', options: ['Reichtum', 'Macht', 'Ressource', 'Ausdruck'], answer: 2, explain: 'Die Ressource stützt und stärkt den Tagesmeister.' },
       { q: '调候 bezeichnet …', options: ['Klimaausgleich', 'Stammkombination', 'Glückssäulen', 'Verborgene Stämme'], answer: 0, explain: 'Den Ausgleich von Hitze/Kälte und Trockenheit/Feuchtigkeit.' },
+    ],
+  },
+  {
+    id: 'lifestages', title: 'Die Zwölf Wachstumsphasen', zh: '十二长生', level: 'Advanced',
+    summary: 'Wie jeder Stamm in den zwölf Zweigen geboren wird, seinen Höhepunkt erreicht und ruht.',
+    body: `
+<p>Dies ist eine Lektion für <b>Fortgeschrittene</b>. Sie baut auf den Drei-Harmonien auf: Dort hast du gesehen, dass ein Element geboren wird, seinen Höhepunkt erreicht und gespeichert wird. Tatsächlich durchläuft jeder Himmelsstamm einen ganzen Lebenszyklus aus <b>zwölf Phasen</b> (十二长生) – eine Phase für jeden der zwölf Zweige.</p>
+<h3>Die zwölf Phasen – ein Leben in vier Abschnitten</h3>
+<ul>
+<li><b>Wachsen:</b> 长生 Geburt → 沐浴 Bad (ein Baby wird gebadet – charmant, aber verletzlich) → 冠带 Krone (sich als Jugendlicher herausputzen)</li>
+<li><b>Stark:</b> 临官 Amtsantritt (Berufsleben, Verantwortung) → 帝旺 Höhepunkt (der Gipfel der Kraft)</li>
+<li><b>Nachlassen:</b> 衰 Abnahme → 病 Krankheit → 死 Tod</li>
+<li><b>Ruhen und Erneuern:</b> 墓 Grab (eingelagert) → 绝 Auslöschung (das Alte ist vorbei) → 胎 Empfängnis → 养 Nähren (Wachsen im Mutterleib) – dann beginnt der Kreis wieder mit der Geburt.</li>
+</ul>
+<p class="tip">Lass dich von Namen wie „Krankheit“ oder „Tod“ nicht abschrecken – es sind klassische Bilder für die Stärke eines Elements, keine Vorhersagen über deine Gesundheit oder dein Leben.</p>
+<div data-widget="life-stages"></div>
+<h3>So wird gezählt</h3>
+<ol>
+<li>Finde den <b>Geburts</b>-Zweig des Stamms: 甲 Holz → 亥 Schwein, 丙 Feuer und 戊 Erde → 寅 Tiger, 庚 Metall → 巳 Schlange, 壬 Wasser → 申 Affe. Für die Yin-Stämme: 乙 → 午 Pferd, 丁 und 己 → 酉 Hahn, 辛 → 子 Ratte, 癸 → 卯 Hase.</li>
+<li><b>Yang-Stämme</b> gehen von dort <b>vorwärts</b> (im Uhrzeigersinn), eine Phase pro Zweig. <b>Yin-Stämme</b> gehen <b>rückwärts</b>.</li>
+</ol>
+<p>Beispiel 甲 Holz: Geburt in 亥 Schwein, Bad in 子 Ratte, Krone in 丑 Büffel, Amtsantritt in 寅 Tiger, Höhepunkt in 卯 Hase, Abnahme in 辰 Drache … Grab in 未 Ziege.</p>
+<p>Erde 戊 und 己 folgt hier dem Feuer (die verbreitetste klassische Sicht). Manche Schulen lassen die Yin-Stämme einfach den Zyklus ihres Yang-Partners teilen – die App nutzt die klassische Zählung „Yin geht rückwärts“.</p>
+<h3>Verbindungen, die du schon kennst</h3>
+<ul>
+<li><b>Drei-Harmonie:</b> Geburt, Höhepunkt und Grab eines Yang-Stamms sind genau die drei Tiere seiner Gruppe – 壬 Wasser: 申 Affe, 子 Ratte, 辰 Drache.</li>
+<li><b>Wohlstandsstern 禄</b> = die Phase Amtsantritt des Tagesmeisters; <b>Ziegenklinge 羊刃</b> = der Höhepunkt eines Yang-Tagesmeisters.</li>
+<li><b>Pfirsichblüte 桃花</b> = die Phase Bad des Gruppen-Elements; <b>Baldachin 华盖</b> = sein Grab.</li>
+<li><b>Stärke:</b> Ein Tagesmeister, der in einem Monat mit Amtsantritt oder Höhepunkt geboren ist, ist stark; bei Tod, Grab oder Auslöschung ist er schwach und braucht Unterstützung.</li>
+</ul>
+<h3>Im Horoskop lesen</h3>
+<p>Schau dir die Phase des <b>Tagesmeisters</b> in jedem Zweig des Horoskops an. Der <b>Monats</b>zweig zeigt seine Kraft aus der Jahreszeit; der <b>Tages</b>zweig (sein eigener Sitz) zeigt, wie viel inneren Halt er hat – ein Tagesmeister auf Geburt, Amtsantritt oder Höhepunkt steht auf festem Boden. Starke Phasen geben eine Wurzel, schwache bedeuten, dass der Tagesmeister dort ruht. Wie immer sind die Phasen ein Faktor unter vielen und wiegen nie das Gesamtgleichgewicht auf.</p>
+<p class="tip">Dein Horoskop zeigt die Wachstumsphase des Tagesmeisters in jeder Säule (Karte „Deine Tagessäule“).</p>`,
+    quiz: [
+      { q: 'Wo wird 甲 Holz geboren?', options: ['亥 Schwein', '寅 Tiger', '午 Pferd', '申 Affe'], answer: 0, explain: '甲 Holz wird in 亥 Schwein geboren und geht von dort vorwärts.' },
+      { q: 'Yin-Stämme zählen die Phasen …', options: ['Vorwärts', 'Rückwärts', 'Gar nicht', 'Nur im Sommer'], answer: 1, explain: 'Yang-Stämme gehen vorwärts, Yin-Stämme rückwärts.' },
+      { q: 'Geburt, Höhepunkt und Grab eines Yang-Stamms bilden eine …', options: ['Sechs-Harmonie', 'Drei-Harmonie', 'Zusammenstoß', 'Strafe'], answer: 1, explain: 'Für 壬 Wasser: 申 Affe, 子 Ratte, 辰 Drache – die Wasser-Drei-Harmonie.' },
     ],
   },
 ];

@@ -222,6 +222,12 @@ const LESSONS_EN = [
 <h3>Three Harmonies 三合</h3>
 <p>A powerful frame that strengthens one element. Two of the three, if one of them is the middle animal (子 Rat, 卯 Rabbit, 午 Horse, 酉 Rooster), form a half combination.</p>
 <div data-widget="rel-three"></div>
+<h3>How does a Three Harmony work?</h3>
+<p>Each group tells the life story of <b>one element</b>: the animal where it is <b>born</b>, the animal where it is at its <b>peak</b> and the animal where it is <b>stored</b>. Think of a plant: it sprouts, comes into full bloom, and is harvested and put away.</p>
+<div data-widget="three-life"></div>
+<p><b>Example Water:</b> 申 Monkey is Metal, and Metal produces Water – a little Water (壬) is hidden inside it, so Water is born here. 子 Rat is midwinter, pure Water – the peak. 辰 Dragon is Earth, but it hides some Water (癸), like a reservoir – Water is stored here.</p>
+<p><b>The easy rule:</b> the middle animal is always one of the four “pure” animals – 子 Rat, 卯 Rabbit, 午 Horse or 酉 Rooster. Its element is the element of the whole group. The other two sit four places before and after it on the wheel, so the three form a triangle. Earth has no group of its own: it is spread over the four storage animals 辰 Dragon, 未 Goat, 戌 Dog and 丑 Ox.</p>
+<p class="tip">You will meet these three moments again: in the Symbolic Stars lesson (Canopy = storage, Travelling Horse) and in the advanced lesson on the Twelve Growth Stages.</p>
 <h3>Directional combinations 三会</h3>
 <p>The three animals of one season together:</p>
 <div data-widget="rel-season"></div>
@@ -249,6 +255,7 @@ const LESSONS_EN = [
 </ul>
 <h3>Where they appear</h3>
 <p>A star’s pillar tells you <i>where</i> it works: a Peach Blossom in the day branch points to romance in close relationships; in the month branch to charisma at work. When a year or luck pillar brings a star’s branch, the star is “activated” – a Travelling Horse year often brings travel or a move.</p>
+<p><b>Why these branches?</b> They follow the life story of the group’s element (see Branch Interactions): the Canopy is the <b>storage</b> animal, the Travelling Horse clashes the <b>birth</b> animal and sets things in motion, and the Peach Blossom is the “Bath” stage right after birth – young, charming and restless.</p>
 <p class="tip">Your chart page lists your symbolic stars, and the year forecast shows which ones each year and month activates.</p>`,
     quiz: [
       { q: 'Which star stands for romance and charm?', options: ['Travelling Horse', 'Peach Blossom', 'Canopy', 'Void'], answer: 1, explain: 'Peach Blossom 桃花 – attraction and popularity.' },
@@ -291,6 +298,43 @@ const LESSONS_EN = [
     quiz: [
       { q: 'A very weak Day Master usually benefits from …', options: ['Wealth', 'Power', 'Resource', 'Output'], answer: 2, explain: 'Resource supports and strengthens the Day Master.' },
       { q: '调候 refers to …', options: ['Climate adjustment', 'Stem combination', 'Luck pillars', 'Hidden stems'], answer: 0, explain: 'Balancing heat/cold and dry/wet.' },
+    ],
+  },
+  {
+    id: 'lifestages', title: 'The Twelve Growth Stages', zh: '十二长生', level: 'Advanced',
+    summary: 'How every stem is born, peaks and rests across the twelve branches.',
+    body: `
+<p>This is an <b>advanced</b> lesson. It builds on the Three Harmonies: there you saw that an element is born, peaks and is stored. In fact every Heavenly Stem goes through a full life cycle of <b>twelve stages</b> (十二长生) – one stage for each of the twelve branches.</p>
+<h3>The twelve stages – a life in four phases</h3>
+<ul>
+<li><b>Growing:</b> 长生 Birth → 沐浴 Bath (a baby being washed – charming but vulnerable) → 冠带 Crown (dressing up as a teenager)</li>
+<li><b>Strong:</b> 临官 Coming of Age (taking office, working life) → 帝旺 Peak (the height of power)</li>
+<li><b>Fading:</b> 衰 Decline → 病 Sickness → 死 Death</li>
+<li><b>Resting and renewing:</b> 墓 Tomb (stored away) → 绝 Extinction (the old is gone) → 胎 Conception → 养 Nurture (growing in the womb) – and the cycle begins again with Birth.</li>
+</ul>
+<p class="tip">Don’t be put off by names like “Sickness” or “Death” – they are classical images for an element’s strength, not predictions about your health or life.</p>
+<div data-widget="life-stages"></div>
+<h3>How to count</h3>
+<ol>
+<li>Find the stem’s <b>Birth</b> branch: 甲 Wood → 亥 Pig, 丙 Fire and 戊 Earth → 寅 Tiger, 庚 Metal → 巳 Snake, 壬 Water → 申 Monkey. For the Yin stems: 乙 → 午 Horse, 丁 and 己 → 酉 Rooster, 辛 → 子 Rat, 癸 → 卯 Rabbit.</li>
+<li><b>Yang stems</b> walk <b>forward</b> (clockwise) from there, one stage per branch. <b>Yin stems</b> walk <b>backward</b>.</li>
+</ol>
+<p>Example 甲 Wood: Birth in 亥 Pig, Bath in 子 Rat, Crown in 丑 Ox, Coming of Age in 寅 Tiger, Peak in 卯 Rabbit, Decline in 辰 Dragon … Tomb in 未 Goat.</p>
+<p>Earth 戊 and 己 follow Fire here (the most common classical view). Some schools let Yin stems simply share the cycle of their Yang partner – the app uses the classic “Yin walks backward” counting.</p>
+<h3>Connections you already know</h3>
+<ul>
+<li><b>Three Harmony:</b> Birth, Peak and Tomb of a Yang stem are exactly the three animals of its group – 壬 Water: 申 Monkey, 子 Rat, 辰 Dragon.</li>
+<li><b>Prosperity Star 禄</b> = the Coming of Age stage of the Day Master; <b>Goat Blade 羊刃</b> = the Peak of a Yang Day Master.</li>
+<li><b>Peach Blossom 桃花</b> = the Bath stage of the group’s element; <b>Canopy 华盖</b> = its Tomb.</li>
+<li><b>Strength:</b> a Day Master born in a month where it is at Coming of Age or Peak is strong; in Death, Tomb or Extinction it is weak and needs support.</li>
+</ul>
+<h3>Reading it in a chart</h3>
+<p>Look at the stage of the <b>Day Master</b> in each branch of the chart. The <b>month</b> branch shows its strength from the season; the <b>day</b> branch (its own seat) shows how much inner support it has – a Day Master sitting on Birth, Coming of Age or Peak stands on firm ground. Strong stages give a root, weak ones mean the Day Master rests there. As always, the stages are one factor among many and never outweigh the overall balance.</p>
+<p class="tip">Your chart shows the Day Master’s growth stage in every pillar (card “Your day pillar”).</p>`,
+    quiz: [
+      { q: 'Where is 甲 Wood born?', options: ['亥 Pig', '寅 Tiger', '午 Horse', '申 Monkey'], answer: 0, explain: '甲 Wood is born in 亥 Pig and walks forward from there.' },
+      { q: 'Yin stems count the stages …', options: ['Forward', 'Backward', 'Not at all', 'Only in summer'], answer: 1, explain: 'Yang stems walk forward, Yin stems backward.' },
+      { q: 'Birth, Peak and Tomb of a Yang stem form a …', options: ['Six Harmony', 'Three Harmony', 'Clash', 'Punishment'], answer: 1, explain: 'For 壬 Water: 申 Monkey, 子 Rat, 辰 Dragon – the Water Three Harmony.' },
     ],
   },
 ];

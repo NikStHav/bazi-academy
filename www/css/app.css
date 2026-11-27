@@ -441,3 +441,15 @@ th, td { overflow-wrap: anywhere; }
 .rel-list { list-style: none; padding: 0; margin: 6px 0 10px; display: grid; gap: 6px; }
 .rel-list li { background: var(--surface-2); border-radius: 10px; padding: 7px 10px; line-height: 1.7; }
 .dg-tag-harm { background: var(--earth); }
+/* Three Harmony life story and the twelve life stages */
+.dg-life-lbl { font: 700 14px system-ui, sans-serif; fill: var(--text); }
+.dg-life-el { font: 700 34px var(--serif); fill: currentColor; }
+.dg-life-tbl { width: 100%; margin: 4px 0 12px; font-size: 14px; } .dg-life-tbl td, .dg-life-tbl th { padding: 5px 3px; vertical-align: top; }
+.dg-stage-zh { font: 700 12px var(--serif); fill: var(--text); } .dg-stage-nm { font: 10px system-ui, sans-serif; fill: var(--muted); }
+.dg-stage-dir { font: 12px system-ui, sans-serif; fill: var(--muted); }
+.dg-stage-top .dg-stage-zh { fill: var(--ok); } .dg-stage-low circle { opacity: .5; } .dg-stage-low .dg-stage-zh { fill: var(--muted); }
+.dg-stage-list { list-style: none; padding: 0; margin: 6px 0; display: grid; gap: 6px; }
+.dg-stage-list li { background: var(--surface-2); border-radius: 10px; padding: 7px 10px; line-height: 1.5; }
+.dg-stage-list li.dg-stage-top { box-shadow: inset 3px 0 0 var(--ok); } .dg-stage-list li.dg-stage-low { box-shadow: inset 3px 0 0 var(--line); }
+.dg-stage-n { display: inline-block; min-width: 22px; text-align: center; border-radius: 999px; background: var(--surface); font: 700 12px/1.7 system-ui, sans-serif; }
+.dg-stem-tabs button { min-width: 0; }

@@ -2,6 +2,7 @@
 // the Five Elements cycle, Yin and Yang, the ten Heavenly Stems as pictures and the wheel of the twelve branches.
 import { STEMS, BRANCHES, ELEMENTS } from './data.js';
 import { t } from './i18n.js';
+import { STAGES, stageBranch } from './stages.js';
 
 // ---------- small white pictures (drawn in a 40 × 40 box) ----------
 const ICON = {
@@ -226,3 +227,80 @@ export function relListHtml(kind) {
   return `<ul class="rel-list">${rows.map((r) => `<li>${r}</li>`).join('')}</ul>`;
 }
 const range6 = () => [0, 1, 2, 3, 4, 5];
+
+// ---------- 7. Why a Three Harmony works: birth, peak and storage of one element ----------
+const LIFE_GROUPS = [[8, 0, 4, 4], [11, 3, 7, 0], [2, 6, 10, 1], [5, 9, 1, 3]]; // [birth, peak, storage, element]
+const LIFE_ROLES = () => [['🌱', t('Birth')], ['🌸', t('Peak')], ['🏺', t('Storage')]];
+function lifeSvg(g) {
+  const C = 170, R = 120;
+  const pt = (i, r = R) => { const a = (i * 30 - 90) * Math.PI / 180; return [C + r * Math.cos(a), C + r * Math.sin(a)]; };
+  const [b, p, s, el] = LIFE_GROUPS[g];
+  const tri = [b, p, s].map((i) => pt(i, R - 22));
+  const roles = LIFE_ROLES();
+  const labels = [b, p, s].map((i, k) => { const [x, y] = pt(i, R + 42); const anchor = x < C - 20 ? 'end' : x > C + 20 ? 'start' : 'middle';
+    const dx = anchor === 'end' ? 14 : anchor === 'start' ? -14 : 0;
+    return `<text x="${(x + dx).toFixed(1)}" y="${(y + 5).toFixed(1)}" text-anchor="${anchor}" class="dg-life-lbl">${roles[k][0]} ${roles[k][1]}</text>`; }).join('');
+  const nodes = BRANCHES.map((br, i) => { const [x, y] = pt(i); const on = [b, p, s].includes(i);
+    return `<g class="${on ? 'dg-sel' : 'dg-faint'}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${on ? 25 : 19}" fill="var(--${ELEMENTS[br.el].key})"/>
+      <text x="${x.toFixed(1)}" y="${(y - 2).toFixed(1)}" text-anchor="middle" font-size="${on ? 15 : 12}">${ANIMAL[i]}</text>
+      <text x="${x.toFixed(1)}" y="${(y + 14).toFixed(1)}" text-anchor="middle" class="dg-zh">${br.zh}</text></g>`; }).join('');
+  return `<svg viewBox="-40 -30 420 400" class="dg-svg" role="img" aria-label="${t('Three Harmony: birth, peak and storage of one element')}">
+    <polygon points="${tri.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')}" class="dg-tri" style="stroke:var(--${ELEMENTS[el].key});fill:var(--${ELEMENTS[el].key})"/>
+    ${nodes}${labels}<text x="${C}" y="${C + 8}" text-anchor="middle" class="dg-life-el tx-${el}">${ELEMENTS[el].zh}</text></svg>`;
+}
+function lifeCaption(g) {
+  const [b, p, s, el] = LIFE_GROUPS[g];
+  return `<p>${t('{el} is born in {a}, strongest in {b} and stored in {c}.', { el: eName(el), a: bName(b), b: bName(p), c: bName(s) })}</p>
+    <p class="small muted">${t('Like a plant: it sprouts, comes into full bloom, and is harvested and stored. When all three animals meet in a chart, they work as one strong team of {el}.', { el: ELEMENTS[el].name })}</p>`;
+}
+export function threeLifeHtml() {
+  const roles = LIFE_ROLES();
+  return `<div class="dg dg-life" data-dg="life">
+    <div class="seg seg-wrap dg-tabs">${LIFE_GROUPS.map(([, , , el], g) => `<button type="button" data-lifeg="${g}" class="${g === 0 ? 'on' : ''}">${ELEMENTS[el].zh} ${ELEMENTS[el].name}</button>`).join('')}</div>
+    <div class="dg-pic">${lifeSvg(0)}</div><div class="dg-cap">${lifeCaption(0)}</div></div>
+    <table class="dg-life-tbl"><tr>${roles.map(([i, n]) => `<th>${i}<br>${n}</th>`).join('')}<th></th></tr>
+      ${LIFE_GROUPS.map(([b, p, s, el]) => `<tr><td>${bName(b)}</td><td><b>${bName(p)}</b></td><td>${bName(s)}</td><td>→ ${eName(el)}</td></tr>`).join('')}</table>`;
+}
+
+// ---------- 8. The twelve life stages of a stem on the wheel ----------
+const STAGE_TONE = ['up', 'mid', 'up', 'top', 'top', 'mid', 'low', 'low', 'low', 'low', 'mid', 'mid'];
+function stagesSvg(stem) {
+  const C = 170, R = 112;
+  const pt = (i, r = R) => { const a = (i * 30 - 90) * Math.PI / 180; return [C + r * Math.cos(a), C + r * Math.sin(a)]; };
+  const at = {}; for (let k = 0; k < 12; k++) at[stageBranch(stem, k)] = k;
+  const nodes = BRANCHES.map((br, i) => { const [x, y] = pt(i); const k = at[i]; const st = STAGES[k]; const side = Math.sin(i * Math.PI / 6); const mid = Math.abs(side) < 0.3;
+    const [lx, ly] = pt(i, mid ? R + 42 : R + 31); const anchor = mid ? 'middle' : side > 0 ? 'start' : 'end';
+    return `<g class="dg-stage-${STAGE_TONE[k]}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="21" fill="var(--${ELEMENTS[br.el].key})"/>
+      <text x="${x.toFixed(1)}" y="${(y - 2).toFixed(1)}" text-anchor="middle" font-size="13">${ANIMAL[i]}</text>
+      <text x="${x.toFixed(1)}" y="${(y + 13).toFixed(1)}" text-anchor="middle" class="dg-zh">${br.zh}</text>
+      <text x="${lx.toFixed(1)}" y="${(ly - 1).toFixed(1)}" text-anchor="${anchor}" class="dg-stage-zh">${k + 1}. ${st.zh}</text>
+      <text x="${lx.toFixed(1)}" y="${(ly + 11).toFixed(1)}" text-anchor="${anchor}" class="dg-stage-nm">${st.name}</text></g>`; }).join('');
+  const s = STEMS[stem];
+  return `<svg viewBox="-80 -36 500 412" class="dg-svg" role="img" aria-label="${t('The twelve life stages of {s}', { s: `${s.zh} ${s.py}` })}">${nodes}
+    <text x="${C}" y="${C - 4}" text-anchor="middle" class="dg-life-el tx-${s.el}">${s.zh}</text>
+    <text x="${C}" y="${C + 22}" text-anchor="middle" class="dg-stage-dir">${s.yang ? '↻ ' + t('forward') : '↺ ' + t('backward')}</text></svg>`;
+}
+function stagesCaption(stem) {
+  const s = STEMS[stem], pol = t(s.yang ? 'Yang {el}' : 'Yin {el}', { el: ELEMENTS[s.el].name });
+  const row = (k) => { const st = STAGES[k]; const b = stageBranch(stem, k);
+    return `<li class="dg-stage-${STAGE_TONE[k]}"><span class="dg-stage-n">${k + 1}</span> <b>${st.zh} ${st.name}</b> · ${bName(b)}<br><span class="small muted">${st.desc}</span></li>`; };
+  return `<p>${t('{s} ({pol}) is born in {b} and walks {dir} through the wheel.', { s: `<b>${s.zh} ${s.py}</b>`, pol, b: bName(stageBranch(stem, 0)), dir: s.yang ? t('forward (clockwise)') : t('backward (anticlockwise)') })}</p>
+    <ol class="dg-stage-list">${range12().map(row).join('')}</ol>`;
+}
+const range12 = () => [...Array(12).keys()];
+export function lifeStagesHtml() {
+  return `<div class="dg dg-stages" data-dg="stages">
+    <p class="small muted" style="margin:0 0 6px">${t('Choose a Heavenly Stem:')}</p>
+    <div class="seg seg-wrap dg-tabs dg-stem-tabs">${STEMS.map((s, i) => `<button type="button" data-stagestem="${i}" class="${i === 0 ? 'on' : ''}"><span class="tx-${s.el}" style="font-family:var(--serif)">${s.zh}</span> ${s.py}</button>`).join('')}</div>
+    <div class="dg-pic">${stagesSvg(0)}</div><div class="dg-cap">${stagesCaption(0)}</div></div>`;
+}
+export function bindLife(root) {
+  root.querySelectorAll('[data-dg="life"]').forEach((box) => box.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-lifeg]'); if (!b) return; const g = Number(b.dataset.lifeg);
+    box.querySelector('.dg-pic').innerHTML = lifeSvg(g); box.querySelector('.dg-cap').innerHTML = lifeCaption(g);
+    box.querySelectorAll('[data-lifeg]').forEach((x) => x.classList.toggle('on', x === b)); }));
+  root.querySelectorAll('[data-dg="stages"]').forEach((box) => box.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-stagestem]'); if (!b) return; const s = Number(b.dataset.stagestem);
+    box.querySelector('.dg-pic').innerHTML = stagesSvg(s); box.querySelector('.dg-cap').innerHTML = stagesCaption(s);
+    box.querySelectorAll('[data-stagestem]').forEach((x) => x.classList.toggle('on', x === b)); }));
+}

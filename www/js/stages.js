@@ -41,3 +41,8 @@ export function stageOf(stem, branch) {
   const i = stem % 2 === 0 ? mod(branch - BIRTH[stem], 12) : mod(BIRTH[stem] - branch, 12);
   return STAGES[i];
 }
+
+/** Branch in which `stem` reaches stage `i` (0 = Birth … 11 = Nurture). Yang stems count forward, Yin stems backward. */
+export function stageBranch(stem, i) {
+  return stem % 2 === 0 ? mod(BIRTH[stem] + i, 12) : mod(BIRTH[stem] - i, 12);
+}
