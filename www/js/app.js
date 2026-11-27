@@ -4,7 +4,7 @@ import { LESSONS } from './lessons.js';
 import { computeChart, tenGod, pillarName, pillarPinyin, pillarFromIndex, pillarsForNow, jieTermsOfYear,
   SEASON_PHASES, PILLAR_KEYS, PILLAR_LABEL } from './bazi.js';
 import { CATEGORIES, makeRound } from './quiz.js';
-import { buildReading } from './reading.js';
+import { buildReading, namedChars } from './reading.js';
 import * as premium from './premium.js';
 import { plugin } from './cap.js';
 import { BUILD } from './build-flags.js';
@@ -92,6 +92,12 @@ function stemSheet(s, dm = null) {
     <p><b>${t("Combines with:")}</b> ${STEMS[combo].zh} ${STEMS[combo].py}</p>
     <p><b>${t("Found as hidden stem in:")}</b> ${BRANCHES.map((b, i) => (b.hidden.includes(s) ? `${b.zh} ${b.animal}` : null)).filter(Boolean).join(', ')}</p>`;
 }
+// Three Harmony group of a branch in classic order (e.g. 申 Monkey · 子 Rat · 辰 Dragon → Water)
+function threeHarmony(b) {
+  const start = [b, (b + 4) % 12, (b + 8) % 12].find((x) => x % 3 === 2);
+  const g = [start, (start + 4) % 12, (start + 8) % 12];
+  return `${g.map((x) => `${BRANCHES[x].zh}\u00a0${BRANCHES[x].animal}`).join(' · ')} → ${ELEMENTS[BRANCHES[g[1]].el].name}`;
+}
 function branchSheet(b) {
   const br = BRANCHES[b];
   return `<div class="head">${branchTile(b)}<div><h2 style="margin:0">${br.zh} ${br.py} – ${br.animal}</h2>
@@ -100,7 +106,7 @@ function branchSheet(b) {
     <tr><th>${t("Hidden stems")}</th><td>${br.hidden.map((s, i) => `<span class="tx-${STEMS[s].el}" style="font-family:var(--serif);font-size:18px">${STEMS[s].zh}</span> ${[t('main'), t('middle'), t('residual')][i]}`).join(' · ')}</td></tr>
     <tr><th>${t("Clashes with")}</th><td>${BRANCHES[(b + 6) % 12].zh} ${BRANCHES[(b + 6) % 12].animal}</td></tr>
     <tr><th>${t("Six Harmony")}</th><td>${BRANCHES[(13 - b) % 12].zh} ${BRANCHES[(13 - b) % 12].animal}</td></tr>
-    <tr><th>${t("Three Harmony")}</th><td>${[b, (b + 4) % 12, (b + 8) % 12].sort((x, y) => x - y).map((x) => BRANCHES[x].zh).join('')}</td></tr></table>`;
+    <tr><th>${t("Three Harmony")}</th><td>${threeHarmony(b)}</td></tr></table>`;
 }
 function godSheet(key) {
   const g = TEN_GODS[key];
@@ -290,7 +296,7 @@ function chartHtml(entry) {
       <span class="track"><i style="width:${e.pct}%;background:var(--${ELEMENTS[e.el].key})"></i></span><span class="small">${e.pct}%</span></div>`).join('')}</div>
     <p class="small muted">${t('Stems count 1; hidden stems 1 / 0.5 / 0.3; month branch ×1.5.')}</p></div>
   <div class="card"><h3 style="margin-top:0">${t("Interactions")} ${q('clash')}</h3>
-    ${c.interactions.length ? c.interactions.map((x) => `<div class="inter"><b>${x.chars}</b> ${x.label} <span class="muted small">${x.zh} · ${x.whereLabel}</span><div class="small">${x.note}</div></div>`).join('')
+    ${c.interactions.length ? c.interactions.map((x) => `<div class="inter"><b>${namedChars(x.chars)}</b> ${x.label} <span class="muted small">${x.zh} · ${x.whereLabel}</span><div class="small">${x.note}</div></div>`).join('')
       : `<p class="muted">${t("No major combinations or clashes between the natal pillars.")}</p>`}</div>
   <div class="card" data-dm="${c.dayMaster}"><h3 style="margin-top:0">${t("Luck Pillars 大运")} ${q('luck')}</h3>
     <p class="small muted">${c.luck.forward ? t('Forward') : t('Backward')} · ${t('first luck pillar starts at about {y} years {m} months', { y: c.luck.startYears, m: c.luck.startMonths })}${i.timeUnknown ? t(' (approximate – birth time unknown)') : ''}.</p>

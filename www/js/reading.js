@@ -5,6 +5,15 @@ import { findStars, pillarListText } from './shensha.js';
 import { t, lang } from './i18n.js';
 import { READING as DE } from './i18n/packs.js';
 
+// "申子辰" → "申 Monkey · 子 Rat · 辰 Dragon"; stems get pinyin + element
+export function namedChars(chars) {
+  return [...chars].map((c) => {
+    const b = BRANCHES.find((x) => x.zh === c); if (b) return `${c}\u00a0${b.animal}`;
+    const s = STEMS.find((x) => x.zh === c); if (s) return `${c}\u00a0${s.py}\u00a0${ELEMENTS[s.el].name}`;
+    return c;
+  }).join(' · ');
+}
+
 const mod = (a, n) => ((a % n) + n) % n;
 
 export const ELEMENT_ADVICE = [
@@ -210,7 +219,7 @@ export function buildReading(chart) {
   sections.push({ title: t('Career & relationships'), html: `
     <h4>${t('Career – month stem: {god}', { god: TEN_GODS[mGod].name })}</h4><p>${GOD_TEXT[mGod].career}</p>
     <h4>${t('Relationships – spouse palace {b}: {god}', { b: `${BRANCHES[db].zh} ${BRANCHES[db].animal}`, god: TEN_GODS[sGod].name })}</h4><p>${GOD_TEXT[sGod].spouse}</p>
-    ${spouseClash ? `<p>${t('Your day branch is involved in a clash ({chars}). Classically this points to an active, changeable love life or a partner who travels or moves a lot – commitment grows through flexibility.', { chars: spouseClash.chars })}</p>` : ''}` });
+    ${spouseClash ? `<p>${t('Your day branch is involved in a clash ({chars}). Classically this points to an active, changeable love life or a partner who travels or moves a lot – commitment grows through flexibility.', { chars: namedChars(spouseClash.chars) })}</p>` : ''}` });
 
   // 6. Current luck pillar & year
   const now = new Date().getFullYear();
@@ -257,7 +266,7 @@ export function buildReading(chart) {
   for (const g of none) items.push(`<li>${g.none.replace(/^([^:]+):/, '<b>$1.</b>')}</li>`);
   for (const x of chart.interactions.filter((i) => i.type === 'Clash')) {
     const [p1, p2] = x.where.split(' & ').map((w) => w.toLowerCase());
-    items.push(`<li>${t('<b>Clash {chars}</b> between {a} and {b}: these areas can pull in different directions. <i>Balance:</i> plan consciously for both and expect change rather than fighting it.', { chars: x.chars, a: PILLAR_AREA[p1], b: PILLAR_AREA[p2] })}</li>`);
+    items.push(`<li>${t('<b>Clash {chars}</b> between {a} and {b}: these areas can pull in different directions. <i>Balance:</i> plan consciously for both and expect change rather than fighting it.', { chars: namedChars(x.chars), a: PILLAR_AREA[p1], b: PILLAR_AREA[p2] })}</li>`);
   }
   sections.splice(sections.length - 1, 0, { title: t('Weak spots & how to balance them'), html: `
     <p>${t('Every chart has imbalances – they are where growth happens. Based on your chart, watch out for:')}</p>

@@ -33,7 +33,7 @@ const HARMS = [[0, 7], [1, 6], [2, 5], [3, 4], [8, 11], [9, 10]];
 const NOBLE = [[1, 7], [0, 8], [11, 9], [11, 9], [1, 7], [0, 8], [2, 6], [2, 6], [3, 5], [3, 5]];
 const ACADEMIC = [5, 6, 8, 9, 8, 9, 11, 0, 2, 3];
 const PEACH = { 0: 9, 2: 3, 1: 6, 3: 0 }, HORSE = { 0: 2, 2: 8, 1: 11, 3: 5 };
-const groupName = (g) => g.slice(0, 3).map((b) => BRANCHES[b].zh).join('');
+const groupName = (g) => g.slice(0, 3).map((b) => `${BRANCHES[b].zh} ${BRANCHES[b].animal}`).join(' · ');
 
 const GEN = {
   intro: () => {
