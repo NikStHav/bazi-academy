@@ -20,9 +20,9 @@ export const OFFICERS = [
     desc: 'Settling and fixing – commitments made today tend to last.' },
   { zh: '执', name: 'Initiate', rating: 'good', good: 'Starting construction, hiring, planting, signing', avoid: 'Moving house, travel, opening a business',
     desc: 'Grasping and holding – good for taking firm action on a plan.' },
-  { zh: '破', name: 'Destruction', rating: 'bad', good: 'Demolition, breaking bad habits, ending things on purpose', avoid: 'Weddings, contracts, openings, moving',
-    desc: 'The day opposite the month – things break apart. Avoid important beginnings.' },
-  { zh: '危', name: 'Danger', rating: 'good', good: 'Prayer, careful detailed work, meditation', avoid: 'Risky activities, climbing, sailing',
+  { zh: '破', name: 'Break', rating: 'bad', good: 'Demolition, breaking bad habits, ending things on purpose', avoid: 'Weddings, contracts, openings, moving',
+    desc: 'The day opposite the month – good for endings and clearing out, less suited to important beginnings.' },
+  { zh: '危', name: 'Caution', rating: 'good', good: 'Prayer, careful detailed work, meditation', avoid: 'Risky activities, climbing, sailing',
     desc: 'Precarious but auspicious when you act carefully.' },
   { zh: '成', name: 'Success', rating: 'best', good: 'Almost everything: weddings, openings, moving, contracts, travel', avoid: 'Lawsuits',
     desc: 'One of the best days of the cycle – efforts come to completion.' },
@@ -34,7 +34,7 @@ export const OFFICERS = [
     desc: 'Things are sealed – a day for rest and endings, not beginnings.' },
 ];
 
-export const RATING_LABEL = { best: 'Very good', good: 'Good', fair: 'Neutral', bad: 'Unfavourable' };
+export const RATING_LABEL = { best: 'Very good', good: 'Good', fair: 'Neutral', bad: 'Less suited' };
 
 export const ACTIVITIES = [
   { key: 'wedding', name: 'Wedding or engagement', icon: '💍', officers: [4, 8, 10] },

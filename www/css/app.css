@@ -453,3 +453,19 @@ th, td { overflow-wrap: anywhere; }
 .dg-stage-list li.dg-stage-top { box-shadow: inset 3px 0 0 var(--ok); } .dg-stage-list li.dg-stage-low { box-shadow: inset 3px 0 0 var(--line); }
 .dg-stage-n { display: inline-block; min-width: 22px; text-align: center; border-radius: 999px; background: var(--surface); font: 700 12px/1.7 system-ui, sans-serif; }
 .dg-stem-tabs button { min-width: 0; }
+
+/* Simple / Detailed switch, chart navigation, folded cards, form errors */
+.view-tog { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 10px; }
+.view-tog .seg { flex: 0 0 auto; } .view-tog .seg button { padding: 6px 12px; font-size: 13px; white-space: nowrap; hyphens: none; }
+.view-tog p { margin: 0; flex: 1 1 160px; }
+.hidden-row .hg { display: block; font-size: 11px; line-height: 1.2; white-space: normal; }
+.luck-god { font-size: 11px; line-height: 1.2; max-width: 64px; margin: 2px auto 0; color: var(--accent); }
+.chart-nav { margin-bottom: 10px; } .chart-nav .btn { font-size: 14px; padding: 9px 10px; }
+details.card.fold > summary { list-style: none; display: flex; align-items: center; justify-content: space-between; padding: 0; }
+details.card.fold > summary::-webkit-details-marker { display: none; }
+details.card.fold > summary h3 { margin: 0; }
+details.card.fold > summary::after { content: '▾'; color: var(--muted); font-size: 18px; transition: transform .2s; }
+details.card.fold[open] > summary { margin-bottom: 8px; } details.card.fold[open] > summary::after { transform: rotate(180deg); }
+.fold-in > summary { font-weight: 600; margin-top: 10px; }
+.chips.jump .chip { cursor: pointer; }
+.form-err { background: color-mix(in srgb, var(--bad) 12%, transparent); color: var(--bad); border-radius: 10px; padding: 8px 10px; font-size: 14px; margin: 12px 0 0; }

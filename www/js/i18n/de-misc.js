@@ -6,14 +6,14 @@ export const OFFICERS = [
   { name: 'Ausgleich', good: 'Reparaturen, Routinearbeit, Streichen, Einebnen', avoid: 'Große neue Vorhaben, Hochzeiten', desc: 'Ein gleichmäßiger, gewöhnlicher Tag – am besten für Instandhaltung und Routine.' },
   { name: 'Festigen', good: 'Hochzeiten, Verträge unterschreiben, Kaufen, Ziele setzen', avoid: 'Rechtsstreitigkeiten, lange Reisen', desc: 'Festlegen und Festigen – was heute vereinbart wird, hat oft Bestand.' },
   { name: 'Ergreifen', good: 'Bau beginnen, Einstellen, Pflanzen, Unterschreiben', avoid: 'Umzug, Reisen, ein Geschäft eröffnen', desc: 'Ergreifen und Halten – gut, um einen Plan entschlossen anzugehen.' },
-  { name: 'Zerstören', good: 'Abriss, schlechte Gewohnheiten brechen, Dinge bewusst beenden', avoid: 'Hochzeiten, Verträge, Eröffnungen, Umzug', desc: 'Der Tag gegenüber dem Monat – Dinge brechen auseinander. Vermeide wichtige Anfänge.' },
-  { name: 'Gefahr', good: 'Gebet, sorgfältige Detailarbeit, Meditation', avoid: 'Riskante Unternehmungen, Klettern, Segeln', desc: 'Heikel, aber günstig, wenn du achtsam handelst.' },
+  { name: 'Bruch', good: 'Abriss, schlechte Gewohnheiten brechen, Dinge bewusst beenden', avoid: 'Hochzeiten, Verträge, Eröffnungen, Umzug', desc: 'Der Tag gegenüber dem Monat – gut zum Beenden und Aufräumen, weniger geeignet für wichtige Anfänge.' },
+  { name: 'Achtsamkeit', good: 'Gebet, sorgfältige Detailarbeit, Meditation', avoid: 'Riskante Unternehmungen, Klettern, Segeln', desc: 'Heikel, aber günstig, wenn du achtsam handelst.' },
   { name: 'Erfolg', good: 'Fast alles: Hochzeiten, Eröffnungen, Umzug, Verträge, Reisen', avoid: 'Rechtsstreitigkeiten', desc: 'Einer der besten Tage des Zyklus – Bemühungen kommen zum Abschluss.' },
   { name: 'Empfangen', good: 'Schulden eintreiben, Ernten, Kaufen, Einlagern', avoid: 'Reisen, medizinische Eingriffe, Beerdigungen', desc: 'Ein Tag, um einzusammeln, was einem zusteht.' },
   { name: 'Öffnen', good: 'Ein Geschäft eröffnen, Hochzeiten, ein Studium beginnen, Reisen, Umzug', avoid: 'Beerdigungen, Angelegenheiten abschließen', desc: 'Türen öffnen sich – hervorragend für Starts und Anfänge.' },
   { name: 'Schließen', good: 'Geld sparen, Konten schließen, Mauern bauen', avoid: 'Eröffnungen, Reisen, etwas Neues beginnen', desc: 'Dinge werden versiegelt – ein Tag für Ruhe und Abschlüsse, nicht für Anfänge.' },
 ];
-export const RATING_LABEL = { best: 'Sehr gut', good: 'Gut', fair: 'Neutral', bad: 'Ungünstig' };
+export const RATING_LABEL = { best: 'Sehr gut', good: 'Gut', fair: 'Neutral', bad: 'Weniger geeignet' };
 export const ACTIVITIES = ['Hochzeit oder Verlobung', 'Umzug', 'Vertrag unterschreiben', 'Geschäftseröffnung oder Start', 'Reiseantritt', 'Renovierung oder Bau'];
 
 export const STARS = {

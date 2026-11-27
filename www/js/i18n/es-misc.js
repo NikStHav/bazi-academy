@@ -6,14 +6,14 @@ export const OFFICERS = [
   { name: 'Equilibrio', good: 'Reparaciones, trabajo rutinario, pintar, nivelar', avoid: 'Grandes proyectos nuevos, bodas', desc: 'Un día parejo y corriente – ideal para el mantenimiento y la rutina.' },
   { name: 'Estabilidad', good: 'Bodas, firmar contratos, comprar, fijar metas', avoid: 'Pleitos, viajes largos', desc: 'Fijar y asentar – lo que se acuerda hoy suele durar.' },
   { name: 'Iniciar', good: 'Empezar una obra, contratar, plantar, firmar', avoid: 'Mudarse, viajar, abrir un negocio', desc: 'Tomar y sostener – bueno para emprender un plan con firmeza.' },
-  { name: 'Destrucción', good: 'Demoliciones, romper malos hábitos, terminar cosas a propósito', avoid: 'Bodas, contratos, inauguraciones, mudanzas', desc: 'El día opuesto al mes – las cosas se separan. Evita los comienzos importantes.' },
-  { name: 'Peligro', good: 'Oración, trabajo minucioso, meditación', avoid: 'Actividades arriesgadas, escalar, navegar', desc: 'Delicado, pero favorable si actúas con cuidado.' },
+  { name: 'Ruptura', good: 'Demoliciones, romper malos hábitos, terminar cosas a propósito', avoid: 'Bodas, contratos, inauguraciones, mudanzas', desc: 'El día opuesto al mes – bueno para cerrar etapas y despejar, menos indicado para comienzos importantes.' },
+  { name: 'Precaución', good: 'Oración, trabajo minucioso, meditación', avoid: 'Actividades arriesgadas, escalar, navegar', desc: 'Delicado, pero favorable si actúas con cuidado.' },
   { name: 'Éxito', good: 'Casi todo: bodas, inauguraciones, mudanzas, contratos, viajes', avoid: 'Pleitos', desc: 'Uno de los mejores días del ciclo – los esfuerzos llegan a buen término.' },
   { name: 'Recibir', good: 'Cobrar deudas, cosechar, comprar, almacenar', avoid: 'Viajes, intervenciones médicas, funerales', desc: 'Un día para recoger lo que te corresponde.' },
   { name: 'Abrir', good: 'Abrir un negocio, bodas, empezar estudios, viajar, mudarse', avoid: 'Entierros, cerrar asuntos', desc: 'Las puertas se abren – excelente para lanzamientos y comienzos.' },
   { name: 'Cerrar', good: 'Ahorrar dinero, cerrar cuentas, levantar muros', avoid: 'Inauguraciones, viajes, empezar algo nuevo', desc: 'Las cosas se sellan – un día para descansar y concluir, no para empezar.' },
 ];
-export const RATING_LABEL = { best: 'Muy bueno', good: 'Bueno', fair: 'Neutral', bad: 'Desfavorable' };
+export const RATING_LABEL = { best: 'Muy bueno', good: 'Bueno', fair: 'Neutral', bad: 'Menos indicado' };
 export const ACTIVITIES = ['Boda o compromiso', 'Mudanza', 'Firmar un contrato', 'Abrir un negocio o un lanzamiento', 'Empezar un viaje', 'Reforma u obra'];
 
 export const STARS = {
