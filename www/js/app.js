@@ -25,9 +25,10 @@ import { lifeTimeline } from './timeline.js';
 import { MONTH_TEXT } from './forecast.js';
 import { dayPillarProfile } from './daypillars.js';
 import { stageOf } from './stages.js';
+import { nayinOf } from './nayin.js';
 import { GUIDE } from './guide.js';
 import { lessonRound } from './lesson-quiz.js';
-import { elementsCycleHtml, yinYangHtml, stemPicturesHtml, branchWheelHtml, relationsHtml, relListHtml, threeLifeHtml, lifeStagesHtml, bindDiagrams, bindRelations, bindLife } from './diagrams.js';
+import { elementsCycleHtml, yinYangHtml, stemPicturesHtml, branchWheelHtml, relationsHtml, relListHtml, threeLifeHtml, lifeStagesHtml, stemPictureHtml, bindDiagrams, bindRelations, bindLife } from './diagrams.js';
 import { GLOSSARY, glossaryEntry } from './glossary.js';
 import { normalize } from './places.js';
 import { STORE_LINKS } from './store-links.js';
@@ -268,7 +269,10 @@ function viewToggleHtml() {
     <p class="small muted">${d ? t('Detailed: with the Ten Gods – how each character relates to you.') : t('Simple: elements and animals only. Switch to Detailed to see the Ten Gods.')}</p></div>`;
 }
 document.addEventListener('click', (e) => {
-  const j = e.target.closest('[data-jump]'); if (j) { document.getElementById(j.dataset.jump)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+  const tb = e.target.closest('[data-ctab-btn]');
+  if (tb) { chartTab = tb.dataset.ctabBtn; view.querySelectorAll('[data-ctab]').forEach((x) => { x.hidden = x.dataset.ctab !== chartTab; });
+    view.querySelectorAll('.ctabs [data-ctab-btn]').forEach((x) => x.classList.toggle('on', x.dataset.ctabBtn === chartTab));
+    view.querySelector('.ctabs')?.scrollIntoView({ block: 'start' }); scrollLuckNow(); return; }
   const b = e.target.closest('[data-detail]'); if (!b) return;
   state.settings.detailed = b.dataset.detail === '1'; save('settings');
   const y = view.scrollTop; router(); view.scrollTop = y;
@@ -286,6 +290,9 @@ function pillarsHtml(c, withHidden = true) {
       <div class="god" ${godKey ? `data-god="${godKey}"` : ''}>${god}</div>
       ${stemTile(p.stem, 'stem')}${branchTile(p.branch)}
       ${withHidden ? `<div class="hidden-row">${BRANCHES[p.branch].hidden.map((s) => `<span data-stem="${s}" role="button" title="${STEMS[s].py} – ${polEl(s)}"><b class="tx-${STEMS[s].el}">${STEMS[s].zh}</b> ${STEMS[s].py}${full ? ` <span class="muted hg">${TEN_GODS[tenGod(dm, s)].name}</span>` : ''}</span>`).join('')}</div>` : ''}
+      ${withHidden && full ? (() => { const ny = nayinOf(p.index); const st = stageOf(dm, p.branch);
+        return `<div class="px-row" data-term="nayin" role="button"><span class="px-zh tx-${ny.el}">${ny.zh}</span><span class="px-nm">${ny.name}</span></div>
+        <div class="px-row" data-term="stages" role="button"><span class="px-zh">${st.zh}</span><span class="px-nm">${st.name}</span></div>`; })() : ''}
     </div>`;
   }).join('')}</div>`;
 }
@@ -301,12 +308,61 @@ function threeThingsHtml(c) {
     <li><b>${star ? `${star.icon} ${star.name} ${star.zh}.` : t('Favourable: {els}.', { els: fav.map((x) => ELEMENTS[x].name).join(', ') })}</b> ${star ? star.desc : t('These elements balance your chart.')}</li></ul>`;
 }
 
+// Classical associations of the five elements (He Tu numbers, compass directions, colours).
+const EL_LIFE = () => [
+  { colours: t('green, teal'), sw: ['#3a9a5b', '#2a9d8f'], dir: t('East'), num: '3 · 8' },
+  { colours: t('red, pink, purple'), sw: ['#d9483b', '#9b4dca'], dir: t('South'), num: '2 · 7' },
+  { colours: t('yellow, brown, beige'), sw: ['#d9a441', '#8b5e3c'], dir: t('Centre, southwest, northeast'), num: '5 · 0' },
+  { colours: t('white, gold, silver'), sw: ['#f2efe9', '#d4af37'], dir: t('West'), num: '4 · 9' },
+  { colours: t('black, blue, navy'), sw: ['#1d2b3a', '#2f6fd6'], dir: t('North'), num: '1 · 6' },
+];
+const swatches = (els) => els.flatMap((e) => EL_LIFE()[e].sw).map((h) => `<i class="sw" style="background:${h}"></i>`).join('');
+/** "Your elements in daily life": colours, directions and numbers from the helpful elements – with the reason. */
+function elementLifeHtml(c, compact = false) {
+  const f = favourableElements(c), L = EL_LIFE(), dm = STEMS[c.dayMaster];
+  const names = (els) => els.map((e) => `<b class="tx-${e}">${ELEMENTS[e].name}</b>`).join(', ');
+  const why = t('Why? Your Day Master {dm} is {state}, so {els} bring balance.', { dm: `${dm.zh} ${polEl(c.dayMaster)}`,
+    state: f.strong ? t('rather strong') : t('rather weak'), els: f.favourable.map((e) => ELEMENTS[e].name).join(', ') });
+  const rows = `<table class="el-life">
+    <tr><th>${t('Colours')}</th><td>${swatches(f.favourable)}<br><span class="small">${f.favourable.map((e) => L[e].colours).join(' · ')}</span></td></tr>
+    <tr><th>${t('Directions')}</th><td>${f.favourable.map((e) => L[e].dir).join(' · ')}</td></tr>
+    <tr><th>${t('Numbers')}</th><td>${f.favourable.map((e) => L[e].num).join(' · ')}</td></tr>
+    <tr><th>${t('Use sparingly')}</th><td>${swatches(f.unfavourable)}<br><span class="small">${f.unfavourable.map((e) => L[e].colours).join(' · ')}</span></td></tr></table>`;
+  if (compact) return `${rows}<p class="small muted" style="margin-bottom:0">${why}</p>`;
+  return `<div class="card"><h3 style="margin-top:0">${t('Your elements in daily life')}</h3>
+    <p>${t('Helpful for you: {els}.', { els: names(f.favourable) })}</p>${rows}
+    <p class="small">${why}</p>
+    <p class="small muted" style="margin-bottom:0">${t('Classical associations: compass directions, colours and the He Tu numbers (Water 1·6, Fire 2·7, Wood 3·8, Metal 4·9, Earth 5·0). Use them as playful reminders, not as rules.')}</p></div>`;
+}
+
+// Short meaning of each Ten God, for the one-line pillar summaries.
+const GOD_KW = () => ({
+  F: t('independence, peers and self-reliance'), RW: t('drive, competition and bold moves'),
+  EG: t('enjoyment, talent and relaxed self-expression'), HO: t('creativity, eloquence and rebellion'),
+  IW: t('opportunity, trade and generosity'), DW: t('steady income, diligence and responsibility'),
+  '7K': t('pressure, ambition and courage'), DO: t('order, reputation and a sense of duty'),
+  IR: t('intuition, unusual knowledge and inner support'), DR: t('learning, care and support from mentors'),
+});
+function pillarLinesHtml(c) {
+  const AREA = { year: t('Ancestors, childhood and public image'), month: t('Parents, siblings and career environment'), day: t('You and your partner'), hour: t('Children, ideas and later life') };
+  const kw = GOD_KW();
+  return `<div class="card"><h3 style="margin-top:0">${t('Your four pillars in plain words')} ${q('tengods')}</h3><div class="pl-lines">${PILLAR_KEYS.filter((k) => c.pillars[k]).map((k) => {
+    const p = c.pillars[k]; const g = tenGod(c.dayMaster, p.stem);
+    const line = k === 'day' ? `${t('Day Master: this is you.')} ${t('The day branch {b} is your partner palace.', { b: `${BRANCHES[p.branch].zh} ${BRANCHES[p.branch].animal}` })}`
+      : t('{god} on the {pillar} pillar: {kw}.', { god: `<a href="javascript:void 0" data-god="${g}">${TEN_GODS[g].name}</a>`, pillar: PILLAR_LABEL[k], kw: kw[g] });
+    return `<div class="pl-line"><span class="pl-zh">${pillarName(p)}</span><span><span class="small muted">${AREA[k]}</span><br>${line}</span></div>`; }).join('')}</div>
+    <p class="small muted" style="margin-bottom:0">${t('Each pillar stands for an area of life. The Ten God of its stem shows how that area relates to you.')}</p></div>`;
+}
+
 function chartHtml(entry) {
   const c = computeChart({ ...entry.input, ziHourNextDay: state.settings.ziHourNextDay });
   const dm = STEMS[c.dayMaster];
   const i = entry.input;
   const nowYear = new Date().getFullYear();
   const curLuck = [...c.luck.pillars].reverse().find((p) => p.year <= nowYear);
+  const fav = favourableElements(c);
+  const tab = chartTab;
+  const sec = (k) => `data-ctab="${k}" ${tab === k ? '' : 'hidden'}`;
   return `
   <div class="card">
     <h2 style="margin-bottom:2px">${esc(entry.name || t('Chart'))} ${entry.mine ? `<span class="star" title="${t('My chart')}">★</span>` : ''}</h2>
@@ -314,40 +370,49 @@ function chartHtml(entry) {
       ${c.solarCorrectionMin ? ` · ${t('true solar time {m} min', { m: (c.solarCorrectionMin > 0 ? '+' : '') + c.solarCorrectionMin })}` : ''}</div>
     ${viewToggleHtml()}
     <div style="margin-top:8px">${pillarsHtml(c)}</div>
-    <p class="small muted" style="margin-bottom:0">${t('Tap any character for its meaning.')} ${t('The gold frame marks your Day Master – that is you.')} ${t('Under each branch: its hidden stems.')}${(() => { const one = PILLAR_KEYS.map((k) => c.pillars[k]).filter((p) => p && BRANCHES[p.branch].hidden.length === 1).map((p) => p.branch);
-      return one.length ? ' ' + t('{b} holds only one hidden stem – that is normal for this branch.', { b: [...new Set(one)].map((x) => `${BRANCHES[x].zh}\u00a0${BRANCHES[x].animal}`).join(', ') }) : ''; })()}</p>
+    <p class="small muted" style="margin-bottom:0">${t('Tap any character for its meaning.')} ${t('The gold frame marks your Day Master – that is you.')} ${t('Under each branch: its hidden stems.')}${detailed() ? ' ' + t('Below them: the Na Yin (the image of the pillar) and the growth stage of your Day Master.') : ''}${(() => { const one = PILLAR_KEYS.map((k) => c.pillars[k]).filter((p) => p && BRANCHES[p.branch].hidden.length === 1).map((p) => p.branch);
+      return one.length ? ' ' + t('{b} holds only one hidden stem – that is normal for this branch.', { b: [...new Set(one)].map((x) => `${BRANCHES[x].zh} ${BRANCHES[x].animal}`).join(', ') }) : ''; })()}</p>
     <p class="small" style="margin:6px 0 0">${t('New to BaZi?')} ${['pillar', 'daymaster', 'tengods', 'hidden'].map((id) => `<a href="javascript:void 0" data-term="${id}">${esc(glossaryEntry(id).term)}</a>`).join(' · ')} · <a href="#/glossary">${t('All terms')} ›</a></p>
   </div>
-  <div class="card"><h3 style="margin-top:0">${t('In a nutshell')}</h3>${threeThingsHtml(c)}
-    <p class="small muted" style="margin:8px 0 4px">${t('Jump to:')}</p>
-    <div class="chips jump">${[['j-dm', t('You')], ['j-el', t('Elements')], ['j-luck', t('Luck')], ['j-stars', t('Stars')], ['j-read', t('Reading')]]
-      .map(([id, n]) => `<button type="button" class="chip" data-jump="${id}">${n}</button>`).join('')}</div></div>
-  <div class="card" id="j-dm" data-dm="${c.dayMaster}">
-    <h3 style="margin-top:0">${t("Day Master:")} <span class="tx-${dm.el}" style="font-family:var(--serif)">${dm.zh}</span> ${dm.py} – ${polEl(c.dayMaster)} ${q('daymaster')}</h3>
+  <div class="seg ctabs" role="tablist">${[['chart', t('Chart')], ['elements', t('Elements')], ['luck', t('Luck')]].map(([k, n]) => `<button type="button" role="tab" data-ctab-btn="${k}" class="${tab === k ? 'on' : ''}">${n}</button>`).join('')}</div>
+  <section ${sec('chart')}>
+  <div class="card"><h3 style="margin-top:0">${t('In a nutshell')}</h3>${threeThingsHtml(c)}</div>
+  <div class="card dm-card" data-dm="${c.dayMaster}">
+    <div class="dm-head">${stemPictureHtml(c.dayMaster)}<div><h3 style="margin:0">${t("Day Master:")} <span class="tx-${dm.el}" style="font-family:var(--serif)">${dm.zh}</span> ${dm.py} – ${polEl(c.dayMaster)} ${q('daymaster')}</h3>
+      <p class="small" style="margin:4px 0 0">“${dm.image}”</p></div></div>
     <p>${dm.desc}</p>
+    <p class="small"><b>${t('Elements that help you:')}</b> ${fav.favourable.map((e) => `<span class="tx-${e}">${ELEMENTS[e].zh} ${ELEMENTS[e].name}</span>`).join(', ')} · <a href="javascript:void 0" data-ctab-btn="elements">${t('What this means in daily life')} ›</a></p>
     <p><span class="chip">${t('Season:')} ${c.strength.phase.zh} ${c.strength.phase.name}</span><span class="chip">${t('Support ≈ {n}%', { n: c.strength.ratio })}</span><span class="chip">${t(c.strength.label)}</span></p>
     <p class="small muted">${c.strength.phase.desc} ${t('The support score counts Companion and Resource elements (month branch weighted double). It is a learning aid, not a full judgement.')}</p>
     <p class="small">${c.strength.ratio >= 45
       ? t('A stronger Day Master is classically balanced by <b>Output, Wealth and Power</b>: {els}.', { els: [1, 2, 3].map((d) => ELEMENTS[(dm.el + d) % 5].name).join(', ') })
       : t('A weaker Day Master is classically supported by <b>Resource and Companions</b>: {els}.', { els: [4, 0].map((d) => ELEMENTS[(dm.el + d) % 5].name).join(', ') })}</p>
   </div>
+  ${pillarLinesHtml(c)}
   ${dayPillarCard(c)}
-  <div class="card" id="j-el"><h3 style="margin-top:0">${t("Five Elements balance")} ${q('elements')}</h3><div class="bars">
-    ${c.elements.map((e) => `<div class="bar" data-el="${e.el}" style="cursor:pointer"><span class="tx-${e.el}" style="font-weight:600">${ELEMENTS[e.el].zh} ${ELEMENTS[e.el].name}</span>
-      <span class="track"><i style="width:${e.pct}%;background:var(--${ELEMENTS[e.el].key})"></i></span><span class="small">${e.pct}%</span></div>`).join('')}</div>
-    <p class="small muted">${t('Stems count 1; hidden stems 1 / 0.5 / 0.3; month branch ×1.5.')}</p></div>
   <details class="card fold"><summary><h3>${t("Interactions")} <span class="muted small">(${c.interactions.length})</span></h3></summary>
     ${c.interactions.length ? c.interactions.map((x) => `<div class="inter"><b>${namedChars(x.chars)}</b> ${x.label} <span class="muted small">${x.zh} · ${x.whereLabel}</span><div class="small">${x.note}</div></div>`).join('')
       : `<p class="muted">${t("No major combinations or clashes between the natal pillars.")}</p>`} ${q('clash')}</details>
-  <div class="card" id="j-luck" data-dm="${c.dayMaster}"><h3 style="margin-top:0">${t("Luck Pillars 大运")} ${q('luck')}</h3>
+  ${starsCard(c)}
+  ${readingHtml(c)}
+  </section>
+  <section ${sec('elements')}>
+  <div class="card"><h3 style="margin-top:0">${t("Five Elements balance")} ${q('elements')}</h3><div class="bars">
+    ${c.elements.map((e) => `<div class="bar" data-el="${e.el}" style="cursor:pointer"><span class="tx-${e.el}" style="font-weight:600">${ELEMENTS[e.el].zh} ${ELEMENTS[e.el].name}</span>
+      <span class="track"><i style="width:${e.pct}%;background:var(--${ELEMENTS[e.el].key})"></i></span><span class="small">${e.pct}%</span></div>`).join('')}</div>
+    <p class="small muted">${t('Stems count 1; hidden stems 1 / 0.5 / 0.3; month branch ×1.5.')} ${t('Tap an element for details.')}</p></div>
+  ${elementLifeHtml(c)}
+  </section>
+  <section ${sec('luck')}>
+  <div class="card" data-dm="${c.dayMaster}"><h3 style="margin-top:0">${t("Luck Pillars 大运")} ${q('luck')}</h3>
     <p class="small muted">${c.luck.forward ? t('Forward') : t('Backward')} · ${t('first luck pillar starts at about {y} years {m} months', { y: c.luck.startYears, m: c.luck.startMonths })}${i.timeUnknown ? t(' (approximate – birth time unknown)') : ''}.</p>
     <div class="luck">${c.luck.pillars.map((p) => `<div class="${curLuck && p.year === curLuck.year ? 'now' : ''}"><div>${p.year}</div><div class="muted">${t('age {n}', { n: Math.floor(p.age) })}</div>
-      ${stemTile(p.stem, 'sm')}${branchTile(p.branch, 'sm')}${detailed() ? `<div class="luck-god">${TEN_GODS[tenGod(c.dayMaster, p.stem)].name}</div>` : ''}</div>`).join('')}</div></div>
-  <div id="j-stars">${starsCard(c)}</div>
-  <div id="j-read">${readingHtml(c)}</div>
+      ${stemTile(p.stem, 'sm')}${branchTile(p.branch, 'sm')}${detailed() ? `<div class="luck-god">${TEN_GODS[tenGod(c.dayMaster, p.stem)].name}</div>` : ''}</div>`).join('')}</div>
+    ${curLuck ? `<p class="small" style="margin-bottom:0"><b>${t('Now ({y}–{z}):', { y: curLuck.year, z: curLuck.year + 9 })}</b> ${t('{god} – {kw}.', { god: TEN_GODS[tenGod(c.dayMaster, curLuck.stem)].name, kw: GOD_KW()[tenGod(c.dayMaster, curLuck.stem)] })}</p>` : ''}</div>
   <a class="card premium-banner" href="#/forecast/${entry.id}"><span class="pb-icon">📅</span><span><b>${t('Year ahead {y}', { y: baziYearOf() })}</b> · ${t('your year and its 12 months')}</span><span class="pb-go">›</span></a>
   <a class="card premium-banner" href="#/influences/${entry.id}"><span class="pb-icon">🧭</span><span><b>${t('Influences')}</b> · ${t('any date measured against this chart')}</span><span class="pb-go">›</span></a>
   <a class="card premium-banner" href="#/timeline/${entry.id}"><span class="pb-icon">🧵</span><span><b>${t('Life timeline')}</b> · ${t('all luck pillars and years at a glance')}</span><span class="pb-go">›</span></a>
+  </section>
   <details class="card fold"><summary><h3>${t('Group & notes')}</h3></summary>
     <label for="c-group">${t('Group')}</label><select id="c-group">${groupOptions(entry.group || '')}</select>
     <label for="c-notes">${t('Notes')}</label><textarea id="c-notes" rows="4" maxlength="2000" placeholder="${t('e.g. what you know about this person, events to compare with the chart …')}">${esc(entry.notes || '')}</textarea>
@@ -355,6 +420,9 @@ function chartHtml(entry) {
   <div class="row" style="margin-bottom:10px"><button class="btn" id="share-chart">${t("⇪ Share as image")}</button><a class="btn secondary" href="#/match/${entry.id}">${t("♥ Compare")}</a></div>
   <div class="row"><button class="btn secondary" id="del-chart">${t("Delete")}</button><button class="btn secondary" id="mine-chart">${entry.mine ? t('★ My chart') : t('☆ Set as my chart')}</button></div>`;
 }
+let chartTab = 'chart';
+/** Scrolls the luck pillar row so that the current ten-year period is visible. */
+function scrollLuckNow() { const n = view.querySelector('.luck .now'); if (n && n.offsetParent) n.parentElement.scrollLeft = n.offsetLeft - n.parentElement.offsetLeft - 40; }
 
 // ---------- views ----------
 // ---------- birth data form (shared by the chart page and the welcome screen) ----------
@@ -537,6 +605,7 @@ const routes = {
       const others = state.charts.length - 1;
       view.innerHTML = `<div class="row chart-nav"><a class="btn secondary" href="#/chart/new">＋ ${t('New chart')}</a>${others > 0 || !entry.mine
         ? `<a class="btn secondary" href="#/chart/all">👥 ${t('All charts ({n})', { n: state.charts.length })}</a>` : ''}</div>` + chartHtml(entry);
+      scrollLuckNow();
       bindPaywall();
       $('#del-chart').onclick = () => { if (confirm(t('Delete this chart?'))) { state.charts = state.charts.filter((c) => c.id !== id); save('charts'); go('#/chart', true); } };
       $('#mine-chart').onclick = () => { state.charts.forEach((c) => { c.mine = c.id === id ? !entry.mine : false; }); save('charts'); rescheduleTips(); routes.chart(id); };
@@ -655,6 +724,7 @@ const routes = {
         <p><span class="officer r-${alm.officer.rating}">${alm.officer.zh}</span> <b>${t('{name} day', { name: alm.officer.name })}</b> – ${RATING_LABEL[alm.officer.rating]}<br>
         <span class="small"><b>${t("Good for:")}</b> ${alm.officer.good}</span></p>
         <p class="small" style="margin-bottom:0"><b>${t('Lucky hours today:')}</b> ${luckyH.map((x) => `${x.range} ${BRANCHES[x.branch].animal}`).join(' · ') || '–'}</p></div>
+      ${myC ? `<div class="card"><h3 style="margin-top:0">${t('Your elements in daily life')}</h3>${elementLifeHtml(myC, true)}</div>` : ''}
       <details class="today-more" id="today-more" ${moreOpen ? 'open' : ''}><summary class="card more-sum"><span><b>${t('More about today')}</b><br>
         <span class="small muted">${t('Pillars of the day, Chinese clock, almanac, solar term and more')}</span></span></summary>
       <div class="card"><h2 style="margin-top:0">${now.toLocaleDateString(LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</h2>

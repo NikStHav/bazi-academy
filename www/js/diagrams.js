@@ -304,3 +304,9 @@ export function bindLife(root) {
     box.querySelector('.dg-pic').innerHTML = stagesSvg(s); box.querySelector('.dg-cap').innerHTML = stagesCaption(s);
     box.querySelectorAll('[data-stagestem]').forEach((x) => x.classList.toggle('on', x === b)); }));
 }
+
+/** The picture of a Heavenly Stem (tree, candle, jewel …) on its element colour – used for the Day Master. */
+export function stemPictureHtml(i, size = 56) {
+  const s = STEMS[i];
+  return `<span class="stem-pic" style="background:var(--${ELEMENTS[s.el].key})" data-stem="${i}" role="button" aria-label="${s.py}">${svgIcon(STEM_ICON[i], size * 0.7)}</span>`;
+}

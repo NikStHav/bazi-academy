@@ -103,6 +103,8 @@ export const LESSONS_1 = [
 <p>Los tallos y las ramas avanzan juntos: 甲子, 乙丑, 丙寅 … Como 10 y 12 tienen un factor común, solo los tallos Yang se emparejan con ramas Yang y los Yin con Yin – lo que da <b>60</b> combinaciones (no 120). Es el <b>ciclo sexagenario</b>, llamado así por su primer par, 甲子 Jia Zi.</p>
 <div data-widget="jiazi"></div>
 <p>El mismo ciclo cuenta años, meses, días y horas. 1984 fue 甲子; 2044 volverá a serlo. Los días recorren este ciclo sin interrupción desde hace más de 2700 años.</p>
+<h3>Na Yin 纳音 – la imagen de un pilar</h3>
+<p>Los 60 pilares forman 30 parejas, y cada pareja lleva una imagen poética con su propio elemento: 甲子 y 乙丑 son 海中金 <i>Oro en el mar</i>; 丙寅 y 丁卯, 炉中火 <i>Fuego en el horno</i>. Estas imágenes se llaman Na Yin («sonido»). Dan color a un pilar, pero el tallo y la rama cuentan siempre primero. En la vista «Detallada», tu carta muestra el Na Yin bajo cada pilar.</p>
 <p class="tip">Por este ciclo tu «animal del zodiaco chino» se repite cada 12 años, pero tu pilar del año completo solo cada 60 años.</p>`,
     quiz: [
       { q: '¿Cuántos pilares tiene el ciclo completo?', options: ['12', '60', '120', '10'], answer: 1, explain: '60 – los tallos Yang solo se emparejan con ramas Yang.' },

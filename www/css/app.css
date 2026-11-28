@@ -489,3 +489,15 @@ details.card.fold[open] > summary { margin-bottom: 8px; } details.card.fold[open
 .progress.lvl-prog { background: var(--surface-2); height: 6px; margin: 6px 4px 10px; }
 .lesson-item.here { box-shadow: 0 0 0 2px var(--gold); }
 .here-tag { color: var(--gold); text-transform: none; letter-spacing: 0; font-weight: 700; margin-left: 4px; white-space: nowrap; }
+/* Chart tabs, Day Master picture, pillar lines, Na Yin rows, elements in daily life */
+.ctabs { margin: 4px 0 12px; position: sticky; top: 0; z-index: 3; background: var(--surface); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.ctabs button { font-weight: 600; }
+.dm-head { display: flex; gap: 12px; align-items: center; margin-bottom: 6px; }
+.stem-pic { flex: 0 0 auto; width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; cursor: pointer; }
+.pl-lines { display: grid; gap: 8px; }
+.pl-line { display: flex; gap: 12px; align-items: flex-start; background: var(--surface-2); border-radius: 12px; padding: 9px 11px; }
+.pl-zh { font: 600 22px var(--serif); color: var(--accent); flex: 0 0 auto; line-height: 1.2; }
+.px-row { display: flex; flex-direction: column; align-items: center; margin-top: 6px; padding-top: 5px; border-top: 1px dashed var(--line); cursor: pointer; line-height: 1.2; }
+.px-zh { font: 600 14px var(--serif); } .px-nm { font-size: 10.5px; color: var(--muted); text-align: center; overflow-wrap: anywhere; }
+.el-life { width: 100%; } .el-life th { text-align: left; width: 34%; vertical-align: top; padding: 7px 6px 7px 0; font-weight: 600; } .el-life td { padding: 7px 0; vertical-align: top; }
+.sw { display: inline-block; width: 18px; height: 18px; border-radius: 50%; margin: 0 4px 2px 0; border: 1px solid var(--line); vertical-align: middle; }

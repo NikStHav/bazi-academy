@@ -103,6 +103,8 @@ export const LESSONS_1 = [
 <p>Stämme und Zweige schreiten gemeinsam voran: 甲子, 乙丑, 丙寅 … Weil 10 und 12 einen gemeinsamen Teiler haben, verbinden sich nur Yang-Stämme mit Yang-Zweigen und Yin mit Yin – so entstehen <b>60</b> (nicht 120) Kombinationen. Das ist der <b>Sechziger-Zyklus</b>, benannt nach seinem ersten Paar 甲子 Jia Zi.</p>
 <div data-widget="jiazi"></div>
 <p>Derselbe Zyklus zählt Jahre, Monate, Tage und Stunden. 1984 war ein 甲子-Jahr; 2044 wird es wieder sein. Die Tage laufen seit über 2.700 Jahren ununterbrochen durch diesen Zyklus.</p>
+<h3>Na Yin 纳音 – das Bild einer Säule</h3>
+<p>Die 60 Säulen bilden 30 Paare, und jedes Paar trägt ein poetisches Bild mit eigenem Element: 甲子 und 乙丑 sind 海中金 <i>Gold im Meer</i>, 丙寅 und 丁卯 sind 炉中火 <i>Feuer im Ofen</i>. Diese Bilder heißen Na Yin („Klang“). Sie geben einer Säule Farbe, doch Stamm und Zweig selbst zählen immer zuerst. In der Ansicht „Ausführlich“ zeigt dein Horoskop das Na Yin unter jeder Säule.</p>
 <p class="tip">Darum wiederholt sich dein „chinesisches Tierzeichen“ alle 12 Jahre, deine vollständige Jahressäule aber erst alle 60 Jahre.</p>`,
     quiz: [
       { q: 'Wie viele Säulen hat der vollständige Zyklus?', options: ['12', '60', '120', '10'], answer: 1, explain: '60 – Yang-Stämme verbinden sich nur mit Yang-Zweigen.' },

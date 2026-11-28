@@ -103,6 +103,8 @@ const LESSONS_EN = [
 <p>Stems and branches advance together: 甲子, 乙丑, 丙寅 … Because 10 and 12 have a common factor, only Yang stems pair with Yang branches and Yin with Yin – giving <b>60</b> (not 120) combinations. This is the <b>sexagenary cycle</b>, named after its first pair 甲子 Jia Zi.</p>
 <div data-widget="jiazi"></div>
 <p>The same cycle counts years, months, days and hours. 1984 was 甲子; 2044 will be again. Days have run through this cycle uninterrupted for over 2,700 years.</p>
+<h3>Na Yin 纳音 – the image of a pillar</h3>
+<p>The 60 pillars form 30 pairs, and each pair carries a poetic image with its own element: 甲子 and 乙丑 are 海中金 <i>Gold in the sea</i>, 丙寅 and 丁卯 are 炉中火 <i>Fire in the furnace</i>. These images are called Na Yin (“sound”). They add colour to a pillar, but the stem and branch themselves always count first. In the Detailed view, your chart shows the Na Yin under every pillar.</p>
 <p class="tip">The cycle is why your “Chinese zodiac animal” repeats every 12 years, but your complete year pillar only every 60 years.</p>`,
     quiz: [
       { q: 'How many pillars does the full cycle have?', options: ['12', '60', '120', '10'], answer: 1, explain: '60 – Yang stems only pair with Yang branches.' },
