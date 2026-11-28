@@ -501,3 +501,18 @@ details.card.fold[open] > summary { margin-bottom: 8px; } details.card.fold[open
 .px-zh { font: 600 14px var(--serif); } .px-nm { font-size: 10.5px; color: var(--muted); text-align: center; overflow-wrap: anywhere; }
 .el-life { width: 100%; } .el-life th { text-align: left; width: 34%; vertical-align: top; padding: 7px 6px 7px 0; font-weight: 600; } .el-life td { padding: 7px 0; vertical-align: top; }
 .sw { display: inline-block; width: 18px; height: 18px; border-radius: 50%; margin: 0 4px 2px 0; border: 1px solid var(--line); vertical-align: middle; }
+/* Day journal and coloured date finder */
+.jr-faces { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 6px 0 8px; }
+.jr-faces button { border: 1px solid var(--line); background: var(--surface-2); color: var(--text); border-radius: 12px; padding: 8px 2px 6px; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; font: inherit; }
+.jr-faces button span { font-size: 26px; line-height: 1; } .jr-faces button small { font-size: 10.5px; color: var(--muted); }
+.jr-faces button.on { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 22%, var(--surface)); }
+#jr-note { width: 100%; margin-bottom: 6px; }
+.jr-list { padding: 4px 14px; } .jr-row { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); } .jr-row:last-child { border-bottom: 0; }
+.jr-face { font-size: 26px; line-height: 1.1; }
+.cal-acts { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px; scrollbar-width: none; }
+.cal-acts .chip { white-space: nowrap; cursor: pointer; flex: 0 0 auto; }
+.cal-acts .chip.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+.cal-bar { display: inline-block; width: 60%; height: 4px; border-radius: 4px; }
+.cal-cell .cal-bar { position: absolute; left: 20%; bottom: 4px; }
+.cb-best { background: var(--ok); } .cb-mid { background: var(--line); } .cb-bad { background: color-mix(in srgb, var(--gold) 70%, var(--line)); } .cb-clash { background: var(--bad); }
+.cal-legend .cal-bar { width: 18px; margin: 0 4px 2px 8px; vertical-align: middle; } .cal-legend .cal-bar:first-child { margin-left: 0; }

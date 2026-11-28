@@ -46,6 +46,7 @@ const state = {
   best: store.get('best', {}),
   charts: store.get('charts', []),
   settings: store.get('settings', { ziHourNextDay: true }),
+  journal: store.get('journal', {}),
 };
 const save = (k) => store.set(k, state[k]);
 /** Standard-time offset (no daylight saving) of a time zone in a year: the smaller of January and July. */
@@ -706,6 +707,26 @@ const routes = {
     view.querySelectorAll('[data-cat]').forEach((b) => b.addEventListener('click', () => go('#/quiz/' + b.dataset.cat)));
   },
 
+  journal() {
+    setTitle(t('My journal'), true);
+    const keys = Object.keys(state.journal).sort().reverse();
+    const ents = keys.map((k) => ({ k, ...state.journal[k] })).filter((e) => e.r);
+    const avg = (arr) => (arr.length ? arr.reduce((a, e) => a + e.r, 0) / arr.length : null);
+    const fmtAvg = (v) => (v === null ? '–' : `${FACES[Math.round(v) - 1]} ${v.toFixed(1).replace('.', LOCALE.startsWith('en') ? '.' : ',')}`);
+    const hi = ents.filter((e) => e.s >= 4), lo = ents.filter((e) => e.s <= 2);
+    const summary = ents.length < 5
+      ? `<p>${t('Rate at least 5 days – then you will see here how your days compare with the day card.')}</p>`
+      : `<p>${t('On days the day card rated well (4–5 ★), you rated your day <b>{a}</b> on average ({n} days).', { a: fmtAvg(avg(hi)), n: hi.length })}</p>
+         <p>${t('On days it rated low (1–2 ★): <b>{a}</b> ({n} days).', { a: fmtAvg(avg(lo)), n: lo.length })}</p>
+         <p class="small muted">${ents.length < 20 ? t('Still few days – keep rating for a clearer picture.') + ' ' : ''}${t('BaZi describes tendencies. If the numbers barely differ, that is a useful result too.')}</p>`;
+    view.innerHTML = `<div class="card"><h2 style="margin-top:0">${t('Your days and the day card')}</h2>${summary}</div>
+      ${ents.length ? `<div class="card jr-list">${ents.map((e) => { const [yy, mm, dd] = e.k.split('-').map(Number);
+        return `<div class="jr-row"><span class="jr-face">${FACES[e.r - 1]}</span><span class="jr-t"><b>${new Date(yy, mm - 1, dd).toLocaleDateString(LOCALE, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}</b>
+          <span class="muted small">${e.p ? `<span style="font-family:var(--serif)">${e.p}</span> · ` : ''}${t('Day card')} ${'★'.repeat(e.s || 0)}${'☆'.repeat(5 - (e.s || 0))}</span>${e.n ? `<br><span class="small">${esc(e.n)}</span>` : ''}</span></div>`; }).join('')}</div>`
+        : `<p class="muted">${t('No days rated yet. Rate today on the Today tab.')}</p>`}
+      <p class="small muted">${t('Your journal is stored only on this device and is included in the backup.')}</p>`;
+  },
+
   today() {
     setTitle(t('Today'));
     const now = new Date();
@@ -728,6 +749,7 @@ const routes = {
         <span class="small"><b>${t("Good for:")}</b> ${alm.officer.good}</span></p>
         <p class="small" style="margin-bottom:0"><b>${t('Lucky hours today:')}</b> ${luckyH.map((x) => `${x.range} ${BRANCHES[x.branch].animal}`).join(' · ') || '–'}</p></div>
       ${myC ? `<div class="card"><h3 style="margin-top:0">${t('Your elements in daily life')}</h3>${elementLifeHtml(myC, true)}</div>` : ''}
+      ${journalCardHtml(now)}
       <details class="today-more" id="today-more" ${moreOpen ? 'open' : ''}><summary class="card more-sum"><span><b>${t('More about today')}</b><br>
         <span class="small muted">${t('Pillars of the day, Chinese clock, almanac, solar term and more')}</span></span></summary>
       <div class="card"><h2 style="margin-top:0">${now.toLocaleDateString(LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</h2>
@@ -747,6 +769,7 @@ const routes = {
     bindNotifyCard();
     bindClock(now, myC);
     bindDayCard(daily, now);
+    bindJournalCard(now, daily);
   },
 
   match(aId) {
@@ -975,6 +998,9 @@ const routes = {
     const ymKey = (yy, mm) => `${yy}-${String(mm).padStart(2, '0')}`;
     const prev = m === 1 ? ymKey(y - 1, 12) : ymKey(y, m - 1), next = m === 12 ? ymKey(y + 1, 1) : ymKey(y, m + 1);
     const isToday = (d) => y === now.getFullYear() && m === now.getMonth() + 1 && d === now.getDate();
+    const act = calAct && ACTIVITIES.find((a) => a.key === calAct);
+    const actRate = (info) => (info.personalClash.length ? 'clash' : act.officers.includes(info.officerIdx) ? 'best' : info.officer.rating === 'bad' ? 'bad' : 'mid');
+    const goodDays = [];
     const cells = [];
     for (let i = 0; i < lead; i++) cells.push('<div class="cal-cell empty"></div>');
     const list = [];
@@ -987,7 +1013,7 @@ const routes = {
       const fest = e.festivals[0];
       cells.push(`<button class="cal-cell ${isToday(d) ? 'today' : ''} ${fest ? 'fest' : ''} ${term ? 'term' : ''}" data-d="${d}">
         <span class="cal-d">${d}</span><span class="cal-l ${l && l.day === 1 ? 'first' : ''}">${fest ? fest.zh.slice(0, 3) : term ? term.zh : lunarText}</span>
-        ${moon ? `<span class="cal-m">${moon.type === 'full' ? '🌕' : '🌑'}</span>` : ''}</button>`);
+        ${moon ? `<span class="cal-m">${moon.type === 'full' ? '🌕' : '🌑'}</span>` : ''}${act ? (() => { const r = actRate(dayInfo(y, m, d, mine)); if (r === 'best') goodDays.push(d); return `<span class="cal-bar cb-${r}"></span>`; })() : ''}</button>`);
       for (const st of e.terms) list.push({ ms: st.ms, html: `<b>${st.zh} ${st.name}</b>${st.major ? ' ☀︎' : ''}`, d });
       for (const mo of e.moon) list.push({ ms: mo.ms, html: `<b>${mo.type === 'full' ? t('🌕 Full moon') : t('🌑 New moon')}</b>`, d });
       for (const f of e.festivals) list.push({ ms: new Date(y, m - 1, d, 0, 0).getTime(), html: `<b>🏮 ${f.zh} ${f.name}</b>`, d, allDay: true });
@@ -999,13 +1025,18 @@ const routes = {
         <div class="cal-nav"><a class="icon-btn" href="#/calendar/${prev}" aria-label="${t('Previous month')}">‹</a>
           <div><h2 style="margin:0">${monthName}</h2><div class="small muted">${first.label.slice(0, -2)} – ${last.label.slice(0, -2)} · ${t('{y} year', { y: ly(first) + (ly(first) !== ly(last) ? ' / ' + ly(last) : '') })}</div></div>
           <a class="icon-btn" href="#/calendar/${next}" aria-label="${t('Next month')}">›</a></div>
+        <p class="small muted" style="margin:10px 0 4px">${t('Colour the days for:')}</p>
+        <div class="cal-acts" style="overflow-x:auto">${[[null, '–', t('Nothing')], ...ACTIVITIES.map((a) => [a.key, a.icon, a.name])].map(([k, ic, n]) => `<button type="button" class="chip ${calAct === k ? 'on' : ''}" data-calact="${k || ''}">${ic} ${n}</button>`).join('')}</div>
         <div class="cal-grid">${[t('Mo'), t('Tu'), t('We'), t('Th'), t('Fr'), t('Sa'), t('Su')].map((w) => `<div class="cal-w">${w}</div>`).join('')}${cells.join('')}</div>
+        ${act ? `<p class="small cal-legend"><span class="cal-bar cb-best"></span>${t('good for this')} <span class="cal-bar cb-mid"></span>${t('neutral')} <span class="cal-bar cb-bad"></span>${t('less suited')}${mine ? ` <span class="cal-bar cb-clash"></span>${t('clashes you')}` : ''}</p>
+          <p class="small"><b>${act.icon} ${act.name}:</b> ${goodDays.length ? t('good days this month: {days}', { days: goodDays.join(', ') }) : t('no especially good day this month – try the next month.')}${mine ? '' : ` <span class="muted">${t('Add your own chart to also see the days that clash with you.')}</span>`}</p>` : ''}
         <p class="small muted" style="margin-bottom:0">${t('Lunar dates as in China (UTC+8). Tap a day for details.')} ${y === now.getFullYear() && m === now.getMonth() + 1 ? '' : `<a href="#/calendar">${t("Back to today")}</a>`}</p></div>
       <div class="card"><h3 style="margin-top:0">${t("This month")}</h3>${list.sort((a, b) => a.ms - b.ms).map((x) => `<div class="cal-ev" data-d="${x.d}">${x.html}<br><span class="small muted">${x.allDay ? new Date(x.ms).toLocaleDateString(LOCALE, { weekday: 'short', day: 'numeric', month: 'short' }) : fmtT(x.ms)}</span></div>`).join('') || `<p class="muted">${t("No events.")}</p>`}
         <p class="small muted" style="margin-bottom:0">${t("Times in your time zone.")}</p></div>
       ${remindersCard()}
       ${calendarExportCard()}`;
     view.querySelectorAll('[data-d]').forEach((el) => el.addEventListener('click', () => openSheet(calendarDay(y, m, +el.dataset.d, mine))));
+    view.querySelectorAll('[data-calact]').forEach((b) => b.addEventListener('click', () => { calAct = b.dataset.calact || null; const top = view.scrollTop; routes.calendar(ym); view.scrollTop = top; }));
     bindCalendarCards();
   },
 
@@ -1168,8 +1199,8 @@ const routes = {
         const backup = validateBackup(JSON.parse(await file.text()));
         if (!confirm(t('Import {n} chart(s) and learning progress from {date}? Existing charts are kept.', { n: backup.charts.length, date: backup.exported?.slice(0, 10) || t('the backup') }))) return;
         const { state: merged, added } = mergeBackup(state, backup);
-        state.charts = merged.charts; state.best = merged.best; state.done = merged.done;
-        save('charts'); save('best'); save('done'); rescheduleTips();
+        state.charts = merged.charts; state.best = merged.best; state.done = merged.done; state.journal = merged.journal;
+        save('charts'); save('best'); save('done'); save('journal'); rescheduleTips();
         alert(t('Imported {n} new chart(s).', { n: added }));
         go('#/chart');
       } catch (err) { alert(err instanceof SyntaxError ? t('This file is not a BaZi Academy backup.') : err.message); }
@@ -1398,7 +1429,33 @@ function bindClock(now, mine) {
   };
 }
 
+// ---------- day journal: rate the day, compare with the day card later ----------
+const FACES = ['😣', '🙁', '😐', '🙂', '😄'];
+const FACE_L = () => [t('Difficult'), t('Not great'), t('Okay'), t('Good'), t('Great')];
+const dkey = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+function journalCardHtml(now) {
+  const e = state.journal[dkey(now)], n = Object.keys(state.journal).length, L = FACE_L();
+  return `<div class="card jr-card" id="jr-card"><h3 style="margin-top:0">${t('How did today go?')}</h3>
+    <p class="small muted">${t('Rate your day in a few seconds. Over time you can compare your days with the day card – the best way to test BaZi for yourself.')}</p>
+    <div class="jr-faces">${FACES.map((f, i) => `<button type="button" data-jr="${i + 1}" class="${e?.r === i + 1 ? 'on' : ''}" aria-label="${L[i]}"><span>${f}</span><small>${L[i]}</small></button>`).join('')}</div>
+    <textarea id="jr-note" rows="2" maxlength="300" placeholder="${t('Optional: what happened today?')}" ${e ? '' : 'hidden'}>${esc(e?.n || '')}</textarea>
+    <p class="small" style="margin-bottom:0">${e ? `✓ ${t('Saved on this device.')} · ` : ''}<a href="#/journal">${t('My journal')} ›</a>${n ? ` <span class="muted">· ${t('{n} days rated', { n })}</span>` : ''}</p></div>`;
+}
+function bindJournalCard(now, daily) {
+  const box = $('#jr-card'); if (!box) return;
+  const k = dkey(now);
+  box.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-jr]'); if (!b) return;
+    state.journal[k] = { ...(state.journal[k] || {}), r: Number(b.dataset.jr), s: daily.stars, p: pillarName(daily.pillar) }; save('journal');
+    box.outerHTML = journalCardHtml(now); bindJournalCard(now, daily);
+  });
+  let timer = 0;
+  $('#jr-note')?.addEventListener('input', (e) => { clearTimeout(timer); timer = setTimeout(() => {
+    if (!state.journal[k]) return; state.journal[k].n = e.target.value.slice(0, 300); save('journal'); }, 400); });
+}
+
 // ---------- lunar calendar ----------
+let calAct = null; // activity whose good days are coloured in the calendar
 function calendarDay(y, m, d, mine) {
   const e = dayEvents(y, m, d);
   const a = dayInfo(y, m, d, mine);
@@ -1675,7 +1732,7 @@ $('#lang-btn').addEventListener('click', openQuickSettings);
 function router() {
   closeSheet();
   const [, name = 'today', arg] = (location.hash || '#/today').split('/');
-  const tab = { lesson: 'learn', guide: 'learn', glossary: 'learn', about: 'learn', premium: 'learn', match: 'chart', almanac: 'today', forecast: 'chart', influences: 'chart', timeline: 'chart', welcome: '' }[name] ?? name;
+  const tab = { lesson: 'learn', guide: 'learn', glossary: 'learn', about: 'learn', premium: 'learn', match: 'chart', almanac: 'today', journal: 'today', forecast: 'chart', influences: 'chart', timeline: 'chart', welcome: '' }[name] ?? name;
   document.body.classList.toggle('no-tabs', name === 'welcome');
   document.body.classList.toggle('on-about', name === 'about');
   document.querySelectorAll('.tabs a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));

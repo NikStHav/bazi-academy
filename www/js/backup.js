@@ -4,7 +4,7 @@ export const FORMAT = 'bazi-academy-backup';
 /** Build the backup object. The purchase is not included – it is restored from the store. */
 export function makeBackup(state, extra = {}) {
   return { format: FORMAT, version: 1, exported: new Date().toISOString(),
-    charts: state.charts, done: state.done, best: state.best, settings: state.settings, ...extra };
+    charts: state.charts, done: state.done, best: state.best, settings: state.settings, journal: state.journal || {}, ...extra };
 }
 
 const isChart = (c) => c && typeof c.id === 'string' && c.input && Number.isInteger(c.input.year)
@@ -30,5 +30,10 @@ export function mergeBackup(state, backup) {
   for (const [k, v] of Object.entries(backup.best || {})) if (typeof v === 'number') best[k] = Math.max(best[k] || 0, v);
   const done = { ...state.done };
   for (const [k, v] of Object.entries(backup.done || {})) if (v === true) done[k] = true;
-  return { state: { ...state, charts: [...state.charts, ...incoming], best, done }, added: incoming.length };
+  const journal = { ...(state.journal || {}) };
+  for (const [k, v] of Object.entries(backup.journal || {})) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(k) && !journal[k] && v && Number.isInteger(v.r) && v.r >= 1 && v.r <= 5)
+      journal[k] = { r: v.r, s: Number.isInteger(v.s) ? v.s : undefined, p: typeof v.p === 'string' ? v.p.slice(0, 4) : undefined, n: typeof v.n === 'string' ? v.n.slice(0, 300) : '' };
+  }
+  return { state: { ...state, charts: [...state.charts, ...incoming], best, done, journal }, added: incoming.length };
 }

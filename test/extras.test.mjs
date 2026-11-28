@@ -55,3 +55,13 @@ test('backup round trip and merge', () => {
   assert.throws(() => validateBackup({ format: 'bazi-academy-backup', charts: [{ id: 1 }] }), /damaged/);
   assert.equal(file.premium, undefined);
 });
+
+test('backup keeps the day journal and merges it without overwriting', () => {
+  const st = { charts: [], done: {}, best: {}, journal: { '2026-11-01': { r: 4, s: 3, p: '丙午', n: 'mine' } } };
+  const b = makeBackup(st);
+  assert.deepEqual(b.journal, st.journal);
+  const { state: m } = mergeBackup(st, { ...b, journal: { '2026-11-01': { r: 1 }, '2026-11-02': { r: 5, s: 2, n: 'x' }, bad: { r: 9 }, '2026-11-03': { r: 7 } } });
+  assert.equal(m.journal['2026-11-01'].n, 'mine');
+  assert.equal(m.journal['2026-11-02'].r, 5);
+  assert.equal(Object.keys(m.journal).length, 2);
+});
