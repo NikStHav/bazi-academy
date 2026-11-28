@@ -490,4 +490,10 @@ export const UI_3 = {
   "yellow, brown, beige": "Gelb, Braun, Beige",
   "{god} on the {pillar} pillar: {kw}.": "{god} in der Säule {pillar}: {kw}.",
   "{god} – {kw}.": "{god} – {kw}.",
+  "Borderline chart: with {n}% support your Day Master sits near the middle, and BaZi schools read such charts differently. Read as {a}, {fa} help; read as {b}, {fb} help. The app uses the first reading – watch in real life which elements actually do you good.": "Grenzfall: Mit {n} % Unterstützung liegt dein Tagesmeister nahe der Mitte, und BaZi-Schulen lesen solche Horoskope unterschiedlich. Als {a} gelesen, helfen {fa}; als {b} gelesen, helfen {fb}. Die App nutzt die erste Lesart – beobachte im echten Leben, welche Elemente dir wirklich guttun.",
+  "Borderline chart – other schools would choose {els}.": "Grenzfall – andere Schulen würden {els} wählen.",
+  "balanced to strong": "ausgewogen bis stark",
+  "balanced to weak": "ausgewogen bis schwach",
+  "slightly strong": "etwas stark",
+  "slightly weak": "etwas schwach",
 };

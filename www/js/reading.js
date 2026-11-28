@@ -145,11 +145,20 @@ if (DE) {
 export function favourableElements(chart) {
   const e = STEMS[chart.dayMaster].el;
   const strong = chart.strength.ratio >= 45;
-  return {
-    strong,
-    favourable: (strong ? [e + 1, e + 2, e + 3] : [e - 1, e]).map((x) => mod(x, 5)),
-    unfavourable: (strong ? [e - 1, e] : [e + 2, e + 3]).map((x) => mod(x, 5)),
-  };
+  const pick = (st) => ({ favourable: (st ? [e + 1, e + 2, e + 3] : [e - 1, e]).map((x) => mod(x, 5)), unfavourable: (st ? [e - 1, e] : [e + 2, e + 3]).map((x) => mod(x, 5)) });
+  // 32–59 % support ("balanced to weak / strong"): schools read such charts differently, so the other reading is returned too.
+  const borderline = chart.strength.ratio >= 32 && chart.strength.ratio < 60;
+  return { strong, borderline, ...pick(strong), alt: pick(!strong) };
+}
+
+/** One honest paragraph for borderline charts: both readings, and which one the app uses. */
+export function borderlineNote(chart) {
+  const f = favourableElements(chart);
+  if (!f.borderline) return '';
+  const names = (els) => els.map((x) => ELEMENTS[x].name).join(', ');
+  return t('Borderline chart: with {n}% support your Day Master sits near the middle, and BaZi schools read such charts differently. Read as {a}, {fa} help; read as {b}, {fb} help. The app uses the first reading – watch in real life which elements actually do you good.', {
+    n: chart.strength.ratio, a: f.strong ? t('slightly strong') : t('slightly weak'), fa: names(f.favourable),
+    b: f.strong ? t('balanced to weak') : t('balanced to strong'), fb: names(f.alt.favourable) });
 }
 
 /** Returns { sections: [{ title, html }] } */
@@ -179,6 +188,7 @@ export function buildReading(chart) {
       : t('A weaker Day Master benefits from elements that <b>support</b> it: the element that produces it and its own element.')}</p>
     <p><b>${t('Favourable:')}</b> ${fav.map((e) => `<span class="tx-${ELEMENTS.indexOf(e)}">${e.zh} ${e.name}</span>`).join(', ')} ·
        <b>${t('Less favourable:')}</b> ${unfavourable.map((x) => el(x).name).join(', ')}</p>
+    ${borderlineNote(chart) ? `<p class="tip">⚖️ ${borderlineNote(chart)}</p>` : ''}
     <p>${t('In traditional practice, people strengthen their main favourable element <b>{el}</b> through:', { el: el(mainFav).name })}</p>
     <ul><li><b>${t('Colours:')}</b> ${ELEMENT_ADVICE[mainFav].colors}</li><li><b>${t('Direction:')}</b> ${el(mainFav).direction}</li>
       <li><b>${t('Activities:')}</b> ${ELEMENT_ADVICE[mainFav].activities}</li><li><b>${t('Fields of work:')}</b> ${ELEMENT_ADVICE[mainFav].careers}</li></ul>

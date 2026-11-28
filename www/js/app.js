@@ -269,6 +269,7 @@ function viewToggleHtml() {
     <p class="small muted">${d ? t('Detailed: with the Ten Gods – how each character relates to you.') : t('Simple: elements and animals only. Switch to Detailed to see the Ten Gods.')}</p></div>`;
 }
 document.addEventListener('click', (e) => {
+  if (e.target.closest('[data-jumpread]')) { view.querySelector('.reading .tip')?.closest('details')?.setAttribute('open', ''); view.querySelector('.reading .tip')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
   const tb = e.target.closest('[data-ctab-btn]');
   if (tb) { chartTab = tb.dataset.ctabBtn; view.querySelectorAll('[data-ctab]').forEach((x) => { x.hidden = x.dataset.ctab !== chartTab; });
     view.querySelectorAll('.ctabs [data-ctab-btn]').forEach((x) => x.classList.toggle('on', x.dataset.ctabBtn === chartTab));
@@ -322,7 +323,8 @@ function elementLifeHtml(c, compact = false) {
   const f = favourableElements(c), L = EL_LIFE(), dm = STEMS[c.dayMaster];
   const names = (els) => els.map((e) => `<b class="tx-${e}">${ELEMENTS[e].name}</b>`).join(', ');
   const why = t('Why? Your Day Master {dm} is {state}, so {els} bring balance.', { dm: `${dm.zh} ${polEl(c.dayMaster)}`,
-    state: f.strong ? t('rather strong') : t('rather weak'), els: f.favourable.map((e) => ELEMENTS[e].name).join(', ') });
+    state: f.borderline ? (f.strong ? t('slightly strong') : t('slightly weak')) : f.strong ? t('rather strong') : t('rather weak'), els: f.favourable.map((e) => ELEMENTS[e].name).join(', ') })
+    + (f.borderline ? ' ' + t('Borderline chart – other schools would choose {els}.', { els: f.alt.favourable.map((e) => ELEMENTS[e].name).join(', ') }) : '');
   const rows = `<table class="el-life">
     <tr><th>${t('Colours')}</th><td>${swatches(f.favourable)}<br><span class="small">${f.favourable.map((e) => L[e].colours).join(' · ')}</span></td></tr>
     <tr><th>${t('Directions')}</th><td>${f.favourable.map((e) => L[e].dir).join(' · ')}</td></tr>
@@ -381,7 +383,8 @@ function chartHtml(entry) {
     <div class="dm-head">${stemPictureHtml(c.dayMaster)}<div><h3 style="margin:0">${t("Day Master:")} <span class="tx-${dm.el}" style="font-family:var(--serif)">${dm.zh}</span> ${dm.py} – ${polEl(c.dayMaster)} ${q('daymaster')}</h3>
       <p class="small" style="margin:4px 0 0">“${dm.image}”</p></div></div>
     <p>${dm.desc}</p>
-    <p class="small"><b>${t('Elements that help you:')}</b> ${fav.favourable.map((e) => `<span class="tx-${e}">${ELEMENTS[e].zh} ${ELEMENTS[e].name}</span>`).join(', ')} · <a href="javascript:void 0" data-ctab-btn="elements">${t('What this means in daily life')} ›</a></p>
+    <p class="small"><b>${t('Elements that help you:')}</b> ${fav.favourable.map((e) => `<span class="tx-${e}">${ELEMENTS[e].zh} ${ELEMENTS[e].name}</span>`).join(', ')} ${fav.borderline ? `<br>⚖️ ${t('Borderline chart – other schools would choose {els}.', { els: fav.alt.favourable.map((e) => ELEMENTS[e].name).join(', ') })} <a href="javascript:void 0" data-jumpread>${t('Why?')}</a>` : ''}
+      · <a href="javascript:void 0" data-ctab-btn="elements">${t('What this means in daily life')} ›</a></p>
     <p><span class="chip">${t('Season:')} ${c.strength.phase.zh} ${c.strength.phase.name}</span><span class="chip">${t('Support ≈ {n}%', { n: c.strength.ratio })}</span><span class="chip">${t(c.strength.label)}</span></p>
     <p class="small muted">${c.strength.phase.desc} ${t('The support score counts Companion and Resource elements (month branch weighted double). It is a learning aid, not a full judgement.')}</p>
     <p class="small">${c.strength.ratio >= 45
